@@ -13,5 +13,5 @@ class HomePage(TestCase):
 class ProjectsPage(TestCase):
     def test_should_get_list_of_projects_when_requested_for(self):
         web_client = Client()
-        response = web_client.get('/projects', {})
+        response = web_client.get('/projects/', {})
         self.assertEquals(200, response.status_code)
