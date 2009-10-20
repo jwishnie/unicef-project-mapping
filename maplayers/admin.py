@@ -1,6 +1,11 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
-from maplayers.models import *
+"""
+Admin site definition for basic models
+
+"""
+
+from maplayers.models import Link, Project, Resource
 from django.contrib import admin 
 
 admin.site.register(Project)

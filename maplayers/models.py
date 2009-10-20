@@ -23,7 +23,8 @@ class Link(models.Model):
     def __unicode__(self): 
         return self.title
 
-    class Admin: pass
+    class Admin: 
+        pass
     
     
 class Resource(models.Model):
@@ -34,4 +35,5 @@ class Resource(models.Model):
     def __unicode__(self): 
         return self.title
 
-    class Admin: pass
+    class Admin: 
+        pass
