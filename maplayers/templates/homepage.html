@@ -6,6 +6,7 @@
 		
          <title>{{project.name}}</title>
 
+         <link rel="stylesheet" type="text/css" href="static/main.css" />
          <script src="http://www.openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
          <script type="text/javascript">
 
@@ -32,11 +33,17 @@
     </head>
 
   <body onload="initialize()">
-        <div id="header"/>
-        <div id="nav"/>
-        <div id="filter_left"/>
-        <div id="main">
-            <div id="map_canvas" style="width: 1200px; height:800px"></div>
+        <div id="header"><h1>Welcome to UNICEF Mapping</h1></div>
+        <div id="nav"></div>
+        <div id="filter_left">
+            <ul>
+                <li>Projects</li>
+                <li>Locations</li>
+            </ul>
         </div>
+        <div id="main">
+            <div id="map_canvas"></div>
+        </div>
+        <div id="footer">Unicef 2009 : All rights reserved  </div>
   </body>
 </html>
