@@ -12,8 +12,8 @@ class Project(models.Model):
     def __unicode__(self): 
         return self.name
 
-    class Admin: pass
-    
+    class Admin:
+        pass
     
 class Link(models.Model):
     title = models.CharField(max_length=50)

@@ -1,7 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.conf.urls.defaults import *
-from maplayers.views import project_details, homepage
+from maplayers.views import project_details, homepage, projects
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -19,6 +19,6 @@ urlpatterns = patterns('',
     (r'^admin/(.*)', admin.site.root),
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': 'static'}),
-	(r'^project_details', project_details),
+	(r'^projects', projects),
 	(r'^$', homepage)
 )

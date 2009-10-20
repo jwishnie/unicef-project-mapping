@@ -7,6 +7,10 @@ def homepage(request):
     projects = Project.objects.all()
     return render_to_response('homepage.html', {'projects' : projects}) 
     
+def projects(request):
+    projects = Project.objects.all()
+    return render_to_response("projects.html", {'projects' : projects})
+
 def project_details(request):
     project = Project.objects.all()[0]
     return render_to_response('project_details.html', {'project': project, 'links' :project.link_set.all() }) 
