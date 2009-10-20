@@ -1,0 +1,40 @@
+/* css for mapping main page */
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    color: black;
+    background-color: red;
+}
+
+#header {
+    background-color: green;
+}
+
+#nav {
+    background-color: yellow;
+}
+
+#map_canvas{
+    width: 800px;
+    height: 600px;
+}
+
+#main {
+    float: right;
+    width: 800px;
+    padding: 10px;
+    background-color: gray;
+}
+
+
+#filter_left {
+    float: left;
+    padding: 10px;
+    background-color: orange;
+}
+
+#footer {
+    clear: both;
+    background-color: black;
+}
