@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
+
 from django.core.management import execute_manager
 try:
     import settings # Assumed to be in the same directory.

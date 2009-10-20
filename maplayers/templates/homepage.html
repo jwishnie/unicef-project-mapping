@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		
+    <title>{{project.name}}</title>
+    <!-- <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA"
+            type="text/javascript"></script> -->
+	<script src="http://www.openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    function initialize() {
+		var map = new OpenLayers.Map( 'map_canvas' );
+	   	var layer = new OpenLayers.Layer.Google( "OpenLayers WMS",
+	   	"http://labs.metacarta.com/wms/vmap0", {layers: 'basic'} );
+	   	map.addLayer(layer);
+	   	
+	   	map.setCenter(new OpenLayers.LonLat(0, 0), 2);
+		var markers = new OpenLayers.Layer.Markers( "Markers" );
+		map.addLayer(markers);
+		
+		var size = new OpenLayers.Size(10,17);
+		var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+		var icon = new OpenLayers.Icon('http://labs.google.com/ridefinder/images/mm_20_blue.png',size,offset);
+		
+		{% for project in projects %}
+			markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat({{project.lon}}, {{project.lat}}),icon.clone()));
+		{% endfor %}
+		
+    }
+
+    </script>
+  </head>
+
+  <body onload="initialize()">
+		<div id="map_canvas" style="width: 1200px; height:800px"></div>
+  </body>
+</html>

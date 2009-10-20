@@ -12,9 +12,9 @@
     function initialize() {
       if (GBrowserIsCompatible()) {
         var map = new GMap2(document.getElementById("map_canvas"));
-				var latlng = new GLatLng({{project.lat}}, {{project.lon}})
+		var latlng = new GLatLng({{project.lat}}, {{project.lon}})
         map.setCenter(latlng, 5);
-				map.addOverlay(new GMarker(latlng));
+		map.addOverlay(new GMarker(latlng));
         map.setUIToDefault();
       }
     }
@@ -39,6 +39,16 @@
 								<label>Location: </label>
 								<span>{{project.geography}}</span>
 						</div>
+						
+						{% if project.link_set %}
+							<div id="project links">
+								<p>Links : </p>
+								{% for link in links %}
+									<div><a href="{{link.url}}">{{link.title}}</a></div>
+								{% endfor %}
+							</div>	
+						{% endif %}
+						
 				</div>
 	
 				<div id="map_canvas" style="width: 500px; height:300px"></div>
