@@ -1,0 +1,49 @@
+<html>
+<head>
+	<script type="text/javascript" src="static/jquery.js"></script>
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			{% for sector in sectors %}
+			$("input[@name='sector_{{sector.id}}']").click(function(){
+				if ($("input[@name='sector_{{sector.id}}']").is(":checked")){
+					$(".{{sector.name}}").show("slow");
+				}else{
+					$(".{{sector.name}}").hide("slow");
+				}
+			});
+			{% endfor %}
+		 });
+		
+	</script>
+	
+</head>
+
+<body>
+
+<div id="sectors">
+	<p>Sectors :</p>
+	{% for sector in sectors %}
+		<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}">
+		<label>{{sector.name}}</label> <br/>
+	{% endfor %}
+	
+</div>
+
+<div id="projects">
+	<p>Projects: </p>
+	
+	<ul>
+	{% for project in projects %}
+		<li>
+			<div id="project_{{project.id}}" class="{{project.sector_names}}"><p>
+				{{project.name}}<br/>
+				{{project.description}}<br/>
+			</p></div>
+		</li>	
+	{% endfor %}
+	</ul>
+</div>
+
+</body>

@@ -13,5 +13,6 @@ urlpatterns = patterns('',
         {'document_root': 'static'}),
 	(r'^projects/$', views.projects),
     (r'^projects/(?P<project_id>\d+)/$', views.project_details),
+    (r'^projects/(?P<left>[0-9\.\-]+)/(?P<bottom>[0-9\.\-]+)/(?P<right>[0-9\.\-]+)/(?P<top>[0-9\.\-]+)', views.projects_in_map),
 	(r'^$', views.homepage),
 )

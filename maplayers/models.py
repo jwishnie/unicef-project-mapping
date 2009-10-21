@@ -8,6 +8,9 @@ class Project(models.Model):
     lat = models.DecimalField(max_digits=10, decimal_places=6)
     lon = models.DecimalField(max_digits=10, decimal_places=6)
     location = models.CharField(max_length=50)
+    
+    def sector_names(self):
+        return " ".join([sector.name for sector in self.sector_set.all()])
 
     def __unicode__(self): 
         return self.name
@@ -34,6 +37,17 @@ class Resource(models.Model):
 
     def __unicode__(self): 
         return self.title
+
+    class Admin: 
+        pass
+        
+        
+class Sector(models.Model):
+    name = models.CharField(max_length=50)
+    projects = models.ManyToManyField(Project, blank=True)
+    
+    def __unicode__(self): 
+        return self.name
 
     class Admin: 
         pass
