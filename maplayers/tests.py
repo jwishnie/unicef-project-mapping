@@ -15,3 +15,6 @@ class ProjectsPage(TestCase):
         web_client = Client()
         response = web_client.get('/projects/', {})
         self.assertEquals(200, response.status_code)
+
+
+
