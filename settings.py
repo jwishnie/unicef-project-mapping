@@ -72,10 +72,6 @@ TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__),"templates").replace('\\', '/'),
 )
 
-FIXTURE_DIRS = (
-    # Testdata fixture are placed here
-    os.path.join(os.path.dirname(__file__), "/db/fixtures/")
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
