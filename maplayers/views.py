@@ -14,7 +14,7 @@ def projects(request):
 
 def project(request, project_id):
     try:
-        project = Project.objects.all()[int(project_id)]
+      project = Project.objects.all()[int(project_id)]
     except IndexError:
       raise Http404
-    return render_to_response('project.html', {'project': project, 'links' :project.link_set.all() }) 
+    return render_to_response('project.html', {'project': project, 'links' : project.link_set.all() }) 
