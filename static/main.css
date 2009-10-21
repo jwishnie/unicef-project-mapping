@@ -7,6 +7,11 @@ html, body {
     background-color: red;
 }
 
+#wrapper{
+    width: 1000px;
+    margin:0 auto;
+}
+
 #header {
     background-color: green;
 }
@@ -22,7 +27,6 @@ html, body {
 
 #main {
     float: right;
-    width: 800px;
     padding: 10px;
     background-color: gray;
 }
@@ -30,6 +34,7 @@ html, body {
 
 #filter_left {
     float: left;
+    width: 150px;
     padding: 10px;
     background-color: orange;
 }
