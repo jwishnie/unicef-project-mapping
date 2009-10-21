@@ -17,4 +17,9 @@ class ProjectsPage(TestCase):
         self.assertEquals(200, response.status_code)
 
 
+class ProjectPage(TestCase):
+    def test_should_get_project_page(self):
+        webclient = Client()
+        response = webclient.get('/projects/', {'project_id' : 1})
+        self.assertEquals(200, response.status_code)
 
