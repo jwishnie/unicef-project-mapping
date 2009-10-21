@@ -3,6 +3,7 @@
 from django.shortcuts import render_to_response
 from maplayers.models import Project, Sector
 import decimal
+from django.http import Http404
 
 def homepage(request):
     projects = Project.objects.all()
@@ -21,3 +22,10 @@ def projects_in_map(request, left, bottom, right, top):
     sectors = Sector.objects.all()
     projects = Project.objects.filter(lon__gte=left, lon__lte=right,  lat__gte=bottom, lat__lte=top)
     return render_to_response('projects_in_map.html', {'projects': projects, 'sectors' : sectors})
+
+def project(request, project_id):
+    try:
+      project = Project.objects.all()[int(project_id)]
+    except IndexError:
+      raise Http404
+    return render_to_response('project.html', {'project': project, 'links' : project.link_set.all() }) 

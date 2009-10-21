@@ -5,6 +5,7 @@ from django.db import models
 class Project(models.Model): 
     name = models.CharField(max_length=30) 
     description = models.TextField()
+
     lat = models.DecimalField(max_digits=10, decimal_places=6)
     lon = models.DecimalField(max_digits=10, decimal_places=6)
     location = models.CharField(max_length=50)
