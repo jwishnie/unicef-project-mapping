@@ -1,1 +1,78 @@
-[{"pk": 1, "model": "maplayers.project", "fields": {"lat": "0.315439", "location": "Kampala, Uganda", "lon": "32.57304", "name": "Unicef Project", "description": "Unicef Project in Kampala"}}, {"pk": 2, "model": "maplayers.project", "fields": {"lat": "-1.274682", "location": "Nairobi, Kenya", "lon": "36.812689", "name": "World Vision project", "description": "World Vision Project"}}, {"pk": 3, "model": "maplayers.project", "fields": {"lat": "16.663559", "location": "Yangon, Myanmar", "lon": "96.192627", "name": "RedCross Project", "description": "Redcross Myanmar"}}, {"pk": 4, "model": "maplayers.project", "fields": {"lat": "51.97676", "location": "Cariboo, Canada", "lon": "-122.724613", "name": "Doctors Without Borders", "description": "Doctors Without Borders"}}]
+[{
+    "pk": 1,
+    "model": "maplayers.project",
+    "fields": {
+        "lat": "0.315439",
+        "location": "Kampala, Uganda",
+        "lon": "32.57304",
+        "name": "Unicef Project",
+        "description": "Unicef Project in Kampala"
+    }
+},
+{
+    "pk": 2,
+    "model": "maplayers.project",
+    "fields": {
+        "lat": "-1.274682",
+        "location": "Nairobi, Kenya",
+        "lon": "36.812689",
+        "name": "World Vision project",
+        "description": "World Vision Project"
+    }
+},
+{
+    "pk": 3,
+    "model": "maplayers.project",
+    "fields": {
+        "lat": "16.663559",
+        "location": "Yangon, Myanmar",
+        "lon": "96.192627",
+        "name": "RedCross Project",
+        "description": "Redcross Myanmar"
+    }
+},
+{
+    "pk": 4,
+    "model": "maplayers.project",
+    "fields": {
+        "lat": "51.97676",
+        "location": "Cariboo, Canada",
+        "lon": "-122.724613",
+        "name": "Doctors Without Borders",
+        "description": "Doctors Without Borders"
+    }
+},
+{
+    "pk": 1,
+    "model": "maplayers.sector",
+    "fields": {
+        "name": "health",
+        "projects": [1, 2, 3]
+    }
+},
+{
+    "pk": 2,
+    "model": "maplayers.sector",
+    "fields": {
+        "name": "environment",
+        "projects": [2, 3]
+    }
+},
+{
+    "pk": 3,
+    "model": "maplayers.sector",
+    "fields": {
+        "name": "economy",
+        "projects": [2, 4]
+    }
+},
+{
+    "pk": 4,
+    "model": "maplayers.sector",
+    "fields": {
+        "name": "infrastructure",
+        "projects": [1, 3, 4]
+    }
+}
+
+]

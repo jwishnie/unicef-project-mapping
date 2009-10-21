@@ -2,6 +2,7 @@
 
 from django.test import TestCase
 from django.test.client import Client
+from maplayers.models import Project
 
 
 class HomePage(TestCase):
@@ -27,3 +28,17 @@ class ProjectPage(TestCase):
         webclient = Client()
         response = webclient.get('/projects/1000/')
         self.assertEquals(404, response.status_code)
+        
+    def test_should_return_list_of_projects_in_bounding_box(self):
+        webclient = Client()
+        context = webclient.get('/projects/0/0/40/10/').context
+        self.assertEquals(40, context['right'])
+        self.assertEquals(10, context['top'])
+        self.assertEquals(0, context['bottom'])
+        self.assertEquals(0, context['left'])
+        self.assertEquals(Project.objects.get(id=1), context['projects'][0])
+        
+    def test_should_return_list_of_projects_in_selected_sectors(self):
+        webclient = Client()
+        context = webclient.post('/projects/-180/-90/180/90/', {'2':'environment', '3':'economy'}).context
+        self.assertEquals(set(Project.objects.filter(id__in=[2,3,4])), set(context['projects']))
