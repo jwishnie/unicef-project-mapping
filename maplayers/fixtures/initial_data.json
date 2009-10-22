@@ -879,7 +879,7 @@
       "model": "maplayers.implementor",
       "fields": {
           "name": "RedCross",
-          "projects": [3]
+          "projects": [3, 4]
       }
   }
 ]
