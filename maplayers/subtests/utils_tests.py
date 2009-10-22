@@ -6,7 +6,7 @@ Created on Oct 22, 2009
 @author: jwishnie
 '''
 import unittest
-from utils import *
+import utils
 
 class UtilsTest(unittest.TestCase):
     empty_list = [
@@ -43,16 +43,16 @@ class UtilsTest(unittest.TestCase):
                      ]
     
     def testEmpty(self):
-        self.assertTrue(all(is_empty(obj) for obj in self.empty_list))
+        self.assertTrue(all(utils.is_empty(obj) for obj in self.empty_list))
 
         for obj in self.not_empty_list:
-            self.assertFalse(is_empty(obj))
+            self.assertFalse(utils.is_empty(obj))
                              
     def testNotEmpty(self):
-        self.assertFalse(all(is_not_empty(obj) for obj in self.empty_list))
+        self.assertFalse(all(utils.is_not_empty(obj) for obj in self.empty_list))
 
         for obj in self.not_empty_list:
-            self.assertTrue(is_not_empty(obj))
+            self.assertTrue(utils.is_not_empty(obj))
 
 if __name__=='__main__':
-    unittest.main()
+    unittest.main() 
