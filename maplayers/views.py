@@ -1,15 +1,17 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.shortcuts import render_to_response
-from maplayers.models import Project, Sector
+from maplayers.models import Project, Sector, Implementor
 import decimal
 from django.http import Http404
 from django.db import connection
 
 
 def homepage(request):
+    sectors = Sector.objects.all()
+    implementors  = Implementor.objects.all()
     projects = Project.objects.all()
-    return render_to_response('homepage.html', {'projects' : projects}) 
+    return render_to_response('homepage.html', {'projects' : projects, 'sectors' : sectors, 'implementors' : implementors}) 
     
 def projects(request):
     projects = Project.objects.all()

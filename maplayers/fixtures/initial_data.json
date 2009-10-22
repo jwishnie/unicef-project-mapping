@@ -73,6 +73,30 @@
         "name": "infrastructure",
         "projects": [1, 3, 4]
     }
-}
+},
 
+{
+    "pk": 1,
+    "model": "maplayers.implementor",
+    "fields": {
+        "name": "UNICEF",
+        "projects": [1]
+    }
+},
+{
+    "pk": 2,
+    "model": "maplayers.implementor",
+    "fields": {
+        "name": "World Vision",
+        "projects": [2]
+    }
+},
+{
+    "pk": 3,
+    "model": "maplayers.implementor",
+    "fields": {
+        "name": "RedCross",
+        "projects": [3]
+    }
+}
 ]

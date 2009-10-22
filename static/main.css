@@ -22,7 +22,7 @@ html, body {
 
 #map_canvas{
     width: 800px;
-    height: 600px;
+    height: 400px;
 }
 
 #main {
@@ -32,9 +32,17 @@ html, body {
 }
 
 
+#sectors li {
+    float: left;
+    margin: 1px;
+    padding-left:0px;
+}
+
 #filter_left {
     float: left;
-    width: 150px;
+    text-align: left;
+    height: 400px;
+    width: 160px;
     padding: 10px;
     background-color: orange;
 }
@@ -42,4 +50,29 @@ html, body {
 #footer {
     clear: both;
     background-color: black;
+}
+
+ul.drawers {
+        width: 160px;
+    }
+    
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+}
+
+li a {
+    text-decoration: none;
+    color: #666;
+}
+
+h3.drawer-handle {
+    margin: 0;
+    padding: 0px;
+    background-color: #3A36F2;
+}
+
+h3.drawer-handle.open {
+    background-color: #1DBB0D;
 }
