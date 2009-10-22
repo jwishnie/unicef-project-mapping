@@ -3,6 +3,19 @@
 import os.path
 # Django settings for maplayers project.
 
+#
+# Cache setting
+#
+
+# Memcached
+# CACHE_BACKEND = 'memcached://127.0.0.1:11211/' 
+
+# file system cache
+# CACHE_BACKEND = 'file:///var/tmp/django_cache' 
+
+# for development, memory cache
+CACHE_BACKEND = 'locmem:///' 
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -81,3 +94,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'maplayers',
 )
+
+
+
