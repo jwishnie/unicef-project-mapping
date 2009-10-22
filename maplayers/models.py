@@ -6,8 +6,8 @@ class Project(models.Model):
     name = models.CharField(max_length=30) 
     description = models.TextField()
 
-    lat = models.DecimalField(max_digits=10, decimal_places=6)
-    lon = models.DecimalField(max_digits=10, decimal_places=6)
+    latitude = models.DecimalField(max_digits=10, decimal_places=6)
+    longitude = models.DecimalField(max_digits=10, decimal_places=6)
     location = models.CharField(max_length=50)
     
     def sector_names(self):

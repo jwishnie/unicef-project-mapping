@@ -20,7 +20,7 @@ def projects_in_map(request, left, bottom, right, top):
     sector_ids = [int(sector_id) for sector_id in request.POST.keys()] or [sector.id for sector in sectors]
     left, bottom, right, top = decimal.Decimal(left), decimal.Decimal(bottom), decimal.Decimal(right), decimal.Decimal(top)
     
-    projects = Project.objects.filter(lon__gte=left, lon__lte=right,  lat__gte=bottom, lat__lte=top, sector__in=sector_ids).distinct()
+    projects = Project.objects.filter(longitude__gte=left, longitude__lte=right,  latitude__gte=bottom, latitude__lte=top, sector__in=sector_ids).distinct()
     return render_to_response('projects_in_map.html', {'projects': projects, 'sectors' : sectors, "selected_sectors" : sector_ids,
                             "left" : left, "right" : right, "top" : top, "bottom" : bottom, "queries" : connection.queries})
 
