@@ -26,7 +26,7 @@
 			var icon = new OpenLayers.Icon('http://labs.google.com/ridefinder/images/mm_20_blue.png',size,offset);
 			
 			{% for project in projects %}
-				markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat({{project.lon}}, {{project.lat}}),icon.clone()));
+				markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat({{project.longitude}}, {{project.latitude}}),icon.clone()));
 			{% endfor %}
 		}
 		
