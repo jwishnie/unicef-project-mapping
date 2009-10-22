@@ -23,8 +23,17 @@ def feed_gallery(ctxt):
     this is then passed to the template to be rendered as a UL
     
     'ctxt' should be a dictionary with arguments:
-    feedurl: url to the feed
-    max_entries: maximum number of entries
+    feed_url: url to the feed
+    max_entries: maximum number of entries (defaults to all)
+    
+    Uses memcache and smart feed retrieval for optimization
     
     """
+    ctxt={}
+    # validate arguments
+    if ctxt == None or 
+        not ctxt.has_key('feed_url') or
+        :
+        return {}
+    
     pass  

@@ -4,7 +4,6 @@ from django.test import TestCase
 from django.test.client import Client
 from maplayers.models import Project
 
-
 class HomePage(TestCase):
     def test_should_get_homepage(self):
         web_client = Client()
