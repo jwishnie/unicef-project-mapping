@@ -5,10 +5,11 @@ Admin site definition for basic models
 
 """
 
-from maplayers.models import Link, Project, Resource, Sector
+from maplayers import models
 from django.contrib import admin 
 
-admin.site.register(Project)
-admin.site.register(Link)
-admin.site.register(Resource)
-admin.site.register(Sector)
+admin.site.register(models.Project)
+admin.site.register(models.Link)
+admin.site.register(models.Resource)
+admin.site.register(models.Sector)
+admin.site.register(models.Blog)

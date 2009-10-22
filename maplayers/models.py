@@ -30,7 +30,18 @@ class Link(models.Model):
     class Admin: 
         pass
     
-    
+class Blog(models.Model):
+    title = models.CharField(max_length=50)
+    homepageurl = models.URLField()
+    feedurl = models.URLField()
+    project = models.ForeignKey(Project)
+
+    def __unicode__(self): 
+        return self.title
+
+    class Admin: 
+        pass
+   
 class Resource(models.Model):
     title = models.CharField(max_length=50)
     filename = models.FileField(upload_to="/resources")
