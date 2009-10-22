@@ -6,8 +6,8 @@ class Project(models.Model):
     name = models.CharField(max_length=30) 
     description = models.TextField()
 
-    lat = models.DecimalField(max_digits=10, decimal_places=6)
-    lon = models.DecimalField(max_digits=10, decimal_places=6)
+    latitude = models.DecimalField(max_digits=10, decimal_places=6)
+    longitude = models.DecimalField(max_digits=10, decimal_places=6)
     location = models.CharField(max_length=50)
     
     def sector_names(self):
@@ -30,7 +30,18 @@ class Link(models.Model):
     class Admin: 
         pass
     
-    
+class Blog(models.Model):
+    title = models.CharField(max_length=50)
+    homepageurl = models.URLField()
+    feedurl = models.URLField()
+    project = models.ForeignKey(Project)
+
+    def __unicode__(self): 
+        return self.title
+
+    class Admin: 
+        pass
+   
 class Resource(models.Model):
     title = models.CharField(max_length=50)
     filename = models.FileField(upload_to="/resources")
@@ -52,7 +63,6 @@ class Sector(models.Model):
 
     class Admin: 
         pass
-        
         
 class Implementor(models.Model):
     name = models.CharField(max_length=50)
