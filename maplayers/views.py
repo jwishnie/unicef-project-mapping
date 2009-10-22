@@ -35,13 +35,11 @@ def projects_in_map(request, left, bottom, right, top):
                                       
     return render_to_response(
                               'projects_in_map.html',
-                              {'projects': projects, 'sectors' : sectors, 
-                               "selected_sectors" : sector_ids,
+                              {'projects': projects,
                                "left" : left, 
                                "right" : right, 
                                "top" : top, 
-                               "bottom" : bottom, 
-                               "queries" : connection.queries}
+                               "bottom" : bottom}
                               )
 
 def project(request, project_id):
