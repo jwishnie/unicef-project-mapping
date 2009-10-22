@@ -19,6 +19,7 @@ def projects_in_map(request, left, bottom, right, top):
     sectors = Sector.objects.all()
     sector_ids = [int(sector_id) for sector_id in request.POST.keys()] or \
         [sector.id for sector in sectors]
+        
     left, bottom, right, top = \
         [decimal.Decimal(p) for p in (left, bottom, right, top)]
     

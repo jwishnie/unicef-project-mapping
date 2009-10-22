@@ -4,7 +4,7 @@
 <body>
 <div id="sectors">
 	<p>Sectors :</p>
-	<form action="/projects/{{left}}/{{bottom}}/{{right}}/{{top}}/" method="POST">
+	<form action="/projects/bbox/{{left}}/{{bottom}}/{{right}}/{{top}}/" method="POST">
 		{% for sector in sectors %}
 			<input type="checkbox" name="{{sector.id}}" value="{{sector.name}}">
 			<label>{{sector.name}}</label> <br/>

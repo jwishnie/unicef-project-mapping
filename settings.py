@@ -13,8 +13,8 @@ import os.path
 # file system cache
 # CACHE_BACKEND = 'file:///var/tmp/django_cache' 
 
-# for development, dummy cache
-CACHE_BACKEND = 'dummy:///' 
+# for development, memory cache
+CACHE_BACKEND = 'locmem:///' 
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
