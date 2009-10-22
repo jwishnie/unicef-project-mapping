@@ -63,3 +63,13 @@ class Sector(models.Model):
 
     class Admin: 
         pass
+        
+class Implementor(models.Model):
+    name = models.CharField(max_length=50)
+    projects = models.ManyToManyField(Project, blank=True)
+    
+    def __unicode__(self):
+        return self.name
+        
+    class Admin:
+        pass

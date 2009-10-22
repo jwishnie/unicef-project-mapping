@@ -1,34 +1,12 @@
-<html>
-<head></head>
+<p>Projects: </p>
 
-<body>
-<div id="sectors">
-	<p>Sectors :</p>
-	<form action="/projects/bbox/{{left}}/{{bottom}}/{{right}}/{{top}}/" method="POST">
-		{% for sector in sectors %}
-			<input type="checkbox" name="{{sector.id}}" value="{{sector.name}}">
-			<label>{{sector.name}}</label> <br/>
-		{% endfor %}
-	<input type="submit" value="Find Projects"/>
-	</form>
-	
-	
-</div>
-
-<div id="projects">
-	<p>Projects: </p>
-	
-	<ul>
-	{% for project in projects %}
-		<li>
-			<div id="project_{{project.id}}" class="{{project.sector_names}}"><p>
-				{{project.name}}<br/>
-				{{project.description}}<br/>
-			</p></div>
-		</li>	
-	{% endfor %}
-	</ul>
-</div>
-
-
-</body>
+<ol>
+{% for project in projects %}
+	<li class="{{project.sector_names}}">
+		<div id="project_{{project.id}}" ><p>
+			{{project.name}}<br/>
+			{{project.description}}<br/>
+		</p></div>
+	</li>	
+{% endfor %}
+</ol>
