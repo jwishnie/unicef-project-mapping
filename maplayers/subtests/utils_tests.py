@@ -6,7 +6,7 @@ Created on Oct 22, 2009
 @author: jwishnie
 '''
 import unittest
-import utils
+from maplayers import utils
 
 class UtilsTest(unittest.TestCase):
     empty_list = [

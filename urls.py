@@ -14,5 +14,6 @@ urlpatterns = patterns('',
 	(r'^projects/$', views.projects),
     (r'^projects/bbox/(?P<left>.+)/(?P<bottom>.+)/(?P<right>.+)/(?P<top>.+)/$', views.projects_in_map),
     (r'^projects/id/(?P<project_id>\d+)/$', views.project),
+    (r'^gallery/', views.gallery),
 	(r'^$', views.homepage),
 )
