@@ -15,7 +15,10 @@ class Project(models.Model):
 
     def __unicode__(self): 
         return self.name
-
+        
+    def snippet(self):
+        return self.name + " : " + self.description
+         
     class Admin:
         pass
     
