@@ -9,9 +9,14 @@ class Project(models.Model):
     latitude = models.DecimalField(max_digits=10, decimal_places=6)
     longitude = models.DecimalField(max_digits=10, decimal_places=6)
     location = models.CharField(max_length=50)
+    website_url = models.URLField()
+    project_image = models.URLField()
     
     def sector_names(self):
         return " ".join([sector.name for sector in self.sector_set.all()])
+
+    def implementors(self):
+        return ", ".join([implementor.name for implementor in self.implementor_set.all()])
 
     def __unicode__(self): 
         return self.name
@@ -30,18 +35,6 @@ class Link(models.Model):
     class Admin: 
         pass
     
-class Blog(models.Model):
-    title = models.CharField(max_length=50)
-    homepageurl = models.URLField()
-    feedurl = models.URLField()
-    project = models.ForeignKey(Project)
-
-    def __unicode__(self): 
-        return self.title
-
-    class Admin: 
-        pass
-   
 class Resource(models.Model):
     title = models.CharField(max_length=50)
     filename = models.FileField(upload_to="/resources")
