@@ -30,7 +30,12 @@
 							<label>Name : </label>
 							<span>{{project.name}}</span>
 						</div>
-						
+
+                                                <div id="project_implementors">
+                                                        <p>Project Implementors : </p>
+                                                        <div>{{project.implementors}}</div>
+                                                </div><p/>	
+                                       
 						<div id="project description">
 							<label>Description: </label>
 							<span>{{project.description}}</span>
@@ -41,16 +46,14 @@
 								<span>{{project.location}}</span>
                                                 </div>
 
-                                                <div id="project_blog">
-                                                    <label>Project Blog: </label>
-                                                    <span><a href="{{blog.homepageurl}}">{{blog.title}}</a></span>
-                                                    <span>
-                                                      <a href={{blog.feedurl}}>
-                                                         <img alt="feed" src="/static/feed-icon.png"/>
-                                                      </a>
-                                                    </span>
+                                                <div id="project_website">
+                                                    <label>Project WebSite: </label>
+                                                    <span><a href="{{project.website_url}}">{{project.name}} home page</a></span>
                                                 </div>
-						
+
+                                                <div id="project_image">
+                                                    <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
+                                                </div>
 						{% if project.link_set %}
 							<div id="project links">
 								<p>Links : </p>

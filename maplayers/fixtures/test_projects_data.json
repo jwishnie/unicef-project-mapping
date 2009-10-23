@@ -1,717 +1,41 @@
 [
   {
-    "pk": 22, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_logentry", 
-      "name": "Can add log entry", 
-      "content_type": 8
-    }
-  }, 
-  {
-    "pk": 23, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_logentry", 
-      "name": "Can change log entry", 
-      "content_type": 8
-    }
-  }, 
-  {
-    "pk": 24, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_logentry", 
-      "name": "Can delete log entry", 
-      "content_type": 8
-    }
-  }, 
-  {
-    "pk": 4, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_group", 
-      "name": "Can add group", 
-      "content_type": 2
-    }
-  }, 
-  {
-    "pk": 10, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_message", 
-      "name": "Can add message", 
-      "content_type": 4
-    }
-  }, 
-  {
-    "pk": 1, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_permission", 
-      "name": "Can add permission", 
-      "content_type": 1
-    }
-  }, 
-  {
-    "pk": 7, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_user", 
-      "name": "Can add user", 
-      "content_type": 3
-    }
-  }, 
-  {
-    "pk": 5, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_group", 
-      "name": "Can change group", 
-      "content_type": 2
-    }
-  }, 
-  {
-    "pk": 11, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_message", 
-      "name": "Can change message", 
-      "content_type": 4
-    }
-  }, 
-  {
-    "pk": 2, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_permission", 
-      "name": "Can change permission", 
-      "content_type": 1
-    }
-  }, 
-  {
-    "pk": 8, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_user", 
-      "name": "Can change user", 
-      "content_type": 3
-    }
-  }, 
-  {
-    "pk": 6, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_group", 
-      "name": "Can delete group", 
-      "content_type": 2
-    }
-  }, 
-  {
-    "pk": 12, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_message", 
-      "name": "Can delete message", 
-      "content_type": 4
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_permission", 
-      "name": "Can delete permission", 
-      "content_type": 1
-    }
-  }, 
-  {
-    "pk": 9, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_user", 
-      "name": "Can delete user", 
-      "content_type": 3
-    }
-  }, 
-  {
-    "pk": 13, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_contenttype", 
-      "name": "Can add content type", 
-      "content_type": 5
-    }
-  }, 
-  {
-    "pk": 14, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_contenttype", 
-      "name": "Can change content type", 
-      "content_type": 5
-    }
-  }, 
-  {
-    "pk": 15, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_contenttype", 
-      "name": "Can delete content type", 
-      "content_type": 5
-    }
-  }, 
-  {
-    "pk": 31, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_blog", 
-      "name": "Can add project blog", 
-      "content_type": 11
-    }
-  }, 
-  {
-    "pk": 28, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_link", 
-      "name": "Can add link", 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 25, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_project", 
-      "name": "Can add project", 
-      "content_type": 9
-    }
-  }, 
-  {
-    "pk": 34, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_resource", 
-      "name": "Can add resource", 
-      "content_type": 12
-    }
-  }, 
-  {
-    "pk": 37, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_sector", 
-      "name": "Can add sector", 
-      "content_type": 13
-    }
-  }, 
-  {
-    "pk": 32, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_blog", 
-      "name": "Can change project blog", 
-      "content_type": 11
-    }
-  }, 
-  {
-    "pk": 29, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_link", 
-      "name": "Can change link", 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 26, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_project", 
-      "name": "Can change project", 
-      "content_type": 9
-    }
-  }, 
-  {
-    "pk": 35, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_resource", 
-      "name": "Can change resource", 
-      "content_type": 12
-    }
-  }, 
-  {
-    "pk": 38, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_sector", 
-      "name": "Can change sector", 
-      "content_type": 13
-    }
-  }, 
-  {
-    "pk": 33, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_blog", 
-      "name": "Can delete project blog", 
-      "content_type": 11
-    }
-  }, 
-  {
-    "pk": 30, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_link", 
-      "name": "Can delete link", 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 27, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_project", 
-      "name": "Can delete project", 
-      "content_type": 9
-    }
-  }, 
-  {
-    "pk": 36, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_resource", 
-      "name": "Can delete resource", 
-      "content_type": 12
-    }
-  }, 
-  {
-    "pk": 39, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_sector", 
-      "name": "Can delete sector", 
-      "content_type": 13
-    }
-  }, 
-  {
-    "pk": 16, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_session", 
-      "name": "Can add session", 
-      "content_type": 6
-    }
-  }, 
-  {
-    "pk": 17, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_session", 
-      "name": "Can change session", 
-      "content_type": 6
-    }
-  }, 
-  {
-    "pk": 18, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_session", 
-      "name": "Can delete session", 
-      "content_type": 6
-    }
-  }, 
-  {
-    "pk": 19, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "add_site", 
-      "name": "Can add site", 
-      "content_type": 7
-    }
-  }, 
-  {
-    "pk": 20, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "change_site", 
-      "name": "Can change site", 
-      "content_type": 7
-    }
-  }, 
-  {
-    "pk": 21, 
-    "model": "auth.permission", 
-    "fields": {
-      "codename": "delete_site", 
-      "name": "Can delete site", 
-      "content_type": 7
-    }
-  }, 
-  {
-    "pk": 1, 
-    "model": "auth.user", 
-    "fields": {
-      "username": "guhui", 
-      "first_name": "", 
-      "last_name": "", 
-      "is_active": true, 
-      "is_superuser": true, 
-      "is_staff": true, 
-      "last_login": "2009-10-22 11:10:46", 
-      "groups": [], 
-      "user_permissions": [], 
-      "password": "sha1$73e53$271f2b9b5d2576496ed23beb181042358cf5e580", 
-      "email": "sai.guhui@love.com", 
-      "date_joined": "2009-10-22 11:10:18"
-    }
-  }, 
-  {
-    "pk": 5, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "contenttype", 
-      "name": "content type", 
-      "app_label": "contenttypes"
-    }
-  }, 
-  {
-    "pk": 2, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "group", 
-      "name": "group", 
-      "app_label": "auth"
-    }
-  }, 
-  {
-    "pk": 10, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "link", 
-      "name": "link", 
-      "app_label": "maplayers"
-    }
-  }, 
-  {
-    "pk": 8, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "logentry", 
-      "name": "log entry", 
-      "app_label": "admin"
-    }
-  }, 
-  {
-    "pk": 4, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "message", 
-      "name": "message", 
-      "app_label": "auth"
-    }
-  }, 
-  {
-    "pk": 1, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "permission", 
-      "name": "permission", 
-      "app_label": "auth"
-    }
-  }, 
-  {
-    "pk": 9, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "project", 
-      "name": "project", 
-      "app_label": "maplayers"
-    }
-  }, 
-  {
-    "pk": 11, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "blog", 
-      "name": "project blog", 
-      "app_label": "maplayers"
-    }
-  }, 
-  {
-    "pk": 12, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "resource", 
-      "name": "resource", 
-      "app_label": "maplayers"
-    }
-  }, 
-  {
-    "pk": 13, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "sector", 
-      "name": "sector", 
-      "app_label": "maplayers"
-    }
-  }, 
-  {
-    "pk": 6, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "session", 
-      "name": "session", 
-      "app_label": "sessions"
-    }
-  }, 
-  {
-    "pk": 7, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "site", 
-      "name": "site", 
-      "app_label": "sites"
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "contenttypes.contenttype", 
-    "fields": {
-      "model": "user", 
-      "name": "user", 
-      "app_label": "auth"
-    }
-  }, 
-  {
-    "pk": "62a783b81bf4c28155591e261dfcc067", 
-    "model": "sessions.session", 
-    "fields": {
-      "expire_date": "2009-11-05 11:10:46", 
-      "session_data": "gAJ9cQEoVRJfYXV0aF91c2VyX2JhY2tlbmRxAlUpZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k\ncy5Nb2RlbEJhY2tlbmRxA1UNX2F1dGhfdXNlcl9pZHEESwF1LjhhMWY2ZWY1YjhhMzg1ZmVmYjdj\nNjU3NGU2M2RjNGNh\n"
-    }
-  }, 
-  {
-    "pk": 1, 
-    "model": "sites.site", 
-    "fields": {
-      "domain": "example.com", 
-      "name": "example.com"
-    }
-  }, 
-  {
-    "pk": 13, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 12:18:34", 
-      "object_repr": "World Vision Work", 
-      "object_id": "8", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 12, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 12:18:25", 
-      "object_repr": "2010 Planning Report", 
-      "object_id": "7", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 11, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 12:18:04", 
-      "object_repr": "Doctors without borders Improvements Report", 
-      "object_id": "6", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 10, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 12:17:44", 
-      "object_repr": "District Improvement Report", 
-      "object_id": "5", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 9, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 12:17:22", 
-      "object_repr": "2009 Field Report", 
-      "object_id": "4", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 8, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 12:17:11", 
-      "object_repr": "Red Cross Report", 
-      "object_id": "3", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 7, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 12:16:45", 
-      "object_repr": "District Improvement Report", 
-      "object_id": "2", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 6, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 12:16:26", 
-      "object_repr": "2009 Field Report", 
-      "object_id": "1", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 10
-    }
-  }, 
-  {
-    "pk": 5, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 2, 
-      "action_time": "2009-10-22 12:04:51", 
-      "object_repr": "World Vision Work", 
-      "object_id": "2", 
-      "change_message": "Changed feedurl.", 
-      "user": 1, 
-      "content_type": 11
-    }
-  }, 
-  {
-    "pk": 4, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 11:31:24", 
-      "object_repr": "Red Cross Blog", 
-      "object_id": "4", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 11
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 11:28:15", 
-      "object_repr": "Doctors without borders", 
-      "object_id": "3", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 11
-    }
-  }, 
-  {
-    "pk": 2, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 11:27:32", 
-      "object_repr": "World Vision Work", 
-      "object_id": "2", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 11
-    }
-  }, 
-  {
-    "pk": 1, 
-    "model": "admin.logentry", 
-    "fields": {
-      "action_flag": 1, 
-      "action_time": "2009-10-22 11:25:40", 
-      "object_repr": "Unicef Project Blog", 
-      "object_id": "1", 
-      "change_message": "", 
-      "user": 1, 
-      "content_type": 11
-    }
-  }, 
-  {
     "pk": 1, 
     "model": "maplayers.project", 
     "fields": {
-      "latitude": "0.315439", 
-      "location": "Kampala, Uganda", 
-      "name": "Unicef Project", 
+      "name": "School for all", 
       "longitude": "32.57304", 
-      "description": "Unicef Project in Kampala"
+      "location": "Kampala, Uganda", 
+      "latitude": "0.315439", 
+      "project_image": "http://www.unicef.org/immunization/images/ibc_vacc_SOWV1.jpg", 
+      "website_url": "http://www.unicef.org/", 
+      "description": "UNICEF is the driving force that helps build a world where the rights of every child are realized. We have the global authority to influence decision-makers, and the variety of partners at grassroots level to turn the most innovative ideas into reality.  That makes us unique among world organizations, and unique among those working with the young.\r\n\r\nWe believe that nurturing and caring for children are the cornerstones of human progress.  UNICEF was created with this purpose in mind \u2013 to work with others to overcome the obstacles that poverty, violence, disease and discrimination place in a child\u2019s path.  We believe that we can, together, advance the cause of humanity.\r\n\r\nWe advocate for measures to give children the best start in life, because proper care at the youngest age forms the strongest foundation for a person\u2019s future."
     }
   }, 
   {
     "pk": 2, 
     "model": "maplayers.project", 
     "fields": {
-      "latitude": "-1.274682", 
-      "location": "Nairobi, Kenya", 
-      "name": "World Vision project", 
-      "longitude": "36.812689", 
-      "description": "World Vision Project"
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "maplayers.project", 
-    "fields": {
-      "latitude": "16.663559", 
-      "location": "Yangon, Myanmar", 
-      "name": "RedCross Project", 
-      "longitude": "96.192627", 
-      "description": "Redcross Myanmar"
-    }
-  }, 
-  {
-    "pk": 4, 
-    "model": "maplayers.project", 
-    "fields": {
-      "latitude": "51.97676", 
-      "location": "Cariboo, Canada", 
-      "name": "Doctors Without Borders", 
+      "name": "DRC Medical Aid", 
       "longitude": "-122.724613", 
-      "description": "Doctors Without Borders"
+      "location": "Cariboo, Canada", 
+      "latitude": "51.97676", 
+      "project_image": "http://doctorswithoutborders.org/images/press/2009/DRC-50491.jpg", 
+      "website_url": "http://doctorswithoutborders.org/", 
+      "description": "Doctors Without Borders/M\u00e9decins Sans Fronti\u00e8res (MSF) is a private international association. The association is made up mainly of doctors and health sector workers and is also open to all other professions which might help in achieving its aims. All of its members agree to honor the following principles:\r\n\r\nM\u00e9decins Sans Fronti\u00e8res provides assistance to populations in distress, to victims of natural or man-made disasters and to victims of armed conflict. They do so irrespective of race, religion, creed or political convictions.\r\n\r\nM\u00e9decins Sans Fronti\u00e8res observes neutrality and impartiality in the name of universal medical ethics and the right to humanitarian assistance and claims full and unhindered freedom in the exercise of its functions.\r\n\r\nMembers undertake to respect their professional code of ethics and to maintain complete independence from all political, economic, or religious powers.\r\n\r\nAs volunteers, members understand the risks and dangers of the missions they carry out and make no claim for themselves or their assigns for any form of compensation other than that which the association might be able to afford them."
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": "Myanmar Hurricane Aid", 
+      "longitude": "96.192627", 
+      "location": "Yangon, Myanmar", 
+      "latitude": "16.663559", 
+      "project_image": "http://www.redcross.org/www-files/Images/other/CurrentCatalog.jpg", 
+      "website_url": "http://www.redcross.org/", 
+      "description": "Since its founding in 1881 by visionary leader Clara Barton, the American Red Cross has been the nation's premier emergency response organization. As part of a worldwide movement that offers neutral humanitarian care to the victims of war, the American Red Cross distinguishes itself by also aiding victims of devastating natural disasters. Over the years, the organization has expanded its services, always with the aim of preventing and relieving suffering.\r\n\r\nToday, in addition to domestic disaster relief, the American Red Cross offers compassionate services in five other areas: community services that help the needy; support and comfort for military members and their families; the collection, processing and distribution of lifesaving blood and blood products; educational programs that promote health and safety; and international relief and development programs.\r\n\r\nThe American Red Cross is where people mobilize to help their neighbors\u2014across the street, across the country, and across the world\u2014in emergencies. Each year, in communities large and small, victims of some 70,000 disasters turn to neighbors familiar and new\u2014the more than half a million volunteers and 35,000 employees of the Red Cross. Through over 700 locally supported chapters, more than 15 million people gain the skills they need to prepare for and respond to emergencies in their homes, communities and world."
     }
   }, 
   {
@@ -720,7 +44,7 @@
     "fields": {
       "url": "http://www.unicef.org/", 
       "project": 1, 
-      "title": "2009 Field Report"
+      "title": "Unicef Blog"
     }
   }, 
   {
@@ -729,16 +53,16 @@
     "fields": {
       "url": "http://www.unicef.org/", 
       "project": 1, 
-      "title": "District Improvement Report"
+      "title": "Unicef 2009 Report"
     }
   }, 
   {
     "pk": 3, 
     "model": "maplayers.link", 
     "fields": {
-      "url": "http://www.redcross.org/", 
-      "project": 3, 
-      "title": "Red Cross Report"
+      "url": "http://doctorswithoutborders.org/", 
+      "project": 2, 
+      "title": "DRC Situation Report"
     }
   }, 
   {
@@ -747,90 +71,14 @@
     "fields": {
       "url": "http://www.redcross.org/", 
       "project": 3, 
-      "title": "2009 Field Report"
-    }
-  }, 
-  {
-    "pk": 5, 
-    "model": "maplayers.link", 
-    "fields": {
-      "url": "http://www.doctorswithoutborders.org/", 
-      "project": 4, 
-      "title": "District Improvement Report"
-    }
-  }, 
-  {
-    "pk": 6, 
-    "model": "maplayers.link", 
-    "fields": {
-      "url": "http://www.doctorswithoutborders.org/", 
-      "project": 4, 
-      "title": "Doctors without borders Improvements Report"
-    }
-  }, 
-  {
-    "pk": 7, 
-    "model": "maplayers.link", 
-    "fields": {
-      "url": "http://www.worldvision.org/", 
-      "project": 2, 
-      "title": "2010 Planning Report"
-    }
-  }, 
-  {
-    "pk": 8, 
-    "model": "maplayers.link", 
-    "fields": {
-      "url": "http://www.worldvision.org/", 
-      "project": 2, 
-      "title": "World Vision Work"
-    }
-  }, 
-  {
-    "pk": 1, 
-    "model": "maplayers.blog", 
-    "fields": {
-      "feedurl": "http://www.unicef.org/rss/index.html", 
-      "project": 1, 
-      "homepageurl": "http://www.unicef.org/", 
-      "title": "Unicef Project Blog"
-    }
-  }, 
-  {
-    "pk": 2, 
-    "model": "maplayers.blog", 
-    "fields": {
-      "feedurl": "http://feeds.feedburner.com/WorldVisionLatestNews", 
-      "project": 2, 
-      "homepageurl": "http://www.worldvision.org/", 
-      "title": "World Vision Work"
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "maplayers.blog", 
-    "fields": {
-      "feedurl": "http://doctorswithoutborders.org/rss/", 
-      "project": 4, 
-      "homepageurl": "http://doctorswithoutborders.org/", 
-      "title": "Doctors without borders"
-    }
-  }, 
-  {
-    "pk": 4, 
-    "model": "maplayers.blog", 
-    "fields": {
-      "feedurl": "http://www.redcross.org/rss", 
-      "project": 3, 
-      "homepageurl": "http://www.redcross.org/", 
-      "title": "Red Cross Blog"
+      "title": "Myanmar Field Report - 2009"
     }
   }, 
   {
     "pk": 1, 
     "model": "maplayers.sector", 
     "fields": {
-      "name": "health", 
+      "name": "Health", 
       "projects": [
         1, 
         2, 
@@ -842,7 +90,37 @@
     "pk": 2, 
     "model": "maplayers.sector", 
     "fields": {
-      "name": "environment", 
+      "name": "Education", 
+      "projects": [
+        1
+      ]
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "maplayers.sector", 
+    "fields": {
+      "name": "Medical", 
+      "projects": [
+        2
+      ]
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "maplayers.sector", 
+    "fields": {
+      "name": "Disaster Aid", 
+      "projects": [
+        3
+      ]
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "maplayers.implementor", 
+    "fields": {
+      "name": "Red Cross Foundation", 
       "projects": [
         2, 
         3
@@ -851,49 +129,22 @@
   }, 
   {
     "pk": 3, 
-    "model": "maplayers.sector", 
+    "model": "maplayers.implementor", 
     "fields": {
-      "name": "economy", 
+      "name": "Doctors Without Borders", 
       "projects": [
-        2, 
-        4
+        3
       ]
     }
   }, 
   {
     "pk": 4, 
-    "model": "maplayers.sector", 
+    "model": "maplayers.implementor", 
     "fields": {
-      "name": "infrastructure", 
+      "name": "Unicef", 
       "projects": [
-        1, 
-        3, 
-        4
+        1
       ]
     }
-  },
-  {
-      "pk": 1,
-      "model": "maplayers.implementor",
-      "fields": {
-          "name": "UNICEF",
-          "projects": [1]
-      }
-  },
-  {
-      "pk": 2,
-      "model": "maplayers.implementor",
-      "fields": {
-          "name": "World Vision",
-          "projects": [2]
-      }
-  },
-  {
-      "pk": 3,
-      "model": "maplayers.implementor",
-      "fields": {
-          "name": "RedCross",
-          "projects": [3, 4]
-      }
   }
 ]

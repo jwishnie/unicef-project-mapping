@@ -59,15 +59,13 @@ def projects_in_map(request, left, bottom, right, top):
 def project(request, project_id):
     try:
         project = Project.objects.all()[int(project_id)]
-        project_blog = project.blog_set.all()[0]
     except IndexError:
         raise Http404
     return render_to_response('project.html', 
                               {'project': project, 
                                'links' : project.link_set.all(), 
-                               'blog': project_blog }) 
-                               
-                               
+                               }) 
+                              
 
 def filter_ids(request, filter_name):
     """
