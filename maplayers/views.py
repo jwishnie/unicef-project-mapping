@@ -7,11 +7,23 @@ from django.http import Http404
 from django.db import connection
 
 
+def gallery(request):
+    feed_url = 'http://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us'
+    return render_to_response('gallery.html',
+                              {'feed_url': feed_url,
+                               'feed_max_entries': 5}
+                              )
+
 def homepage(request):
     sectors = Sector.objects.all()
     implementors  = Implementor.objects.all()
     projects = Project.objects.all()
-    return render_to_response('homepage.html', {'projects' : projects, 'sectors' : sectors, 'implementors' : implementors}) 
+    return render_to_response(
+                              'homepage.html', 
+                              {'projects' : projects, 
+                               'sectors' : sectors, 
+                               'implementors' : implementors}
+                              ) 
     
 def projects(request):
     projects = Project.objects.all()

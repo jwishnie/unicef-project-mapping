@@ -8,13 +8,13 @@ import os.path
 #
 
 # Memcached
-# CACHE_BACKEND = 'memcached://127.0.0.1:11211/' 
+# CACHE_BACKEND = 'memcached://127.0.0.1:11211/?timeout=2592000' 
 
 # file system cache
-# CACHE_BACKEND = 'file:///var/tmp/django_cache' 
+# CACHE_BACKEND = 'file:///var/tmp/django_cache?timeout=2592000' 
 
 # for development, memory cache
-CACHE_BACKEND = 'locmem:///' 
+CACHE_BACKEND = 'locmem:///?timeout=2592000' 
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

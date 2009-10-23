@@ -34,3 +34,5 @@ def is_not_empty(obj):
     
     """
     return not is_empty(obj)
+    
+        
