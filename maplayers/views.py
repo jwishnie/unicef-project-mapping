@@ -47,7 +47,7 @@ def projects_in_map(request, left, bottom, right, top):
                                       ).distinct()
                                       
     return render_to_response(
-                              'projects_in_map.html',
+                              'projects_in_map.json',
                               {'projects': projects,
                                "left" : left, 
                                "right" : right, 

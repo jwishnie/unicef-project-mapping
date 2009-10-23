@@ -1,0 +1,5 @@
+[
+{% for project in projects %}
+	{'latitude' : {{project.latitude}}, 'longitude' : {{project.longitude}}, 'snippet': '{{project.snippet}}' },
+{% endfor %}
+]
