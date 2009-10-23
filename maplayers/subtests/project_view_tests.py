@@ -32,5 +32,11 @@ class ProjectPage(TestCase):
         
     def test_should_return_list_of_projects_in_selected_sectors(self):
         webclient = Client()
-        context = webclient.post('/projects/bbox/-180/-90/180/90/', {'2':'environment', '3':'economy'}).context
+        context = webclient.post('/projects/bbox/-180/-90/180/90/', {'sector_2':'true', 'sector_3':'true'}).context
         self.assertEquals(set(Project.objects.filter(id__in=[2, 3, 4])), set(context['projects']))
+    
+    def test_should_return_list_of_projects_by_selected_implementors(self):
+        webclient = Client()
+        context = webclient.post('/projects/bbox/-180/-90/180/90/', {'implementor_1':'true'}).context
+        self.assertEquals(1, len(context['projects']))
+        self.assertEquals(Project.objects.get(id=1), context['projects'][0])

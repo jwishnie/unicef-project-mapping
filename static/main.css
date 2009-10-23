@@ -4,7 +4,7 @@ html, body {
     margin: 0px;
     padding: 0px;
     color: black;
-    background-color: red;
+    background-color: white;
 }
 
 #wrapper{
@@ -13,7 +13,9 @@ html, body {
 }
 
 #header {
-    background-color: green;
+    background-color: #FEFDEE;
+    border-style: solid;
+    border-width: 2px;
 }
 
 #nav {
@@ -28,7 +30,7 @@ html, body {
 #main {
     float: right;
     padding: 10px;
-    background-color: gray;
+    background-color: #EFEFEF;
 }
 
 
@@ -44,7 +46,7 @@ html, body {
     height: 400px;
     width: 160px;
     padding: 10px;
-    background-color: orange;
+    background-color: #D3D3D3;
 }
 
 #footer {
@@ -70,9 +72,9 @@ li a {
 h3.drawer-handle {
     margin: 0;
     padding: 0px;
-    background-color: #3A36F2;
+    background-color: #85B2B7;
 }
 
 h3.drawer-handle.open {
-    background-color: #1DBB0D;
+    background-color: #828282;
 }

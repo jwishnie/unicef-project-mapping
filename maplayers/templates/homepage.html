@@ -18,13 +18,24 @@
 			        $('li.drawer ul:visible').slideUp().prev().removeClass('open');
 			        $(this).addClass('open').next().slideDown();
 			    });
-			});
-		
-			function initialize() {
+			
+				$('.sectorbox').click(mapEvent);
+				$('.implementorbox').click(mapEvent);
+			
+			
 				function mapEvent(event) {
 			        var boundingBox = map.getExtent();
-					var projects_url = "/projects/" + boundingBox.left + "/" + boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
-					$.get(projects_url, function(data){
+					var projects_url = "/projects/bbox/" + boundingBox.left + "/" + 
+										boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
+					var filters = {};
+					$(".sectors input[type=checkbox][checked]").each(function(){
+						filters[$(this).attr('name')] = true;
+					});
+					$(".implementors input[type=checkbox][checked]").each(function(){
+						filters[$(this).attr('name')] = true;
+					});
+					
+					$.post(projects_url, filters, function(data){
 						$("#projects").html(data);
 					})
 			    }
@@ -46,12 +57,13 @@
 				{% for project in projects %}
 					markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat({{project.longitude}}, {{project.latitude}}),icon.clone()));
 				{% endfor %}
-			}
+			
+			});
 
 		//]]>
 		</script>
 	</head>
-	<body onload="initialize()">
+	<body>
 		<div id="wrapper">
 			<div id="header">
 				<h1>
@@ -66,7 +78,7 @@
 						<ul class="sectors">
 							{% for sector in sectors %}
 							<li>
-								<input type="checkbox" name="{{sector.id}}" value="{{sector.name}}">
+								<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox">
 								<label>{{sector.name}}</label>
 							</li>
 							{% endfor %}
@@ -78,7 +90,7 @@
 						<ul class="implementors">
 							{% for implementor in implementors %}
 							<li>
-								<input type="checkbox" name="{{implementor.id}}" value="{{implementor.name}}">
+								<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox">
 								<label>{{implementor.name}}</label> <br/>
 							{% endfor %}
 							</li>
