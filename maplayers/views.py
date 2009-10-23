@@ -1,10 +1,9 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.shortcuts import render_to_response
-from maplayers.models import Project, Sector, Implementor
+from maplayers.models import Project, Sector, Implementor, SubProject
 import decimal
 from django.http import Http404
-from django.db import connection
 
 
 def gallery(request):
@@ -30,9 +29,9 @@ def projects(request):
     return render_to_response("projects.html", {'projects' : projects})
     
 def projects_in_map(request, left, bottom, right, top):
-    sector_ids =  filter_ids(request, "sector") or \
+    sector_ids =  _filter_ids(request, "sector") or \
                 [sector.id for sector in Sector.objects.all()]
-    implementor_ids =  filter_ids(request, "implementor") or \
+    implementor_ids =  _filter_ids(request, "implementor") or \
                 [implementor.id for implementor in Implementor.objects.all()]
         
     left, bottom, right, top = \
@@ -59,15 +58,19 @@ def projects_in_map(request, left, bottom, right, top):
 def project(request, project_id):
     try:
         project = Project.objects.all()[int(project_id)]
+        subprojects = SubProject.objects.filter(
+                                                project__id=int(project_id) + 1
+                                                ).distinct()
     except IndexError:
         raise Http404
     return render_to_response('project.html', 
                               {'project': project, 
                                'links' : project.link_set.all(), 
+                               'subprojects' : subprojects,
                                }) 
                               
 
-def filter_ids(request, filter_name):
+def _filter_ids(request, filter_name):
     """
     returns a list of selected filter_id from the request
     """

@@ -13,11 +13,24 @@
     function initialize() {
       if (GBrowserIsCompatible()) {
         var map = new GMap2(document.getElementById("map_canvas"));
-		var latlng = new GLatLng({{project.latitude}}, {{project.longitude}})
+        var latlng = new GLatLng({{project.latitude}}, {{project.longitude}})
         map.setCenter(latlng, 5);
-		map.addOverlay(new GMarker(latlng));
+        map.addOverlay(new GMarker(latlng));
+        addsubprojects(map);
         map.setUIToDefault();
       }
+    }
+
+    function addsubprojects(map) {
+      {% for subproject in subprojects %}
+        var icon = new GIcon();
+        icon.image = "http://labs.google.com/ridefinder/images/mm_20_blue.png";  
+        icon.size = new GSize(16,16);
+        icon.iconAnchor = new GPoint({{subproject.latitude}},{{subproject.longitude}})  
+        var latlng = new GLatLng({{subproject.latitude}}, {{subproject.longitude}})
+        map.addOverlay(new GMarker(latlng, icon)); 
+      {% endfor %}
+       
     }
 
     </script>

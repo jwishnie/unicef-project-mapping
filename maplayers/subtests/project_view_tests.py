@@ -16,9 +16,10 @@ class ProjectPage(TestCase):
         webclient = Client()
         response = webclient.get('/projects/id/1/')
         self.assertEquals(200, response.status_code)
+
     def test_should_return_404_if_project_doesnot_exist(self):
         webclient = Client()
-        response = webclient.get('/projects/1id/000/')
+        response = webclient.get('/projects/id/1000/')
         self.assertEquals(404, response.status_code)
         
     def test_should_return_list_of_projects_in_bounding_box(self):
@@ -37,6 +38,13 @@ class ProjectPage(TestCase):
    
     def test_should_return_list_of_projects_by_selected_implementors(self):
         webclient = Client()
-        context = webclient.post('/projects/bbox/-180/-90/180/90/', {'Doctors Without Borders':'true'}).context
+        context = webclient.post('/projects/bbox/-180/-90/180/90/', {'1':'true'}).context
         self.assertEquals(3, len(context['projects']))
-        self.assertEquals(Project.objects.get(id=1), context['projects'][0])
+        self.assertEquals(Project.objects.get(id=2), context['projects'][1])
+
+
+    def test_should_return_list_of_subprojects_for_selected_project(self):
+        webclient = Client()
+        context = webclient.get('/projects/id/0/').context
+        self.assertEquals(2, len(context['subprojects']))
+
