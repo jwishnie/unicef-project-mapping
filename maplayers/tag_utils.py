@@ -8,7 +8,7 @@ import urlparse
 import re
 import feedparser
 from django.core.cache import cache
-from maplayers import utils
+from maplayers.utils import is_empty
 
 
 IMAGE_TYPES = (
@@ -19,6 +19,50 @@ IMAGE_TYPES = (
                )
 
 FLICKR_FEED_FORMAT='format=atom'
+
+"""
+
+Turns out this is more compicated since it has to handle template variables.
+
+Not worth implementing at this time.
+
+def parse_tag_args(tag_token=None, var_list=None, var_name_default=None):    
+    if is_empty(tag_token) or \
+        is_empty(var_list):
+        raise ValueError
+    
+    # figure out var name
+    var_name = None
+    tokes = tag_token.split_contents()
+    if len(tokes)>=3:
+        if tokes[-2].lower() == 'as':
+            var_name = tokes[-1]
+            # remove 'as var_name' from list
+            tokes = tokes[:-2]
+        
+    if var_name is None:
+        var_name = var_name_default
+    
+    if var_name is None:
+        var_name = tokes[0]
+        
+    # parse args (skipping tagname)
+    args = []
+    for key,val in (arg.split('=',1) for arg in tokes[1:]):
+        try:
+            klass = var_list[key]
+            arg = klass(val)
+            first_last = "".join((arg[0],arg[-1]))
+            # strip quotes
+            if klass == str and \
+                (first_last == '""' or first_last == "''"):
+                arg = arg[1:-1]
+            args.append(arg)
+        except:
+            raise ValueError
+    
+    return args 
+"""
 
 def clean_feed_url(url):
     """
@@ -50,8 +94,8 @@ def clean_feed_url(url):
      
     return urlparse.urlunsplit((scheme, loc, path, query, frag))
     
-def parse_feed(url, max_entries=None):
-    if utils.is_empty(url):
+def parse_img_feed(url, max_entries=None):
+    if is_empty(url):
         return []
     
     # fix url for use by feedparser
@@ -113,5 +157,5 @@ def parse_feed(url, max_entries=None):
                   'url':
                         (f.link if f.has_key('link') else '')}
 
-    return { 'feed': feed_meta, 'media': media }
+    return { 'feed': feed_meta, 'images': media }
         

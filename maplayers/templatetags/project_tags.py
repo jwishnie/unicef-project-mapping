@@ -6,40 +6,66 @@ Template tags used to display project content
 """
 
 from django import template
-from django.core.cache import cache
-import feedparser
+from maplayers.tag_utils import parse_img_feed
 from maplayers.utils import is_empty
-from maplayers.feed_utils import parse_feed
 
 register = template.Library()  
-
-@register.inclusion_tag('feedgallery.html', takes_context=True)
-def feed_gallery(context):
+ 
+@register.tag(name='parse_img_rss_feed')
+def do_parse_img_rss_feed(parser, token):
+    """ 
+    Compiler for parse_img_rss_feed tag. Expects arguments in form
+    {% parse_img_rss_feed url='http://...' max=10 as variable_name %}
+        
     """
-    Parses an RSS feed, extracts images, and titles,
-    places in a ordered sequence of dictionaries:
-    { type: 'image/jpeg', # mime type
-      url: 'http://etc...',
-      caption: 'some caption'
-    }
     
-    this is then passed to the template to be rendered as a UL
+    return ParseImgRssFeedNode()
     
-    Context should include:
-    feed_url: url to the feed
-    feed_max_entries: maximum number of entries (defaults to all)
+class ParseImgRssFeedNode(template.Node):
+    """ Render node for parse_img_rss_feed """
+    def __init__(self):
+        pass
     
-    Uses memcache and smart feed retrieval for optimization
-    
-    """
-    print "gallery tag enter"
-    # validate arguments
-    if not context.has_key('feed_url') or \
-        is_empty(context['feed_url']):
-        return {}
-    
-    max_ = (int(context['feed_max_entries']) \
-        if context.has_key('feed_max_entries') else 0)
-    # fix url for use by feedparser
-    return parse_feed(context['feed_url'], max_)
+    def render(self, context):
+        """
+        Expects context to hold:
+        - rss_img_feed_url
+        - rss_img_feed_max_entries
+        
+        Adds a dictionary named 'rss_img_feed' to the context of form:
+        {
+            feed: {
+                    title: 'some title',
+                    url: 'http://feedurl...'
+                   }
+            images: [
+                        { type: 'image/jpeg', # mime type
+                          url: 'http://etc...',
+                          caption: 'some caption'
+                        },
+                        ...
+                    ]
+        }  
+        
+        """
+        
+        # pull vars
+        url = None
+        if context.has_key('rss_img_feed_url'):
+            url = context['rss_img_feed_url']
+            if is_empty(url):
+                url = None
+           
+        max_ = None
+        if context.has_key('rss_img_feed_max_entries'):
+            max_ = int(context['rss_img_feed_max_entries'])
+        
+       
+        # parse_feed does all the work
+        res = ( parse_img_feed(url, max_) if \
+                                  not url is None else \
+                                   { 'feed': {'title': '', 'url': ''}, 'images': []} )
+        
+        context['rss_img_feed'] = res
+        return ''
                                 

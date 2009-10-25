@@ -10,7 +10,17 @@
 		</title>
 		<link rel="stylesheet" type="text/css" href="static/main.css" />
 	</head>
+	{% parse_img_rss_feed %}
 	<body>
-		{% feed_gallery %}
+		<ul>
+        {% for img in rss_img_feed.images %}
+            <li>
+                <div>
+                    <a href={{img.entry_url}}><img src={{img.img_url}} /></a>
+                </div>
+                <div>{{img.title}}</div>
+            </li>   
+        {% endfor %}
+        </ul>
 	</body>
 </html>

@@ -6,9 +6,9 @@ Created on Oct 22, 2009
 @author: jwishnie
 '''
 import unittest
-from maplayers import feed_utils
+from maplayers import tag_utils
 
-FRMT = feed_utils.FLICKR_FEED_FORMAT
+FRMT = tag_utils.FLICKR_FEED_FORMAT
 
 class FeedUtilsTest(unittest.TestCase):
     urlList = [
@@ -34,11 +34,11 @@ class FeedUtilsTest(unittest.TestCase):
     
     def testCleanURL(self):
         for src, expected in self.urlList:
-            result = feed_utils.clean_feed_url(src)
+            result = tag_utils.clean_feed_url(src)
             if result != expected:
                 print "\nFAILURE\nsrc:\t  %s\nexpected: %s\nreceived: %s" % \
                     (src, expected, result)
                 self.assertFalse(True)
     
-if __name__=='__main__':
+if __name__ == '__main__':
     unittest.main() 

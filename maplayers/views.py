@@ -7,10 +7,10 @@ from django.http import Http404
 
 
 def gallery(request):
-    feed_url = 'http://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us'
+    feed_url = 'feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us'
     return render_to_response('gallery.html',
-                              {'feed_url': feed_url,
-                               'feed_max_entries': 5}
+                              {'rss_img_feed_url': feed_url,
+                               'rss_img_feed_max_entries': 5}
                               )
 
 def homepage(request):
