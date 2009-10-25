@@ -62,10 +62,9 @@ class ParseImgRssFeedNode(template.Node):
         
        
         # parse_feed does all the work
-        res = ( parse_img_feed(url, max_) if \
+        context['rss_img_feed'] = ( parse_img_feed(url, max_) if \
                                   not url is None else \
                                    { 'feed': {'title': '', 'url': ''}, 'images': []} )
-        
-        context['rss_img_feed'] = res
+
         return ''
                                 

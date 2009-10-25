@@ -4,12 +4,20 @@ from django.shortcuts import render_to_response
 from maplayers.models import Project, Sector, Implementor, SubProject
 import decimal
 from django.http import Http404
+from maplayers.utils import is_empty
 
 
-def gallery(request):
-    feed_url = 'feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us'
+def gallery(request, gallery_type):
+    if is_empty(gallery_type):
+        gallery_type = 'flickr'
+        
+    urls = { 'flickr': \
+            'feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us',
+            'picasa': \
+            'http://picasaweb.google.com/data/feed/base/user/flyvideo2/albumid/5228431042645681505?alt=rss&kind=photo&hl=en_US'
+            }
     return render_to_response('gallery.html',
-                              {'rss_img_feed_url': feed_url,
+                              {'rss_img_feed_url': urls[gallery_type],
                                'rss_img_feed_max_entries': 5}
                               )
 
