@@ -11,12 +11,19 @@ from django.core.cache import cache
 from maplayers.utils import is_empty
 
 
-IMAGE_TYPES = (
+IMAGE_TYPES = [
                'image/jpeg',
                'image/pjpeg',
                'image/gif',
-               'image/png'
-               )
+               'image/png',
+               ]
+
+VIDEO_TYPES = [
+               'application/x-shockwave-flash',
+               'video/3gpp',
+               ]
+
+YOUTUBE_EMBED_TYPE=VIDEO_TYPES[0]
 
 FLICKR_FEED_FORMAT='format=atom'
 
@@ -93,10 +100,10 @@ def clean_feed_url(url):
             query = "%s%s%s" % (query, prefix, FLICKR_FEED_FORMAT)
      
     return urlparse.urlunsplit((scheme, loc, path, query, frag))
-    
-def parse_img_feed(url, max_entries=None):
+
+def parse_feed(url):
     if is_empty(url):
-        return []
+        return None
     
     # fix url for use by feedparser
     clean_url = clean_feed_url(url)
@@ -121,7 +128,14 @@ def parse_img_feed(url, max_entries=None):
         # no cached one, go get it
         parsed_feed = feedparser.parse(clean_url)
         cache.set(clean_url, parsed_feed)
-        
+    return parsed_feed
+
+def parse_img_feed(url, max_entries=None):  
+    parsed_feed=parse_feed(url)
+    
+    if parsed_feed is None:
+        return []
+          
     # extract media info
     max_ = (int(max_entries) \
             if max_entries is not None else 0)
@@ -158,4 +172,44 @@ def parse_img_feed(url, max_entries=None):
                         (f.link if f.has_key('link') else '')}
 
     return { 'feed': feed_meta, 'images': media }
+
+def parse_youtube_feed(url, max_entries=None):  
+    parsed_feed=parse_feed(url)
+
+    if parsed_feed is None:
+        return []
+          
+    # extract media info
+    max_ = (int(max_entries) \
+            if max_entries is not None else 0)
+    if max_ < 0:
+        max_ = 0
+        
+    media = []
+    for e in parsed_feed.entries:
+        if max_ == 0:
+            break
+        
+        # check for media content
+        if e.has_key('media_content'):
+            flash = (m for m in e.media_content if \
+                     
+                     m['type']==YOUTUBE_EMBED_TYPE).next()
+            if flash.has_key('url'):
+                # add info
+                media.append({'video_url': flash['url'],
+                              'title': 
+                                  (e['title'] if e.has_key('title') else ''),
+                              'entry_url': 
+                                  (e['link'] if e.has_key('link') else '')})
+                max_ = max_ -1
+
+    # extract feed info
+    f = parsed_feed.feed
+    feed_meta = {'title':
+                        (f.title if f.has_key('title') else ''),
+                  'url':
+                        (f.link if f.has_key('link') else '')}
+ 
+    return { 'feed': feed_meta, 'videos': media }
         

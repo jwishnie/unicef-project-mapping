@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/283/trunk/www/docs/examples
+END
+rss20dc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/255/trunk/www/docs/examples/rss20dc.xml
+END
+hcard.xml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/279/trunk/www/docs/examples/hcard.xml
+END
+rss10.rdf
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/255/trunk/www/docs/examples/rss10.rdf
+END
+xfn.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/283/trunk/www/docs/examples/xfn.xml
+END
+rel-tag.xml
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/282/trunk/www/docs/examples/rel-tag.xml
+END
+digest_auth.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/255/trunk/www/docs/examples/digest_auth.xml
+END
+atom10.xml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/255/trunk/www/docs/examples/atom10.xml
+END
+basic_auth.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/255/trunk/www/docs/examples/basic_auth.xml
+END
+atom03.xml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/255/trunk/www/docs/examples/atom03.xml
+END
+nonstandard_prefix.rdf
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/255/trunk/www/docs/examples/nonstandard_prefix.rdf
+END
+prism.rdf
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/255/trunk/www/docs/examples/prism.rdf
+END
+no_base.xml
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/255/trunk/www/docs/examples/no_base.xml
+END
+http_base.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/255/trunk/www/docs/examples/http_base.xml
+END
+rss20.xml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/255/trunk/www/docs/examples/rss20.xml
+END
+base.xml
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/255/trunk/www/docs/examples/base.xml
+END
+.htpasswd_digest
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/255/trunk/www/docs/examples/.htpasswd_digest
+END
+.htaccess
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/255/trunk/www/docs/examples/.htaccess
+END
+.htpasswd_basic
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/255/trunk/www/docs/examples/.htpasswd_basic
+END
+rel-enclosure.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/282/trunk/www/docs/examples/rel-enclosure.xml
+END

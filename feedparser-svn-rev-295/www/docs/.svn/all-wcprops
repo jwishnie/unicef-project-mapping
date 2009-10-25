@@ -1,0 +1,737 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/287/trunk/www/docs
+END
+reference-entry-enclosures.html
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/280/trunk/www/docs/reference-entry-enclosures.html
+END
+date-parsing.html
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/287/trunk/www/docs/date-parsing.html
+END
+annotated-atom03.html
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/287/trunk/www/docs/annotated-atom03.html
+END
+http-redirect.html
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/278/trunk/www/docs/http-redirect.html
+END
+namespace-handling.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/287/trunk/www/docs/namespace-handling.html
+END
+reference-feed-image.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-image.html
+END
+reference-feed-license.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-license.html
+END
+reference-status.html
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/287/trunk/www/docs/reference-status.html
+END
+reference-entry-comments.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-comments.html
+END
+basic.html
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/278/trunk/www/docs/basic.html
+END
+command-line-basic.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/279/trunk/www/docs/command-line-basic.html
+END
+reference-bozo_exception.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/287/trunk/www/docs/reference-bozo_exception.html
+END
+reference-feed-generator.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-generator.html
+END
+reference-entry-publisher.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-publisher.html
+END
+annotated-examples.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/279/trunk/www/docs/annotated-examples.html
+END
+uncommon-atom.html
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/287/trunk/www/docs/uncommon-atom.html
+END
+changes-31.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/284/trunk/www/docs/changes-31.html
+END
+reference-entry-vcard.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/283/trunk/www/docs/reference-entry-vcard.html
+END
+reference-entry-source.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-source.html
+END
+changes-27.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/287/trunk/www/docs/changes-27.html
+END
+common-atom-elements.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/287/trunk/www/docs/common-atom-elements.html
+END
+reference-entry-created_parsed.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-created_parsed.html
+END
+uncommon-rss.html
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/287/trunk/www/docs/uncommon-rss.html
+END
+command-line.html
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/279/trunk/www/docs/command-line.html
+END
+reference-entry-content.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/283/trunk/www/docs/reference-entry-content.html
+END
+basic-existence.html
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/278/trunk/www/docs/basic-existence.html
+END
+command-line-arguments.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/279/trunk/www/docs/command-line-arguments.html
+END
+reference-entry-publisher_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-publisher_detail.html
+END
+command-line-output-formats.html
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/279/trunk/www/docs/command-line-output-formats.html
+END
+reference-namespaces.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/287/trunk/www/docs/reference-namespaces.html
+END
+reference-modified.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/287/trunk/www/docs/reference-modified.html
+END
+reference-entry-title.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-title.html
+END
+reference-feed-publisher_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-publisher_detail.html
+END
+reference-feed-links.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-links.html
+END
+reference-entry-author_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-author_detail.html
+END
+introduction.html
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/287/trunk/www/docs/introduction.html
+END
+reference-version.html
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/287/trunk/www/docs/reference-version.html
+END
+reference-entry-updated.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-updated.html
+END
+changes-early.html
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/287/trunk/www/docs/changes-early.html
+END
+license.html
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/278/trunk/www/docs/license.html
+END
+annotated-rss20.html
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/287/trunk/www/docs/annotated-rss20.html
+END
+reference-entry-xfn.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/283/trunk/www/docs/reference-entry-xfn.html
+END
+reference-entry-summary.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/287/trunk/www/docs/reference-entry-summary.html
+END
+reference-entry-tags.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/287/trunk/www/docs/reference-entry-tags.html
+END
+changes-40.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/284/trunk/www/docs/changes-40.html
+END
+changes-32.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/284/trunk/www/docs/changes-32.html
+END
+reference-feed-tags.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/287/trunk/www/docs/reference-feed-tags.html
+END
+http-authentication.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/278/trunk/www/docs/http-authentication.html
+END
+reference-entry-author.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-author.html
+END
+reference-entry-title_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-title_detail.html
+END
+http-other.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/279/trunk/www/docs/http-other.html
+END
+reference-feed.html
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/287/trunk/www/docs/reference-feed.html
+END
+reference-feed-author.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-author.html
+END
+reference-feed-title_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-title_detail.html
+END
+atom-detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/278/trunk/www/docs/atom-detail.html
+END
+reference-feed-ttl.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/284/trunk/www/docs/reference-feed-ttl.html
+END
+reference-feed-generator_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-generator_detail.html
+END
+reference-bozo.html
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/287/trunk/www/docs/reference-bozo.html
+END
+advanced.html
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/282/trunk/www/docs/advanced.html
+END
+reference-feed-errorreportsto.html
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-errorreportsto.html
+END
+annotated-rss20-dc.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/287/trunk/www/docs/annotated-rss20-dc.html
+END
+bozo.html
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/279/trunk/www/docs/bozo.html
+END
+changes-401.html
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/284/trunk/www/docs/changes-401.html
+END
+reference-entry-published.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-published.html
+END
+reference-entry-summary_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/283/trunk/www/docs/reference-entry-summary_detail.html
+END
+reference-etag.html
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/287/trunk/www/docs/reference-etag.html
+END
+reference-entry-license.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/283/trunk/www/docs/reference-entry-license.html
+END
+reference-feed-rights_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-rights_detail.html
+END
+http.html
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/278/trunk/www/docs/http.html
+END
+reference-feed-language.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-language.html
+END
+reference-feed-icon.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-icon.html
+END
+reference-entry-id.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-id.html
+END
+reference-entry-contributors.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-contributors.html
+END
+reference-feed-info.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-info.html
+END
+reference-feed-id.html
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-id.html
+END
+changes-41.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/284/trunk/www/docs/changes-41.html
+END
+reference-feed-publisher.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-publisher.html
+END
+reference-feed-contributors.html
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-contributors.html
+END
+changes-33.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/284/trunk/www/docs/changes-33.html
+END
+reference-feed-rights.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/287/trunk/www/docs/reference-feed-rights.html
+END
+http-etag.html
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/287/trunk/www/docs/http-etag.html
+END
+reference.html
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/287/trunk/www/docs/reference.html
+END
+version-detection.html
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/278/trunk/www/docs/version-detection.html
+END
+common-rss-elements.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/287/trunk/www/docs/common-rss-elements.html
+END
+reference-entry-published_parsed.html
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-published_parsed.html
+END
+changes-301.html
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/284/trunk/www/docs/changes-301.html
+END
+reference-entry-links.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-links.html
+END
+changes-402.html
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/284/trunk/www/docs/changes-402.html
+END
+annotated-atom10.html
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/287/trunk/www/docs/annotated-atom10.html
+END
+html-sanitization.html
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/287/trunk/www/docs/html-sanitization.html
+END
+reference-feed-title.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-title.html
+END
+reference-entry-updated_parsed.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-updated_parsed.html
+END
+character-encoding.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/287/trunk/www/docs/character-encoding.html
+END
+reference-href.html
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/287/trunk/www/docs/reference-href.html
+END
+reference-feed-author_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-author_detail.html
+END
+reference-feed-updated_parsed.html
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-updated_parsed.html
+END
+reference-encoding.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/287/trunk/www/docs/reference-encoding.html
+END
+annotated-rss10.html
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/287/trunk/www/docs/annotated-rss10.html
+END
+reference-feed-updated.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-updated.html
+END
+reference-feed-docs.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-docs.html
+END
+reference-entry-link.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-link.html
+END
+reference-feed-info-detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-info-detail.html
+END
+reference-feed-subtitle.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-subtitle.html
+END
+changes-30.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/287/trunk/www/docs/changes-30.html
+END
+reference-entry-expired_parsed.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-expired_parsed.html
+END
+reference-feed-link.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-link.html
+END
+reference-entry-expired.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-expired.html
+END
+changes-42.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/287/trunk/www/docs/changes-42.html
+END
+reference-entry.html
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/287/trunk/www/docs/reference-entry.html
+END
+reference-feed-logo.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-logo.html
+END
+changes-26.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/287/trunk/www/docs/changes-26.html
+END
+content-normalization.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/287/trunk/www/docs/content-normalization.html
+END
+resolving-relative-links.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/287/trunk/www/docs/resolving-relative-links.html
+END
+history.html
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/287/trunk/www/docs/history.html
+END
+reference-feed-textinput.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/287/trunk/www/docs/reference-feed-textinput.html
+END
+reference-entry-created.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/278/trunk/www/docs/reference-entry-created.html
+END
+reference-feed-cloud.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-cloud.html
+END
+microformats.html
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/287/trunk/www/docs/microformats.html
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/287/trunk/www/docs/index.html
+END
+reference-headers.html
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/287/trunk/www/docs/reference-headers.html
+END
+http-useragent.html
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/278/trunk/www/docs/http-useragent.html
+END
+reference-feed-subtitle_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/278/trunk/www/docs/reference-feed-subtitle_detail.html
+END
