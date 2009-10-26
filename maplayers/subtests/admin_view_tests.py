@@ -1,11 +1,13 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.test import TestCase
+from django.test.client import Client
+
 from maplayers.admin_view import __add_existing_sectors__, __create_and_add_new_sectors__
 from maplayers.admin_view import __add_existing_implementors__, __create_and_add_new_implementors__
 from maplayers.models import Project, Sector, Implementor
 
-class AdminViews(TestCase):
+class AdminViewsUnitTest(TestCase):
     
     def setUp(self):
         self.p = Project(name="test", description="test description", latitude=0, longitude=0)
@@ -45,6 +47,21 @@ class AdminViews(TestCase):
     
         expected_implementors = Implementor.objects.filter(name__in=["WHO"])
         self.assertEquals(set(expected_implementors), set(self.p.implementor_set.all()))
+        
+
+class AdminViewsFunctionalTest(TestCase):
+    def test_adding_a_new_project(self):
+        web_client = Client()
+        context = web_client.post("/add_project/", 
+                                 {"name" : "test", "description" : "test description", 
+                                  "latitude" : "-70", "longitude" : "-10", 
+                                  "location" : "test location", "website_url" : "www.test.com",
+                                  "project_image" : "www.image.com",
+                                  "project_sectors" : "Health, TestSector",
+                                  "project_implementors" : "TestImplementor, Red Cross Foundation"})
+        self.assertTrue(Project.objects.filter(name="test"))
+        self.assertTrue(Sector.objects.filter(name="TestSector"))
+        self.assertTrue(Implementor.objects.filter(name="TestImplementor"))
  
  
         
