@@ -122,12 +122,16 @@ def parse_feed(url):
                 
         # did we get any changes?  
         if updated_feed is not None and updated_feed.status == 200:
-            parsed_feed = updated_feed
+            parsed_feed = updated_feed            
             cache.set(clean_url, parsed_feed)
     else:
         # no cached one, go get it
         parsed_feed = feedparser.parse(clean_url)
-        cache.set(clean_url, parsed_feed)
+        if len(parsed_feed.feed) > 0:
+            cache.set(clean_url, parsed_feed)
+        elif cache.has_key(clean_url):
+            del cache[clean_url]
+            
     return parsed_feed
 
 def parse_img_feed(url, max_entries=None):  
@@ -138,10 +142,8 @@ def parse_img_feed(url, max_entries=None):
           
     # extract media info
     max_ = (int(max_entries) \
-            if max_entries is not None else 0)
-    if max_ < 0:
-        max_ = 0
-        
+            if max_entries is not None else -1)
+
     media = []
     for e in parsed_feed.entries:
         if max_ == 0:
@@ -162,8 +164,8 @@ def parse_img_feed(url, max_entries=None):
                                   (e.title if e.has_key('title') else ''),
                               'entry_url': 
                                   (e.link if e.has_key('link') else '')})
-                max_ = max_ -1
-                
+                max_ = max_ - 1
+         
     # extract feed info
     f = parsed_feed.feed
     feed_meta = {'title':
@@ -181,10 +183,8 @@ def parse_youtube_feed(url, max_entries=None):
           
     # extract media info
     max_ = (int(max_entries) \
-            if max_entries is not None else 0)
-    if max_ < 0:
-        max_ = 0
-        
+            if max_entries is not None else -1)
+
     media = []
     for e in parsed_feed.entries:
         if max_ == 0:

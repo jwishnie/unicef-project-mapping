@@ -1,26 +1,26 @@
-{% load project_tags %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>
-			gallery
-		</title>
+		<title>gallery</title>
 		<link rel="stylesheet" type="text/css" href="static/main.css" />
 	</head>
-	{% parse_img_rss_feed %}
 	<body>
-		<ul>
-        {% for img in rss_img_feed.images %}
-            <li>
-                <div>
+            <div id="image_set">
+            {% load project_tags %}
+            {% parse_img_rss_feed %}
+            <ul>
+              {% for img in rss_img_feed.images %}
+                <li>
+                  <div>
                     <a href={{img.entry_url}}><img src={{img.img_url}} /></a>
-                </div>
-                <div>{{img.title}}</div>
-            </li>   
-        {% endfor %}
-        </ul>
+                  </div>
+                    <div>{{img.title}}</div>
+                </li>   
+              {% endfor %}
+              </ul>
+          </div>
 	</body>
 </html>

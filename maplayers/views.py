@@ -74,6 +74,7 @@ def project(request, project_id):
                               {'project': project, 
                                'links' : project.link_set.all(), 
                                'subprojects' : subprojects,
+                               'rss_img_feed_url': project.imageset_feedurl,
                                }) 
                                
                                

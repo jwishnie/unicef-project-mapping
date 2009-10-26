@@ -24,7 +24,7 @@ class ParseImgRssFeedNode(template.Node):
         """
         Expects context to hold:
         - rss_img_feed_url
-        - rss_img_feed_max_entries
+        - rss_img_feed_max_entries (optional)
         
         Adds a dictionary named 'rss_img_feed' to the context of form:
         {
@@ -54,7 +54,6 @@ class ParseImgRssFeedNode(template.Node):
         if context.has_key('rss_img_feed_max_entries'):
             max_ = int(context['rss_img_feed_max_entries'])
         
-       
         # parse_feed does all the work
         context['rss_img_feed'] = ( parse_img_feed(url, max_) if \
                                   not url is None else \
@@ -80,7 +79,7 @@ class ParseYouTubeRssFeedNode(template.Node):
         """
         Expects context to hold:
         - rss_youtube_feed_url
-        - rss_youtube_feed_max_entries
+        - rss_youtube_feed_max_entries (optional)
         
         Adds a dictionary named 'rss_youtube_feed' to the context of form:
         {
