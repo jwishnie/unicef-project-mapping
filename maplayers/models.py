@@ -12,12 +12,6 @@ class Project(models.Model):
     website_url = models.URLField()
     project_image = models.URLField()
     
-    def sector_names(self):
-        return " ".join([sector.name for sector in self.sector_set.all()])
-
-    def implementors(self):
-        return ", ".join([implementor.name for implementor in self.implementor_set.all()])
-
     def __unicode__(self): 
         return self.name
         
