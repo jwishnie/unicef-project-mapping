@@ -13,4 +13,4 @@ admin.site.register(models.Link)
 admin.site.register(models.Resource)
 admin.site.register(models.Sector)
 admin.site.register(models.Implementor)
-
+admin.site.register(models.SubProject)

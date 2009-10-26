@@ -1,0 +1,88 @@
+9
+
+dir
+295
+http://feedparser.googlecode.com/svn/trunk/feedparser/tests/wellformed
+http://feedparser.googlecode.com/svn
+
+
+
+2009-03-10T01:11:18.810374Z
+295
+andychu@google.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+73d2b349-402e-0410-baf4-070fd12ab5b7
+
+http
+dir
+
+lang
+dir
+
+feedburner
+dir
+
+mf_rel_enclosure
+dir
+
+encoding
+dir
+
+sanitize
+dir
+
+cdf
+dir
+
+namespace
+dir
+
+mf_rel_tag
+dir
+
+atom
+dir
+
+atom10
+dir
+
+mf_hcard
+dir
+
+rss
+dir
+
+itunes
+dir
+
+htmlish
+dir
+
+base
+dir
+
+rdf
+dir
+
+amp
+dir
+
+date
+dir
+
+mf_xfn
+dir
+

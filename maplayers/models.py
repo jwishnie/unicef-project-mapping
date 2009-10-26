@@ -27,6 +27,19 @@ class Project(models.Model):
     class Admin:
         pass
     
+class SubProject(models.Model):
+    name = models.CharField(max_length=50)
+    location = models.CharField(max_length=50)
+    latitude = models.DecimalField(max_digits=10, decimal_places=6)
+    longitude = models.DecimalField(max_digits=10, decimal_places=6)
+    project = models.ForeignKey(Project)
+
+    def __unicode__(self): 
+        return self.name
+
+    class Admin:
+        pass
+ 
 class Link(models.Model):
     title = models.CharField(max_length=50)
     url = models.URLField()

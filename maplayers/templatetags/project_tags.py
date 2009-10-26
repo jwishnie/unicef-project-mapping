@@ -6,101 +6,114 @@ Template tags used to display project content
 """
 
 from django import template
-from django.core.cache import cache
-import feedparser
+from maplayers.tag_utils import parse_img_feed, parse_youtube_feed
 from maplayers.utils import is_empty
-from maplayers.feed_utils import clean_feed_url, IMAGE_TYPES
 
 register = template.Library()  
-
-@register.inclusion_tag('feedgallery.html', takes_context=True)
-def feed_gallery(context):
-    """
-    Parses an RSS feed, extracts images, and titles,
-    places in a ordered sequence of dictionaries:
-    { type: 'image/jpeg', # mime type
-      url: 'http://etc...',
-      caption: 'some caption'
-    }
+ 
+@register.tag(name='parse_img_rss_feed')
+def do_parse_img_rss_feed(parser, token):
+    return ParseImgRssFeedNode()
     
-    this is then passed to the template to be rendered as a UL
+class ParseImgRssFeedNode(template.Node):
+    """ Render node for parse_img_rss_feed """
+    def __init__(self):
+        pass
     
-    Context should include:
-    feed_url: url to the feed
-    feed_max_entries: maximum number of entries (defaults to all)
-    
-    Uses memcache and smart feed retrieval for optimization
-    
-    """
-
-    # validate arguments
-    if not context.has_key('feed_url') or \
-        is_empty(context['feed_url']):
-        return {}
-    
-    # fix url for use by feedparser
-    clean_url = clean_feed_url(context['feed_url'])
-                                
-    # Try to retrieve from cache using cleaned url
-    parsed_feed = cache.get(clean_url)
-    
-    # if we got one, make a etags or modified request to see if any updates
-    if parsed_feed is not None:
-        print "Cache Hit"
-        updated_feed = None
-        if parsed_feed.has_key('etag'):
-            updated_feed = feedparser.parse(clean_url, etag=parsed_feed.etag)
-        elif parsed_feed.has_key('modified'):
-            updated_feed = \
-                feedparser.parse(clean_url, modified=parsed_feed.modified)
-                
-        # did we get any changes?  
-        if updated_feed is not None and updated_feed.status == 200:
-            print 'cache feed updated'
-            parsed_feed = updated_feed
-            cache.set(clean_url, parsed_feed)
-        print 'cache still valid'
-    else:
-        print 'cache miss'
-        # no cached one, go get it
-        parsed_feed = feedparser.parse(clean_url)
-        cache.set(clean_url, parsed_feed)
+    def render(self, context):
+        """
+        Expects context to hold:
+        - rss_img_feed_url
+        - rss_img_feed_max_entries
         
-    # extract media info
-    max_ = (int(context['feed_max_entries']) \
-            if context.has_key('feed_max_entries') else -1)
-    media = []
-    for e in parsed_feed.entries:
-        if max_ == 0:
-            break
+        Adds a dictionary named 'rss_img_feed' to the context of form:
+        {
+            feed: {
+                    title: 'some title',
+                    url: 'http://feedurl...'
+                   }
+            images: [
+                        { type: 'image/jpeg', # mime type
+                          url: 'http://etc...',
+                          caption: 'some caption'
+                        },
+                        ...
+                    ]
+        }  
         
-        # check for all required info
-        if e.has_key('enclosures') and \
-            len(e.enclosures)>0:
-            img = e.enclosures[0]
-            
-            if img.has_key('type') and \
-                img.type in IMAGE_TYPES and \
-                img.has_key('href'):
-            
-                # add info
-                media.append({'img_url': img.href,
-                              'title': 
-                                  (e.title if e.has_key('title') else ''),
-                              'entry_url': 
-                                  (e.link if e.has_key('link') else '')})
-                max_ = max_ -1
-                
-    # extract feed info
-    f = parsed_feed.feed
-    feed_meta = {'title':
-                        (f.title if f.has_key('title') else ''),
-                  'url':
-                        (f.link if f.has_key('link') else '')}
+        """
+        
+        # pull vars
+        url = None
+        if context.has_key('rss_img_feed_url'):
+            url = context['rss_img_feed_url']
+            if is_empty(url):
+                url = None
+           
+        max_ = None
+        if context.has_key('rss_img_feed_max_entries'):
+            max_ = int(context['rss_img_feed_max_entries'])
+        
+       
+        # parse_feed does all the work
+        context['rss_img_feed'] = ( parse_img_feed(url, max_) if \
+                                  not url is None else \
+                                   { 'feed': {'title': '', 'url': ''}, 'images': []} )
 
-    return { 'feed': feed_meta, 'media': media }
+        return ''
+  
+"""
+YouTube feed
+  
+"""
+  
+@register.tag(name='parse_youtube_rss_feed')
+def do_parse_youtube_rss_feed(parser, token):
+    return ParseYouTubeRssFeedNode()
     
-                         
+class ParseYouTubeRssFeedNode(template.Node):
+    """ Render node for parse_img_rss_feed """
+    def __init__(self):
+        pass
+    
+    def render(self, context):
+        """
+        Expects context to hold:
+        - rss_youtube_feed_url
+        - rss_youtube_feed_max_entries
         
-            
-    
+        Adds a dictionary named 'rss_youtube_feed' to the context of form:
+        {
+            feed: {
+                    title: 'some title',
+                    url: 'http://feedurl...'
+                   }
+            videos: [
+                        { type: 'image/jpeg', # mime type
+                          url: 'http://etc...',
+                          caption: 'some caption'
+                        },
+                        ...
+                    ]
+        }  
+        
+        """
+        
+        # pull vars
+        url = None
+        if context.has_key('rss_youtube_feed_url'):
+            url = context['rss_youtube_feed_url']
+            if is_empty(url):
+                url = None
+           
+        max_ = None
+        if context.has_key('rss_youtube_feed_max_entries'):
+            max_ = int(context['rss_youtube_feed_max_entries'])
+        
+       
+        # parse_feed does all the work
+        context['rss_youtube_feed'] = ( parse_youtube_feed(url, max_) if \
+                                  not url is None else \
+                                   { 'feed': {'title': '', 'url': ''}, 'videos': []} )
+
+        return ''                              

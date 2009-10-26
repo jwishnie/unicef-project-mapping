@@ -1,17 +1,33 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.shortcuts import render_to_response
-from maplayers.models import Project, Sector, Implementor
+from maplayers.models import Project, Sector, Implementor, SubProject
 import decimal
 from django.http import Http404
-from django.db import connection
+from maplayers.utils import is_empty
 
 
-def gallery(request):
-    feed_url = 'http://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us'
-    return render_to_response('gallery.html',
-                              {'feed_url': feed_url,
-                               'feed_max_entries': 5}
+def gallery(request, gallery_type):
+    if is_empty(gallery_type):
+        gallery_type = 'flickr'
+        
+    urls = { 'flickr': \
+            'feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us',
+            'picasa': \
+            'http://picasaweb.google.com/data/feed/base/user/flyvideo2/albumid/5228431042645681505?alt=rss&kind=photo&hl=en_US',
+            'youtube': \
+            'feed://gdata.youtube.com/feeds/api/users/unicef/uploads',
+            }
+    
+    if gallery_type=='youtube':
+        return render_to_response('youtube_gallery.html',
+                              {'rss_youtube_feed_url': urls[gallery_type],
+                               'rss_youtube_feed_max_entries': 5}
+                              )
+    else:
+        return render_to_response('gallery.html',
+                              {'rss_img_feed_url': urls[gallery_type],
+                               'rss_img_feed_max_entries': 5}
                               )
 
 def homepage(request):
@@ -50,11 +66,15 @@ def projects_in_map(request, left, bottom, right, top):
 def project(request, project_id):
     try:
         project = Project.objects.all()[int(project_id)]
+        subprojects = SubProject.objects.filter(
+                                                project__id=int(project_id) + 1
+                                                ).distinct()
     except IndexError:
         raise Http404
     return render_to_response('project.html', 
                               {'project': project, 
                                'links' : project.link_set.all(), 
+                               'subprojects' : subprojects,
                                }) 
                               
 
