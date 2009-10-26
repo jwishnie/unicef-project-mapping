@@ -16,7 +16,7 @@ CACHE_BACKEND = 'memcached://127.0.0.1:11211/?timeout=2592000'
 # for development, memory cache
 # CACHE_BACKEND = 'locmem:///?timeout=2592000' 
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
