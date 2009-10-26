@@ -84,7 +84,6 @@
 
 				var map = new OpenLayers.Map( 'map_canvas' , 
 							  {eventListeners: {"moveend": mapEvent}});
-							
 				var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS",
 				"http://labs.metacarta.com/wms/vmap0", {layers: 'basic'} );
 				map.addLayer(layer);

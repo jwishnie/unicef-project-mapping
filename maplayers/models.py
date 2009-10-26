@@ -13,12 +13,6 @@ class AbstractProject(models.Model):
     project_image = models.URLField()
     imageset_feedurl = models.CharField(max_length=1000)
     
-    def sector_names(self):
-        return " ".join([sector.name for sector in self.sector_set.all()])
-
-    def implementors(self):
-        return ", ".join([implementor.name for implementor in self.implementor_set.all()])
-
     def __unicode__(self): 
         return self.name
         

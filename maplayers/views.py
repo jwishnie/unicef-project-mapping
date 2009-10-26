@@ -6,7 +6,6 @@ import decimal
 from django.http import Http404
 from maplayers.utils import is_empty
 
-
 def gallery(request, gallery_type):
     if is_empty(gallery_type):
         gallery_type = 'flickr'
@@ -77,7 +76,10 @@ def project(request, project_id):
                                'subprojects' : subprojects,
                                'rss_img_feed_url': project.imageset_feedurl,
                                }) 
-                              
+                               
+                               
+                    
+                            
 
 def __filter_ids__(request, filter_name):
     """

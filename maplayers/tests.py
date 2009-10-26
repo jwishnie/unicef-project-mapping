@@ -16,3 +16,4 @@ from maplayers.subtests.utils_tests import *
 from maplayers.subtests.tag_utils_tests import *
 from maplayers.subtests.homepage_view_tests import *
 from maplayers.subtests.project_view_tests import * 
+from maplayers.subtests.admin_view_tests import *
