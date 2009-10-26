@@ -22,7 +22,7 @@ class Project(models.Model):
         return self.name
         
     def snippet(self):
-        return self.name + " : " + self.description
+        return self.name + " : " + self.description[:50]
          
     class Admin:
         pass

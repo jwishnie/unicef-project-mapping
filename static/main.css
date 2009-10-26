@@ -27,6 +27,10 @@ html, body {
     height: 400px;
 }
 
+#bookmark{
+    width: 800px;
+}
+
 #main {
     float: right;
     padding: 10px;
