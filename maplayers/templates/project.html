@@ -1,5 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+{% load project_tags %}
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -80,5 +82,9 @@
                                 <p/>
 	
 				<div id="map_canvas" style="width: 500px; height:300px"></div>
+                                <div id="photo_set">
+                                    {% parse_img_rss_feed %}
+                                    {% include 'photo_gallery.html' %}
+                                </div>
   </body>
 </html>

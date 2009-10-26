@@ -11,6 +11,7 @@ class Project(models.Model):
     location = models.CharField(max_length=50)
     website_url = models.URLField()
     project_image = models.URLField()
+    imageset_feedurl = models.CharField(max_length=1000)
     
     def sector_names(self):
         return " ".join([sector.name for sector in self.sector_set.all()])
