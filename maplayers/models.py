@@ -2,7 +2,7 @@
 
 from django.db import models 
 
-class Project(models.Model): 
+class AbstractProject(models.Model):
     name = models.CharField(max_length=30) 
     description = models.TextField()
 
@@ -24,22 +24,16 @@ class Project(models.Model):
         
     def snippet(self):
         return self.name + " : " + self.description[:50]
-         
-    class Admin:
-        pass
-    
-class SubProject(models.Model):
-    name = models.CharField(max_length=50)
-    location = models.CharField(max_length=50)
-    latitude = models.DecimalField(max_digits=10, decimal_places=6)
-    longitude = models.DecimalField(max_digits=10, decimal_places=6)
+        
+    class Meta:
+        abstract = True
+
+class Project(AbstractProject): 
+    pass    
+
+class SubProject(AbstractProject):
     project = models.ForeignKey(Project)
 
-    def __unicode__(self): 
-        return self.name
-
-    class Admin:
-        pass
  
 class Link(models.Model):
     title = models.CharField(max_length=50)

@@ -45,55 +45,75 @@
     "pk": 1, 
     "model": "maplayers.subproject", 
     "fields": {
-      "latitude": "16.726698", 
-      "project": 3, 
       "name": "Bassein Hurricane Relief Camp", 
       "longitude": "94.808349", 
-      "location": "Bassien, Myanmar"
+      "project": 3, 
+      "imageset_feedurl": "", 
+      "location": "Bassien, Myanmar", 
+      "latitude": "16.726698", 
+      "project_image": "", 
+      "website_url": "", 
+      "description": ""
     }
   }, 
   {
     "pk": 2, 
     "model": "maplayers.subproject", 
     "fields": {
-      "latitude": "15.843255", 
-      "project": 3, 
       "name": "Kyakatzu Releif Center", 
       "longitude": "94.896698", 
-      "location": "Kyakatzu, Myanmar"
+      "project": 3, 
+      "imageset_feedurl": "", 
+      "location": "Kyakatzu, Myanmar", 
+      "latitude": "15.843255", 
+      "project_image": "", 
+      "website_url": "", 
+      "description": ""
     }
   }, 
   {
     "pk": 3, 
     "model": "maplayers.subproject", 
     "fields": {
-      "latitude": "-0.688826", 
-      "project": 2, 
       "name": "Gabbon Medical Center", 
       "longitude": "11.764526", 
-      "location": "Gabbon, DRC"
+      "project": 2, 
+      "imageset_feedurl": "", 
+      "location": "Gabbon, DRC", 
+      "latitude": "-0.688826", 
+      "project_image": "", 
+      "website_url": "", 
+      "description": ""
     }
   }, 
   {
     "pk": 4, 
     "model": "maplayers.subproject", 
     "fields": {
-      "latitude": "1.083737", 
-      "project": 1, 
       "name": "Pallisa Digital Doorway", 
       "longitude": "34.062195", 
-      "location": "Pallisa, Uganda"
+      "project": 1, 
+      "imageset_feedurl": "", 
+      "location": "Pallisa, Uganda", 
+      "latitude": "1.083737", 
+      "project_image": "", 
+      "website_url": "", 
+      "description": ""
     }
   }, 
   {
     "pk": 5, 
     "model": "maplayers.subproject", 
     "fields": {
-      "latitude": "0.457576", 
-      "project": 1, 
       "name": "Jinja Primary School Project", 
       "longitude": "33.199768", 
-      "location": "Jinja, Uganda"
+      "project": 1, 
+      "imageset_feedurl": "", 
+      "location": "Jinja, Uganda", 
+      "latitude": "0.457576", 
+      "project_image": "", 
+      "website_url": "", 
+      "description": ""
     }
   }, 
   {
