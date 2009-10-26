@@ -54,7 +54,6 @@ class ParseImgRssFeedNode(template.Node):
         if context.has_key('rss_img_feed_max_entries'):
             max_ = int(context['rss_img_feed_max_entries'])
         
-       
         # parse_feed does all the work
         context['rss_img_feed'] = ( parse_img_feed(url, max_) if \
                                   not url is None else \
