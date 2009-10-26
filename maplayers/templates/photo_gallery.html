@@ -1,0 +1,10 @@
+<ul>
+  {% for img in rss_img_feed.images %}
+    <li>
+      <div>
+        <a href={{img.entry_url}}><img src={{img.img_url}} /></a>
+      </div>
+      <div>{{img.title}}</div>
+    </li>   
+  {% endfor %}
+</ul>
