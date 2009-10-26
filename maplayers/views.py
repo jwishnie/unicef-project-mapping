@@ -31,14 +31,20 @@ def gallery(request, gallery_type):
                               )
 
 def homepage(request):
-    sectors = Sector.objects.all()
-    implementors  = Implementor.objects.all()
-    projects = Project.objects.all()
+    sectors = __get_sectors__(request)
+    sector_ids = [sector.id for sector in sectors]
+    implementors  = __get_implementors__(request)
+    implementor_ids = [implementor.id for implementor in implementors]
+    left, bottom, right, top = __get_bounding_box__(request)
+    
+    projects = __get_projects__(left, bottom, right, top, sector_ids, implementor_ids)
     return render_to_response(
                               'homepage.html', 
                               {'projects' : projects, 
                                'sectors' : sectors, 
-                               'implementors' : implementors}
+                               'implementors' : implementors,
+                               'left': left, 'right' : right,
+                               'top': top, 'bottom' : bottom}
                               ) 
     
 def projects(request):
@@ -46,30 +52,15 @@ def projects(request):
     return render_to_response("projects.html", {'projects' : projects})
     
 def projects_in_map(request, left, bottom, right, top):
-    sector_ids =  _filter_ids(request, "sector") or \
+    sector_ids =  __filter_ids__(request, "sector") or \
                 [sector.id for sector in Sector.objects.all()]
-    implementor_ids =  _filter_ids(request, "implementor") or \
+    implementor_ids =  __filter_ids__(request, "implementor") or \
                 [implementor.id for implementor in Implementor.objects.all()]
         
-    left, bottom, right, top = \
-        [decimal.Decimal(p) for p in (left, bottom, right, top)]
-    
-    projects = Project.objects.filter(
-                                      longitude__gte=left, 
-                                      longitude__lte=right,  
-                                      latitude__gte=bottom, 
-                                      latitude__lte=top, 
-                                      sector__in=sector_ids,
-                                      implementor__in=implementor_ids,
-                                      ).distinct()
-                                      
+    projects = __get_projects__(left, bottom, right, top, sector_ids, implementor_ids)
     return render_to_response(
                               'projects_in_map.json',
-                              {'projects': projects,
-                               "left" : left, 
-                               "right" : right, 
-                               "top" : top, 
-                               "bottom" : bottom}
+                              {'projects': projects}
                               )
 
 def project(request, project_id):
@@ -87,8 +78,48 @@ def project(request, project_id):
                                }) 
                               
 
-def _filter_ids(request, filter_name):
+def __filter_ids__(request, filter_name):
     """
     returns a list of selected filter_id from the request
     """
-    return [int(filter_id.split("_")[1]) for filter_id in request.POST.keys() if filter_id.find(filter_name +"_") >=0]
+    return [int(filter_id.split("_")[1]) for filter_id in \
+            request.GET.keys() if filter_id.find(filter_name +"_") >=0]
+    
+def __get_sectors__(request):
+    """
+    returns a list of selected sectors present in the request OR all sectors as default
+    """
+    ids = __filter_ids__(request, "sector")
+    return Sector.objects.filter(id__in=ids) if ids else Sector.objects.all()
+    
+def __get_implementors__(request):
+    """
+    returns a list of selected implementors present in the request OR all implementors as default
+    """
+    ids = __filter_ids__(request, "implementor")
+    return Implementor.objects.filter(id__in=ids) if ids else Implementor.objects.all()
+    
+def __get_projects__(left, bottom, right, top, sector_ids, implementor_ids):
+    """
+    returns a list of projects that match the filter criteria and are within the bounding box
+    """
+    left, bottom, right, top = \
+        [decimal.Decimal(p) for p in (left, bottom, right, top)]
+    
+    return Project.objects.filter(longitude__gte=left, 
+                                  longitude__lte=right,  
+                                  latitude__gte=bottom, 
+                                  latitude__lte=top, 
+                                  sector__in=sector_ids,
+                                  implementor__in=implementor_ids,
+                                  ).distinct()
+                                      
+                            
+def __get_bounding_box__(request):
+    left = request.GET.get('left', '-180')
+    right = request.GET.get('right', '180')
+    top = request.GET.get('top', '90')
+    bottom = request.GET.get('left', '-90')
+    return (left, bottom, right, top)
+    
+    

@@ -25,10 +25,6 @@ class ProjectPage(TestCase):
     def test_should_return_list_of_projects_in_bounding_box(self):
         webclient = Client()
         context = webclient.get('/projects/bbox/0/0/40/10/').context
-        self.assertEquals(40, context['right'])
-        self.assertEquals(10, context['top'])
-        self.assertEquals(0, context['bottom'])
-        self.assertEquals(0, context['left'])
         self.assertEquals(Project.objects.get(id=1), context['projects'][0])
         
     def test_should_return_list_of_projects_in_selected_sectors(self):
