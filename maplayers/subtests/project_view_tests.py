@@ -4,12 +4,6 @@ from django.test import TestCase
 from django.test.client import Client
 from maplayers.models import Project
 
-class ProjectsPage(TestCase):
-    def test_should_get_list_of_projects(self):
-        web_client = Client()
-        response = web_client.get('/projects/', {})
-        self.assertEquals(200, response.status_code)
-
 class ProjectPage(TestCase):
     fixtures=['test_projects_data.json']
     def test_should_get_project_page(self):
@@ -42,5 +36,5 @@ class ProjectPage(TestCase):
     def test_should_return_list_of_subprojects_for_selected_project(self):
         webclient = Client()
         context = webclient.get('/projects/id/0/').context
-        self.assertEquals(2, len(context['subprojects']))
+        self.assertEquals(2, len(context[0]['subprojects']))
 
