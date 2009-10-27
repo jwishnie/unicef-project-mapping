@@ -47,10 +47,12 @@
 						</div>
 
                         <div id="project_implementors">
-                                <p>Project Implementors : </p>
-                                <div>{{project.implementors}}</div>
-                        </div><p/>	
-                                       
+						{% if project.implementor_set %}
+							<p>Project Implementors : </p>
+								{{implementors}}
+						{% endif %}
+						</div>                      
+                        <p/>               
 						<div id="project description">
 							<label>Description: </label>
 							<span>{{project.description}}</span>
@@ -69,9 +71,18 @@
                         <div id="parent_project">
                           {% if project.parent_project %}
                             <label>Main Project : </label>
-                            <div><a href="/projects/id/{{project.parent_project.id}}">{{project.parent_project.name}}</a></div>
+                            <div><a href="/projects/id/{{project.parent_project.id}}/">{{project.parent_project.name}}</a></div>
                           {% endif %}
                         </div>
+                        
+                        <div id="subprojects">
+                          {% if subprojects %}
+                            <label>Sub Projects : </label>
+                            {% for subproject in subprojects %}
+                              <div><a href="/projects/id/{{subproject.id}}/">{{subproject.name}}</a></div>
+                            {% endfor %}
+                          {% endif %}
+                        </div>                        
 
                         <div id="project_image">
                             <span><img alt={{project.name}} src="{{project.project_image}}"/></span>

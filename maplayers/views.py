@@ -62,6 +62,7 @@ def project(request, project_id):
     try:
         project = Project.objects.get(id__exact=project_id)
         subprojects = Project.objects.filter(parent_project=project_id)
+        implementors = ", ".join([implementor.name for implementor in Implementor.objects.filter(projects__in=project_id)])
     except Project.DoesNotExist:
         raise Http404
     return render_to_response('project.html', 
@@ -69,6 +70,7 @@ def project(request, project_id):
                                'links' : project.link_set.all(), 
                                'rss_img_feed_url': project.imageset_feedurl,
                                'subprojects' : subprojects,
+                               'implementors' : implementors,
                                }) 
 
 def _filter_ids(request, filter_name):
