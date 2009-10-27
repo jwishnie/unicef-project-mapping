@@ -47,10 +47,12 @@
 						</div>
 
                         <div id="project_implementors">
-                                <p>Project Implementors : </p>
-                                <div>{{project.implementors}}</div>
-                        </div><p/>	
-                                       
+						{% if project.implementor_set %}
+							<p>Project Implementors : </p>
+								{{implementors}}
+						{% endif %}
+						</div>                      
+                        <p/>               
 						<div id="project description">
 							<label>Description: </label>
 							<span>{{project.description}}</span>
