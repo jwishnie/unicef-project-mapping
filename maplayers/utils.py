@@ -34,5 +34,29 @@ def is_not_empty(obj):
     
     """
     return not is_empty(obj)
+
+def tfu_enc(in_str, session_id, nonce, max_len=None):
+    """
+    'Encoding' for TFU flash updater values
+    
+    """
+    
+    key='%s%s%s' % (session_id[:5],nonce, session_id)
+    
+    if max_len is not None:
+        in_str = in_str[:max_len]
+
+    # check if input is valid                                                                                                    
+    if not (all(ord(c)<=127 for c in in_str) and \
+            all(ord(c)<=127 for c in key)):
+        return None
+
+    code = []
+    keylen=len(key)
+    for i in range(len(in_str)):
+        code.append(chr(ord(in_str[i]) + ord(key[i%keylen])))
+
+    return ''.join(code).decode('iso-8859-1').encode('utf-8')
+
     
         
