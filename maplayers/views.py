@@ -7,11 +7,6 @@ from django.http import Http404
 from maplayers.utils import is_empty
 
 
-MAP_MAX_SCALE = 865124.6923828125
-MAP_MIN_SCALE = 110735960.625
-MAP_BASE_LAYER = "http://labs.metacarta.com/wms/vmap0"
-
-
 def gallery(request, gallery_type):
     if is_empty(gallery_type):
         gallery_type = 'flickr'
@@ -48,10 +43,7 @@ def homepage(request):
                                'sectors' : sectors, 
                                'implementors' : implementors,
                                'left': left, 'right' : right,
-                               'top': top, 'bottom' : bottom,
-                               'base_layer' : MAP_BASE_LAYER,
-                               'min_scale' : MAP_MIN_SCALE,
-                               'max_scale' : MAP_MAX_SCALE
+                               'top': top, 'bottom' : bottom
                                }
                               ) 
     
