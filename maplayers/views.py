@@ -6,6 +6,7 @@ import decimal
 from django.http import Http404
 from maplayers.utils import is_empty
 
+
 def gallery(request, gallery_type):
     if is_empty(gallery_type):
         gallery_type = 'flickr'
@@ -42,7 +43,8 @@ def homepage(request):
                                'sectors' : sectors, 
                                'implementors' : implementors,
                                'left': left, 'right' : right,
-                               'top': top, 'bottom' : bottom}
+                               'top': top, 'bottom' : bottom
+                               }
                               ) 
     
     

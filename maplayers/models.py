@@ -11,7 +11,7 @@ class Project(models.Model):
     website_url = models.URLField()
     project_image = models.URLField()
     imageset_feedurl = models.CharField(max_length=1000)
-    youtube_username = models.CharField(max_length=100)
+    youtube_username = models.CharField(max_length=100, null=True, blank=True)
     parent_project = models.ForeignKey('self', null=True, blank=True)
     
     def __unicode__(self): 
