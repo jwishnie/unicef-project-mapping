@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from maplayers.models import Project, Sector, Implementor, SubProject
+from maplayers.models import Project, Sector, Implementor
 from maplayers.forms import ProjectForm
 
 def add_project(request):

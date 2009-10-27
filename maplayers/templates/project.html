@@ -46,10 +46,10 @@
 							<span>{{project.name}}</span>
 						</div>
 
-                                                <div id="project_implementors">
-                                                        <p>Project Implementors : </p>
-                                                        <div>{{project.implementors}}</div>
-                                                </div><p/>	
+                        <div id="project_implementors">
+                                <p>Project Implementors : </p>
+                                <div>{{project.implementors}}</div>
+                        </div><p/>	
                                        
 						<div id="project description">
 							<label>Description: </label>
@@ -59,16 +59,24 @@
 						<div id="project location">
 								<label>Location: </label>
 								<span>{{project.location}}</span>
-                                                </div>
+                        </div>
 
-                                                <div id="project_website">
-                                                    <label>Project WebSite: </label>
-                                                    <span><a href="{{project.website_url}}">{{project.name}} home page</a></span>
-                                                </div>
+                        <div id="project_website">
+                            <label>Project WebSite: </label>
+                            <span><a href="{{project.website_url}}">{{project.name}} home page</a></span>
+                        </div>
+                        
+                        <div id="parent_project">
+                          {% if project.parent_project %}
+                            <label>Main Project : </label>
+                            <div><a href="/projects/id/{{project.parent_project.id}}">{{project.parent_project.name}}</a></div>
+                          {% endif %}
+                        </div>
 
-                                                <div id="project_image">
-                                                    <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
-                                                </div>
+                        <div id="project_image">
+                            <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
+                        </div>
+                        
 						{% if project.link_set %}
 							<div id="project links">
 								<p>Links : </p>
@@ -78,8 +86,8 @@
 							</div>	
 						{% endif %}
 						
-				</div>
-                                <p/>
+				  </div>
+                  <p/>
 	
 				<div id="map_canvas" style="width: 500px; height:300px"></div>
                                 <div id="photo_set">

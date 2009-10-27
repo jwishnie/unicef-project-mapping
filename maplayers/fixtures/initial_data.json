@@ -4,6 +4,8 @@
     "model": "maplayers.project", 
     "fields": {
       "name": "School for all", 
+      "parent_project": null, 
+      "youtube_username": "unicef", 
       "longitude": "32.57304", 
       "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "Kampala, Uganda", 
@@ -18,6 +20,8 @@
     "model": "maplayers.project", 
     "fields": {
       "name": "DRC Medical Aid", 
+      "parent_project": null, 
+      "youtube_username": "unicef", 
       "longitude": "15.126343", 
       "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "Ekami, Congo", 
@@ -32,6 +36,8 @@
     "model": "maplayers.project", 
     "fields": {
       "name": "Myanmar Hurricane Aid", 
+      "parent_project": null, 
+      "youtube_username": "unicef", 
       "longitude": "96.192627", 
       "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "Yangon, Myanmar", 
@@ -42,78 +48,35 @@
     }
   }, 
   {
-    "pk": 1, 
-    "model": "maplayers.subproject", 
-    "fields": {
-      "name": "Bassein Hurricane Relief Camp", 
-      "longitude": "94.808349", 
-      "project": 3, 
-      "imageset_feedurl": "", 
-      "location": "Bassien, Myanmar", 
-      "latitude": "16.726698", 
-      "project_image": "", 
-      "website_url": "", 
-      "description": ""
-    }
-  }, 
-  {
-    "pk": 2, 
-    "model": "maplayers.subproject", 
-    "fields": {
-      "name": "Kyakatzu Releif Center", 
-      "longitude": "94.896698", 
-      "project": 3, 
-      "imageset_feedurl": "", 
-      "location": "Kyakatzu, Myanmar", 
-      "latitude": "15.843255", 
-      "project_image": "", 
-      "website_url": "", 
-      "description": ""
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "maplayers.subproject", 
-    "fields": {
-      "name": "Gabbon Medical Center", 
-      "longitude": "11.764526", 
-      "project": 2, 
-      "imageset_feedurl": "", 
-      "location": "Gabbon, DRC", 
-      "latitude": "-0.688826", 
-      "project_image": "", 
-      "website_url": "", 
-      "description": ""
-    }
-  }, 
-  {
     "pk": 4, 
-    "model": "maplayers.subproject", 
+    "model": "maplayers.project", 
     "fields": {
-      "name": "Pallisa Digital Doorway", 
-      "longitude": "34.062195", 
-      "project": 1, 
-      "imageset_feedurl": "", 
-      "location": "Pallisa, Uganda", 
-      "latitude": "1.083737", 
-      "project_image": "", 
-      "website_url": "", 
-      "description": ""
+      "name": "Jinja Primary School Project", 
+      "parent_project": 1, 
+      "youtube_username": "unicef", 
+      "longitude": "33.199768", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
+      "location": "Jinja, Uganda", 
+      "latitude": "1.457576", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
+      "website_url": "http://www.unicef.org/", 
+      "description": "Jinja primary school"
     }
   }, 
   {
     "pk": 5, 
-    "model": "maplayers.subproject", 
+    "model": "maplayers.project", 
     "fields": {
-      "name": "Jinja Primary School Project", 
-      "longitude": "33.199768", 
-      "project": 1, 
-      "imageset_feedurl": "", 
-      "location": "Jinja, Uganda", 
-      "latitude": "0.457576", 
-      "project_image": "", 
-      "website_url": "", 
-      "description": ""
+      "name": "Gabbon Medical Center", 
+      "parent_project": 2, 
+      "youtube_username": "unicef", 
+      "longitude": "14.840698", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
+      "location": "Gabbon, Congo", 
+      "latitude": "-2.522744", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
+      "website_url": "http://redcross.org/", 
+      "description": "Gabbon Medical Center"
     }
   }, 
   {
