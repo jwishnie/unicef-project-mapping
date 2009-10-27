@@ -6,7 +6,6 @@ from django.conf import settings
 from maplayers import views
 from maplayers import admin_view
 
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
@@ -36,6 +35,6 @@ if settings.DEBUG:
     static_serve = (r'^static/(?P<path>.*)$', 'django.views.static.serve',
                     {'document_root': 'static'})
     pats.insert(0,static_serve)
-    
+
 urlpatterns = patterns('', *pats)
 

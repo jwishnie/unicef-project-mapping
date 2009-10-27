@@ -8,4 +8,5 @@ settings.py
 build
 *.sqlite3
 *.log*
-.settings/org.eclipse.core.resources.prefs
+*.py.swo
+.settings/*

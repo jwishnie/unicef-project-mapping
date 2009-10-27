@@ -114,5 +114,3 @@ def _get_bounding_box(request):
     top = request.GET.get('top', '90')
     bottom = request.GET.get('bottom', '-90')
     return (left, bottom, right, top)
-    
-    

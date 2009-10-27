@@ -14,9 +14,6 @@ class Project(models.Model):
     youtube_username = models.CharField(max_length=100)
     parent_project = models.ForeignKey('self', null=True, blank=True)
     
-    def url(self):
-        return "/projects/id/%s" %(self.id)        
-    
     def __unicode__(self): 
         return self.name
         
