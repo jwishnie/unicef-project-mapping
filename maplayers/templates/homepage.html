@@ -83,13 +83,15 @@
 			    }
 
 				var map = new OpenLayers.Map( 'map_canvas' , 
-							  {eventListeners: {"moveend": mapEvent}});
+							  {eventListeners: {"moveend": mapEvent}, maxScale : 865124.6923828125, minScale : 110735960.625});
 				var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS",
 				"http://labs.metacarta.com/wms/vmap0", {layers: 'basic'} );
 				map.addLayer(layer);
 
 				var bounds= new OpenLayers.Bounds({{left}}, {{bottom}}, {{right}}, {{top}});
 				map.zoomToExtent(bounds);
+				map.maxExtent(-180, -90, 180, 90);
+				map.minExtent(-10, -10, 10, 10);
 				var markers = new OpenLayers.Layer.Markers( "Markers" );
 				map.addLayer(markers);
 							
