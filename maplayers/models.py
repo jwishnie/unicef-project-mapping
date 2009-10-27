@@ -12,6 +12,7 @@ class AbstractProject(models.Model):
     website_url = models.URLField()
     project_image = models.URLField()
     imageset_feedurl = models.CharField(max_length=1000)
+    youtube_username = models.CharField(max_length=100)
     
     def __unicode__(self): 
         return self.name

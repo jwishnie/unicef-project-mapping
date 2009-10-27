@@ -32,6 +32,8 @@ def _create_project(form):
     p.project_image = form.cleaned_data['project_image']
     sector_names = form.cleaned_data['project_sectors']
     implementor_names = form.cleaned_data['project_implementors']
+    p.youtube_username = form.cleaned_data['youtube_username']
+    p.imageset_feedurl = form.cleaned_data['imageset_feedurl']
     p.save()
     _add_sectors_and_implementors(p, sector_names, implementor_names)
 

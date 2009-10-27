@@ -10,3 +10,6 @@ class ProjectForm(forms.Form):
     project_image = forms.URLField()
     project_sectors = forms.CharField(max_length = 500)
     project_implementors = forms.CharField(max_length = 500)
+    imageset_feedurl = forms.CharField(max_length=1000, required=False)
+    youtube_username = forms.CharField(max_length=100, required=False)
+    

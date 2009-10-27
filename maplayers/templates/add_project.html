@@ -97,6 +97,18 @@
 				<input type="text" name="project_implementors" id="id_project_implementors" autocomplete="off"></input>
 				<label>(Eg : {{implementors}})</label>
 			</p>
+			
+			<p>
+				{{ form.youtube_username.errors }}
+				<label for="id_youtube_username">Youtube username: </label> 
+				<input type="text" name="youtube_username" id="id_youtube_username"></input>
+			</p>	
+			
+			<p>
+				{{ form.imageset_feedurl.errors }}
+				<label for="id_imageset_feedurl">Image set feed url: </label> 
+				<input type="text" name="imageset_feedurl" id="id_imageset_feedurl"></input>
+			</p>
 			<input type="submit" value="Submit">
 		</form>
 	</body>
