@@ -30,13 +30,13 @@ def gallery(request, gallery_type):
                               )
 
 def homepage(request):
-    sectors = __get_sectors__(request)
+    sectors = _get_sectors(request)
     sector_ids = [sector.id for sector in sectors]
-    implementors  = __get_implementors__(request)
+    implementors  = _get_implementors(request)
     implementor_ids = [implementor.id for implementor in implementors]
-    left, bottom, right, top = __get_bounding_box__(request)
+    left, bottom, right, top = _get_bounding_box(request)
     
-    projects = __get_projects__(left, bottom, right, top, sector_ids, implementor_ids)
+    projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     return render_to_response(
                               'homepage.html', 
                               {'projects' : projects, 
@@ -51,12 +51,12 @@ def projects(request):
     return render_to_response("projects.html", {'projects' : projects})
     
 def projects_in_map(request, left, bottom, right, top):
-    sector_ids =  __filter_ids__(request, "sector") or \
+    sector_ids =  _filter_ids(request, "sector") or \
                 [sector.id for sector in Sector.objects.all()]
-    implementor_ids =  __filter_ids__(request, "implementor") or \
+    implementor_ids =  _filter_ids(request, "implementor") or \
                 [implementor.id for implementor in Implementor.objects.all()]
         
-    projects = __get_projects__(left, bottom, right, top, sector_ids, implementor_ids)
+    projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     return render_to_response(
                               'projects_in_map.json',
                               {'projects': projects}
@@ -81,28 +81,28 @@ def project(request, project_id):
                     
                             
 
-def __filter_ids__(request, filter_name):
+def _filter_ids(request, filter_name):
     """
     returns a list of selected filter_id from the request
     """
     return [int(filter_id.split("_")[1]) for filter_id in \
             request.GET.keys() if filter_id.find(filter_name +"_") >=0]
     
-def __get_sectors__(request):
+def _get_sectors(request):
     """
     returns a list of selected sectors present in the request OR all sectors as default
     """
-    ids = __filter_ids__(request, "sector")
+    ids = _filter_ids(request, "sector")
     return Sector.objects.filter(id__in=ids) if ids else Sector.objects.all()
     
-def __get_implementors__(request):
+def _get_implementors(request):
     """
     returns a list of selected implementors present in the request OR all implementors as default
     """
-    ids = __filter_ids__(request, "implementor")
+    ids = _filter_ids(request, "implementor")
     return Implementor.objects.filter(id__in=ids) if ids else Implementor.objects.all()
     
-def __get_projects__(left, bottom, right, top, sector_ids, implementor_ids):
+def _get_projects(left, bottom, right, top, sector_ids, implementor_ids):
     """
     returns a list of projects that match the filter criteria and are within the bounding box
     """
@@ -118,7 +118,7 @@ def __get_projects__(left, bottom, right, top, sector_ids, implementor_ids):
                                   ).distinct()
                                       
                             
-def __get_bounding_box__(request):
+def _get_bounding_box(request):
     left = request.GET.get('left', '-180')
     right = request.GET.get('right', '180')
     top = request.GET.get('top', '90')
