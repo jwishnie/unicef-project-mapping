@@ -35,7 +35,6 @@ def homepage(request):
     implementors  = _get_implementors(request)
     implementor_ids = [implementor.id for implementor in implementors]
     left, bottom, right, top = _get_bounding_box(request)
-    
     projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     return render_to_response(
                               'homepage.html', 
@@ -122,7 +121,7 @@ def _get_bounding_box(request):
     left = request.GET.get('left', '-180')
     right = request.GET.get('right', '180')
     top = request.GET.get('top', '90')
-    bottom = request.GET.get('left', '-90')
+    bottom = request.GET.get('bottom', '-90')
     return (left, bottom, right, top)
     
     

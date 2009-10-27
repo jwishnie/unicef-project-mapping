@@ -67,6 +67,7 @@
 						markers.destroy();
 						markers = new OpenLayers.Layer.Markers( "Markers" );
 						map.addLayer(markers);
+						
 						var html = "<p>Projects : </p><ol>";
 						for(var i=0; i<projects.length; i++){
 							html += "<li><div>" + projects[i]['snippet'] + '</div></li>';
@@ -79,7 +80,6 @@
 					});
 					
 					bookmarkUrl();
-					
 			    }
 
 				var map = new OpenLayers.Map( 'map_canvas' , 
@@ -88,8 +88,8 @@
 				"http://labs.metacarta.com/wms/vmap0", {layers: 'basic'} );
 				map.addLayer(layer);
 
-							
-				map.setCenter(new OpenLayers.LonLat(0, 0), 2);
+				var bounds= new OpenLayers.Bounds({{left}}, {{bottom}}, {{right}}, {{top}});
+				map.zoomToExtent(bounds);
 				var markers = new OpenLayers.Layer.Markers( "Markers" );
 				map.addLayer(markers);
 							
