@@ -2,10 +2,9 @@
 
 from django.db import models 
 
-class AbstractProject(models.Model):
+class Project(models.Model): 
     name = models.CharField(max_length=30) 
     description = models.TextField()
-
     latitude = models.DecimalField(max_digits=10, decimal_places=6)
     longitude = models.DecimalField(max_digits=10, decimal_places=6)
     location = models.CharField(max_length=50)
@@ -13,22 +12,19 @@ class AbstractProject(models.Model):
     project_image = models.URLField()
     imageset_feedurl = models.CharField(max_length=1000)
     youtube_username = models.CharField(max_length=100)
+    parent_project = models.ForeignKey('self', null=True, blank=True)
+    
+    def url(self):
+        return "/projects/id/%s" %(self.id)        
     
     def __unicode__(self): 
         return self.name
         
     def snippet(self):
         return self.name + " : " + self.description[:50]
-        
-    class Meta:
-        abstract = True
-
-class Project(AbstractProject): 
-    pass    
-
-class SubProject(AbstractProject):
-    project = models.ForeignKey(Project)
-
+    
+    class Admin: 
+        pass
  
 class Link(models.Model):
     title = models.CharField(max_length=50)

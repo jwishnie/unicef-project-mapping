@@ -1,7 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.shortcuts import render_to_response
-from maplayers.models import Project, Sector, Implementor, SubProject
+from maplayers.models import Project, Sector, Implementor
 import decimal
 from django.http import Http404
 from maplayers.utils import is_empty
@@ -46,9 +46,6 @@ def homepage(request):
                                'top': top, 'bottom' : bottom}
                               ) 
     
-def projects(request):
-    projects = Project.objects.all()
-    return render_to_response("projects.html", {'projects' : projects})
     
 def projects_in_map(request, left, bottom, right, top):
     sector_ids =  _filter_ids(request, "sector") or \
@@ -64,22 +61,16 @@ def projects_in_map(request, left, bottom, right, top):
 
 def project(request, project_id):
     try:
-        project = Project.objects.all()[int(project_id)]
-        subprojects = SubProject.objects.filter(
-                                                project__id=int(project_id) + 1
-                                                ).distinct()
-    except IndexError:
+        project = Project.objects.get(id__exact=project_id)
+        subprojects = Project.objects.filter(parent_project=project_id)
+    except Project.DoesNotExist:
         raise Http404
     return render_to_response('project.html', 
                               {'project': project, 
                                'links' : project.link_set.all(), 
-                               'subprojects' : subprojects,
                                'rss_img_feed_url': project.imageset_feedurl,
+                               'subprojects' : subprojects,
                                }) 
-                               
-                               
-                    
-                            
 
 def _filter_ids(request, filter_name):
     """

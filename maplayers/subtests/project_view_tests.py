@@ -35,6 +35,6 @@ class ProjectPage(TestCase):
 
     def test_should_return_list_of_subprojects_for_selected_project(self):
         webclient = Client()
-        context = webclient.get('/projects/id/0/').context
-        self.assertEquals(2, len(context[0]['subprojects']))
+        context = webclient.get('/projects/id/1/').context
+        self.assertEquals(1, len(context[0]['subprojects']))
 
