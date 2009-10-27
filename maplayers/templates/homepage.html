@@ -90,8 +90,6 @@
 
 				var bounds= new OpenLayers.Bounds({{left}}, {{bottom}}, {{right}}, {{top}});
 				map.zoomToExtent(bounds);
-				map.maxExtent(-180, -90, 180, 90);
-				map.minExtent(-10, -10, 10, 10);
 				var markers = new OpenLayers.Layer.Markers( "Markers" );
 				map.addLayer(markers);
 							
