@@ -74,8 +74,7 @@ $(document).ready(function() {
 
 	var map = new OpenLayers.Map( 'map_canvas' , 
 				  {eventListeners: {"moveend": mapEvent}, maxScale : MAX_SCALE , minScale : MIN_SCALE });
-	var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS",
-	BASE_LAYER, {layers: 'basic'} );
+	var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
 	map.addLayer(layer);
 
 	var bounds= new OpenLayers.Bounds(left, bottom, right, top);
@@ -85,5 +84,5 @@ $(document).ready(function() {
 				
 	var size = new OpenLayers.Size(10,17);
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-	var icon = new OpenLayers.Icon('http://labs.google.com/ridefinder/images/mm_20_blue.png',size,offset);
+	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
 });
