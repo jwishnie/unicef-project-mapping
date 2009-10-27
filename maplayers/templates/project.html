@@ -17,6 +17,11 @@
 		var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS",
 		"http://labs.metacarta.com/wms/vmap0", {layers: 'basic'} );
 		map.addLayer(layer);
+		
+
+		map.setCenter(new OpenLayers.LonLat({{project.longitude}}, 
+						      {{project.latitude}}));
+		
 
 		var markers = new OpenLayers.Layer.Markers( "Markers" );
 		map.addLayer(markers);
@@ -108,7 +113,7 @@
 				  </div>
                   <p/>
 	
-				<div id="map_canvas" style="width: 500px; height:300px"></div>
+				<div id="map_canvas" class="olMap" style="width: 512px; height:256px; border=1px solid #CCCCCC"></div>
                                 <div id="photo_set">
                                     {% parse_img_rss_feed %}
                                     {% include 'photo_gallery.html' %}
