@@ -103,5 +103,7 @@ JQUERY_UI = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.j
 MOOTOOLS = 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js'
 OPENLAYERS = STATIC_URL+'/openlayers/OpenLayers.js'
 JQUERY_PLUGINS = STATIC_URL+'/jqueryplugins'
+FANCY_UPLOADER = STATIC_URL + "/fancyuploader"
+FANCY_UPLOADER_SWF = FANCY_UPLOADER + "/Swiff.Uploader.swf"
 
 
