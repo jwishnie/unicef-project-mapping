@@ -69,8 +69,8 @@ def _create_project(form, project_id):
     project.location = form.cleaned_data['location']
     project.website_url = form.cleaned_data['website_url']
     project.project_image = form.cleaned_data['project_image']
-    srojectector_names = form.cleaned_data['project_sectors']
-    irojectmplementor_names = form.cleaned_data['project_implementors']
+    sector_names = form.cleaned_data['project_sectors']
+    implementor_names = form.cleaned_data['project_implementors']
     project.youtube_username = form.cleaned_data['youtube_username']
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
     project.save()

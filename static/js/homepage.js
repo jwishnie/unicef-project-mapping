@@ -38,7 +38,17 @@ $(document).ready(function() {
 		$('#bookmark').html(url);
 	}
 
-
+    function mousedn(){
+        if(popup != null) {
+            popup.destroy();
+        }
+        popup = new OpenLayers.Popup("chicken",
+                               this.marker.lonlat,
+                               new OpenLayers.Size(200,70),
+                               this.text,
+                               true);        
+        map.addPopup(popup);
+    }
 
 	function mapEvent(event) {
         var boundingBox = map.getExtent();
@@ -59,11 +69,16 @@ $(document).ready(function() {
 			map.addLayer(markers);
 			
 			var html = "<p>Projects : </p><ol>";
-			for(var i=0; i<projects.length; i++){
-				html += "<li><div>" + projects[i]['snippet'] + '</div></li>';
-				markers.addMarker(new OpenLayers.Marker
-								 (new OpenLayers.LonLat(projects[i]['longitude'], 
-								      projects[i]['latitude']),icon.clone()));
+			for(var i = 0;i<projects.length; i++){
+			    var project = projects[i];
+			    var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
+				                        project['snippet'] + '</a></div>'
+				html += "<li>" + project_text + '</li>';
+				marker = new OpenLayers.Marker(
+				                new OpenLayers.LonLat(project['longitude'], 
+        						    project['latitude']),icon.clone());
+                marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
+				markers.addMarker(marker);
 			}
 			html += '</ol>';
 			$("#projects").html(html);
@@ -71,7 +86,7 @@ $(document).ready(function() {
 		
 		bookmarkUrl();
     }
-
+    var popup = null;
 	var map = new OpenLayers.Map( 'map_canvas' , 
 				  {eventListeners: {"moveend": mapEvent}, maxScale : MAX_SCALE , minScale : MIN_SCALE });
 	var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
@@ -81,7 +96,7 @@ $(document).ready(function() {
 	map.zoomToExtent(bounds);
 	var markers = new OpenLayers.Layer.Markers( "Markers" );
 	map.addLayer(markers);
-				
+	
 	var size = new OpenLayers.Size(10,17);
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
