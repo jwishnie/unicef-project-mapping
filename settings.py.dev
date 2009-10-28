@@ -93,6 +93,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ( "django.core.context_processors.auth",
                                 "django.core.context_processors.debug",
                                 "django.core.context_processors.i18n",
                                 "django.core.context_processors.media",
+                                "django.core.context_processors.request",
                                 "maplayers.context_processors.add_settings")
 
 # Absolute path to the directory that holds media.
@@ -109,4 +110,4 @@ MOOTOOLS =  STATIC_URL+'/mootools/mootools-nc.js'
 OPENLAYERS = STATIC_URL+'/openlayers/OpenLayers.js'
 JQUERY_PLUGINS = STATIC_URL+'/jqueryplugins'
 
-
+LOGIN_REDIRECT_URL = '/'

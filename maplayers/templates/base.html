@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+<title>{% block title %}UNICEF Maps{% block title_extra %}{% endblock %}{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{{ css_url }}/main.css{% endblock %}" />
+{% block extrastyle %}{% endblock %}
+{% block extrahead %}{% endblock %}
+</head>
+{% load i18n %}
+
+<body class="{% block bodyclass %}{% endblock %}{% block body_tag_exta %}{% endblock %}">
+    <div id="wrapper">
+        {% block page_header %}
+        <div id="header">
+            <h1>
+                UNICEF Mapping
+            </h1>
+            {% if user.is_authenticated %}
+                {{ user.username }} <a href='{% url django.contrib.auth.views.logout %}'>logout</a>
+            {% else %}
+                <a href='{% url django.contrib.auth.views.login %}'>login</a>
+            {% endif %}
+        </div>
+        {% endblock %}
+        {% block page_nav %}
+        <div id="nav">
+        </div>
+        {% endblock %}
+        {% block page_content %}{% endblock %}
+        {% block page_footer %}
+        <div id="footer">
+            Unicef 2009 : All rights reserved
+        </div>
+        {% endblock %}
+</body>
+</html>

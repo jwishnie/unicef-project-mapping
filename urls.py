@@ -3,20 +3,19 @@
 from django.conf.urls.defaults import patterns
 from django.views.generic.simple import direct_to_template
 from django.conf import settings
-from maplayers import views
-from maplayers import admin_view
 
 from django.contrib import admin
 admin.autodiscover()
 
 pats = [
         (r'^accounts/login/$', 'django.contrib.auth.views.login'),
+        (r'^accounts/logout/$', 'django.contrib.auth.views.logout', { 'next_page': '/' }),
         (r'^admin/(.*)', admin.site.root),
-        (r'^projects/bbox/(?P<left>.+)/(?P<bottom>.+)/(?P<right>.+)/(?P<top>.+)/$', views.projects_in_map),
-        (r'^projects/id/(?P<project_id>\d+)/$', views.project),
-        (r'^gallery/(?P<gallery_type>\w+)?', views.gallery),
-        (r'^$', views.homepage),
-        (r'^add_project/', admin_view.add_project),
+        (r'^projects/bbox/(?P<left>.+)/(?P<bottom>.+)/(?P<right>.+)/(?P<top>.+)/$', 
+            'maplayers.views.projects_in_map'),
+        (r'^projects/id/(?P<project_id>\d+)/$', 'maplayers.views.project'),
+        (r'^$', 'maplayers.views.homepage'),
+        (r'^add_project/', 'maplayers.admin_view.add_project'),
         (r'^project_created_successfully/', direct_to_template, {'template': 'project_created_successfully.html'})
     ]
 

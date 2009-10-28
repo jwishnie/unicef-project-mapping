@@ -1,8 +1,8 @@
-<html>
-<head><title>Created Project Successfully</title></head>
+{% extends "base.html" %}
+{% load i18n %}
 
-<body>
+{% block title_extra %} &mdash; {{ project.name }} Created{% endblock %}
+{% block page_content %}
 	Project created successfully<br/>
 	<a href="/add_project">Add another</a>
-</body>
-</html>
+{% endblock %}

@@ -1,29 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
 {% load project_tags %}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>
-			gallery
-		</title>
-		<link rel="stylesheet" type="text/css" href="{{ css_url}}/main.css" />
-	</head>
-	{% parse_youtube_rss_feed %}
-	<body>
-		<ul>
-        {% for vid in rss_youtube_feed.videos %}
-            <li>
-                <object width="425" height="350">
-                   <param name="movie" value="{{ vid.video_url }}"></param>
-                   <embed src="{{ vid.video_url }}" 
-                    type="{{ vid.type }}" width="425" height="350">
-                   </embed>
-               </object>
-                <div>{{ vid.title }}</div>
-            </li>   
-        {% endfor %}
-        </ul>
-	</body>
-</html>
+{% block title_extra %} &mdash; YouTube Test{% endblock %}
+
+{% block page_content %}
+{% parse_youtube_rss_feed %}
+<ul>
+{% for vid in rss_youtube_feed.videos %}
+    <li>
+        <object width="425" height="350">
+           <param name="movie" value="{{ vid.video_url }}"></param>
+           <embed src="{{ vid.video_url }}" 
+            type="{{ vid.type }}" width="425" height="350">
+           </embed>
+       </object>
+        <div>{{ vid.title }}</div>
+    </li>   
+{% endfor %}
+</ul>
+{% endblock %}

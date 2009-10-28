@@ -4,35 +4,12 @@ import decimal
 from django.shortcuts import render_to_response
 from django.http import Http404
 from django.template import RequestContext
+from django.http import HttpResponseRedirect 
 
 from maplayers.utils import is_empty
 from maplayers.models import Project, Sector, Implementor
 
-
-def gallery(request, gallery_type):
-    if is_empty(gallery_type):
-        gallery_type = 'flickr'
-        
-    urls = { 'flickr': \
-            'feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us',
-            'picasa': \
-            'http://picasaweb.google.com/data/feed/base/user/flyvideo2/albumid/5228431042645681505?alt=rss&kind=photo&hl=en_US',
-            'youtube': \
-            'feed://gdata.youtube.com/feeds/api/users/unicef/uploads',
-            }
-    
-    if gallery_type=='youtube':
-        return render_to_response('youtube_gallery.html',
-                              {'rss_youtube_feed_url': urls[gallery_type],
-                               'rss_youtube_feed_max_entries': 5},
-                               context_instance=RequestContext(request)
-                              )
-    else:
-        return render_to_response('gallery.html',
-                              {'rss_img_feed_url': urls[gallery_type],
-                               'rss_img_feed_max_entries': 5},
-                               context_instance=RequestContext(request)
-                              )
+from django.contrib.auth import logout
 
 def homepage(request):
     sectors = _get_sectors(request)
