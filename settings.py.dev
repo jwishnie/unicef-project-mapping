@@ -108,5 +108,7 @@ JQUERY_UI = STATIC_URL+'/jquery-ui/jquery-ui.min.js'
 MOOTOOLS =  STATIC_URL+'/mootools/mootools-nc.js'
 OPENLAYERS = STATIC_URL+'/openlayers/OpenLayers.js'
 JQUERY_PLUGINS = STATIC_URL+'/jqueryplugins'
+FANCY_UPLOADER = STATIC_URL + "/fancyuploader"
+FANCY_UPLOADER_SWF = FANCY_UPLOADER + "/Swiff.Uploader.swf"
 
 

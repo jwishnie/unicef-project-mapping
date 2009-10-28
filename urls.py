@@ -17,7 +17,9 @@ pats = [
         (r'^gallery/(?P<gallery_type>\w+)?', views.gallery),
         (r'^$', views.homepage),
         (r'^add_project/', admin_view.add_project),
-        (r'^project_created_successfully/', direct_to_template, {'template': 'project_created_successfully.html'})
+        (r'^project_created_successfully/', direct_to_template, {'template': 'project_created_successfully.html'}),
+        (r'^fancy_upload/', direct_to_template, {'template': 'fancyuploader.html'}),
+        (r'^upload/$', admin_view.file_upload)
     ]
 
 # If in debug mode, server statics locally, otherwise the host HTTP server should do this

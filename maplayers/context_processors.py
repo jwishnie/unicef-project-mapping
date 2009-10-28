@@ -19,5 +19,7 @@ def add_settings(request):
             'jquery': settings.JQUERY,
             'jquery_plugins_url': settings.JQUERY_PLUGINS,
             'openlayers': settings.OPENLAYERS,
-            'mootools': settings.MOOTOOLS
+            'mootools': settings.MOOTOOLS,
+            'fancyuploader': settings.FANCY_UPLOADER,
+            'fancyuploader_swf' : settings.FANCY_UPLOADER_SWF
             }

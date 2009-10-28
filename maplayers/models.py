@@ -3,14 +3,14 @@
 from django.db import models 
 
 class Project(models.Model): 
-    name = models.CharField(max_length=30) 
-    description = models.TextField()
-    latitude = models.DecimalField(max_digits=10, decimal_places=6)
-    longitude = models.DecimalField(max_digits=10, decimal_places=6)
-    location = models.CharField(max_length=50)
-    website_url = models.URLField()
-    project_image = models.URLField()
-    imageset_feedurl = models.CharField(max_length=1000)
+    name = models.CharField(max_length=30, null=True, blank=True) 
+    description = models.TextField(null=True, blank=True)
+    latitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
+    location = models.CharField(max_length=50, null=True, blank=True)
+    website_url = models.URLField(null=True, blank=True)
+    project_image = models.URLField(null=True, blank=True)
+    imageset_feedurl = models.CharField(max_length=1000,null=True, blank=True)
     youtube_username = models.CharField(max_length=100, null=True, blank=True)
     parent_project = models.ForeignKey('self', null=True, blank=True)
     
