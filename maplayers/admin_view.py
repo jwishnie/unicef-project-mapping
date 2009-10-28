@@ -1,12 +1,14 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 
 from maplayers.models import Project, Sector, Implementor, Resource
 from maplayers.forms import ProjectForm
 from django.http import HttpResponse
 import uuid
 
+@login_required
 def add_project(request):
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])

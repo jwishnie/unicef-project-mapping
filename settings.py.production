@@ -25,10 +25,10 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'db/maplayers.sqlite3'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'root'             # Not used with sqlite3.
-DATABASE_PASSWORD = 'pwd'         # Not used with sqlite3.
+DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = 'unicefmapping'             # Or path to database file if using sqlite3.
+DATABASE_USER = 'unicefmapping'             # Not used with sqlite3.
+DATABASE_PASSWORD = 'unicef'         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
@@ -89,7 +89,11 @@ INSTALLED_APPS = (
 #
 # Context processing and app specific URLs to use in templates
 #
-TEMPLATE_CONTEXT_PROCESSORS = ('maplayers.context_processors.add_settings',)
+TEMPLATE_CONTEXT_PROCESSORS = ( "django.core.context_processors.auth",
+                                "django.core.context_processors.debug",
+                                "django.core.context_processors.i18n",
+                                "django.core.context_processors.media",
+                                "maplayers.context_processors.add_settings")
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"

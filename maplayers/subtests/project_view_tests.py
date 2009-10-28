@@ -5,7 +5,8 @@ from django.test.client import Client
 from maplayers.models import Project
 
 class ProjectPage(TestCase):
-    fixtures=['test_projects_data.json']
+    fixtures = ['test_project_data']
+    
     def test_should_get_project_page(self):
         webclient = Client()
         response = webclient.get('/projects/id/1/')

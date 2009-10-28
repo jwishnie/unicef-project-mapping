@@ -4,6 +4,8 @@
 Utilities for dealing with RSS Feeds
 
 """
+from __future__ import with_statement
+
 import urlparse
 import re
 import feedparser
@@ -23,9 +25,9 @@ VIDEO_TYPES = [
                'video/3gpp',
                ]
 
-YOUTUBE_EMBED_TYPE=VIDEO_TYPES[0]
+YOUTUBE_EMBED_TYPE = VIDEO_TYPES[0]
 
-FLICKR_FEED_FORMAT='format=atom'
+FLICKR_FEED_FORMAT = 'format=atom'
 
 """
 
@@ -107,15 +109,21 @@ def parse_feed(url):
     
     # fix url for use by feedparser
     clean_url = clean_feed_url(url)
-                                
-    # Try to retrieve from cache using cleaned url
-    parsed_feed = cache.get(clean_url)
+        
+    # see if it's a file url, 'cause parse feeder doesn't handle them
+    # correctly
+    is_file_url = clean_url.lower().startswith('file://')
+                        
+    # Try to retrieve from cache using cleaned url. 
+    # In case of file url, don't bother with the cache, just re-read
+    # each time
+    parsed_feed = (None if is_file_url else cache.get(clean_url))
     
     # if we got one, make a etags or modified request to see if any updates
     if parsed_feed is not None:
         updated_feed = None
         if parsed_feed.has_key('etag'):
-            updated_feed = feedparser.parse(clean_url, etag=parsed_feed.etag)
+           updated_feed = feedparser.parse(clean_url, etag=parsed_feed.etag)
         elif parsed_feed.has_key('modified'):
             updated_feed = \
                 feedparser.parse(clean_url, modified=parsed_feed.modified)
@@ -125,8 +133,14 @@ def parse_feed(url):
             parsed_feed = updated_feed            
             cache.set(clean_url, parsed_feed)
     else:
-        # no cached one, go get it
-        parsed_feed = feedparser.parse(clean_url)
+        # no cached one, go get it, handling files for
+        # dumb ass feedparser
+        to_parse = clean_url
+        if is_file_url:
+            with open(clean_url[7:]) as f:
+                to_parse = f.read()
+                
+        parsed_feed = feedparser.parse(to_parse)
         if len(parsed_feed.feed) > 0:
             cache.set(clean_url, parsed_feed)
         elif cache.has_key(clean_url):
