@@ -18,7 +18,8 @@ def add_settings(request):
         split_url = urlparse.urlsplit(request.META['HTTP_REFERER'])
         referer_path = split_url[2]
         
-    return {'referer_path': referer_path,
+    return {
+            'referer_path': referer_path,
             'static_url': settings.STATIC_URL,
             'css_url': '%s%s' % (settings.STATIC_URL, '/css'),
             'js_url': '%s%s' % (settings.STATIC_URL, '/js'),
@@ -26,5 +27,7 @@ def add_settings(request):
             'jquery': settings.JQUERY,
             'jquery_plugins_url': settings.JQUERY_PLUGINS,
             'openlayers': settings.OPENLAYERS,
-            'mootools': settings.MOOTOOLS
+            'mootools': settings.MOOTOOLS,
+            'fancyuploader': settings.FANCY_UPLOADER,
+            'fancyuploader_swf' : settings.FANCY_UPLOADER_SWF
             }

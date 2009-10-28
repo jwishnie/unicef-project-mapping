@@ -3,8 +3,10 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
-from maplayers.models import Project, Sector, Implementor
+from maplayers.models import Project, Sector, Implementor, Resource
 from maplayers.forms import ProjectForm
+from django.http import HttpResponse
+import uuid
 
 @login_required
 def add_project(request):
@@ -13,8 +15,9 @@ def add_project(request):
     
     if request.method == 'POST':
         form = ProjectForm(request.POST)
+        project_id = request.POST.get("project_id")
         if form.is_valid(): 
-            _create_project(form)
+            _create_project(form, project_id)
             return HttpResponseRedirect('/project_created_successfully/')
         else: 
             return render_to_response(
@@ -22,38 +25,56 @@ def add_project(request):
                                       {
                                        'form': form,
                                       'sectors' : sectors, 
-                                      'implementors' : implementors
+                                      'implementors' : implementors,
+                                      'project_id' : project_id
                                       },
                                       context_instance=RequestContext(request)
                                       ) 
     else: 
         form = ProjectForm()
+        project = Project()
+        project.save()
         return render_to_response(
                                   'add_project.html', 
                                   {
                                    'form': form,
-                                  'sectors' : sectors, 'implementors' : implementors
+                                  'sectors' : sectors, 'implementors' : implementors,
+                                  'project_id' : project.id
                                   },
                                   context_instance=RequestContext(request)
                                   ) 
         
         
-def _create_project(form):
-    p = Project()
-    p.name = form.cleaned_data['name']
-    p.description = form.cleaned_data['description']
-    p.latitude = form.cleaned_data['latitude']
-    p.longitude = form.cleaned_data['longitude']
-    p.location = form.cleaned_data['location']
-    p.website_url = form.cleaned_data['website_url']
-    p.project_image = form.cleaned_data['project_image']
+        
+def file_upload(request):
+    uploaded_file = request.FILES['Filedata']
+    uploaded_file_name = request.POST.get('Filename', '')
+    project_id = request.POST.get('project_id')
+    destination_name = "static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
+    destination = open(destination_name, 'wb+')
+    for chunk in uploaded_file.chunks(): 
+        destination.write(chunk) 
+        destination.close() 
+    project = Project.objects.get(id=project_id)
+    project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project))
+    return HttpResponse("OK")
+    
+        
+def _create_project(form, project_id):
+    project = Project.objects.get(id=int(project_id))
+    project.name = form.cleaned_data['name']
+    project.description = form.cleaned_data['description']
+    project.latitude = form.cleaned_data['latitude']
+    project.longitude = form.cleaned_data['longitude']
+    project.location = form.cleaned_data['location']
+    project.website_url = form.cleaned_data['website_url']
+    project.project_image = form.cleaned_data['project_image']
     sector_names = form.cleaned_data['project_sectors']
     implementor_names = form.cleaned_data['project_implementors']
-    p.youtube_username = form.cleaned_data['youtube_username']
-    p.imageset_feedurl = form.cleaned_data['imageset_feedurl']
-    p.save()
-    _add_sectors_and_implementors(p, sector_names, implementor_names)
-
+    project.youtube_username = form.cleaned_data['youtube_username']
+    project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
+    project.save()
+    _add_sectors_and_implementors(project, sector_names, implementor_names)
 
 
 def _add_sectors_and_implementors(p, sectors_names,implementor_names):

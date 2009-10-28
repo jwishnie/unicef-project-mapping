@@ -10,8 +10,9 @@
 		<link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
 		<script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
 
-
 		<script type="text/javascript">
+			var project_id = {{project_id}};
+			var fancy_uploader_swf = "{{ fancyuploader_swf }}";
 			$(document).ready(function(){
 				var sector_names = "{{sectors}}".split(", ");
 				$("#id_project_sectors").autocomplete(sector_names, {
@@ -24,12 +25,23 @@
 					multiple: true, 
 					autoFill: true
 				});
+				
 			});
 		</script>
+		
+		<script type="text/javascript" src="{{ mootools }}"></script>
+        
+        <script type="text/javascript" src="{{ fancyuploader }}/Swiff.Uploader.js"></script>
+        <script type="text/javascript" src="{{ fancyuploader }}/Fx.ProgressBar.js"></script>
+        <script type="text/javascript" src="{{ fancyuploader }}/FancyUpload3.Attach.js"></script>
+        <script type="text/javascript" src="{{ js_url }}/fileupload.js"></script>
 {% endblock %}
 
 {% block page_content %}
 		<form action="/add_project/" method="post">
+			<p>
+				<input type="hidden" name="project_id" value="{{project_id}}"></input>
+			</p>
 			<p>
 				{{ form.name.errors }}
 				<label for="id_name">Name:</label> 
@@ -88,6 +100,12 @@
 				{{ form.imageset_feedurl.errors }}
 				<label for="id_imageset_feedurl">Image set feed url: </label> 
 				<input type="text" name="imageset_feedurl" id="id_imageset_feedurl"></input>
+			</p>
+			<p>
+				<div id="demo">
+					<a href="#" id="demo-attach" name="demo-attach">Attach a file</a>
+					<ul id="demo-list"></ul><a href="#" id="demo-attach-2" style="display: none;" name="demo-attach-2">Attach another file</a>
+				</div>
 			</p>
 			<input type="submit" value="Submit">
 		</form>
