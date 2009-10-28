@@ -8,7 +8,6 @@ from maplayers.admin_view import _add_existing_implementors, _create_and_add_new
 from maplayers.models import Project, Sector, Implementor
 
 class AdminViewsUnitTest(TestCase):
-    
     def setUp(self):
         self.p = Project(name="test", description="test description", latitude=0, longitude=0)
         self.p.save()
@@ -50,8 +49,14 @@ class AdminViewsUnitTest(TestCase):
         
 
 class AdminViewsFunctionalTest(TestCase):
+    fixtures = ['test_project_data']
+    
+    def setUp(self):
+        pass
+    
     def test_adding_a_new_project(self):
         web_client = Client()
+        self.assertTrue(web_client.login(username='admin', password='admin'))
         context = web_client.post("/add_project/", 
                                  {"name" : "test", "description" : "test description", 
                                   "latitude" : "-70", "longitude" : "-10", 
@@ -59,6 +64,7 @@ class AdminViewsFunctionalTest(TestCase):
                                   "project_image" : "www.image.com",
                                   "project_sectors" : "Health, TestSector",
                                   "project_implementors" : "TestImplementor, Red Cross Foundation"})
+        
         self.assertTrue(Project.objects.filter(name="test"))
         self.assertTrue(Sector.objects.filter(name="TestSector"))
         self.assertTrue(Implementor.objects.filter(name="TestImplementor"))
