@@ -1,8 +1,12 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+
 from maplayers.models import Project, Sector, Implementor
 from maplayers.forms import ProjectForm
 
+@login_required
 def add_project(request):
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
@@ -13,12 +17,25 @@ def add_project(request):
             _create_project(form)
             return HttpResponseRedirect('/project_created_successfully/')
         else: 
-            return render_to_response('add_project.html', {'form': form,
-                                      'sectors' : sectors, 'implementors' : implementors}) 
+            return render_to_response(
+                                      'add_project.html', 
+                                      {
+                                       'form': form,
+                                      'sectors' : sectors, 
+                                      'implementors' : implementors
+                                      },
+                                      context_instance=RequestContext(request)
+                                      ) 
     else: 
         form = ProjectForm()
-        return render_to_response('add_project.html', {'form': form,
-                                  'sectors' : sectors, 'implementors' : implementors}) 
+        return render_to_response(
+                                  'add_project.html', 
+                                  {
+                                   'form': form,
+                                  'sectors' : sectors, 'implementors' : implementors
+                                  },
+                                  context_instance=RequestContext(request)
+                                  ) 
         
         
 def _create_project(form):

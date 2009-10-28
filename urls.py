@@ -10,6 +10,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 pats = [
+        (r'^accounts/login/$', 'django.contrib.auth.views.login'),
         (r'^admin/(.*)', admin.site.root),
         (r'^projects/bbox/(?P<left>.+)/(?P<bottom>.+)/(?P<right>.+)/(?P<top>.+)/$', views.projects_in_map),
         (r'^projects/id/(?P<project_id>\d+)/$', views.project),
