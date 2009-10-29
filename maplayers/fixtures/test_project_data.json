@@ -352,38 +352,95 @@
   }, 
   {
     "pk": 1, 
+    "model": "auth.group", 
+    "fields": {
+      "name": "admins", 
+      "permissions": []
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "auth.group", 
+    "fields": {
+      "name": "project_authors", 
+      "permissions": []
+    }
+  }, 
+  {
+    "pk": 1, 
     "model": "auth.user", 
     "fields": {
-      "username": "me", 
+      "username": "super", 
       "first_name": "", 
       "last_name": "", 
       "is_active": true, 
       "is_superuser": true, 
       "is_staff": true, 
-      "last_login": "2009-10-28 16:41:12", 
+      "last_login": "2009-10-29 11:15:14", 
       "groups": [], 
       "user_permissions": [], 
-      "password": "sha1$80a74$3b1f66ace78fb793b27461ec7c4b26f576f88d5a", 
-      "email": "me@me.me", 
-      "date_joined": "2009-10-28 16:40:52"
+      "password": "sha1$1c36d$7b330ad48b2d10867cb7c1d97bde27a1cb86ee4d", 
+      "email": "me@me.com", 
+      "date_joined": "2009-10-29 11:06:54"
     }
   }, 
   {
     "pk": 2, 
     "model": "auth.user", 
     "fields": {
+      "username": "author", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2009-10-29 12:15:43", 
+      "groups": [
+        2
+      ], 
+      "user_permissions": [], 
+      "password": "sha1$7434c$af7f40a30e7ad2890d1d476ff61b8af78dcc097d", 
+      "email": "", 
+      "date_joined": "2009-10-29 11:12:53"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "nobody", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2009-10-29 12:15:54", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$3c868$3b748138c2677c4bd66b12a485f9d2e4be32c2a5", 
+      "email": "", 
+      "date_joined": "2009-10-29 11:13:01"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "auth.user", 
+    "fields": {
       "username": "admin", 
       "first_name": "", 
       "last_name": "", 
       "is_active": true, 
-      "is_superuser": true, 
+      "is_superuser": false, 
       "is_staff": false, 
-      "last_login": "2009-10-28 17:08:35", 
-      "groups": [], 
+      "last_login": "2009-10-29 11:16:35", 
+      "groups": [
+        1, 
+        2
+      ], 
       "user_permissions": [], 
-      "password": "sha1$62db2$5e1501a83a77b862b6b0de48224957e88dc675ca", 
+      "password": "sha1$2a9bf$9fd69ef5f55069740d5fc3d96bd4a771d1bc9021", 
       "email": "", 
-      "date_joined": "2009-10-28 16:43:48"
+      "date_joined": "2009-10-29 11:13:08"
     }
   }, 
   {
@@ -504,27 +561,11 @@
     }
   }, 
   {
-    "pk": "28abb18896f436da3abdd14f5c0ae7f1", 
+    "pk": "fbfbf6a4413a187a8350fdebf5061a28", 
     "model": "sessions.session", 
     "fields": {
-      "expire_date": "2009-11-11 16:41:12", 
-      "session_data": "gAJ9cQEoVRJfYXV0aF91c2VyX2JhY2tlbmRxAlUpZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k\ncy5Nb2RlbEJhY2tlbmRxA1UNX2F1dGhfdXNlcl9pZHEESwF1LjhhMWY2ZWY1YjhhMzg1ZmVmYjdj\nNjU3NGU2M2RjNGNh\n"
-    }
-  }, 
-  {
-    "pk": "2022ecdb175764a7b407c4b063cbd8bb", 
-    "model": "sessions.session", 
-    "fields": {
-      "expire_date": "2009-11-11 16:52:36", 
-      "session_data": "gAJ9cQEoVRJfYXV0aF91c2VyX2JhY2tlbmRxAlUpZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k\ncy5Nb2RlbEJhY2tlbmRxA1UNX2F1dGhfdXNlcl9pZHEESwJ1LjM3MDRlYjUxNmIzYmJjZTQxYzY3\nY2RhMDZiMDhjZDQw\n"
-    }
-  }, 
-  {
-    "pk": "ccdcfaa0d723188537733df1fa2d6d47", 
-    "model": "sessions.session", 
-    "fields": {
-      "expire_date": "2009-11-11 17:08:36", 
-      "session_data": "gAJ9cQEoVRJfYXV0aF91c2VyX2JhY2tlbmRxAlUpZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k\ncy5Nb2RlbEJhY2tlbmRxA1UNX2F1dGhfdXNlcl9pZHEESwJ1LjM3MDRlYjUxNmIzYmJjZTQxYzY3\nY2RhMDZiMDhjZDQw\n"
+      "expire_date": "2009-11-12 12:15:54", 
+      "session_data": "gAJ9cQEoVRJfYXV0aF91c2VyX2JhY2tlbmRxAlUpZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k\ncy5Nb2RlbEJhY2tlbmRxA1UNX2F1dGhfdXNlcl9pZHEESwN1LjllZjgzY2RmYzkzNDI2ZjBmM2Y3\nNzkwMTgzOWQ2YTdj\n"
     }
   }, 
   {
@@ -536,16 +577,81 @@
     }
   }, 
   {
-    "pk": 2, 
+    "pk": 7, 
     "model": "admin.logentry", 
     "fields": {
       "action_flag": 2, 
-      "action_time": "2009-10-28 16:44:27", 
+      "action_time": "2009-10-29 11:15:39", 
       "object_repr": "admin", 
-      "object_id": "2", 
-      "change_message": "Changed is_superuser.", 
+      "object_id": "4", 
+      "change_message": "Changed groups.", 
       "user": 1, 
       "content_type": 3
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "admin.logentry", 
+    "fields": {
+      "action_flag": 2, 
+      "action_time": "2009-10-29 11:15:24", 
+      "object_repr": "author", 
+      "object_id": "2", 
+      "change_message": "Changed groups.", 
+      "user": 1, 
+      "content_type": 3
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "admin.logentry", 
+    "fields": {
+      "action_flag": 1, 
+      "action_time": "2009-10-29 11:13:08", 
+      "object_repr": "admin", 
+      "object_id": "4", 
+      "change_message": "", 
+      "user": 1, 
+      "content_type": 3
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "admin.logentry", 
+    "fields": {
+      "action_flag": 1, 
+      "action_time": "2009-10-29 11:13:01", 
+      "object_repr": "nobody", 
+      "object_id": "3", 
+      "change_message": "", 
+      "user": 1, 
+      "content_type": 3
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "admin.logentry", 
+    "fields": {
+      "action_flag": 1, 
+      "action_time": "2009-10-29 11:12:53", 
+      "object_repr": "author", 
+      "object_id": "2", 
+      "change_message": "", 
+      "user": 1, 
+      "content_type": 3
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "admin.logentry", 
+    "fields": {
+      "action_flag": 1, 
+      "action_time": "2009-10-29 11:12:41", 
+      "object_repr": "project_authors", 
+      "object_id": "2", 
+      "change_message": "", 
+      "user": 1, 
+      "content_type": 2
     }
   }, 
   {
@@ -553,12 +659,12 @@
     "model": "admin.logentry", 
     "fields": {
       "action_flag": 1, 
-      "action_time": "2009-10-28 16:43:48", 
-      "object_repr": "admin", 
-      "object_id": "2", 
+      "action_time": "2009-10-29 11:12:37", 
+      "object_repr": "admins", 
+      "object_id": "1", 
       "change_message": "", 
       "user": 1, 
-      "content_type": 3
+      "content_type": 2
     }
   }, 
   {
@@ -569,7 +675,7 @@
       "parent_project": null, 
       "youtube_username": "unicef", 
       "longitude": "32.57304", 
-      "imageset_feedurl": "file://./maplayers/fixtures/flickr.rss", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "Kampala, Uganda", 
       "latitude": "0.315439", 
       "project_image": "http://www.unicef.org/immunization/images/ibc_vacc_SOWV1.jpg", 
@@ -585,7 +691,7 @@
       "parent_project": null, 
       "youtube_username": "unicef", 
       "longitude": "15.126343", 
-      "imageset_feedurl": "file://./maplayers/fixtures/flickr.rss", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "Ekami, Congo", 
       "latitude": "-0.886561", 
       "project_image": "http://doctorswithoutborders.org/images/press/2009/DRC-50491.jpg", 
@@ -601,7 +707,7 @@
       "parent_project": null, 
       "youtube_username": "unicef", 
       "longitude": "96.192627", 
-      "imageset_feedurl": "file://./maplayers/fixtures/flickr.rss", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "Yangon, Myanmar", 
       "latitude": "16.663559", 
       "project_image": "http://www.redcross.org/www-files/Images/other/CurrentCatalog.jpg", 
@@ -617,7 +723,7 @@
       "parent_project": 1, 
       "youtube_username": "unicef", 
       "longitude": "33.199768", 
-      "imageset_feedurl": "file://./maplayers/fixtures/flickr.rss", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "Jinja, Uganda", 
       "latitude": "1.457576", 
       "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
@@ -633,12 +739,76 @@
       "parent_project": 2, 
       "youtube_username": "unicef", 
       "longitude": "14.840698", 
-      "imageset_feedurl": "file://./maplayers/fixtures/flickr.rss", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "Gabbon, Congo", 
       "latitude": "-2.522744", 
       "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
       "website_url": "http://redcross.org/", 
       "description": "Gabbon Medical Center"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": null, 
+      "parent_project": null, 
+      "youtube_username": null, 
+      "longitude": null, 
+      "imageset_feedurl": null, 
+      "location": null, 
+      "latitude": null, 
+      "project_image": null, 
+      "website_url": null, 
+      "description": null
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": null, 
+      "parent_project": null, 
+      "youtube_username": null, 
+      "longitude": null, 
+      "imageset_feedurl": null, 
+      "location": null, 
+      "latitude": null, 
+      "project_image": null, 
+      "website_url": null, 
+      "description": null
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": null, 
+      "parent_project": null, 
+      "youtube_username": null, 
+      "longitude": null, 
+      "imageset_feedurl": null, 
+      "location": null, 
+      "latitude": null, 
+      "project_image": null, 
+      "website_url": null, 
+      "description": null
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": null, 
+      "parent_project": null, 
+      "youtube_username": null, 
+      "longitude": null, 
+      "imageset_feedurl": null, 
+      "location": null, 
+      "latitude": null, 
+      "project_image": null, 
+      "website_url": null, 
+      "description": null
     }
   }, 
   {

@@ -3,9 +3,10 @@
 from django.test import TestCase
 from django.test.client import Client
 
-from maplayers.admin_view import _add_existing_sectors, _create_and_add_new_sectors
-from maplayers.admin_view import _add_existing_implementors, _create_and_add_new_implementors
+from maplayers.admin_views import _add_existing_sectors, _create_and_add_new_sectors
+from maplayers.admin_views import _add_existing_implementors, _create_and_add_new_implementors
 from maplayers.models import Project, Sector, Implementor
+from maplayers.utils import is_iter
 
 class AdminViewsUnitTest(TestCase):
     def setUp(self):
@@ -51,19 +52,22 @@ class AdminViewsUnitTest(TestCase):
 class AdminViewsFunctionalTest(TestCase):
     fixtures = ['test_project_data']
     
-    def setUp(self):
-        pass
-    
     def test_adding_a_new_project(self):
         web_client = Client()
-        self.assertTrue(web_client.login(username='admin', password='admin'))
-        context = web_client.post("/add_project/", 
-                                 {"name" : "test", "description" : "test description", 
+        self.assertTrue(web_client.login(username='author', password='author'))
+        ctxt = web_client.get("/add_project/").context
+        ctxt = ( ctxt[0] if is_iter(ctxt) else ctxt )
+        id = ctxt['project_id']
+        web_client.post("/add_project/", 
+                                 {"project_id": id,
+                                  "name" : "test", "description" : "test description", 
                                   "latitude" : "-70", "longitude" : "-10", 
                                   "location" : "test location", "website_url" : "www.test.com",
                                   "project_image" : "www.image.com",
                                   "project_sectors" : "Health, TestSector",
                                   "project_implementors" : "TestImplementor, Red Cross Foundation"})
+        
+        
         
         self.assertTrue(Project.objects.filter(name="test"))
         self.assertTrue(Sector.objects.filter(name="TestSector"))

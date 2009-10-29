@@ -3,13 +3,40 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
-from maplayers.models import Project, Sector, Implementor, Resource
+from maplayers.models import Project, Sector, Implementor, Resource, Link
 from maplayers.forms import ProjectForm
 from django.http import HttpResponse
 import uuid
 
+from maplayers.constants import GROUPS
+
+# Authentication helpers
+def _is_project_author(u):
+    for g in u.groups.all():
+        if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS):
+            return True
+    return False
+
+def _is_project_owner(u, project):
+    """
+    Must be implemented for _edit_project_ to check that
+    the person attempting to edit has perms.
+    
+    Test should be:
+    1. Are they the original creator?
+    2. Are they in the same implementing org as the original creator?
+    
+    """
+    return True
+
 @login_required
-def add_project(request):
+def add_project(request): 
+    # check for authorness... Can't use 'user_passes_test' decoartor
+    # because it doesn't handle redirects properly
+    if not _is_project_author(request.user):
+        return HttpResponseRedirect('/permission_denied/add_project/not_author')
+    
+    
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
     
@@ -17,6 +44,7 @@ def add_project(request):
         form = ProjectForm(request.POST)
         project_id = request.POST.get("project_id")
         if form.is_valid(): 
+            _create_links(request, project_id)
             _create_project(form, project_id)
             return HttpResponseRedirect('/project_created_successfully/')
         else: 
@@ -58,7 +86,6 @@ def file_upload(request):
     project = Project.objects.get(id=project_id)
     project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project))
     return HttpResponse("OK")
-    
         
 def _create_project(form, project_id):
     project = Project.objects.get(id=int(project_id))
@@ -75,6 +102,17 @@ def _create_project(form, project_id):
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
     project.save()
     _add_sectors_and_implementors(project, sector_names, implementor_names)
+    
+def _create_links(request, project_id):
+    link_titles = request.POST.getlist('link_title')
+    link_urls =  request.POST.getlist('link_url')
+    
+    for i in range(len(link_titles)):
+        link = Link(project_id=project_id, title=link_titles[i], url=link_urls[i])
+        # link.project_id = project_id
+        # link.title = link_titles[i]
+        # link_url = link_urls[i]
+        link.save()
 
 
 def _add_sectors_and_implementors(p, sectors_names,implementor_names):
@@ -115,7 +153,6 @@ def _create_and_add_new_implementors(p, all_implementors, implementor_names):
     new_implementors = set(implementor_names) - set(all_implementor_names)
     for implementor_name in new_implementors:
         p.implementor_set.create(name=implementor_name)
-    
-    
-    
+
+
     

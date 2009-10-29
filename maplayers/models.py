@@ -1,6 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.db import models 
+from maplayers.utils import is_empty
 
 class Project(models.Model): 
     name = models.CharField(max_length=30, null=True, blank=True) 
@@ -15,7 +16,7 @@ class Project(models.Model):
     parent_project = models.ForeignKey('self', null=True, blank=True)
     
     def __unicode__(self): 
-        return self.name
+        return ( 'No Name' if is_empty(self.name) else self.name)
         
     def snippet(self):
         return self.name + " : " + self.description[:50]

@@ -74,9 +74,10 @@ $(document).ready(function() {
 			    var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
 				                        project['snippet'] + '</a></div>'
 				html += "<li>" + project_text + '</li>';
+				var marker_icon = icon.clone()
 				marker = new OpenLayers.Marker(
 				                new OpenLayers.LonLat(project['longitude'], 
-        						    project['latitude']),icon.clone());
+        						    project['latitude']),marker_icon);
                 marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
 				markers.addMarker(marker);
 			}
