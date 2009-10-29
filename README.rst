@@ -16,6 +16,17 @@ Tidy                       libtidy-0.99-0
 Chardet                    python-chardet
 ========================   ========================
 
+The following are need for deploy with PostGIS, Nginx, and Fastcgi
+
+========================   ========================
+Dependency                 Ubuntu Package
+========================   ========================
+Flup                       python-flup
+Postgres                   postgresql
+PostGIS                    postgis
+Postgres Python driver     python-psycopg2
+Nginx                      nginx
+Buildbot                   buildbot
 
 
 
