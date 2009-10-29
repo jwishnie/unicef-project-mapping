@@ -135,7 +135,7 @@ def _create_and_add_new_implementors(p, all_implementors, implementor_names):
 
 def _render_response(request, form, sectors, implementors, project_id, link_titles=[], link_urls=[]):
     link_titles_and_values = zip(link_titles, link_urls)
-    print link_titles_and_values
+
     return render_to_response(
                               'add_project.html', 
                               {
