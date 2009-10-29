@@ -42,7 +42,7 @@ $(document).ready(function() {
         if(popup != null) {
             popup.destroy();
         }
-        popup = new OpenLayers.Popup("chicken",
+        popup = new OpenLayers.Popup("project",
                                this.marker.lonlat,
                                new OpenLayers.Size(200,70),
                                this.text,
