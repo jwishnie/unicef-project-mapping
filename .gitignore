@@ -10,3 +10,4 @@ build
 *.log*
 *.py.swo
 .settings/*
+initial_data.json
