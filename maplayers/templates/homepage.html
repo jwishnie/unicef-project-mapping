@@ -1,71 +1,52 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>
-			{{project.name}}
-		</title>
-		<link rel="stylesheet" type="text/css" href="{{ css_url }}/main.css" />
-		
-		<script type="text/javascript">
-			var left = {{left}};
-			var right = {{right}};
-			var bottom = {{bottom}};
-			var top = {{top}};
-		</script>
-		
-		<script src="{{ jquery }}" type="text/javascript"></script>
-		<script src="{{ openlayers }}" type="text/javascript"></script>
-		<script src="{{ js_url }}/homepage.js" type="text/javascript" ></script>
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title_extra %} &mdash; Home{% endblock %}
 	
-	</head>
-	<body>
-		<div id="wrapper">
-			<div id="header">
-				<h1>
-					Welcome to UNICEF Mapping
-				</h1>
-			</div>
-			
-			<div id="nav"></div>
-			
-			<div id="filter_left">
-				<ul class="drawers">
-				    <li class="drawer">
-						<h3 class="drawer-handle open">Sectors</h3>
-						<ul class="sectors">
-							{% for sector in sectors %}
-							<li>
-								<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
-								<label>{{sector.name}}</label>
-							</li>
-							{% endfor %}
-						</ul>
-					</li>
-					<li class="drawer">
-						<h3 class="drawer-handle">Implementors</h3>
-						<ul class="implementors">
-							{% for implementor in implementors %}
-							<li>
-								<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
-								<label>{{implementor.name}}</label> <br/>
-							</li>
-							{% endfor %}
-						</ul>
-					</li>
-				</ul>
-			</div>
-					
-			<div id="main">
-				<div id="map_canvas"></div>
-				<div id="projects"></div>
-				<div id="bookmark"></div>
-			</div>
-			
-			<div id="footer">
-				Unicef 2009 : All rights reserved
-			</div>
-		</div>
-	</body>
-</html>
+{% block extrahead %}
+<script type="text/javascript">
+	var left = {{left}};
+	var right = {{right}};
+	var bottom = {{bottom}};
+	var top = {{top}};
+</script>
+
+<script src="{{ jquery }}" type="text/javascript"></script>
+<script src="{{ openlayers }}" type="text/javascript"></script>
+<script src="{{ js_url }}/homepage.js" type="text/javascript" ></script>
+{% endblock %}
+		
+{% block page_content %}
+<div id="filter_left">
+	<ul class="drawers">
+	    <li class="drawer">
+			<h3 class="drawer-handle open">Sectors</h3>
+			<ul class="sectors">
+				{% for sector in sectors %}
+				<li>
+					<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
+					<label>{{sector.name}}</label>
+				</li>
+				{% endfor %}
+			</ul>
+		</li>
+		<li class="drawer">
+			<h3 class="drawer-handle">Implementors</h3>
+			<ul class="implementors">
+				{% for implementor in implementors %}
+				<li>
+					<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
+					<label>{{implementor.name}}</label> <br/>
+				</li>
+				{% endfor %}
+			</ul>
+		</li>
+	</ul>
+</div>
+		
+<div id="main">
+	<div id="map_canvas"></div>
+	<div id="projects"></div>
+	<div id="bookmark"></div>
+</div>
+{% endblock %}

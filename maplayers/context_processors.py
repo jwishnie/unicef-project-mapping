@@ -10,9 +10,17 @@ Created on Oct 28, 2009
 '''
 
 from django.conf import settings
+import urlparse
 
 def add_settings(request):
-    return {'static_url': settings.STATIC_URL,
+    referer_path = ''
+    if request.META.has_key('HTTP_REFERER'):
+        split_url = urlparse.urlsplit(request.META['HTTP_REFERER'])
+        referer_path = split_url[2]
+        
+    return {
+            'referer_path': referer_path,
+            'static_url': settings.STATIC_URL,
             'css_url': '%s%s' % (settings.STATIC_URL, '/css'),
             'js_url': '%s%s' % (settings.STATIC_URL, '/js'),
             'img_url': '%s%s' % (settings.STATIC_URL, '/img'),

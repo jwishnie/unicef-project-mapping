@@ -1,10 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-    
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>Add Project</title>
-		<link rel="stylesheet" type="text/css" href="{{ css_url}}/add_project.css" />
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title_extra %} &mdash; Add Project{% endblock %}
+{% block stylesheet %}{{ css_url }}/add_project.css{% endblock %}
+
+{% block extrahead %}
+        <link rel="stylesheet" href="{{ css_url }}/main.css" type="text/css" />
 		<script src="{{ jquery }}" type="text/javascript"></script>
 		<link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
 		<script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
@@ -27,15 +28,15 @@
 				
 			});
 		</script>
-
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.2/mootools.js"></script>
 		
-		<script type="text/javascript" src="{{ fancyuploader }}/Swiff.Uploader.js"></script>
-		<script type="text/javascript" src="{{ fancyuploader }}/Fx.ProgressBar.js"></script>
-		<script type="text/javascript" src="{{ fancyuploader }}/FancyUpload3.Attach.js"></script>
-		<script type="text/javascript" src="{{ js_url }}/fileupload.js"></script>
-	</head>
-	<body>
+		<script type="text/javascript" src="{{ mootools }}"></script>
+        <script type="text/javascript" src="{{ fancyuploader }}/Swiff.Uploader.js"></script>
+        <script type="text/javascript" src="{{ fancyuploader }}/Fx.ProgressBar.js"></script>
+        <script type="text/javascript" src="{{ fancyuploader }}/FancyUpload3.Attach.js"></script>
+        <script type="text/javascript" src="{{ js_url }}/fileupload.js"></script>
+{% endblock %}
+
+{% block page_content %}
 		<form action="/add_project/" method="post">
 			<p>
 				<input type="hidden" name="project_id" value="{{project_id}}"></input>
@@ -105,7 +106,6 @@
 					<ul id="demo-list"></ul><a href="#" id="demo-attach-2" style="display: none;" name="demo-attach-2">Attach another file</a>
 				</div>
 			</p>
-			<input type="submit" value="Submit">
+			<input type="submit" value="Submit" />
 		</form>
-	</body>
-</html>
+{% endblock %}

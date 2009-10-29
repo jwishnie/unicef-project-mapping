@@ -1,13 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
+{% extends "base.html" %}
+{% load i18n %}
 {% load project_tags %}
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-		
-    <title>{{project.name}}</title>
-	<link rel="stylesheet" type="text/css" href="{{ css_url }}/main.css" />
+
+{% block title_extra %} &mdash; {{ project.name }}{% endblock %}
+ 
+{% block extra_head %}
 	<script src="{{ jquery }}" type="text/javascript"></script>
 	<script src="{{ openlayers }}" type="text/javascript"></script>
     <script type="text/javascript">
@@ -47,12 +44,11 @@
       {% endfor %}
        
     }
-
     </script>
-  </head>
+ {% endblock %}
 
-  <body onload="initialize()">
-	
+{% block body_tag_exta %}onload='initialize()'{% endblock %}
+{% block page_content %}
 				<div id="project_details">
 						<div id="project_name">
 							<label>Name : </label>
@@ -118,5 +114,4 @@
                                     {% parse_img_rss_feed %}
                                     {% include 'photo_gallery.html' %}
                                 </div>
-  </body>
-</html>
+{% endblock %}
