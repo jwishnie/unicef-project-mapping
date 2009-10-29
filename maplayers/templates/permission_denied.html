@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title_extra %} &mdash; Not Allowed{% endblock %}
+{% block page_content %}
+<div>
+    Sorry, you cannot {% trans params.action %} because {% trans params.reason %}
+</div>
+<div>
+    <a href='/'>click here to return home</a>
+ </div>
+{% endblock %}
