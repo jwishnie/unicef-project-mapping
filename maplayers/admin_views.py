@@ -31,11 +31,10 @@ def _is_project_owner(u, project):
 
 @login_required
 def add_project(request): 
-    # check for authorness... Can't use 'user_passes_test' decoartor
+    # check for authorness... Can't use 'user_passes_test' decorator
     # because it doesn't handle redirects properly
     if not _is_project_author(request.user):
         return HttpResponseRedirect('/permission_denied/add_project/not_author')
-    
     
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
@@ -43,37 +42,23 @@ def add_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         project_id = request.POST.get("project_id")
+        
+        link_titles = request.POST.getlist('link_title')
+        link_urls =  request.POST.getlist('link_url')
+        
         if form.is_valid(): 
-            _create_links(request, project_id)
+            _create_links(request, project_id, link_titles, link_urls)
             _create_project(form, project_id)
             return HttpResponseRedirect('/project_created_successfully/')
         else: 
-            return render_to_response(
-                                      'add_project.html', 
-                                      {
-                                       'form': form,
-                                      'sectors' : sectors, 
-                                      'implementors' : implementors,
-                                      'project_id' : project_id
-                                      },
-                                      context_instance=RequestContext(request)
-                                      ) 
+            return _render_response(request, form, sectors, implementors, project_id, link_titles, link_urls)
     else: 
         form = ProjectForm()
         project = Project()
         project.save()
-        return render_to_response(
-                                  'add_project.html', 
-                                  {
-                                   'form': form,
-                                  'sectors' : sectors, 'implementors' : implementors,
-                                  'project_id' : project.id
-                                  },
-                                  context_instance=RequestContext(request)
-                                  ) 
-        
-        
-        
+        return _render_response(request, form, sectors, implementors, project.id)
+
+  
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')
@@ -103,15 +88,9 @@ def _create_project(form, project_id):
     project.save()
     _add_sectors_and_implementors(project, sector_names, implementor_names)
     
-def _create_links(request, project_id):
-    link_titles = request.POST.getlist('link_title')
-    link_urls =  request.POST.getlist('link_url')
-    
+def _create_links(request, project_id, link_titles, link_urls):
     for i in range(len(link_titles)):
         link = Link(project_id=project_id, title=link_titles[i], url=link_urls[i])
-        # link.project_id = project_id
-        # link.title = link_titles[i]
-        # link_url = link_urls[i]
         link.save()
 
 
@@ -154,5 +133,18 @@ def _create_and_add_new_implementors(p, all_implementors, implementor_names):
     for implementor_name in new_implementors:
         p.implementor_set.create(name=implementor_name)
 
+def _render_response(request, form, sectors, implementors, project_id, link_titles=[], link_urls=[]):
+    link_titles_and_values = zip(link_titles, link_urls)
+    print link_titles_and_values
+    return render_to_response(
+                              'add_project.html', 
+                              {
+                               'form': form,
+                               'sectors' : sectors, 'implementors' : implementors,
+                               'project_id' : project_id,
+                               'title_and_values' : link_titles_and_values
+                              },
+                              context_instance=RequestContext(request)
+                              )
 
     

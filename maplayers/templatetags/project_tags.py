@@ -10,6 +10,18 @@ from maplayers.tag_utils import parse_img_feed, parse_youtube_feed
 from maplayers.utils import is_empty
 
 register = template.Library()  
+
+@register.simple_tag
+def project_links(titles_and_urls):
+    link_id = 0
+    link_tag = []
+    for (title, url) in titles_and_urls:
+        link_id += 1
+        link_tag.append('<div id="link_%d"><label>Title: </label>' % link_id)
+        link_tag.append('<input type="text" name="link_title" value="%s"></input><label>Url: </label>' % title)
+        link_tag.append('<input type="text" name="link_url"  value="%s"></input></div>' % url)
+    return "".join(link_tag).encode("UTF-8")
+    
  
 @register.tag(name='parse_img_rss_feed')
 def do_parse_img_rss_feed(parser, token):
