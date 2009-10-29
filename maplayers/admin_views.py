@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
-from maplayers.models import Project, Sector, Implementor, Resource
+from maplayers.models import Project, Sector, Implementor, Resource, Link
 from maplayers.forms import ProjectForm
 from django.http import HttpResponse
 import uuid
@@ -44,6 +44,7 @@ def add_project(request):
         form = ProjectForm(request.POST)
         project_id = request.POST.get("project_id")
         if form.is_valid(): 
+            _create_links(request, project_id)
             _create_project(form, project_id)
             return HttpResponseRedirect('/project_created_successfully/')
         else: 
@@ -101,6 +102,17 @@ def _create_project(form, project_id):
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
     project.save()
     _add_sectors_and_implementors(project, sector_names, implementor_names)
+    
+def _create_links(request, project_id):
+    link_titles = request.POST.getlist('link_title')
+    link_urls =  request.POST.getlist('link_url')
+    
+    for i in range(len(link_titles)):
+        link = Link(project_id=project_id, title=link_titles[i], url=link_urls[i])
+        # link.project_id = project_id
+        # link.title = link_titles[i]
+        # link_url = link_urls[i]
+        link.save()
 
 
 def _add_sectors_and_implementors(p, sectors_names,implementor_names):
