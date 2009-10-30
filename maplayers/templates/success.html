@@ -3,6 +3,6 @@
 
 {% block title_extra %} &mdash; {{ project.name }} Created{% endblock %}
 {% block page_content %}
-	Project created successfully<br/>
-	<a href="/add_project">Add another</a>
+	{{ message }}<br/>
+	<a href="/{{ link }}">{{ action }} another</a>
 {% endblock %}

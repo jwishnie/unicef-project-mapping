@@ -4,6 +4,10 @@
 
 {% block title_extra %} &mdash; {{ project.name }}{% endblock %}
  
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{{ css_url }}/project.css" />
+{% endblock %}
+
 {% block extrahead %}
 <script type="text/javascript">
 var latitude = {{ project.latitude }};
@@ -22,6 +26,11 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 
 {% block body_tag_exta %}onload='initialize()'{% endblock %}
 {% block page_content %}
+				{% if user.is_authenticated %}
+				<p>
+					<a href='/edit_project/{{project.id}}/' id="edit_project">Edit this project</a>
+				</p>
+				{% endif %}
 				<div id="project_details">
 						<div id="project_name">
 							<label>Name : </label>

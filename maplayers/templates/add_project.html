@@ -56,7 +56,7 @@
 
 {% block page_content %}
 
-		<form action="/add_project/" method="post">
+		<form action="/{{action}}/" method="post">
 			<p>
 				<input type="hidden" name="project_id" value="{{project_id}}"></input>
 			</p>

@@ -42,7 +42,6 @@ def add_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         project_id = request.POST.get("project_id")
-        
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
         
@@ -51,13 +50,51 @@ def add_project(request):
             _create_project(form, project_id)
             return HttpResponseRedirect('/project_created_successfully/')
         else: 
-            return _render_response(request, form, sectors, implementors, project_id, link_titles, link_urls)
+            return _render_response(request, form, "add_project", sectors, 
+                                    implementors, project_id, link_titles, link_urls)
     else: 
         form = ProjectForm()
         project = Project()
         project.save()
-        return _render_response(request, form, sectors, implementors, project.id)
+        return _render_response(request, form, "add_project", 
+                                sectors, implementors, project.id)
+        
+        
+@login_required
+def edit_project(request, project_id): 
+    
+    if not _is_project_author(request.user):
+        return HttpResponseRedirect('/permission_denied/add_project/not_author')
+    project = Project.objects.get(id=int(project_id))
 
+    sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
+    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        link_titles = request.POST.getlist('link_title')
+        link_urls =  request.POST.getlist('link_url')
+        if form.is_valid(): 
+            project.link_set.all().delete()
+            project.sector_set.clear()
+            project.implementor_set.clear()
+            project.save()
+            _create_links(request, project_id, link_titles, link_urls)
+            _create_project(form, project_id)
+            return HttpResponseRedirect('/project_edited_successfully/')
+        else:
+            action = "edit_project/" + project_id
+            return _render_response(request, form, action, sectors, implementors, 
+                                    project_id, link_titles, link_urls)
+    else:
+        form = _create_initial_data_from_project(project)
+        links = project.link_set.all()
+        link_titles = [link.title for link in links]
+        link_urls = [link.url for link in links]
+        action = "edit_project/" + project_id
+        return _render_response(request, form, action, sectors, implementors, 
+                                project_id, link_titles, link_urls)
+    
   
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
@@ -132,17 +169,33 @@ def _create_and_add_new_implementors(p, all_implementors, implementor_names):
     new_implementors = set(implementor_names) - set(all_implementor_names)
     for implementor_name in new_implementors:
         p.implementor_set.create(name=implementor_name)
+        
+def _create_initial_data_from_project(project):
+    form = ProjectForm()
+    form.fields['name'].initial = project.name
+    form.fields['description'].initial = project.description
+    form.fields['latitude'].initial = project.latitude
+    form.fields['longitude'].initial = project.longitude
+    form.fields['location'].initial = project.location
+    form.fields['website_url'].initial = project.website_url
+    form.fields['project_image'].initial = project.project_image
+    form.fields['project_sectors'].initial = ", ".join([sector.name for sector in project.sector_set.all()])
+    form.fields['project_implementors'].initial = ", ".join([implementor.name for implementor \
+                                                            in project.implementor_set.all()])
+    form.fields['youtube_username'].initial = project.youtube_username
+    form.fields['imageset_feedurl'].initial = project.imageset_feedurl
+    return form
 
-def _render_response(request, form, sectors, implementors, project_id, link_titles=[], link_urls=[]):
+def _render_response(request, form, action, sectors, implementors, project_id, link_titles=[], link_urls=[]):
     link_titles_and_values = zip(link_titles, link_urls)
-
     return render_to_response(
                               'add_project.html', 
                               {
                                'form': form,
                                'sectors' : sectors, 'implementors' : implementors,
                                'project_id' : project_id,
-                               'title_and_values' : link_titles_and_values
+                               'title_and_values' : link_titles_and_values,
+                               'action' : action
                               },
                               context_instance=RequestContext(request)
                               )

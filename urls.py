@@ -20,8 +20,21 @@ urlpatterns += patterns('maplayers',
                          (r'^projects/id/(?P<project_id>\d+)/$', 'views.project'),
                          (r'^$', 'views.homepage'),
                          (r'^add_project/', 'admin_views.add_project'),
+                         (r'^edit_project/(?P<project_id>\d+)/$', 'admin_views.edit_project'),
+                         
                          (r'^project_created_successfully/', direct_to_template, 
-                          {'template': 'project_created_successfully.html'}),
+                          {'template': 'success.html', 'extra_context': {
+                                 'message': 'Project added successfully',
+                                 'link' : 'add_project',
+                                 'action' : 'Add'
+                          }}),
+                          
+                          (r'^project_edited_successfully/', direct_to_template, 
+                           {'template': 'success.html', 'extra_context': {
+                               'message': 'Project editied successfully',
+                               'link' : 'edit_project',
+                               'action' : 'Edit'
+                         }}),
                           (r'^fancy_upload/', direct_to_template, 
                            {'template': 'fancyuploader.html'}),
                            (r'^upload/$', 'admin_views.file_upload'),
