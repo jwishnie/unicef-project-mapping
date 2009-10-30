@@ -370,7 +370,7 @@
     "pk": 1, 
     "model": "auth.user", 
     "fields": {
-      "username": "super", 
+      "username": "map_super", 
       "first_name": "", 
       "last_name": "", 
       "is_active": true, 
@@ -379,7 +379,7 @@
       "last_login": "2009-10-29 11:15:14", 
       "groups": [], 
       "user_permissions": [], 
-      "password": "sha1$1c36d$7b330ad48b2d10867cb7c1d97bde27a1cb86ee4d", 
+      "password": "sha1$f11f3$d5f0728ea68bc41e4917bfaf32d0e0a5d953cbb5", 
       "email": "me@me.com", 
       "date_joined": "2009-10-29 11:06:54"
     }
