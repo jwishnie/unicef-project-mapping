@@ -20,7 +20,8 @@ def homepage(request):
     projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     return render_to_response(
                               'homepage.html', 
-                              {'projects' : projects, 
+                              {
+                               'projects' : projects, 
                                'sectors' : sectors, 
                                'implementors' : implementors,
                                'left': left, 'right' : right,
@@ -56,6 +57,8 @@ def project(request, project_id):
                                'rss_img_feed_url': project.imageset_feedurl,
                                'subprojects' : subprojects,
                                'implementors' : implementors,
+                               'rss_youtube_feed_url':'feed://gdata.youtube.com/feeds/api/users/' + project.youtube_username +'/uploads',
+                               'rss_youtube_feed_max_entries': 4,
                                },
                                context_instance=RequestContext(request)
                                ) 

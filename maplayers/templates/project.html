@@ -92,20 +92,20 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
                   <p/>
                   
                   <div  id="project_video">
-					{% parse_youtube_rss_feed %}
-					<ul>
-					{% for vid in rss_youtube_feed.videos %}
-					    <li>
-					        <object width="425" height="350">
-					           <param name="movie" value="{{ vid.video_url }}"></param>
-					           <embed src="{{ vid.video_url }}" 
-					            type="{{ vid.type }}" width="425" height="350">
-					           </embed>
-					       </object>
-					        <div>{{ vid.title }}</div>
-					    </li>   
-					{% endfor %}
-					</ul>                  
+                    {% parse_youtube_rss_feed %}
+                    <ul>
+                    {% for vid in rss_youtube_feed.videos %}
+                        <li>
+                            <object width="425" height="350">
+                               <param name="movie" value="{{ vid.video_url }}"></param>
+                               <embed src="{{ vid.video_url }}" 
+                                type="{{ vid.type }}" width="425" height="350">
+                               </embed>
+                           </object>
+                            <div>{{ vid.title }}</div>
+                        </li>   
+                    {% endfor %}
+                    </ul>                  
                   </div>
 	
 				<div id="map_canvas" class="olMap" style="width: 512px; height:256px; border=1px solid #CCCCCC"></div>
