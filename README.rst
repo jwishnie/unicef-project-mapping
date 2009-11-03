@@ -26,7 +26,7 @@ Postgres Python driver     python-psycopg2
 Nginx                      nginx
 Memcached                  memcached
 Python memcache            python-memcache
-Buildbot (for build servers)                   buildbot
+Buildbot (build servers)   buildbot
 ========================   ========================
 
 
