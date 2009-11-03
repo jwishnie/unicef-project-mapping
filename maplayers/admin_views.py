@@ -64,7 +64,7 @@ def add_project(request):
 def edit_project(request, project_id): 
     
     if not _is_project_author(request.user):
-        return HttpResponseRedirect('/permission_denied/add_project/not_author')
+        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
     project = Project.objects.get(id=int(project_id))
 
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
