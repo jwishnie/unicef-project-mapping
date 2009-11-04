@@ -6,7 +6,6 @@ from django.http import Http404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect 
 from django.db.models import Q
-from forms import SearchForm
 
 from maplayers.utils import is_empty
 from maplayers.models import Project, Sector, Implementor
@@ -64,6 +63,20 @@ def project(request, project_id):
                                },
                                context_instance=RequestContext(request)
                                )
+
+def projects_search(request, search_term):
+    qset = (
+            Q(name__icontains=search_term) |
+            Q(description__icontains=search_term) |
+            Q(location__icontains=search_term) |
+            Q(implementor__name__icontains=search_term)
+           )
+    results = Project.objects.filter(qset).distinct()
+    return render_to_response(
+                              'projects_in_map.json',
+                              {'projects': results},
+                               context_instance=RequestContext(request)
+                              )
 
 def search(request):
     query = request.GET.get('q', '')

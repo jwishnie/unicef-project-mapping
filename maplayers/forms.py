@@ -13,14 +13,3 @@ class ProjectForm(forms.Form):
     imageset_feedurl = forms.CharField(max_length=1000, required=False)
     youtube_username = forms.CharField(max_length=100, required=False)
     
-SEARCH_CHOICES = (
-                  ('title','project title'),
-                  ('description', 'project description'),
-                  ('implementor', 'project implementor'),
-                  ('location','project location'),
-                  )
-
-class SearchForm(forms.Form):
-    choices = forms.ChoiceField(choices=SEARCH_CHOICES)
-    search_term = forms.CharField(max_length = 500)
-    
