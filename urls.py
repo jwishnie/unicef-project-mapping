@@ -26,14 +26,14 @@ urlpatterns += patterns('maplayers',
                           {'template': 'success.html', 'extra_context': {
                                  'message': 'Project added successfully',
                                  'link' : 'add_project',
-                                 'action' : 'Add'
+                                 'link_text' : 'Add Another'
                           }}),
                           
                           (r'^project_edited_successfully/', direct_to_template, 
                            {'template': 'success.html', 'extra_context': {
                                'message': 'Project editied successfully',
-                               'link' : 'edit_project',
-                               'action' : 'Edit'
+                               'link' : '',
+                               'link_text' : 'Homepage'
                          }}),
                           (r'^fancy_upload/', direct_to_template, 
                            {'template': 'fancyuploader.html'}),
