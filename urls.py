@@ -19,6 +19,7 @@ urlpatterns += patterns('maplayers',
                          'views.projects_in_map'),
                          (r'^projects/id/(?P<project_id>\d+)/$', 'views.project'),
                          (r'^$', 'views.homepage'),
+                         (r'^search/','views.search'),
                          (r'^add_project/', 'admin_views.add_project'),
                          (r'^edit_project/(?P<project_id>\d+)/$', 'admin_views.edit_project'),
                          

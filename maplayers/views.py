@@ -5,6 +5,8 @@ from django.shortcuts import render_to_response
 from django.http import Http404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect 
+from django.db.models import Q
+from forms import SearchForm
 
 from maplayers.utils import is_empty
 from maplayers.models import Project, Sector, Implementor
@@ -61,7 +63,25 @@ def project(request, project_id):
                                'rss_youtube_feed_max_entries': 4,
                                },
                                context_instance=RequestContext(request)
-                               ) 
+                               )
+
+def search(request):
+    query = request.GET.get('q', '')
+    if query:
+        qset = (
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(location__icontains=query) |
+            Q(implementor__name__icontains=query)
+        )
+        results = Project.objects.filter(qset).distinct()
+    else:
+        results = []
+    return render_to_response("search.html", {
+        "results": results,
+        "query": query
+    })
+
 
 def _filter_ids(request, filter_name):
     """

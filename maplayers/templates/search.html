@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load project_tags %}
+
+{% block title_extra %} &mdash; Search for Projects{% endblock %}
+
+{% block page_content %}
+  <h1>Search for Projects</h1>
+  <form action="." method="GET">
+    <label for="q">Search : </label>
+    <input type="text" name="q" value="{{ query|escape }}">
+    <input type="submit" value="Search">
+  </form>
+
+  {% if query %}
+    <h2>Results for "{{ query|escape }}":</h2>
+
+    {% if results %}
+      <ul>
+      {% for project in results %}
+        <a href="/projects/id/{{project.id}}"><li>{{ project|escape }}</l1></a>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No results found</p>
+    {% endif %}
+  {% endif %}
+
+{% endblock %}
