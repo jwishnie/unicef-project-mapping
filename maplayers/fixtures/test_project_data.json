@@ -748,6 +748,22 @@
     }
   }, 
   {
+    "pk": 6, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": "Test project for Edit", 
+      "parent_project": null, 
+      "youtube_username": "Test project", 
+      "longitude": "0", 
+      "imageset_feedurl": "feed://api.flickr.com/", 
+      "location": "test project", 
+      "latitude": "50", 
+      "project_image": "http://3.bp.blogspot.com/", 
+      "website_url": "http://test.org/", 
+      "description": "Test project for Edit"
+    }
+  },
+  {
     "pk": 1, 
     "model": "maplayers.link", 
     "fields": {
@@ -821,7 +837,18 @@
     "fields": {
       "name": "Disaster Aid", 
       "projects": [
-        3
+        3,
+        6
+      ]
+    }
+  },   
+  {
+    "pk": 5, 
+    "model": "maplayers.sector", 
+    "fields": {
+      "name": "TestSector", 
+      "projects": [
+        6
       ]
     }
   }, 
@@ -853,7 +880,8 @@
       "name": "Unicef", 
       "projects": [
         1, 
-        4
+        4,
+        6
       ]
     }
   }

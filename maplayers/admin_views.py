@@ -69,7 +69,7 @@ def edit_project(request, project_id):
 
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
-
+    action = "edit_project/" + project_id
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         link_titles = request.POST.getlist('link_title')
@@ -83,7 +83,6 @@ def edit_project(request, project_id):
             _create_project(form, project_id)
             return HttpResponseRedirect('/project_edited_successfully/')
         else:
-            action = "edit_project/" + project_id
             return _render_response(request, form, action, sectors, implementors, 
                                     project_id, link_titles, link_urls)
     else:
@@ -91,7 +90,6 @@ def edit_project(request, project_id):
         links = project.link_set.all()
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
-        action = "edit_project/" + project_id
         return _render_response(request, form, action, sectors, implementors, 
                                 project_id, link_titles, link_urls)
     
