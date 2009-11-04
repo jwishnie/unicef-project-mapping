@@ -841,6 +841,16 @@
         6
       ]
     }
+  },   
+  {
+    "pk": 5, 
+    "model": "maplayers.sector", 
+    "fields": {
+      "name": "TestSector", 
+      "projects": [
+        6
+      ]
+    }
   }, 
   {
     "pk": 2, 
