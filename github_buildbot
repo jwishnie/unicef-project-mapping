@@ -1,37 +1,30 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          maplayers
+# Provides:          github_buildbot
 # Required-Start:    $remote_fs
 # Required-Stop:     $remote_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Django server for UNICEF Maplayers
+# Short-Description: Example initscript
+# Description:       This file should be used to construct scripts to be
+#                    placed in /etc/init.d.
 ### END INIT INFO
 
-# Author: Jeff Wishnie <jwishnie@thoughtworks.com>
+# Author: Foo Bar <foobar@baz.org>
 #
-
-#
-# TO USE:
-# 1. edit 'provides' (above) and NAME and DAEMON (below) as appropriate
-# 2. Copy into /etc/init.d and give a name that matches your service
-# 3. add to run levels with this command:
-# > update-rc.d <service-anem> defaults
-#
-
+# Please remove the "Author" lines above and replace them
+# with your own name if you copy and modify this script.
 
 # Do NOT "set -e"
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="UNICEF MapLayers Project"
-NAME=maplayers
+DESC="Description of the service"
+NAME=github_buildbot.py
+DAEMON=/usr/share/buildbot/contrib/$NAME
+DAEMON_ARGS="-p 8080"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-DAEMON=/var/www/mapping/doc-root/manage.py
-DAEMON_ARGS="runfcgi port=8801 host=127.0.0.1 pidfile=${PIDFILE}"
-
-
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
@@ -57,7 +50,7 @@ do_start()
 	#   2 if daemon could not be started
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
 		|| return 1
-	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- \
+	start-stop-daemon --start --quiet -b -m  --pidfile $PIDFILE --exec $DAEMON -- \
 		$DAEMON_ARGS \
 		|| return 2
 	# Add code here, if necessary, that waits for the process to be ready
@@ -100,7 +93,7 @@ do_reload() {
 	# restarting (for example, when it is sent a SIGHUP),
 	# then implement that here.
 	#
-	start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE 
+	start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE
 	return 0
 }
 
