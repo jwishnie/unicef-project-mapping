@@ -12,6 +12,7 @@ Universal feed parser      (included in project dir as need at least rev295 from
 Python Tidy                python-utidylib
 Tidy                       libtidy-0.99-0 
 Chardet                    python-chardet
+SimpleJson                 python-simplejson
 ========================   ========================
 
 The following are need for deploy with PostGIS, Memcached, Nginx, and Fastcgi
