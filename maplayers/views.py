@@ -62,7 +62,7 @@ def project(request, project_id):
                                'rss_youtube_feed_max_entries': 4,
                                },
                                context_instance=RequestContext(request)
-                               )
+                              )
 
 def projects_search(request, search_term):
     qset = (
@@ -77,24 +77,6 @@ def projects_search(request, search_term):
                               {'projects': results},
                                context_instance=RequestContext(request)
                               )
-
-def search(request):
-    query = request.GET.get('q', '')
-    if query:
-        qset = (
-            Q(name__icontains=query) |
-            Q(description__icontains=query) |
-            Q(location__icontains=query) |
-            Q(implementor__name__icontains=query)
-        )
-        results = Project.objects.filter(qset).distinct()
-    else:
-        results = []
-    return render_to_response("search.html", {
-        "results": results,
-        "query": query
-    })
-
 
 def _filter_ids(request, filter_name):
     """
