@@ -8,11 +8,13 @@ from maplayers.admin_views import _add_existing_implementors, _create_and_add_ne
 from maplayers.models import Project, Sector, Implementor
 from maplayers.utils import is_iter
 from django.db.models import Q
+from django.contrib.auth.models import Group
 
 class AdminViewsUnitTest(TestCase):
     def setUp(self):
-        self.p = Project(name="test", description="test description", latitude=0, longitude=0)
+        self.p = Project(name="test", description="test description", latitude=0, longitude=0, created_by_id=2)
         self.p.save()
+        self.p.groups.add(Group.objects.get(id=2))
         
     def teardown(self):
         self.p.delete()
@@ -65,12 +67,14 @@ class AdminViewsFunctionalTest(TestCase):
                                   "latitude" : "-70", "longitude" : "-10", 
                                   "location" : "test location", "website_url" : "www.test.com",
                                   "project_image" : "www.image.com",
-                                  "project_sectors" : "Health, Education",
+                                  "project_sectors" : "Health, TestSector",
                                   "project_implementors" : "TestImplementor, Red Cross Foundation"})
 
-        self.assertTrue(Project.objects.filter(name="test"))
+        project = Project.objects.filter(name="test")
+        self.assertTrue(project)
         self.assertTrue(Sector.objects.filter(name="TestSector"))
         self.assertTrue(Implementor.objects.filter(name="TestImplementor"))
+        # self.assert
         
         
     def test_editing_an_existing_project(self):
@@ -78,12 +82,12 @@ class AdminViewsFunctionalTest(TestCase):
         self.assertTrue(web_client.login(username='author', password='author'))
         project_id = 6
         project_links = ["http://www.link1.com", "http://www.link2.com", "http://www.link3.com"]
-        web_client.post("/edit_project/6", 
+        web_client.post("/edit_project/6/", 
                                  {"project_id": project_id,
                                   "name" : "Edited", "description" : "editied description", 
                                   "latitude" : "30", "longitude" : "45", 
-                                  "location" : "edited location", "website_url" : "www.edited-test.com",
-                                  "project_image" : "www.edited-image.com",
+                                  "location" : "edited location", "website_url" : "http://www.edited-test.com/",
+                                  "project_image" : "http://www.edited-image.com/",
                                   "project_sectors" : "Education",
                                   "project_implementors" : "WHO, Red Cross Foundation",
                                   "link_title" : ["Link 1", "Link 2", "Link 3"],
@@ -92,13 +96,13 @@ class AdminViewsFunctionalTest(TestCase):
         expected_sectors = Sector.objects.filter(name="Education")
         expected_implementors = Implementor.objects.filter(Q(name="WHO") | Q(name="Red Cross Foundation"))
         
-        self.assertTrue("Edited", project.name)
-        self.assertTrue("editied description", project.description)
-        self.assertTrue(30, project.latitude)
-        self.assertTrue(45, project.longitude)
-        self.assertTrue("www.edited-test.com", project.website_url)
-        self.assertTrue("www.edited-image.com", project.project_image)
-        self.assertTrue(expected_sectors, project.sector_set.all())
-        self.assertTrue(expected_implementors, project.implementor_set.all())
-        self.assertTrue(set(project_links), set([link.url for link in project.link_set.all()]))
+        self.assertEquals(u"Edited", project.name)
+        self.assertEquals(u"editied description", project.description)
+        self.assertEquals(30, project.latitude)
+        self.assertEquals(45, project.longitude)
+        self.assertEquals(u"http://www.edited-test.com/", project.website_url)
+        self.assertEquals(u"http://www.edited-image.com/", project.project_image)
+        self.assertEquals(set(expected_sectors), set(project.sector_set.all()))
+        self.assertEquals(set(expected_implementors), set(project.implementor_set.all()))
+        self.assertEquals(set(project_links), set([link.url for link in project.link_set.all()]))
         
