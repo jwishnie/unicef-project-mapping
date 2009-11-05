@@ -22,6 +22,15 @@ def project_links(titles_and_urls):
         link_tag.append('<input type="text" name="link_url"  value="%s"></input></div>' % url)
     return "".join(link_tag).encode("UTF-8")
     
+@register.simple_tag
+def edit_project_link(project, user):
+    s = ""
+    if project.is_editable_by(user):
+        s = """<p>
+    			<a href='/edit_project/%s/' id="edit_project">Edit this project</a>
+    		</p>""" % project.id
+    return s
+    
  
 @register.tag(name='parse_img_rss_feed')
 def do_parse_img_rss_feed(parser, token):

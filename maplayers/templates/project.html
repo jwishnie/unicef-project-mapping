@@ -26,11 +26,7 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 
 {% block body_tag_exta %}onload='initialize()'{% endblock %}
 {% block page_content %}
-				{% if user.is_authenticated %}
-				<p>
-					<a href='/edit_project/{{project.id}}/' id="edit_project">Edit this project</a>
-				</p>
-				{% endif %}
+				{% edit_project_link project user %}
 				<div id="project_details">
 						<div id="project_name">
 							<label>Name : </label>

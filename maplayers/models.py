@@ -3,7 +3,7 @@
 from django.db import models 
 from maplayers.utils import is_empty
 import simplejson as json
-
+from django.contrib.auth.models import User, Group
 
 class Project(models.Model): 
     name = models.CharField(max_length=30, null=True, blank=True) 
@@ -16,6 +16,14 @@ class Project(models.Model):
     imageset_feedurl = models.CharField(max_length=1000,null=True, blank=True)
     youtube_username = models.CharField(max_length=100, null=True, blank=True)
     parent_project = models.ForeignKey('self', null=True, blank=True)
+    status = models.CharField(max_length=12)
+    created_by = models.ForeignKey(User)
+    groups = models.ManyToManyField(Group)
+    
+    def is_editable_by(self, user):
+        if self.created_by == user: return True
+        if (user.groups.all() & self.groups.all()) : return True
+        return False
     
     def implementors_in_json(self):
         return json.dumps([implementor.name for implementor in Implementor.objects.filter(projects=self.id)])

@@ -8,26 +8,14 @@ from maplayers.forms import ProjectForm
 from django.http import HttpResponse
 import uuid
 
-from maplayers.constants import GROUPS
+from maplayers.constants import GROUPS, PROJECT_STATUS
 
 # Authentication helpers
-def _is_project_author(u):
-    for g in u.groups.all():
+def _is_project_author(user):
+    for g in user.groups.all():
         if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS):
             return True
     return False
-
-def _is_project_owner(u, project):
-    """
-    Must be implemented for _edit_project_ to check that
-    the person attempting to edit has perms.
-    
-    Test should be:
-    1. Are they the original creator?
-    2. Are they in the same implementing org as the original creator?
-    
-    """
-    return True
 
 @login_required
 def add_project(request): 
@@ -47,25 +35,24 @@ def add_project(request):
         
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
-            _create_project(form, project_id)
+            _add_project_details(form, project_id)
             return HttpResponseRedirect('/project_created_successfully/')
         else: 
             return _render_response(request, form, "add_project", sectors, 
                                     implementors, project_id, link_titles, link_urls)
     else: 
         form = ProjectForm()
-        project = Project()
-        project.save()
+        project = _create_new_project(request)
         return _render_response(request, form, "add_project", 
                                 sectors, implementors, project.id)
         
         
 @login_required
 def edit_project(request, project_id): 
-    
-    if not _is_project_author(request.user):
-        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
     project = Project.objects.get(id=int(project_id))
+    
+    if not project.is_editable_by(request.user):
+        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
 
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
@@ -80,7 +67,7 @@ def edit_project(request, project_id):
             project.implementor_set.clear()
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
-            _create_project(form, project_id)
+            _add_project_details(form, project_id)
             return HttpResponseRedirect('/project_edited_successfully/')
         else:
             return _render_response(request, form, action, sectors, implementors, 
@@ -107,7 +94,7 @@ def file_upload(request):
     project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project))
     return HttpResponse("OK")
         
-def _create_project(form, project_id):
+def _add_project_details(form, project_id):
     project = Project.objects.get(id=int(project_id))
     project.name = form.cleaned_data['name']
     project.description = form.cleaned_data['description']
@@ -183,6 +170,15 @@ def _create_initial_data_from_project(project):
     form.fields['youtube_username'].initial = project.youtube_username
     form.fields['imageset_feedurl'].initial = project.imageset_feedurl
     return form
+    
+
+def _create_new_project(request):
+    project = Project()
+    project.status = PROJECT_STATUS.DRAFT
+    project.created_by = request.user
+    project.save()
+    project.groups = request.user.groups.all()
+    return project
 
 def _render_response(request, form, action, sectors, implementors, project_id, link_titles=[], link_urls=[]):
     link_titles_and_values = zip(link_titles, link_urls)
