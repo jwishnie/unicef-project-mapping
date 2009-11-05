@@ -5,6 +5,7 @@ settings.py
 \#*
 .#*
 *~
+*.swp
 build
 *.sqlite3
 *.log*

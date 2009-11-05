@@ -2,6 +2,7 @@
 
 from django.db import models 
 from maplayers.utils import is_empty
+import simplejson as json
 from django.contrib.auth.models import User, Group
 
 class Project(models.Model): 
@@ -23,6 +24,12 @@ class Project(models.Model):
         if self.created_by == user: return True
         if (user.groups.all() & self.groups.all()) : return True
         return False
+    
+    def implementors_in_json(self):
+        return json.dumps([implementor.name for implementor in Implementor.objects.filter(projects=self.id)])
+    
+    def sectors_in_json(self):
+        return json.dumps([sector.name for sector in Sector.objects.filter(projects=self.id)])
     
     def __unicode__(self): 
         return ( 'No Name' if is_empty(self.name) else self.name)

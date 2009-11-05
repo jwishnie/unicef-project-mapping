@@ -17,7 +17,54 @@ $(document).ready(function() {
 
 	$('.sectorbox').click(mapEvent);
 	$('.implementorbox').click(mapEvent);
+	$('[name=Search]').click(searchEvent);
 	
+	function searchEvent(){
+	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
+		$.get(search_url, function(data){
+			var projects = eval(data);
+			markers.destroy();
+			markers = new OpenLayers.Layer.Markers( "Markers" );
+			map.addLayer(markers);
+			
+			var html = "<p>Projects : </p><ol>";
+			for(var i = 0;i<projects.length; i++){
+			    var project = projects[i];
+			    var project_name = project['snippet'].split(":")[0];
+			    var project_description = project['snippet'].split(":")[1];			    
+			    var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
+				                        project_name + '</a>' + ' - ' +  project_description + '</div>'
+				html += "<li>" + project_text + '</li>';
+				var marker_icon = icon.clone()
+				marker = new OpenLayers.Marker(
+				                new OpenLayers.LonLat(project['longitude'], 
+	    						    project['latitude']),marker_icon);
+	            marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
+				markers.addMarker(marker);
+			}
+			html += '</ol>';
+			$("#projects").html(html);
+			
+			$("input[type=checkbox]").each(function()
+			{
+				this.checked = false;
+			});			
+            for(var i = 0;i<projects.length; i++){			
+			  $("input[type=checkbox]").each(function()
+			  {
+			      var project = projects[i];
+			      if($.inArray(this.value, project['implementors']) > -1) 
+			      {
+				    this.checked = true;
+				  }
+			      if($.inArray(this.value, project['sectors']) > -1) 
+			      {
+				    this.checked = true;
+				  }				  
+			  });
+			}			
+		});	  
+	}
 	
 	function constructQueryString(selected_filters){
 		var qstring = "";
@@ -71,8 +118,10 @@ $(document).ready(function() {
 			var html = "<p>Projects : </p><ol>";
 			for(var i = 0;i<projects.length; i++){
 			    var project = projects[i];
+			    var project_name = project['snippet'].split(":")[0];
+			    var project_description = project['snippet'].split(":")[1];			    
 			    var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
-				                        project['snippet'] + '</a></div>'
+				                        project_name + '</a>' + ' - ' +  project_description + '</div>'
 				html += "<li>" + project_text + '</li>';
 				var marker_icon = icon.clone()
 				marker = new OpenLayers.Marker(
