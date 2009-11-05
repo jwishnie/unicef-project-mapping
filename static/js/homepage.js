@@ -102,10 +102,10 @@ $(document).ready(function() {
 		var projects_url = "/projects/bbox/" + boundingBox.left + "/" + 
 							boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
 		var filters = {};
-		$(".sectors input[type=checkbox][checked]").each(function(){
+		$(".sectors input[type=checkbox]:checked").each(function(){
 			filters[$(this).attr('name')] = true;
 		});
-		$(".implementors input[type=checkbox][checked]").each(function(){
+		$(".implementors input[type=checkbox]:checked").each(function(){
 			filters[$(this).attr('name')] = true;
 		});
 		
