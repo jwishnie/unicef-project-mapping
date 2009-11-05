@@ -11,4 +11,5 @@ build
 *.log*
 *.py.swo
 .settings/*
+static/resources/
 initial_data.json
