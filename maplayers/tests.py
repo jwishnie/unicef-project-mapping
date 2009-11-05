@@ -12,6 +12,7 @@ for t in glob('maplayers/subtests/*tests.py'):
     __import__(mod)
 """   
 
+
 from maplayers.subtests.utils_tests import * 
 from maplayers.subtests.tag_utils_tests import *
 from maplayers.subtests.homepage_view_tests import *
