@@ -44,6 +44,25 @@ $(document).ready(function() {
 			}
 			html += '</ol>';
 			$("#projects").html(html);
+			
+			$("input[type=checkbox]").each(function()
+			{
+				this.checked = false;
+			});			
+            for(var i = 0;i<projects.length; i++){			
+			  $("input[type=checkbox]").each(function()
+			  {
+			      var project = projects[i];
+			      if($.inArray(this.value, project['implementors']) > -1) 
+			      {
+				    this.checked = true;
+				  }
+			      if($.inArray(this.value, project['sectors']) > -1) 
+			      {
+				    this.checked = true;
+				  }				  
+			  });
+			}			
 		});	  
 	}
 	

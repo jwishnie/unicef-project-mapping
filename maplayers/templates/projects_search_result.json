@@ -1,0 +1,14 @@
+{% autoescape off %}
+[
+{% for project in projects %}
+	{
+	  'latitude' : {{project.latitude}},
+	  'longitude' : {{project.longitude}},
+	  'snippet': '{{project.snippet}}',
+	  'id' : {{ project.id }},
+	  'implementors' : {{project.implementors_in_json}},
+	  'sectors' : {{project.sectors_in_json}}
+	 },
+{% endfor %}
+]
+{% endautoescape %}

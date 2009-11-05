@@ -65,19 +65,18 @@ def project(request, project_id):
                               )
 
 def projects_search(request, search_term):
-    qset = (
-            Q(name__icontains=search_term) |
-            Q(description__icontains=search_term) |
-            Q(location__icontains=search_term) |
-            Q(implementor__name__icontains=search_term)
-           )
-    results = Project.objects.filter(qset).distinct()
+    qset = _construct_queryset_for_project_search(search_term)
+    results = Project.objects.filter(qset, parent_project=None).distinct()
+
     return render_to_response(
-                              'projects_in_map.json',
+                              'projects_search_result.json',
                               {'projects': results},
                                context_instance=RequestContext(request)
                               )
 
+def _get_implementors_for_projects_in_result(results):
+    pass
+    
 def _filter_ids(request, filter_name):
     """
     returns a list of selected filter_id from the request
@@ -121,3 +120,8 @@ def _get_bounding_box(request):
     top = request.GET.get('top', '90')
     bottom = request.GET.get('bottom', '-90')
     return (left, bottom, right, top)
+def _construct_queryset_for_project_search(search_term):
+    return  (Q(name__icontains=search_term) |
+             Q(description__icontains=search_term) |
+             Q(location__icontains=search_term) |
+             Q(implementor__name__icontains=search_term))

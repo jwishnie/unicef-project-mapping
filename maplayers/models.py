@@ -2,6 +2,8 @@
 
 from django.db import models 
 from maplayers.utils import is_empty
+import simplejson as json
+
 
 class Project(models.Model): 
     name = models.CharField(max_length=30, null=True, blank=True) 
@@ -14,6 +16,12 @@ class Project(models.Model):
     imageset_feedurl = models.CharField(max_length=1000,null=True, blank=True)
     youtube_username = models.CharField(max_length=100, null=True, blank=True)
     parent_project = models.ForeignKey('self', null=True, blank=True)
+    
+    def implementors_in_json(self):
+        return json.dumps([implementor.name for implementor in Implementor.objects.filter(projects=self.id)])
+    
+    def sectors_in_json(self):
+        return json.dumps([sector.name for sector in Sector.objects.filter(projects=self.id)])
     
     def __unicode__(self): 
         return ( 'No Name' if is_empty(self.name) else self.name)
