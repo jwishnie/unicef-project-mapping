@@ -5,6 +5,7 @@ from maplayers.models import Project
 from django.contrib.auth.models import User, Group
 
 class ProjectModelTest(TestCase):
+    
     def test_should_get_list_of_project_implementors_in_json(self):
         project = Project.objects.get(id=3)
         self.assertEquals('["Red Cross Foundation", "Doctors Without Borders"]', project.implementors_in_json())
