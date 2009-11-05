@@ -11,23 +11,11 @@ import uuid
 from maplayers.constants import GROUPS, PROJECT_STATUS
 
 # Authentication helpers
-def _is_project_author(u):
-    for g in u.groups.all():
+def _is_project_author(user):
+    for g in user.groups.all():
         if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS):
             return True
     return False
-
-def _is_project_owner(u, project):
-    """
-    Must be implemented for _edit_project_ to check that
-    the person attempting to edit has perms.
-    
-    Test should be:
-    1. Are they the original creator?
-    2. Are they in the same implementing org as the original creator?
-    
-    """
-    return True
 
 @login_required
 def add_project(request): 
@@ -61,9 +49,10 @@ def add_project(request):
         
 @login_required
 def edit_project(request, project_id): 
-    if not _is_project_author(request.user):
-        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
     project = Project.objects.get(id=int(project_id))
+    
+    if not project.is_editable_by(request.user):
+        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
 
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])

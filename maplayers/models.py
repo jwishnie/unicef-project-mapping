@@ -19,6 +19,11 @@ class Project(models.Model):
     created_by = models.ForeignKey(User)
     groups = models.ManyToManyField(Group)
     
+    def is_editable_by(self, user):
+        if self.created_by == user: return True
+        if (user.groups.all() & self.groups.all()) : return True
+        return False
+    
     def __unicode__(self): 
         return ( 'No Name' if is_empty(self.name) else self.name)
         
