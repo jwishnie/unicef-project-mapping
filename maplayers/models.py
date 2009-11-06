@@ -2,6 +2,7 @@
 
 from django.db import models 
 from maplayers.utils import is_empty
+import simplejson as json
 from django.contrib.auth.models import User, Group
 
 class Project(models.Model): 
@@ -18,6 +19,17 @@ class Project(models.Model):
     status = models.CharField(max_length=12)
     created_by = models.ForeignKey(User)
     groups = models.ManyToManyField(Group)
+    
+    def is_editable_by(self, user):
+        if self.created_by == user: return True
+        if (user.groups.all() & self.groups.all()) : return True
+        return False
+    
+    def implementors_in_json(self):
+        return json.dumps([implementor.name for implementor in Implementor.objects.filter(projects=self.id)])
+    
+    def sectors_in_json(self):
+        return json.dumps([sector.name for sector in Sector.objects.filter(projects=self.id)])
     
     def __unicode__(self): 
         return ( 'No Name' if is_empty(self.name) else self.name)
@@ -41,9 +53,10 @@ class Link(models.Model):
     
 class Resource(models.Model):
     title = models.CharField(max_length=50)
-    filename = models.FileField(upload_to="/resources")
+    filename = models.CharField(max_length=250)
     project = models.ForeignKey(Project)
-
+    filesize = models.IntegerField()
+    
     def __unicode__(self): 
         return self.title
 

@@ -123,17 +123,31 @@ FancyUpload3.Attach.File = new Class({
 		this.ui.title = new Element('span', {'class': 'file-title', text: this.name});
 		this.ui.size = new Element('span', {'class': 'file-size', text: Swiff.Uploader.formatUnit(this.size, 'b')});
 		
+        this.ui.remove = new Element('a', {
+                			'class': 'file-remove',
+                			href: '#',
+                			html: 'remove',
+                			events: {
+                				click: function() {
+                					jQuery.get("/remove_attachment/", {'project_id' : project_id, 'file-name' : this.name});
+                					this.remove();
+                					return false;
+                				}.bind(this)
+                			}
+                		});
+		
 		this.ui.cancel = new Element('a', {'class': 'file-cancel', text: 'Cancel', href: '#'});
 		this.ui.cancel.addEvent('click', function() {
 			this.remove();
 			return false;
 		}.bind(this));
 		
-		this.ui.element.adopt(
-			this.ui.title,
-			this.ui.size,
-			this.ui.cancel
-		).inject(this.base.list).highlight();
+        this.ui.element.adopt(
+         this.ui.title,
+         this.ui.size,
+         this.ui.remove,
+         this.ui.cancel
+        ).inject(this.base.list).highlight();
 		
 		var progress = new Element('img', {'class': 'file-progress', src: '/static/img/bar.gif'}).inject(this.ui.size, 'after');
 		this.ui.progress = new Fx.ProgressBar(progress, {

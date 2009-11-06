@@ -5,9 +5,11 @@ settings.py
 \#*
 .#*
 *~
+*.swp
 build
 *.sqlite3
 *.log*
 *.py.swo
 .settings/*
+static/resources/
 initial_data.json

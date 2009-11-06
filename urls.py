@@ -19,6 +19,7 @@ urlpatterns += patterns('maplayers',
                          'views.projects_in_map'),
                          (r'^projects/id/(?P<project_id>\d+)/$', 'views.project'),
                          (r'^$', 'views.homepage'),
+                         (r'^projects/search/(?P<search_term>.+)/$','views.projects_search'),
                          (r'^add_project/', 'admin_views.add_project'),
                          (r'^edit_project/(?P<project_id>\d+)/$', 'admin_views.edit_project'),
                          
@@ -35,9 +36,8 @@ urlpatterns += patterns('maplayers',
                                'link' : '',
                                'link_text' : 'Homepage'
                          }}),
-                          (r'^fancy_upload/', direct_to_template, 
-                           {'template': 'fancyuploader.html'}),
                            (r'^upload/$', 'admin_views.file_upload'),
+                           (r'^remove_attachment/$', 'admin_views.remove_attachment'),
                            (r'^permission_denied/(?P<action>.+)/(?P<reason>.+)/$', direct_to_template,
                             {'template': 'permission_denied.html'}),
                            )

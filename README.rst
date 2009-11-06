@@ -8,13 +8,11 @@ Dependency                 Ubuntu Package
 ========================   ========================
 Django                     python-django
 TZ definitions             python-tz
-Universal feed parser      (included in project dir as need at least rev295 from sv)
-Python Tidy                python-utidylib
-Tidy                       libtidy-0.99-0 
-Chardet                    python-chardet
+Universal feed parser      (included in project dir as need at least rev295 from svn)
+SimpleJson                 python-simplejson
 ========================   ========================
 
-The following are need for deploy with PostGIS, Memcached, Nginx, and Fastcgi
+The following are needed for staging deploy with PostGIS, Memcached, Nginx, Fastcgi, and BuildBot
 
 ========================   ========================
 Dependency                 Ubuntu Package
@@ -26,6 +24,7 @@ Postgres Python driver     python-psycopg2
 Nginx                      nginx
 Memcached                  memcached
 Python memcache            python-memcache
+Python Expect              python-pexpect
 Buildbot (build servers)   buildbot
 ========================   ========================
 

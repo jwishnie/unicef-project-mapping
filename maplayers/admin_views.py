@@ -7,27 +7,16 @@ from maplayers.models import Project, Sector, Implementor, Resource, Link
 from maplayers.forms import ProjectForm
 from django.http import HttpResponse
 import uuid
+import os, stat
 
 from maplayers.constants import GROUPS, PROJECT_STATUS
 
 # Authentication helpers
-def _is_project_author(u):
-    for g in u.groups.all():
+def _is_project_author(user):
+    for g in user.groups.all():
         if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS):
             return True
     return False
-
-def _is_project_owner(u, project):
-    """
-    Must be implemented for _edit_project_ to check that
-    the person attempting to edit has perms.
-    
-    Test should be:
-    1. Are they the original creator?
-    2. Are they in the same implementing org as the original creator?
-    
-    """
-    return True
 
 @login_required
 def add_project(request): 
@@ -44,14 +33,16 @@ def add_project(request):
         project_id = request.POST.get("project_id")
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
+        project = Project.objects.get(id=int(project_id))
         
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
-            _add_project_details(form, project_id)
+            _add_project_details(form, project)
             return HttpResponseRedirect('/project_created_successfully/')
         else: 
             return _render_response(request, form, "add_project", sectors, 
-                                    implementors, project_id, link_titles, link_urls)
+                                    implementors, project_id, link_titles, link_urls, 
+                                    project.resource_set.all())
     else: 
         form = ProjectForm()
         project = _create_new_project(request)
@@ -61,9 +52,10 @@ def add_project(request):
         
 @login_required
 def edit_project(request, project_id): 
-    if not _is_project_author(request.user):
-        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
     project = Project.objects.get(id=int(project_id))
+    
+    if not project.is_editable_by(request.user):
+        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
 
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
@@ -78,35 +70,47 @@ def edit_project(request, project_id):
             project.implementor_set.clear()
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
-            _add_project_details(form, project_id)
+            _add_project_details(form, project)
             return HttpResponseRedirect('/project_edited_successfully/')
         else:
             return _render_response(request, form, action, sectors, implementors, 
-                                    project_id, link_titles, link_urls)
+                                    project_id, link_titles, link_urls, 
+                                    project.resource_set.all())
     else:
         form = _create_initial_data_from_project(project)
         links = project.link_set.all()
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
         return _render_response(request, form, action, sectors, implementors, 
-                                project_id, link_titles, link_urls)
-    
+                                project_id, link_titles, link_urls, 
+                                project.resource_set.all())
+                                
   
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
+    file_size = uploaded_file.size
     destination_name = "static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
     destination = open(destination_name, 'wb+')
     for chunk in uploaded_file.chunks(): 
         destination.write(chunk) 
-        destination.close() 
+        destination.close()
+    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
     project = Project.objects.get(id=project_id)
-    project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project))
+    project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project, filesize=file_size))
+    return HttpResponse("OK")
+    
+def remove_attachment(request):
+    project_id = request.GET.get('project_id')
+    filename = request.GET.get('file-name')
+    project = Project.objects.get(id=int(project_id))
+    resource = Resource.objects.filter(filename__contains=filename, project=project)[0]
+    os.remove(resource.filename)
+    resource.delete()
     return HttpResponse("OK")
         
-def _add_project_details(form, project_id):
-    project = Project.objects.get(id=int(project_id))
+def _add_project_details(form, project):
     project.name = form.cleaned_data['name']
     project.description = form.cleaned_data['description']
     project.latitude = form.cleaned_data['latitude']
@@ -191,14 +195,15 @@ def _create_new_project(request):
     project.groups = request.user.groups.all()
     return project
 
-def _render_response(request, form, action, sectors, implementors, project_id, link_titles=[], link_urls=[]):
+def _render_response(request, form, action, sectors, implementors, 
+                     project_id, link_titles=[], link_urls=[], resources=[]):
     link_titles_and_values = zip(link_titles, link_urls)
     return render_to_response(
                               'add_project.html', 
                               {
                                'form': form,
                                'sectors' : sectors, 'implementors' : implementors,
-                               'project_id' : project_id,
+                               'project_id' : project_id, 'resources' : resources,  
                                'title_and_values' : link_titles_and_values,
                                'action' : action
                               },

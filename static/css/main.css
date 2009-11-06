@@ -15,7 +15,8 @@ img {
 	background-color: #0099FF;
 }
 
-#header {
+#header,
+#project_search {
 	border: 1px dotted #FBFBEF;
 	overflow: hidden;
 	color: #FFF;
@@ -23,6 +24,10 @@ img {
 
 #unicef_logo {
 	float: left;
+}
+
+#project_search {
+  float: right;
 }
 
 #unite {

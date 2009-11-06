@@ -63,3 +63,11 @@ a.hover {
 	vertical-align: middle;
 	background-image: url(/static/img/progress.gif);
 }
+
+.file-size, .file-remove, .file-remove-edit {
+    padding-left: 10px;
+}
+
+.file-title{
+    color: blue;
+}

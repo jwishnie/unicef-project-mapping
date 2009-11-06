@@ -17,6 +17,11 @@
 {% endblock %}
 		
 {% block page_content %}
+<div id="project_search">
+   <input type="text" name="q" value="{{ query|escape }}">
+   <input type="submit" value="Search" name="Search">
+</div>            
+
 <div id="left_pane">
 	<div class="innertube">
 		<ul class="drawers">
