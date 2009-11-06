@@ -17,34 +17,36 @@
 {% endblock %}
 		
 {% block page_content %}
-<div id="filter_left">
-	<ul class="drawers">
-	    <li class="drawer">
-			<h3 class="drawer-handle open">Sectors</h3>
-			<ul class="sectors">
-				{% for sector in sectors %}
-				<li>
-					<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
-					<label>{{sector.name}}</label>
-				</li>
-				{% endfor %}
-			</ul>
-		</li>
-		<li class="drawer">
-			<h3 class="drawer-handle">Implementors</h3>
-			<ul class="implementors">
-				{% for implementor in implementors %}
-				<li>
-					<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
-					<label>{{implementor.name}}</label> <br/>
-				</li>
-				{% endfor %}
-			</ul>
-		</li>
-	</ul>
+<div id="left_pane">
+	<div class="innertube">
+		<ul class="drawers">
+		    <li class="drawer">
+				<h3 class="drawer-handle open">Sectors</h3>
+				<ul class="sectors">
+					{% for sector in sectors %}
+					<li>
+						<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
+						<label>{{sector.name}}</label>
+					</li>
+					{% endfor %}
+				</ul>
+			</li>
+			<li class="drawer">
+				<h3 class="drawer-handle">Implementors</h3>
+				<ul class="implementors">
+					{% for implementor in implementors %}
+					<li>
+						<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
+						<label>{{implementor.name}}</label> <br/>
+					</li>
+					{% endfor %}
+				</ul>
+			</li>
+		</ul>
+	</div>	
 </div>
 		
-<div id="main">
+<div id="main_pane">
 	<div id="map_canvas"></div>
 	<div id="projects"></div>
 	<div id="bookmark"></div>

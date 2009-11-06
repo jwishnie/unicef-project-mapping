@@ -10,27 +10,34 @@
 {% load i18n %}
 
 <body class="{% block bodyclass %}{% endblock %}{% block body_tag_extra %}{% endblock %}">
-    <div id="wrapper">
+    <div class="main_wrapper">
         {% block page_header %}
         <div id="header">
-            <h1>
-                UNICEF Mapping
-            </h1>
-            {% if user.is_authenticated %}
-                {{ user.username }} <a href='{% url django.contrib.auth.views.logout %}'>logout</a>
-            {% else %}
-                <a href='{% url django.contrib.auth.views.login %}'>login</a>
-            {% endif %}
+	        <div class="innertube">
+	            <div id="unicef_logo">
+	            	<a href="#">
+	            		<img src="../../static/img/unicef_logo.gif" />
+	            	</a>
+	            </div>
+	            <div id="unite">unite for children</div>
+	            <div id="auth_info">
+		            {% if user.is_authenticated %}
+		                Hello {{ user.username }}, <a href='{% url django.contrib.auth.views.logout %}'>logout</a>
+		            {% else %}
+		                <a href='{% url django.contrib.auth.views.login %}'>login</a>
+		            {% endif %}
+	            </div>
+	        </div>    
         </div>
         {% endblock %}
         {% block page_nav %}
-        <div id="nav">
-        </div>
         {% endblock %}
         {% block page_content %}{% endblock %}
         {% block page_footer %}
         <div id="footer">
-            Unicef 2009 : All rights reserved
+        	<div class="innertube">
+            	Unicef 2009 : All rights reserved
+            </div>	
         </div>
         {% endblock %}
     </div>
