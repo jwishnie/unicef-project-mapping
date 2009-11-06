@@ -91,11 +91,11 @@ li a {
 h3.drawer-handle {
     margin: 0;
     padding: 4px;
-    background: transparent url('../img/drawer_closed.png') repeat-x top left;
+    background: transparent url('/static/img/drawer_closed.png') repeat-x top left;
 }
 
 h3.drawer-handle.open {
-    background: transparent url('../img/drawer_open.png') repeat-x top left;
+    background: transparent url('/static/img/drawer_open.png') repeat-x top left;
 }
 
 #footer {
