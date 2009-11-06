@@ -1,6 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 import os.path
+import tagging
 # Django settings for maplayers project.
 
 #
@@ -84,6 +85,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'maplayers',
+    'tagging',
 )
 
 #

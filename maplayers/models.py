@@ -1,9 +1,13 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
-from django.db import models 
-from maplayers.utils import is_empty
-import simplejson as json
+from django.db import models
 from django.contrib.auth.models import User, Group
+
+import simplejson as json
+from tagging.fields import TagField
+from tagging.models import Tag
+
+from maplayers.utils import is_empty
 
 class Project(models.Model): 
     name = models.CharField(max_length=30, null=True, blank=True) 
@@ -19,6 +23,13 @@ class Project(models.Model):
     status = models.CharField(max_length=12)
     created_by = models.ForeignKey(User)
     groups = models.ManyToManyField(Group)
+    tags = TagField()
+    
+    def set_tags(self, tags):
+        Tag.objects.update_tags(self, tags)
+
+    def get_tags(self, tags):
+        return Tag.objects.get_for_object(self)       
     
     def is_editable_by(self, user):
         if self.created_by == user: return True

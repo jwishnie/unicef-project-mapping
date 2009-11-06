@@ -96,4 +96,8 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
                         {% parse_img_rss_feed %}
                         {% include 'photo_gallery.html' %}
                     </div>
+					{% for tag in project.get_tags %}
+					  <a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a>
+					{%endfor%}
+                    
 {% endblock %}

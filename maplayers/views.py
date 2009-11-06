@@ -1,16 +1,17 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
-import decimal
 from django.shortcuts import render_to_response
 from django.http import Http404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect 
 from django.db.models import Q
+from django.contrib.auth import logout
 
 from maplayers.utils import is_empty
 from maplayers.models import Project, Sector, Implementor
 
-from django.contrib.auth import logout
+import decimal
+from tagging.models import TaggedItem, Tag
 
 def homepage(request):
     sectors = _get_sectors(request)
@@ -73,9 +74,40 @@ def projects_search(request, search_term):
                               {'projects': results},
                                context_instance=RequestContext(request)
                               )
+    
+def projects_tag_search(request, tag_term):
+    projects = TaggedItem.objects.get_by_model(Project, Tag.objects.filter(name__in=[tag_term]))
+    sectors = _get_sectors_for_projects(projects) 
+    implementors =  _get_implementors_for_projects(projects) 
+    left, right, top, bottom = (-180, 180, -90, 90)
+    
+    return render_to_response(
+                              'homepage.html',
+                              {
+                               'projects' : projects, 
+                               'sectors' : sectors, 
+                               'implementors' : implementors,
+                               'left': left, 'right' : right,
+                               'top': top, 'bottom' : bottom
+                               },
+                               context_instance=RequestContext(request)
+                              )     
 
-def _get_implementors_for_projects_in_result(results):
-    pass
+def _get_sectors_for_projects(projects):
+    sectors = [Sector.objects.filter(projects=project.id) for project in projects]
+    result = []
+    for project_sectors in sectors:
+        for sector in project_sectors:
+            result.append(sector)
+    return list(set(result))
+
+def _get_implementors_for_projects(projects):
+    implementor = [Implementor.objects.filter(projects=project.id) for project in projects]
+    result = []
+    for project_implementor in implementor:
+        for implementor in project_implementor:
+            result.append(implementor)
+    return list(set(result))
     
 def _filter_ids(request, filter_name):
     """
@@ -113,13 +145,13 @@ def _get_projects(left, bottom, right, top, sector_ids, implementor_ids):
                                   implementor__in=implementor_ids,
                                   ).distinct()
                                       
-                            
 def _get_bounding_box(request):
     left = request.GET.get('left', '-180')
     right = request.GET.get('right', '180')
     top = request.GET.get('top', '90')
     bottom = request.GET.get('bottom', '-90')
     return (left, bottom, right, top)
+
 def _construct_queryset_for_project_search(search_term):
     return  (Q(name__icontains=search_term) |
              Q(description__icontains=search_term) |
