@@ -39,10 +39,9 @@ def file_list(resources):
         filename = "_".join(resource.filename.split("_")[1:])
         filesize = resource.filesize / 1024
         result.append('<li id="file-%s" class="file" style="background-color: transparent;">' % str(index+1))
-        result.append('<input type="checkbox"/>')
         result.append('<span class="file-title">%s</span>' % filename)
-        result.append('<span class="file-size">%s MB</span>' % str(filesize))
-        result.append('<a class="file-remove" href="#">remove</a>')
+        result.append('<span class="file-size">%s KB</span>' % str(filesize))
+        result.append('<a class="file-remove-edit" href="#">remove</a>')
         result.append('</li>')
         
     result = "".join(result)

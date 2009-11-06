@@ -48,6 +48,13 @@
 				
 				jQuery("#add_link").click(add_link);
 				
+				jQuery('.file-remove-edit').click(function(){
+					var filename = jQuery(this).prev().prev().html();
+					jQuery.get("/remove_attachment/", {'project_id' : project_id, 'file-name' : filename});
+					jQuery(this).parent().remove();
+					return false;
+				});
+				
 			});
 		</script>
 
@@ -100,7 +107,7 @@
 				<label for="id_project_sectors">Sectors: </label> 
 				{{ form.project_sectors }} 
 				<label>(Eg : {{sectors}})</label>
-			</p>
+			</p>	
 			<p>
 				{{ form.project_implementors.errors}}
 				<label for="id_project_implementors">Implementors: </label> 
