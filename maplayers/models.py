@@ -53,7 +53,7 @@ class Link(models.Model):
     
 class Resource(models.Model):
     title = models.CharField(max_length=50)
-    filename = models.FileField(upload_to="/resources")
+    filename = models.CharField(max_length=250)
     project = models.ForeignKey(Project)
 
     def __unicode__(self): 

@@ -7,6 +7,7 @@ from maplayers.models import Project, Sector, Implementor, Resource, Link
 from maplayers.forms import ProjectForm
 from django.http import HttpResponse
 import uuid
+import os, stat
 
 from maplayers.constants import GROUPS, PROJECT_STATUS
 
@@ -79,7 +80,7 @@ def edit_project(request, project_id):
         link_urls = [link.url for link in links]
         return _render_response(request, form, action, sectors, implementors, 
                                 project_id, link_titles, link_urls)
-    
+                                
   
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
@@ -89,9 +90,19 @@ def file_upload(request):
     destination = open(destination_name, 'wb+')
     for chunk in uploaded_file.chunks(): 
         destination.write(chunk) 
-        destination.close() 
+        destination.close()
+    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
     project = Project.objects.get(id=project_id)
     project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project))
+    return HttpResponse("OK")
+    
+def remove_attachment(request):
+    project_id = request.GET.get('project_id')
+    filename = request.GET.get('file-name')
+    project = Project.objects.get(id=int(project_id))
+    resource = Resource.objects.filter(filename__contains=filename, project=project)[0]
+    os.remove(resource.filename)
+    resource.delete()
     return HttpResponse("OK")
         
 def _add_project_details(form, project_id):
