@@ -75,8 +75,8 @@ $(document).ready(function() {
 	
 	function bookmarkUrl(){
 		var queryString = "";
-		queryString += constructQueryString($(".sectors input[type=checkbox][checked]"));
-		queryString += constructQueryString($(".implementors input[type=checkbox][checked]"));
+		queryString += constructQueryString($(".sectors input[type=checkbox]:checked"));
+		queryString += constructQueryString($(".implementors input[type=checkbox]:checked"));
 		var boundingBox = map.getExtent();
 		var url = document.location.protocol + "//" + document.location.host + 
 				  "/?left=" + boundingBox.left + "&bottom=" + 
