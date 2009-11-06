@@ -1,7 +1,8 @@
 $(document).ready(function() {
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125
-    MIN_SCALE = 110735960.625
+    MIN_SCALE = 141700000
+
     
     $('li.drawer ul:not(:first)').hide();
     $('h3.drawer-handle').click(function() {
@@ -137,12 +138,21 @@ $(document).ready(function() {
 		bookmarkUrl();
     }
     var popup = null;
-	var map = new OpenLayers.Map( 'map_canvas' , 
-				  {eventListeners: {"moveend": mapEvent}, maxScale : MAX_SCALE , minScale : MIN_SCALE });
+	var bounds= new OpenLayers.Bounds(left, bottom, right, top);
+
+        options = {
+            restrictedExtent: bounds, 
+            maxScale: MAX_SCALE, 
+            minScale: MIN_SCALE,
+            eventListeners: { "moveend": mapEvent}
+        }
+
+        var map = new OpenLayers.Map( 'map_canvas' , options )
+            
 	var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
 	map.addLayer(layer);
 
-	var bounds= new OpenLayers.Bounds(left, bottom, right, top);
+
 	map.zoomToExtent(bounds);
 	var markers = new OpenLayers.Layer.Markers( "Markers" );
 	map.addLayer(markers);
