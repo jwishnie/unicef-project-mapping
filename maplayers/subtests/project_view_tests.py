@@ -34,4 +34,10 @@ class ProjectPage(TestCase):
         webclient = Client()
         context = webclient.get('/projects/id/1/').context
         self.assertEquals(1, len(context[0]['subprojects']))
+        
+    def test_should_return_list_of_projects_in_json_matching_search_term(self):
+        webclient = Client()
+        response = webclient.get('/projects/search/unicef/')
+        self.assertContains(response, "School for all")
+        self.assertContains(response, "'implementors' : [\"Unicef\"]")
 
