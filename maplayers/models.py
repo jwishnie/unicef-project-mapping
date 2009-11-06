@@ -55,7 +55,8 @@ class Resource(models.Model):
     title = models.CharField(max_length=50)
     filename = models.CharField(max_length=250)
     project = models.ForeignKey(Project)
-
+    filesize = models.IntegerField()
+    
     def __unicode__(self): 
         return self.title
 
