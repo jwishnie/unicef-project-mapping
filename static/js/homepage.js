@@ -147,7 +147,7 @@ $(document).ready(function() {
             eventListeners: { "moveend": mapEvent}
         }
 
-        var map = new OpenLayers.Map( 'map_canvas' , options )
+        var map = new OpenLayers.Map( 'map_canvas' , options );
             
 	var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
 	map.addLayer(layer);
