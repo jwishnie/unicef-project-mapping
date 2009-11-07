@@ -161,7 +161,7 @@ $(document).ready(function() {
                    "Dists",
                    gs,
                    { 
-                       layers: 'GADM_ug:UGA_adm1',
+                       layers: 'GADM:UGA_adm1',
                        transparent: true,
                        format: 'image/png',
                    },
