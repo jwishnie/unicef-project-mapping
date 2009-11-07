@@ -1,8 +1,11 @@
 $(document).ready(function() {
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
-    MAX_SCALE = 865124.6923828125
-    MIN_SCALE = 141700000
-
+    MAX_SCALE = 865124.6923828125;
+    MIN_SCALE = 141700000;
+    // pink tile avoidance
+    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+    // make OL compute scale according to WMS spec
+    OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
     
     $('li.drawer ul:not(:first)').hide();
     $('h3.drawer-handle').click(function() {
@@ -149,9 +152,28 @@ $(document).ready(function() {
 
         var map = new OpenLayers.Map( 'map_canvas' , options );
             
-	var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
-	map.addLayer(layer);
-
+        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
+        map.addLayer(layer);
+        
+        var gs = "http://"+ window.location.host+"/geoserver/ows";
+        
+        var dists = new OpenLayers.Layer.WMS(
+                   "Dists",
+                   gs,
+                   { 
+                       layers: 'GADM_ug:UGA_adm1',
+                       transparent: true,
+                       format: 'image/png',
+                   },
+                   {
+                       isBaseLayer: false
+                   }
+        );
+        
+        dists.setOpacity(0.5);
+        map.addLayer(dists);
+                                             
+        
 
 	map.zoomToExtent(bounds);
 	var markers = new OpenLayers.Layer.Markers( "Markers" );
