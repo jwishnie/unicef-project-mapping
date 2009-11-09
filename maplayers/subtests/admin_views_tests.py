@@ -106,3 +106,20 @@ class AdminViewsFunctionalTest(TestCase):
         self.assertEquals(set(expected_implementors), set(project.implementor_set.all()))
         self.assertEquals(set(project_links), set([link.url for link in project.link_set.all()]))
         
+        
+    def test_only_superuser_can_publish_projects(self): 
+        #TODO : even trusted partners should be able to publish projects
+        web_client = Client()
+        response = web_client.get("/projects/id/1/")
+        self.assertNotContains(response, "Unpublish")
+        
+        web_client.login(username='map_super', password='map_super')
+        response = web_client.get("/projects/id/1/")
+        self.assertContains(response, "Unpublish")
+        
+        response = web_client.get("/projects/id/7/")
+        self.assertContains(response, "Publish")
+
+
+        
+        

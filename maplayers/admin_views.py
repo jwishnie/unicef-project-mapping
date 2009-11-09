@@ -39,7 +39,7 @@ def add_project(request):
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
             _add_project_details(form, project)
-            return add_edit_success_page(project, "Added", request)
+            return _add_edit_success_page(project, "Added", request)
         else: 
             return _render_response(request, form, "add_project", sectors, 
                                     implementors, project_id, link_titles, link_urls, 
@@ -72,7 +72,7 @@ def edit_project(request, project_id):
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
             _add_project_details(form, project)
-            return add_edit_success_page(project, "Edited",request)
+            return _add_edit_success_page(project, "Edited",request)
         else:
             return _render_response(request, form, action, sectors, implementors, 
                                     project_id, link_titles, link_urls, 
@@ -105,11 +105,11 @@ def _change_project_status(request, project_id, status, message):
         
     project.status=status
     project.save()
-    return add_edit_success_page(project, message,request)
+    return _add_edit_success_page(project, message,request)
     
     
                                 
-def add_edit_success_page(project, message, request):
+def _add_edit_success_page(project, message, request):
     return render_to_response(
                               'success.html', 
                               {

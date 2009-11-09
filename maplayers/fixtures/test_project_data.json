@@ -794,6 +794,27 @@
     }
   },
   {
+    "pk": 7, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": "Draft Project", 
+      "parent_project": null, 
+      "youtube_username": "draft_project", 
+      "created_by": 2,
+      "groups": [
+          2
+        ],
+      "longitude": "0", 
+      "imageset_feedurl": "feed://api.flickr.com/", 
+      "location": "draft project", 
+      "latitude": "50", 
+      "project_image": "http://3.bp.blogspot.com/", 
+      "website_url": "http://draft.org/", 
+      "description": "Draft Project",
+      "status": "Draft"
+    }
+  },
+  {
     "pk": 1, 
     "model": "maplayers.link", 
     "fields": {
