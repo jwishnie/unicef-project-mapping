@@ -9,6 +9,7 @@ from maplayers.models import Project, Sector, Implementor
 from maplayers.utils import is_iter
 from django.db.models import Q
 from django.contrib.auth.models import Group
+from maplayers.constants import PROJECT_STATUS
 
 class AdminViewsUnitTest(TestCase):
     def setUp(self):
@@ -119,6 +120,18 @@ class AdminViewsFunctionalTest(TestCase):
         
         response = web_client.get("/projects/id/7/")
         self.assertContains(response, "Publish")
+        
+    def test_publish_unpublish_should_update_project_status(self):
+        web_client = Client()
+        project = Project.objects.get(id=1)
+        self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)
+        web_client.login(username='map_super', password='map_super')
+        response = web_client.get("/projects/unpublish/1/")
+        project = Project.objects.get(id=1)
+        self.assertEquals(PROJECT_STATUS.DRAFT, project.status)
+        response = web_client.get("/projects/publish/1/")
+        project = Project.objects.get(id=1)
+        self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)
 
 
         
