@@ -161,3 +161,36 @@ $(document).ready(function() {
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
 });
+
+function expandOrCollapse(){
+    if ($('#left_pane .expand').size() != 0) {
+        collapse();
+    }
+    else {
+        expand();
+    }
+}
+
+function collapse(){
+    $('#left_pane span').removeClass("expand");
+    $('.expandable_content').hide();
+    adjustStylesAfterCollapse();
+}
+
+function expand(){
+    $('#left_pane span').addClass("expand");
+    $('#left_pane span a').html("Hide");
+    adjustStylesAfterExpand();
+}
+
+function adjustStylesAfterCollapse(){
+    $('#left_pane span a').html("Show");
+    $('#left_pane').css("width", "0");
+    $('#map_canvas').css("width", "974px");
+}
+
+function adjustStylesAfterExpand(){
+    $('#left_pane').css("width", "170px");
+    $('#map_canvas').css("width", "800px");
+    $('.expandable_content').show();
+}
