@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{{ css_url }}/project.css" />
 {% endblock %}
 
+
 {% block extrahead %}
 <script type="text/javascript">
 var latitude = {{ project.latitude }};
@@ -96,8 +97,11 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
                         {% parse_img_rss_feed %}
                         {% include 'photo_gallery.html' %}
                     </div>
-					{% for tag in project.get_tags %}
-					  <a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a>
-					{%endfor%}
+                    
+                    <div id="tags">
+						{% for tag in project.get_tags %}
+						  <a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a>
+						{%endfor%}
+					</div>
                     
 {% endblock %}

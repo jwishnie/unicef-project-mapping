@@ -36,7 +36,7 @@ urlpatterns += patterns('maplayers',
                                'message': 'Project editied successfully',
                                'link' : '',
                                'link_text' : 'Homepage'
-                         }}),
+                           }}),
                            (r'^upload/$', 'admin_views.file_upload'),
                            (r'^remove_attachment/$', 'admin_views.remove_attachment'),
                            (r'^permission_denied/(?P<action>.+)/(?P<reason>.+)/$', direct_to_template,
