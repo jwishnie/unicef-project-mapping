@@ -1,6 +1,15 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 import os.path
+import logging
+
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+    filename = 'mapping.log',
+)
+
 # Django settings for maplayers project.
 
 #

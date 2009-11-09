@@ -778,7 +778,7 @@
     "fields": {
       "name": "Test project for Edit", 
       "parent_project": null, 
-      "youtube_username": "Test project", 
+      "youtube_username": "test_project", 
       "created_by": 2,
       "groups": [
           2
