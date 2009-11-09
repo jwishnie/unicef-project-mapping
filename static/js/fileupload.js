@@ -26,7 +26,7 @@ window.addEvent('domready', function() {
 		},
 
 		onFileSuccess: function(file) {
-			new Element('input', {type: 'checkbox', 'checked': true}).inject(file.ui.element, 'top');
+            // new Element('input', {type: 'checkbox', 'checked': true}).inject(file.ui.element, 'top');
 			file.ui.element.highlight('#e6efc2');
 		},
 

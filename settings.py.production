@@ -1,6 +1,15 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 import os.path
+import logging
+
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+    filename = 'mapping.log',
+)
+
 # Django settings for maplayers project.
 
 #
@@ -16,7 +25,7 @@ CACHE_BACKEND = 'memcached://127.0.0.1:11211/?timeout=2592000'
 # for development, memory cache
 # CACHE_BACKEND = 'locmem:///?timeout=2592000' 
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

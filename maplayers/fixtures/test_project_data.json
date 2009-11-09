@@ -778,7 +778,7 @@
     "fields": {
       "name": "Test project for Edit", 
       "parent_project": null, 
-      "youtube_username": "Test project", 
+      "youtube_username": "test_project", 
       "created_by": 2,
       "groups": [
           2
@@ -873,7 +873,7 @@
     }
   },   
   {
-    "pk": 2, 
+    "pk": 1, 
     "model": "maplayers.implementor", 
     "fields": {
       "name": "Red Cross Foundation", 
@@ -884,7 +884,7 @@
     }
   }, 
   {
-    "pk": 3, 
+    "pk": 2, 
     "model": "maplayers.implementor", 
     "fields": {
       "name": "Doctors Without Borders", 
@@ -894,7 +894,7 @@
     }
   }, 
   {
-    "pk": 4, 
+    "pk": 3, 
     "model": "maplayers.implementor", 
     "fields": {
       "name": "Unicef", 

@@ -9,9 +9,10 @@
 {% block extrahead %}{% endblock %}
 </head>
 {% load i18n %}
+{% load project_tags %}
 
 <body class="{% block bodyclass %}{% endblock %}{% block body_tag_extra %}{% endblock %}">
-    <div id="wrapper">
+    <div class="main_wrapper">
         {% block page_header %}
         <div id="header">
             <h1>
@@ -23,16 +24,32 @@
                 <a href='{% url django.contrib.auth.views.login %}'>login</a>
             {% endif %}
             <a href="/">Back to Home Page</a>
+	        <div class="innertube">
+	            <div id="unicef_logo">
+	            	<a href="#">
+	            		<img src="{{ img_url }}/unicef_logo.gif" />
+	            	</a>
+	            </div>
+	            <div id="unite">unite for children</div>
+	            <div id="auth_info">
+		            {% if user.is_authenticated %}
+		                Hello {{ user.username }}, <a href='{% url django.contrib.auth.views.logout %}'>logout</a>
+						{% add_project_link user %}
+		            {% else %}
+		                <a href='{% url django.contrib.auth.views.login %}'>login</a>
+		            {% endif %}
+	            </div>
+	        </div>    
         </div>
         {% endblock %}
         {% block page_nav %}
-        <div id="nav">
-        </div>
         {% endblock %}
         {% block page_content %}{% endblock %}
         {% block page_footer %}
         <div id="footer">
-            Unicef 2009 : All rights reserved
+        	<div class="innertube">
+            	Unicef 2009 : All rights reserved
+            </div>	
         </div>
         {% endblock %}
     </div>
