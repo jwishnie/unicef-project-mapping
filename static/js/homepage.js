@@ -23,7 +23,7 @@ $(document).ready(function() {
 	function searchEvent(){
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
-			var projects = eval(data);
+			var projects = JSON.parse(data.replace(/'/g, '"'));
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
@@ -111,7 +111,7 @@ $(document).ready(function() {
 		});
 		
 		$.get(projects_url, filters, function(data){
-			var projects = eval(data);
+			var projects = JSON.parse(data.replace(/'/g, '"'));
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
