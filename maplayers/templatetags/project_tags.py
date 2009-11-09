@@ -8,6 +8,7 @@ Template tags used to display project content
 from django import template
 from maplayers.tag_utils import parse_img_feed, parse_youtube_feed
 from maplayers.utils import is_empty
+from maplayers.constants import PROJECT_STATUS
 
 register = template.Library()  
 
@@ -24,12 +25,50 @@ def project_links(titles_and_urls):
     
 @register.simple_tag
 def edit_project_link(project, user):
-    s = ""
+    result = ""
     if project.is_editable_by(user):
-        s = """<p>
-    			<a href='/edit_project/%s/' id="edit_project">Edit this project</a>
-    		</p>""" % project.id
-    return s
+        result = """<p>
+            			<a href='/edit_project/%s/' id="edit_project">Edit this project</a>
+            	    </p>""" % project.id
+    return result
+    
+
+@register.simple_tag
+def publish_project_link(project, user):
+    result = ""
+    if project.is_publishable_by(user):
+        action = ("unpublish" if project.status == PROJECT_STATUS.PUBLISHED else "publish")
+        result = '<div><a href="/projects/%s/%s/">%s</a></div>' % (action, str(project.id), action.capitalize())
+    return result
+    
+
+@register.simple_tag
+def add_project_link(user):
+    result = ""
+    if user.is_authenticated:
+        result = """<p>
+            			<a href='/add_project/' id="add_project">Add a new project</a>
+            	    </p>"""
+    return result    
+    
+    
+@register.simple_tag
+def file_list(resources):
+    result = []
+    for index, resource in enumerate(resources):
+        filename = "_".join(resource.filename.split("_")[1:])
+        filesize = resource.filesize / 1024
+        result.append('<li id="file-%s" class="file" style="background-color: transparent;">' % str(index+1))
+        result.append('<span class="file-title">%s</span>' % filename)
+        result.append('<span class="file-size">%s KB</span>' % str(filesize))
+        result.append('<a class="file-remove-edit" href="#">remove</a>')
+        result.append('</li>')
+        
+    result = "".join(result)
+    if result:
+        result = '<ul id="file-list">' + result + '</ul>'
+    return result
+    
     
  
 @register.tag(name='parse_img_rss_feed')

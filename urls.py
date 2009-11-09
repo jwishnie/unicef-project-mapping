@@ -15,7 +15,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('', (r'^admin/(.*)', admin.site.root))
  
 urlpatterns += patterns('maplayers',
-                        (r'^projects/bbox/(?P<left>.+)/(?P<bottom>.+)/(?P<right>.+)/(?P<top>.+)/$', 
+                         (r'^projects/bbox/(?P<left>.+)/(?P<bottom>.+)/(?P<right>.+)/(?P<top>.+)/$', 
                          'views.projects_in_map'),
                          (r'^projects/id/(?P<project_id>\d+)/$', 'views.project'),
                          (r'^$', 'views.homepage'),
@@ -23,25 +23,29 @@ urlpatterns += patterns('maplayers',
                          (r'^projects/tag/(?P<tag_term>.+)/$','views.projects_tag_search'),
                          (r'^add_project/', 'admin_views.add_project'),
                          (r'^edit_project/(?P<project_id>\d+)/$', 'admin_views.edit_project'),
-                         
                          (r'^project_created_successfully/', direct_to_template, 
                           {'template': 'success.html', 'extra_context': {
                                  'message': 'Project added successfully',
                                  'link' : 'add_project',
                                  'link_text' : 'Add Another'
-                          }}),
-                          
-                          (r'^project_edited_successfully/', direct_to_template, 
-                           {'template': 'success.html', 'extra_context': {
-                               'message': 'Project editied successfully',
-                               'link' : '',
-                               'link_text' : 'Homepage'
-                           }}),
-                           (r'^upload/$', 'admin_views.file_upload'),
-                           (r'^remove_attachment/$', 'admin_views.remove_attachment'),
-                           (r'^permission_denied/(?P<action>.+)/(?P<reason>.+)/$', direct_to_template,
-                            {'template': 'permission_denied.html'}),
-                           )
+                         }}),
+                         (r'^project_edited_successfully/', direct_to_template, 
+                         {'template': 'success.html', 'extra_context': {
+                          'message': 'Project editied successfully',
+                          'link' : '',
+                          'link_text' : 'Homepage'
+                         }}),
+                         (r'^upload/$', 'admin_views.file_upload'),
+                         (r'^remove_attachment/$', 'admin_views.remove_attachment'),
+                         (r'^permission_denied/(?P<action>.+)/(?P<reason>.+)/$', direct_to_template,
+                         {'template': 'permission_denied.html'}),
+                         (r'^upload/$', 'admin_views.file_upload'),
+                         (r'^remove_attachment/$', 'admin_views.remove_attachment'),
+                         (r'^permission_denied/(?P<action>.+)/(?P<reason>.+)/$', direct_to_template,
+                         {'template': 'permission_denied.html'}),
+                         (r'^projects/publish/(?P<project_id>\d+)/$', 'admin_views.publish_project'),
+                         (r'^projects/unpublish/(?P<project_id>\d+)/$', 'admin_views.unpublish_project'))
+
 
 # If in debug mode, server statics locally, otherwise the host HTTP server should do this
 if settings.DEBUG:

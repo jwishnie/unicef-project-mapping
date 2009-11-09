@@ -1,8 +1,11 @@
 $(document).ready(function() {
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
-    MAX_SCALE = 865124.6923828125
-    MIN_SCALE = 141700000
-
+    MAX_SCALE = 865124.6923828125;
+    MIN_SCALE = 141700000;
+    // pink tile avoidance
+    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+    // make OL compute scale according to WMS spec
+    OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
     
     $('li.drawer ul:not(:first)').hide();
     $('h3.drawer-handle').click(function() {
@@ -23,7 +26,7 @@ $(document).ready(function() {
 	function searchEvent(){
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
-			var projects = eval(data);
+			var projects = JSON.parse(data.replace(/'/g, '"'));
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
@@ -114,6 +117,10 @@ $(document).ready(function() {
 		
 		$.get(projects_url, filters, tag, function(data){
 			var projects = eval(data);
+
+		$.get(projects_url, filters, function(data){
+			var projects = JSON.parse(data.replace(/'/g, '"'));
+
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
@@ -143,17 +150,36 @@ $(document).ready(function() {
 	var bounds= new OpenLayers.Bounds(left, bottom, right, top);
 
         options = {
-            restrictedExtent: bounds, 
+            restrictedExtent: new OpenLayers.Bounds(-180,-90, 180, 90), 
             maxScale: MAX_SCALE, 
             minScale: MIN_SCALE,
             eventListeners: { "moveend": mapEvent}
         }
 
-        var map = new OpenLayers.Map( 'map_canvas' , options )
+        var map = new OpenLayers.Map( 'map_canvas' , options );
             
-	var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
-	map.addLayer(layer);
-
+        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
+        map.addLayer(layer);
+        
+        var gs = "http://"+ window.location.host+"/geoserver/ows";
+        
+        var dists = new OpenLayers.Layer.WMS(
+                   "Dists",
+                   gs,
+                   { 
+                       layers: 'GADM:UGA_adm1',
+                       transparent: true,
+                       format: 'image/png',
+                   },
+                   {
+                       isBaseLayer: false
+                   }
+        );
+        
+        dists.setOpacity(0.5);
+        map.addLayer(dists);
+                                             
+        
 
 	map.zoomToExtent(bounds);
 	var markers = new OpenLayers.Layer.Markers( "Markers" );
@@ -163,3 +189,36 @@ $(document).ready(function() {
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
 });
+
+function expandOrCollapse(){
+    if ($('#left_pane .expand').size() != 0) {
+        collapse();
+    }
+    else {
+        expand();
+    }
+}
+
+function collapse(){
+    $('#left_pane span').removeClass("expand");
+    $('.expandable_content').hide();
+    adjustStylesAfterCollapse();
+}
+
+function expand(){
+    $('#left_pane span').addClass("expand");
+    $('#left_pane span a').html("Hide");
+    adjustStylesAfterExpand();
+}
+
+function adjustStylesAfterCollapse(){
+    $('#left_pane span a').html("Show");
+    $('#left_pane').css("width", "0");
+    $('#map_canvas').css("width", "974px");
+}
+
+function adjustStylesAfterExpand(){
+    $('#left_pane').css("width", "170px");
+    $('#map_canvas').css("width", "800px");
+    $('.expandable_content').show();
+}

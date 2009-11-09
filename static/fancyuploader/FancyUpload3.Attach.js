@@ -142,12 +142,12 @@ FancyUpload3.Attach.File = new Class({
 			return false;
 		}.bind(this));
 		
-		this.ui.element.adopt(
-			this.ui.title,
-			this.ui.size,
-			this.ui.remove,
-			this.ui.cancel
-		).inject(this.base.list).highlight();
+        this.ui.element.adopt(
+         this.ui.title,
+         this.ui.size,
+         this.ui.remove,
+         this.ui.cancel
+        ).inject(this.base.list).highlight();
 		
 		var progress = new Element('img', {'class': 'file-progress', src: '/static/img/bar.gif'}).inject(this.ui.size, 'after');
 		this.ui.progress = new Fx.ProgressBar(progress, {
