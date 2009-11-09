@@ -31,6 +31,15 @@ def edit_project_link(project, user):
             	    </p>""" % project.id
     return result
     
+@register.simple_tag
+def add_project_link(user):
+    result = ""
+    if user.is_authenticated:
+        result = """<p>
+            			<a href='/add_project/' id="add_project">Add a new project</a>
+            	    </p>"""
+    return result    
+    
     
 @register.simple_tag
 def file_list(resources):

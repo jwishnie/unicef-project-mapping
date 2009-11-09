@@ -8,6 +8,7 @@
 {% block extrahead %}{% endblock %}
 </head>
 {% load i18n %}
+{% load project_tags %}
 
 <body class="{% block bodyclass %}{% endblock %}{% block body_tag_extra %}{% endblock %}">
     <div class="main_wrapper">
@@ -23,6 +24,7 @@
 	            <div id="auth_info">
 		            {% if user.is_authenticated %}
 		                Hello {{ user.username }}, <a href='{% url django.contrib.auth.views.logout %}'>logout</a>
+						{% add_project_link user %}
 		            {% else %}
 		                <a href='{% url django.contrib.auth.views.login %}'>login</a>
 		            {% endif %}
