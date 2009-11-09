@@ -21,10 +21,17 @@ class Project(models.Model):
     groups = models.ManyToManyField(Group)
     
     def is_editable_by(self, user):
+        if user.is_superuser: return True
         if self.created_by == user: return True
         if (user.groups.all() & self.groups.all()) : return True
         return False
-    
+        
+    def is_publishable_by(self, user):
+        if user.is_superuser: return True
+        #Check if the user is a Trusted Partner
+        return False
+            
+        
     def implementors_in_json(self):
         return json.dumps([implementor.name for implementor in Implementor.objects.filter(projects=self.id)])
     

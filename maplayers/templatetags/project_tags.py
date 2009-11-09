@@ -8,6 +8,7 @@ Template tags used to display project content
 from django import template
 from maplayers.tag_utils import parse_img_feed, parse_youtube_feed
 from maplayers.utils import is_empty
+from maplayers.constants import PROJECT_STATUS
 
 register = template.Library()  
 
@@ -29,6 +30,15 @@ def edit_project_link(project, user):
         result = """<p>
             			<a href='/edit_project/%s/' id="edit_project">Edit this project</a>
             	    </p>""" % project.id
+    return result
+    
+
+@register.simple_tag
+def publish_project_link(project, user):
+    result = ""
+    if project.is_publishable_by(user):
+        action = ("unpublish" if project.status == PROJECT_STATUS.PUBLISHED else "publish")
+        result = '<div><a href="/projects/%s/%s/">%s</a></div>' % (action, str(project.id), action.capitalize())
     return result
     
     

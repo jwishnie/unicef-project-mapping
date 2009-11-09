@@ -13,6 +13,7 @@ from maplayers.constants import GROUPS, PROJECT_STATUS
 
 # Authentication helpers
 def _is_project_author(user):
+    if user.is_superuser: return True
     for g in user.groups.all():
         if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS):
             return True
@@ -38,7 +39,7 @@ def add_project(request):
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
             _add_project_details(form, project)
-            return HttpResponseRedirect('/project_created_successfully/')
+            return add_edit_success_page(project, "Added", request)
         else: 
             return _render_response(request, form, "add_project", sectors, 
                                     implementors, project_id, link_titles, link_urls, 
@@ -71,7 +72,7 @@ def edit_project(request, project_id):
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
             _add_project_details(form, project)
-            return HttpResponseRedirect('/project_edited_successfully/')
+            return add_edit_success_page(project, "Edited",request)
         else:
             return _render_response(request, form, action, sectors, implementors, 
                                     project_id, link_titles, link_urls, 
@@ -85,6 +86,39 @@ def edit_project(request, project_id):
                                 project_id, link_titles, link_urls, 
                                 project.resource_set.all())
                                 
+
+@login_required                     
+def publish_project(request, project_id):
+    return _change_project_status(request, project_id, 
+                    PROJECT_STATUS.PUBLISHED, "Published")
+
+@login_required
+def unpublish_project(request, project_id):
+    return _change_project_status(request, project_id, 
+                    PROJECT_STATUS.DRAFT, "Unpublished")
+    
+    
+def _change_project_status(request, project_id, status, message):
+    project = Project.objects.get(id=int(project_id))
+    if not project.is_publishable_by(request.user):
+        return HttpResponseRedirect('/permission_denied/publish_project/not_trusted_partner')
+        
+    project.status=status
+    project.save()
+    return add_edit_success_page(project, message,request)
+    
+    
+                                
+def add_edit_success_page(project, message, request):
+    return render_to_response(
+                              'success.html', 
+                              {
+                                'project' : project,
+                                'message' : message
+                              },
+                              context_instance=RequestContext(request)
+                              )
+
   
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']

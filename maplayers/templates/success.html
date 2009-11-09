@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load project_tags %}
 
 {% block title_extra %} &mdash; {{ project.name }} Created{% endblock %}
 {% block page_content %}
-	{{ message }}<br/>
-	<a href="/{{ link }}">{{link_text}}</a>
+	<a href="/projects/id/{{project.id}}/">{{ project.name }}</a> has been {{message}} successfully<br/>
+	{% ifnotequal message "Published" %}
+		{% publish_project_link project user%}
+	{% endifnotequal %}
+	<a href="/">Return to Homepage</a>
 {% endblock %}
