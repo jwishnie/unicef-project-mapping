@@ -144,7 +144,7 @@ $(document).ready(function() {
 	var bounds= new OpenLayers.Bounds(left, bottom, right, top);
 
         options = {
-            restrictedExtent: bounds, 
+            restrictedExtent: new OpenLayers.Bounds(-180,-90, 180, 90), 
             maxScale: MAX_SCALE, 
             minScale: MIN_SCALE,
             eventListeners: { "moveend": mapEvent}
