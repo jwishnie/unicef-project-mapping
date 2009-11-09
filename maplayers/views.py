@@ -25,6 +25,7 @@ def homepage(request):
                               {
                                'projects' : projects, 
                                'sectors' : sectors, 
+                               'tag': '',
                                'implementors' : implementors,
                                'left': left, 'right' : right,
                                'top': top, 'bottom' : bottom
@@ -38,8 +39,10 @@ def projects_in_map(request, left, bottom, right, top):
                 [sector.id for sector in Sector.objects.all()]
     implementor_ids =  _filter_ids(request, "implementor") or \
                 [implementor.id for implementor in Implementor.objects.all()]
-        
-    projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    
+    if request.GET['tag'] == '' :
+      projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    
     return render_to_response(
                               'projects_in_map.json',
                               {'projects': projects},
@@ -87,6 +90,7 @@ def projects_tag_search(request, tag_term):
                                'projects' : projects, 
                                'sectors' : sectors, 
                                'implementors' : implementors,
+                               'tag' : tag_term,
                                'left': left, 'right' : right,
                                'top': top, 'bottom' : bottom
                                },

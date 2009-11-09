@@ -110,7 +110,9 @@ $(document).ready(function() {
 			filters[$(this).attr('name')] = true;
 		});
 		
-		$.get(projects_url, filters, function(data){
+		var tag = {{tag}};
+		
+		$.get(projects_url, filters, tag, function(data){
 			var projects = eval(data);
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
