@@ -1,6 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 import decimal
+import logging
 from django.shortcuts import render_to_response
 from django.http import Http404
 from django.template import RequestContext
@@ -47,9 +48,10 @@ def projects_in_map(request, left, bottom, right, top):
 
 def project(request, project_id):
     try:
-        project = Project.objects.get(id__exact=project_id)
-        subprojects = Project.objects.filter(parent_project=project_id)
-        implementors = ", ".join([implementor.name for implementor in Implementor.objects.filter(projects__in=project_id)])
+        logging.debug("View project details [project_id] : %s" % project_id)
+        project = Project.objects.get(id=int(project_id))
+        subprojects = Project.objects.filter(parent_project=int(project_id))
+        implementors = ", ".join([implementor.name for implementor in Implementor.objects.filter(projects__in=[project])])
     except Project.DoesNotExist:
         raise Http404
     return render_to_response('project.html', 
