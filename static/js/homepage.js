@@ -26,7 +26,7 @@ $(document).ready(function() {
 	function searchEvent(){
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
-			var projects = eval(data);
+			var projects = JSON.parse(data.replace(/'/g, '"'));
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
@@ -78,8 +78,8 @@ $(document).ready(function() {
 	
 	function bookmarkUrl(){
 		var queryString = "";
-		queryString += constructQueryString($(".sectors input[type=checkbox][checked]"));
-		queryString += constructQueryString($(".implementors input[type=checkbox][checked]"));
+		queryString += constructQueryString($(".sectors input[type=checkbox]:checked"));
+		queryString += constructQueryString($(".implementors input[type=checkbox]:checked"));
 		var boundingBox = map.getExtent();
 		var url = document.location.protocol + "//" + document.location.host + 
 				  "/?left=" + boundingBox.left + "&bottom=" + 
@@ -114,7 +114,7 @@ $(document).ready(function() {
 		});
 		
 		$.get(projects_url, filters, function(data){
-			var projects = eval(data);
+			var projects = JSON.parse(data.replace(/'/g, '"'));
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
@@ -183,3 +183,36 @@ $(document).ready(function() {
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
 });
+
+function expandOrCollapse(){
+    if ($('#left_pane .expand').size() != 0) {
+        collapse();
+    }
+    else {
+        expand();
+    }
+}
+
+function collapse(){
+    $('#left_pane span').removeClass("expand");
+    $('.expandable_content').hide();
+    adjustStylesAfterCollapse();
+}
+
+function expand(){
+    $('#left_pane span').addClass("expand");
+    $('#left_pane span a').html("Hide");
+    adjustStylesAfterExpand();
+}
+
+function adjustStylesAfterCollapse(){
+    $('#left_pane span a').html("Show");
+    $('#left_pane').css("width", "0");
+    $('#map_canvas').css("width", "974px");
+}
+
+function adjustStylesAfterExpand(){
+    $('#left_pane').css("width", "170px");
+    $('#map_canvas').css("width", "800px");
+    $('.expandable_content').show();
+}
