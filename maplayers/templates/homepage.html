@@ -9,6 +9,10 @@
 	var right = {{right}};
 	var bottom = {{bottom}};
 	var top = {{top}};
+	var search_tag = '';
+	{% if tag %}
+	  search_tag = '{{ tag }}';
+	{% endif %}
 </script>
 
 <script src="{{ jquery }}" type="text/javascript"></script>

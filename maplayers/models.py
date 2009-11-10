@@ -29,7 +29,17 @@ class Project(models.Model):
         Tag.objects.update_tags(self, tags)
 
     def get_tags(self):
-        return Tag.objects.get_for_object(self)       
+        return Tag.objects.get_for_object(self)  
+    
+    def contains_tag(self, tag):
+        if self.tags.split(" ").__contains__(tag):
+            return True
+        return False     
+    
+    def is_parent_project(self):
+        if self.parent_project:
+            return False
+        return True
     
     def is_editable_by(self, user):
         if user.is_superuser: return True

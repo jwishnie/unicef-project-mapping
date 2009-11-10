@@ -28,7 +28,7 @@ def homepage(request):
                               {
                                'projects' : projects, 
                                'sectors' : sectors, 
-                               'tag': '',
+                               'tag': "",
                                'implementors' : implementors,
                                'left': left, 'right' : right,
                                'top': top, 'bottom' : bottom
@@ -45,6 +45,9 @@ def projects_in_map(request, left, bottom, right, top):
     
     if request.GET['tag'] == '' :
       projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    else:
+      projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
+      
     
     return render_to_response(
                               'projects_in_map.json',
@@ -95,13 +98,14 @@ def projects_tag_search(request, tag_term):
                                'sectors' : sectors, 
                                'implementors' : implementors,
                                'tag' : tag_term,
-                               'left': left, 'right' : right,
-                               'top': top, 'bottom' : bottom
+                               'left' : left, 'right' : right,
+                               'top' : top, 'bottom' : bottom
                                },
                                context_instance=RequestContext(request)
                               )     
 
 def _get_sectors_for_projects(projects):
+    all_sectors = Sector.objects.all()
     sectors = [Sector.objects.filter(projects=project.id) for project in projects]
     result = []
     for project_sectors in sectors:
@@ -166,3 +170,12 @@ def _construct_queryset_for_project_search(search_term):
              Q(description__icontains=search_term) |
              Q(location__icontains=search_term) |
              Q(implementor__name__icontains=search_term))
+
+def _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, tag):
+    projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    results = []
+    for project in projects:
+        if project.contains_tag(tag) and project.is_parent_project():
+            results.append(project)
+    return results
+    

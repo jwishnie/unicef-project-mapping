@@ -113,11 +113,8 @@ $(document).ready(function() {
 			filters[$(this).attr('name')] = true;
 		});
 		
-		var tag = {{tag}};
+		filters["tag"] = search_tag;
 		
-		$.get(projects_url, filters, tag, function(data){
-			var projects = eval(data);
-
 		$.get(projects_url, filters, function(data){
 			var projects = JSON.parse(data.replace(/'/g, '"'));
 
@@ -221,4 +218,8 @@ function adjustStylesAfterExpand(){
     $('#left_pane').css("width", "170px");
     $('#map_canvas').css("width", "800px");
     $('.expandable_content').show();
+}
+
+function drawProjectsOnMap(projects) {
+
 }
