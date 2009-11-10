@@ -21,12 +21,6 @@ class ProjectModelTest(TestCase):
         self.assertFalse(project.is_editable_by(non_editing_user))
         self.assertTrue(project.is_editable_by(user))
         
-    def test_return_true_if_project_contains_tag(self):
-        user = User.objects.create_user('author1', 'author1@email.com', 'author1') 
-        project = self._create_project(user)
-        self.assertFalse(project.contains_tag('Help'))
-        self.assertTrue(project.contains_tag('Medical'))              
-    
     
     def _create_project(self, user):
         admin = Group.objects.get(id=1)
