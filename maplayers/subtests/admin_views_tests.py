@@ -75,12 +75,11 @@ class AdminViewsFunctionalTest(TestCase):
         self.assertTrue(project)
         self.assertTrue(Sector.objects.filter(name="TestSector"))
         self.assertTrue(Implementor.objects.filter(name="TestImplementor"))
-        # self.assert
         
         
     def test_editing_an_existing_project(self):
         web_client = Client()
-        self.assertTrue(web_client.login(username='author', password='author'))
+        self.assertTrue(web_client.login(username='editor', password='editor'))
         project_id = 6
         project_links = ["http://www.link1.com", "http://www.link2.com", "http://www.link3.com"]
         web_client.post("/edit_project/6/", 
@@ -108,13 +107,23 @@ class AdminViewsFunctionalTest(TestCase):
         self.assertEquals(set(project_links), set([link.url for link in project.link_set.all()]))
         
         
-    def test_only_superuser_can_publish_projects(self): 
-        #TODO : even trusted partners should be able to publish projects
+    def test_user_can_edit_project_only_if_editor_publisher_or_creator(self):
+        web_client = Client()
+        self.assertTrue(web_client.login(username='author', password='author'))
+        response = web_client.get("/projects/id/3/")
+        self.assertNotContains(response, "Edit this project")
+        web_client.logout()
+        self.assertTrue(web_client.login(username='editor', password='editor'))
+        response = web_client.get("/projects/id/3/")
+        self.assertContains(response, "Edit this project")
+        
+        
+    def test_only_editors_can_publish_projects(self): 
         web_client = Client()
         response = web_client.get("/projects/id/1/")
         self.assertNotContains(response, "Unpublish")
         
-        web_client.login(username='map_super', password='map_super')
+        web_client.login(username='editor', password='editor')
         response = web_client.get("/projects/id/1/")
         self.assertContains(response, "Unpublish")
         

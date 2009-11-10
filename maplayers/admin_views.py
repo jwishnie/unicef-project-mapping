@@ -13,9 +13,8 @@ from maplayers.constants import GROUPS, PROJECT_STATUS
 
 # Authentication helpers
 def _is_project_author(user):
-    if user.is_superuser: return True
     for g in user.groups.all():
-        if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS):
+        if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS, GROUPS.EDITORS_PUBLISHERS):
             return True
     return False
 

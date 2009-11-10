@@ -4,6 +4,7 @@ from django.db import models
 from maplayers.utils import is_empty
 import simplejson as json
 from django.contrib.auth.models import User, Group
+from maplayers.constants import GROUPS
 
 class Project(models.Model): 
     name = models.CharField(max_length=30, null=True, blank=True) 
@@ -21,15 +22,13 @@ class Project(models.Model):
     groups = models.ManyToManyField(Group)
     
     def is_editable_by(self, user):
-        if user.is_superuser: return True
         if self.created_by == user: return True
-        if (user.groups.all() & self.groups.all()) : return True
+        user_groups = set([group.name for group in user.groups.all()])
+        if (user_groups & set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS))) : return True
         return False
         
     def is_publishable_by(self, user):
-        if user.is_superuser: return True
-        #Check if the user is a Trusted Partner
-        return False
+        return self.is_editable_by(user)
             
         
     def implementors_in_json(self):

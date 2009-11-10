@@ -11,6 +11,7 @@ Created on Oct 29, 2009
 class GROUPS(object):
     ADMINS = u'admins',
     PROJECT_AUTHORS = 'project_authors'
+    EDITORS_PUBLISHERS = 'editors_publishers'
     
 class PROJECT_STATUS(object):
     PUBLISHED= u'Published'

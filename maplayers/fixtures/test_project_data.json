@@ -364,7 +364,15 @@
     "fields": {
       "name": "project_authors", 
       "permissions": []
-    }
+   }
+  }, 
+  {
+    "pk": 3, 
+    "model": "auth.group", 
+    "fields": {
+      "name": "editors_publishers", 
+      "permissions": []
+   }
   }, 
   {
     "pk": 1, 
@@ -377,7 +385,7 @@
       "is_superuser": true, 
       "is_staff": true, 
       "last_login": "2009-10-29 11:15:14", 
-      "groups": [], 
+      "groups": [1, 2, 3], 
       "user_permissions": [], 
       "password": "sha1$f11f3$d5f0728ea68bc41e4917bfaf32d0e0a5d953cbb5", 
       "email": "me@me.com", 
@@ -443,6 +451,28 @@
       "date_joined": "2009-10-29 11:13:08"
     }
   }, 
+  {
+    "pk": 5, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "editor", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2009-10-29 11:16:35", 
+      "groups": [
+        1, 
+        2,
+        3
+      ], 
+      "user_permissions": [], 
+      "password": "sha1$0b27d$9fa958ef2158698786ae3485ed13fde02ab502f6", 
+      "email": "", 
+      "date_joined": "2009-10-29 11:13:08"
+    }
+  },
   {
     "pk": 5, 
     "model": "contenttypes.contenttype", 
@@ -716,7 +746,7 @@
       "name": "Myanmar Hurricane Aid", 
       "parent_project": null, 
       "youtube_username": "unicef", 
-      "created_by": 2,
+      "created_by": 5,
       "groups": [
           2
         ],
