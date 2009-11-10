@@ -20,13 +20,12 @@ class ProjectModelTest(TestCase):
         non_editing_user = User.objects.get(id=2)
         self.assertFalse(project.is_editable_by(non_editing_user))
         self.assertTrue(project.is_editable_by(user))
-    
-    
+        
     
     def _create_project(self, user):
         admin = Group.objects.get(id=1)
         user.groups.add(admin)
-        project = Project(name="Non Editable Project", description="Non editable description", latitude=30, longitude=30)
+        project = Project(name="Non Editable Project", description="Non editable description", latitude=30, longitude=30, tags="Medical Health Children")
         project.created_by = user
         project.save()
         project.groups.add(admin)

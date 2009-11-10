@@ -2,14 +2,14 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-
-from maplayers.models import Project, Sector, Implementor, Resource, Link
-from maplayers.forms import ProjectForm
 from django.http import HttpResponse
+
 import uuid
 import os, stat
 
 from maplayers.constants import GROUPS, PROJECT_STATUS
+from maplayers.models import Project, Sector, Implementor, Resource, Link
+from maplayers.forms import ProjectForm
 
 # Authentication helpers
 def _is_project_author(user):
