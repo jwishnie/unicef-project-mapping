@@ -808,16 +808,16 @@
     "fields": {
       "name": "Test project for Edit", 
       "parent_project": null, 
-      "youtube_username": "test_project", 
+      "youtube_username": "unicef", 
       "created_by": 2,
       "groups": [
           2
         ],
       "longitude": "0", 
-      "imageset_feedurl": "feed://api.flickr.com/", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "test project", 
       "latitude": "50", 
-      "project_image": "http://3.bp.blogspot.com/", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
       "website_url": "http://test.org/", 
       "description": "Test project for Edit",
       "status": "Published"
@@ -829,16 +829,16 @@
     "fields": {
       "name": "Draft Project", 
       "parent_project": null, 
-      "youtube_username": "draft_project", 
+      "youtube_username": "unicef", 
       "created_by": 2,
       "groups": [
           2
         ],
       "longitude": "0", 
-      "imageset_feedurl": "feed://api.flickr.com/", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "draft project", 
       "latitude": "50", 
-      "project_image": "http://3.bp.blogspot.com/", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
       "website_url": "http://draft.org/", 
       "description": "Draft Project",
       "status": "Draft"
