@@ -1,4 +1,6 @@
 from django import forms
+from django.forms.util import ErrorList
+
 
 class ProjectForm(forms.Form): 
     name = forms.CharField(max_length=30) 
@@ -13,3 +15,22 @@ class ProjectForm(forms.Form):
     imageset_feedurl = forms.CharField(max_length=1000, required=False)
     youtube_username = forms.CharField(max_length=100, required=False)
     
+    
+class UserForm(forms.Form):
+    username = forms.CharField(max_length=30) 
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
+    groups = forms.CharField(max_length = 500)
+    
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+        
+        if password != confirm_password:
+            message = u"Passwords do not match"
+            self._errors["password"] = ErrorList([message])
+            
+        return cleaned_data
+        

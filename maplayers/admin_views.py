@@ -4,8 +4,9 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
 from maplayers.models import Project, Sector, Implementor, Resource, Link
-from maplayers.forms import ProjectForm
+from maplayers.forms import ProjectForm, UserForm
 from django.http import HttpResponse
+from django.contrib.auth.models import User, Group
 import uuid
 import os, stat
 
@@ -17,6 +18,26 @@ def _is_project_author(user):
         if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS, GROUPS.EDITORS_PUBLISHERS):
             return True
     return False
+    
+    
+@login_required
+def user_registration(request):
+    user_groups = [group.name for group in request.user.groups.all()]
+    if not GROUPS.ADMINS in user_groups:
+        return HttpResponseRedirect('/permission_denied/add_user/not_admin')
+        
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            _create_user(form)
+            return HttpResponse("ok")
+        else:
+            return _user_registration_response(request, form)
+    else:
+        form = UserForm()
+        return _user_registration_response(request, form)
+        
+    
 
 @login_required
 def add_project(request): 
@@ -96,6 +117,14 @@ def unpublish_project(request, project_id):
     return _change_project_status(request, project_id, 
                     PROJECT_STATUS.DRAFT, "Unpublished")
     
+    
+def _user_registration_response(request, form):
+    group_names = ", ".join([str(group.name) for group in Group.objects.all()])
+    return render_to_response('user_registration.html',
+                             {'form' : form,
+                              'groups': group_names},
+                             context_instance=RequestContext(request)
+                             )
     
 def _change_project_status(request, project_id, status, message):
     project = Project.objects.get(id=int(project_id))
@@ -219,6 +248,13 @@ def _create_initial_data_from_project(project):
     form.fields['imageset_feedurl'].initial = project.imageset_feedurl
     return form
     
+def _create_user(form):
+    username = form.cleaned_data['username']
+    email = form.cleaned_data['email']
+    password = form.cleaned_data['password']
+    group_names = form.cleaned_data['groups'].split(", ")
+    user = User.objects.create_user(username, email, password)
+    user.save()
 
 def _create_new_project(request):
     project = Project()
