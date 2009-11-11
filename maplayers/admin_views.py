@@ -33,6 +33,7 @@ def add_project(request):
         project_id = request.POST.get("project_id")
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
+        tags = request.POST.get("tags")
         project = Project.objects.get(id=int(project_id))
         
         if form.is_valid(): 
@@ -41,7 +42,7 @@ def add_project(request):
             return _add_edit_success_page(project, "Added", request)
         else: 
             return _render_response(request, form, "add_project", sectors, 
-                                    implementors, project_id, link_titles, link_urls, 
+                                    implementors, project_id, tags,link_titles, link_urls, 
                                     project.resource_set.all())
     else: 
         form = ProjectForm()
@@ -64,6 +65,7 @@ def edit_project(request, project_id):
         form = ProjectForm(request.POST)
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
+        tags = request.POST.get("tags")
         if form.is_valid(): 
             project.link_set.all().delete()
             project.sector_set.clear()
@@ -74,15 +76,16 @@ def edit_project(request, project_id):
             return _add_edit_success_page(project, "Edited",request)
         else:
             return _render_response(request, form, action, sectors, implementors, 
-                                    project_id, link_titles, link_urls, 
+                                    project_id, tags,link_titles, link_urls, 
                                     project.resource_set.all())
     else:
         form = _create_initial_data_from_project(project)
         links = project.link_set.all()
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
+        tags = project.tags
         return _render_response(request, form, action, sectors, implementors, 
-                                project_id, link_titles, link_urls, 
+                                project_id, tags,link_titles, link_urls, 
                                 project.resource_set.all())
                                 
 
@@ -155,6 +158,7 @@ def _add_project_details(form, project):
     implementor_names = form.cleaned_data['project_implementors']
     project.youtube_username = form.cleaned_data['youtube_username']
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
+    project.set_tags(form.cleaned_data['tags'])
     project.save()
     _add_sectors_and_implementors(project, sector_names, implementor_names)
     
@@ -229,7 +233,7 @@ def _create_new_project(request):
     return project
 
 def _render_response(request, form, action, sectors, implementors, 
-                     project_id, link_titles=[], link_urls=[], resources=[]):
+                     project_id, tags, link_titles=[], link_urls=[], resources=[]):
     link_titles_and_values = zip(link_titles, link_urls)
     return render_to_response(
                               'add_project.html', 
@@ -238,7 +242,8 @@ def _render_response(request, form, action, sectors, implementors,
                                'sectors' : sectors, 'implementors' : implementors,
                                'project_id' : project_id, 'resources' : resources,  
                                'title_and_values' : link_titles_and_values,
-                               'action' : action
+                               'action' : action,
+                               'tags' : tags,
                               },
                               context_instance=RequestContext(request)
                               )

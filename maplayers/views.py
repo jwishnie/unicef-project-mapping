@@ -87,8 +87,10 @@ def projects_search(request, search_term):
     
 def projects_tag_search(request, tag_term):
     projects = TaggedItem.objects.get_by_model(Project, Tag.objects.filter(name__in=[tag_term]))
-    sectors = _get_sectors_for_projects(projects) 
-    implementors =  _get_implementors_for_projects(projects) 
+#    sectors = _get_sectors_for_projects(projects) 
+#    implementors =  _get_implementors_for_projects(projects)
+    sectors = Sector.objects.all()
+    implementors = Implementor.objects.all() 
     left, right, top, bottom = (-180, 180, -90, 90)
     
     return render_to_response(
