@@ -27,6 +27,13 @@ class ProjectModelTest(TestCase):
         project.tags = "Medical Health Vaccine"
         self.assertTrue(project.tags.__contains__("Medical"))        
         
+    def test_return_true_if_project_contains_tag(self):
+        user = User.objects.create_user('author1', 'author1@email.com', 'author1') 
+        project = self._create_project(user)
+        project.tags = "Medical Health Vaccine"
+        self.assertTrue(project.contains_tag("Medical"))
+        self.assertFalse(project.contains_tag("Children"))           
+        
     
     def _create_project(self, user):
         admin = Group.objects.get(id=1)
