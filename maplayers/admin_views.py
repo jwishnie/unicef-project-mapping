@@ -10,7 +10,7 @@ from django.contrib.auth.models import User, Group
 
 from maplayers.constants import GROUPS, PROJECT_STATUS
 from maplayers.models import Project, Sector, Implementor, Resource, Link
-from maplayers.forms import ProjectForm, UserForm
+from maplayers.forms import ProjectForm, UserForm, ChangePasswordForm
 
 
 # Authentication helpers
@@ -31,13 +31,29 @@ def user_registration(request):
         form = UserForm(request.POST)
         if form.is_valid():
             _create_user(form)
-            return HttpResponse("ok")
+            return HttpResponseRedirect('/user_registration/success/')
         else:
             return _user_registration_response(request, form)
     else:
         form = UserForm()
         return _user_registration_response(request, form)
 
+        
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid() and form.validated_user(request.user):
+            user = User.objects.get(username=request.user.username)
+            user.set_password(str(form.cleaned_data['new_password']))
+            user.save()
+            return HttpResponseRedirect('/change_password/success/')
+        else:
+            return _change_password_response(request, form)
+        
+    else:
+        form = ChangePasswordForm()
+        return _change_password_response(request, form)
         
     
 
@@ -128,6 +144,13 @@ def _user_registration_response(request, form):
                               'groups': group_names},
                              context_instance=RequestContext(request)
                              )
+                             
+def _change_password_response(request, form):
+    return render_to_response('change_password.html',
+                             {'form' : form},
+                             context_instance=RequestContext(request)
+                             )
+
     
 def _change_project_status(request, project_id, status, message):
     project = Project.objects.get(id=int(project_id))

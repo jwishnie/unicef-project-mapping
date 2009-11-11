@@ -22,6 +22,10 @@ urlpatterns += patterns('maplayers',
                          (r'^projects/search/(?P<search_term>.+)/$','views.projects_search'),
                          (r'^permission_denied/(?P<action>.+)/(?P<reason>.+)/$', direct_to_template,
                           {'template': 'permission_denied.html'}),
+                         (r'^user_registration/success/$', direct_to_template, 
+                          {'template' : 'registration_success.html', 'message' : 'User Created'}),
+                         (r'^change_password/success/$', direct_to_template, 
+                          {'template' : 'registration_success.html', 'message' : 'Password changed'}),
                          (r'^projects/tag/(?P<tag_term>.+)/$','views.projects_tag_search'),
                          )
  
@@ -32,7 +36,8 @@ urlpatterns += patterns('maplayers',
                         (r'^remove_attachment/$', 'admin_views.remove_attachment'),
                         (r'^projects/publish/(?P<project_id>\d+)/$', 'admin_views.publish_project'),
                         (r'^projects/unpublish/(?P<project_id>\d+)/$', 'admin_views.unpublish_project'),
-                        (r'^user_registration/$', 'admin_views.user_registration')
+                        (r'^user_registration/$', 'admin_views.user_registration'),
+                        (r'^change_password/$', 'admin_views.change_password'),
                        )
 
 # If in debug mode, server statics locally, otherwise the host HTTP server should do this
