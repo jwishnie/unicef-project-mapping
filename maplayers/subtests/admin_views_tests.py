@@ -69,7 +69,8 @@ class AdminViewsFunctionalTest(TestCase):
                                   "location" : "test location", "website_url" : "www.test.com",
                                   "project_image" : "www.image.com",
                                   "project_sectors" : "Health, TestSector",
-                                  "project_implementors" : "TestImplementor, Red Cross Foundation"})
+                                  "project_implementors" : "TestImplementor, Red Cross Foundation",
+                                  "tags": "Health Medical"})
 
         project = Project.objects.filter(name="test")
         self.assertTrue(project)

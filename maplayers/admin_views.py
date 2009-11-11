@@ -1,15 +1,17 @@
+import uuid
+import os, stat
+
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-
-import uuid
-import os, stat
+from django.contrib.auth.models import User, Group
 
 from maplayers.constants import GROUPS, PROJECT_STATUS
 from maplayers.models import Project, Sector, Implementor, Resource, Link
-from maplayers.forms import ProjectForm
+from maplayers.forms import ProjectForm, UserForm
+
 
 # Authentication helpers
 def _is_project_author(user):
@@ -17,6 +19,26 @@ def _is_project_author(user):
         if g.name in (GROUPS.ADMINS, GROUPS.PROJECT_AUTHORS, GROUPS.EDITORS_PUBLISHERS):
             return True
     return False
+    
+    
+@login_required
+def user_registration(request):
+    user_groups = [group.name for group in request.user.groups.all()]
+    if not GROUPS.ADMINS in user_groups:
+        return HttpResponseRedirect('/permission_denied/add_user/not_admin')
+        
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            _create_user(form)
+            return HttpResponse("ok")
+        else:
+            return _user_registration_response(request, form)
+    else:
+        form = UserForm()
+        return _user_registration_response(request, form)
+        
+    
 
 @login_required
 def add_project(request): 
@@ -33,7 +55,6 @@ def add_project(request):
         project_id = request.POST.get("project_id")
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
-        tags = request.POST.get("tags")
         project = Project.objects.get(id=int(project_id))
         
         if form.is_valid(): 
@@ -42,7 +63,7 @@ def add_project(request):
             return _add_edit_success_page(project, "Added", request)
         else: 
             return _render_response(request, form, "add_project", sectors, 
-                                    implementors, project_id, tags,link_titles, link_urls, 
+                                    implementors, project_id,link_titles, link_urls, 
                                     project.resource_set.all())
     else: 
         form = ProjectForm()
@@ -76,16 +97,15 @@ def edit_project(request, project_id):
             return _add_edit_success_page(project, "Edited",request)
         else:
             return _render_response(request, form, action, sectors, implementors, 
-                                    project_id, tags,link_titles, link_urls, 
+                                    project_id, link_titles, link_urls, 
                                     project.resource_set.all())
     else:
         form = _create_initial_data_from_project(project)
         links = project.link_set.all()
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
-        tags = project.tags
         return _render_response(request, form, action, sectors, implementors, 
-                                project_id, tags,link_titles, link_urls, 
+                                project_id,link_titles, link_urls, 
                                 project.resource_set.all())
                                 
 
@@ -99,6 +119,14 @@ def unpublish_project(request, project_id):
     return _change_project_status(request, project_id, 
                     PROJECT_STATUS.DRAFT, "Unpublished")
     
+    
+def _user_registration_response(request, form):
+    group_names = ", ".join([str(group.name) for group in Group.objects.all()])
+    return render_to_response('user_registration.html',
+                             {'form' : form,
+                              'groups': group_names},
+                             context_instance=RequestContext(request)
+                             )
     
 def _change_project_status(request, project_id, status, message):
     project = Project.objects.get(id=int(project_id))
@@ -158,7 +186,7 @@ def _add_project_details(form, project):
     implementor_names = form.cleaned_data['project_implementors']
     project.youtube_username = form.cleaned_data['youtube_username']
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
-    project.set_tags(form.cleaned_data['tags'])
+    project.tags = form.cleaned_data['tags']
     project.save()
     _add_sectors_and_implementors(project, sector_names, implementor_names)
     
@@ -221,8 +249,16 @@ def _create_initial_data_from_project(project):
                                                             in project.implementor_set.all()])
     form.fields['youtube_username'].initial = project.youtube_username
     form.fields['imageset_feedurl'].initial = project.imageset_feedurl
+    form.fields['tags'].initial = project.tags
     return form
     
+def _create_user(form):
+    username = form.cleaned_data['username']
+    email = form.cleaned_data['email']
+    password = form.cleaned_data['password']
+    group_names = form.cleaned_data['groups'].split(", ")
+    user = User.objects.create_user(username, email, password)
+    user.save()
 
 def _create_new_project(request):
     project = Project()
@@ -233,7 +269,7 @@ def _create_new_project(request):
     return project
 
 def _render_response(request, form, action, sectors, implementors, 
-                     project_id, tags, link_titles=[], link_urls=[], resources=[]):
+                     project_id, link_titles=[], link_urls=[], resources=[]):
     link_titles_and_values = zip(link_titles, link_urls)
     return render_to_response(
                               'add_project.html', 
@@ -243,7 +279,6 @@ def _render_response(request, form, action, sectors, implementors,
                                'project_id' : project_id, 'resources' : resources,  
                                'title_and_values' : link_titles_and_values,
                                'action' : action,
-                               'tags' : tags,
                               },
                               context_instance=RequestContext(request)
                               )

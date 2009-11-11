@@ -100,7 +100,7 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
                     </div>
                     
                     <div id="tags">
-						{% for tag in project.get_tags %}
+						{% for tag in tags %}
 						  <a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a>
 						{%endfor%}
 					</div>

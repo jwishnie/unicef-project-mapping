@@ -24,14 +24,17 @@ class Project(models.Model):
     status = models.CharField(max_length=12)
     created_by = models.ForeignKey(User)
     groups = models.ManyToManyField(Group)
-    tags = TagField()
-    
-    def set_tags(self, tags):
-        Tag.objects.update_tags(self, tags)
 
-    def get_tags(self):
-        return Tag.objects.get_for_object(self)  
     
+    def _get_tags(self):
+        tags = Tag.objects.get_for_object(self) 
+        return " ".join([tag.name for tag in tags])
+    
+    def _set_tags(self, tag_list):
+        Tag.objects.update_tags(self, tag_list)
+
+    tags = property(_get_tags, _set_tags)  
+      
     def contains_tag(self, tag):
         if self.tags.split(" ").__contains__(tag):
             return True

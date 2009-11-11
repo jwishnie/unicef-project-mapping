@@ -1,0 +1,17 @@
+ul.errorlist { 
+	margin: 0; 
+	padding: 0; 
+	width: 200px;
+} 
+.errorlist li { 
+	background-color: red; 
+	color: white; 
+	display: block; 
+	font-size: 10px; 
+	margin: 0 0 3px; 
+	padding: 4px 5px; 
+}
+
+#id_groups {
+    width:40em;
+}

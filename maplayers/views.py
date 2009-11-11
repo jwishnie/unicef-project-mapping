@@ -61,6 +61,7 @@ def project(request, project_id):
         project = Project.objects.get(id=int(project_id))
         subprojects = Project.objects.filter(parent_project=int(project_id))
         implementors = ", ".join([implementor.name for implementor in Implementor.objects.filter(projects__in=[project])])
+        tags = project.tags.split(" ")
     except Project.DoesNotExist:
         raise Http404
     return render_to_response('project.html', 
@@ -71,6 +72,7 @@ def project(request, project_id):
                                'implementors' : implementors,
                                'rss_youtube_feed_url':'feed://gdata.youtube.com/feeds/api/users/' + project.youtube_username +'/uploads',
                                'rss_youtube_feed_max_entries': 4,
+                               'tags' : tags,
                                },
                                context_instance=RequestContext(request)
                               )
@@ -87,8 +89,6 @@ def projects_search(request, search_term):
     
 def projects_tag_search(request, tag_term):
     projects = TaggedItem.objects.get_by_model(Project, Tag.objects.filter(name__in=[tag_term]))
-#    sectors = _get_sectors_for_projects(projects) 
-#    implementors =  _get_implementors_for_projects(projects)
     sectors = Sector.objects.all()
     implementors = Implementor.objects.all() 
     left, right, top, bottom = (-180, 180, -90, 90)

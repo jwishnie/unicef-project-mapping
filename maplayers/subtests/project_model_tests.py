@@ -20,12 +20,18 @@ class ProjectModelTest(TestCase):
         non_editing_user = User.objects.get(id=2)
         self.assertFalse(project.is_editable_by(non_editing_user))
         self.assertTrue(project.is_editable_by(user))
+
+    def test_get_tags_as_space_seperated(self):
+        user = User.objects.create_user('author1', 'author1@email.com', 'author1') 
+        project = self._create_project(user)
+        project.tags = "Medical Health Vaccine"
+        self.assertTrue(project.tags.__contains__("Medical"))        
         
     
     def _create_project(self, user):
         admin = Group.objects.get(id=1)
         user.groups.add(admin)
-        project = Project(name="Non Editable Project", description="Non editable description", latitude=30, longitude=30, tags="Medical Health Children")
+        project = Project(name="Non Editable Project", description="Non editable description", latitude=30, longitude=30)
         project.created_by = user
         project.save()
         project.groups.add(admin)
