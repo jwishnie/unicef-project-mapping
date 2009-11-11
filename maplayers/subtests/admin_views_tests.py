@@ -8,7 +8,7 @@ from maplayers.admin_views import _add_existing_implementors, _create_and_add_ne
 from maplayers.models import Project, Sector, Implementor
 from maplayers.utils import is_iter
 from django.db.models import Q
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import User, Group
 from maplayers.constants import PROJECT_STATUS
 
 class AdminViewsUnitTest(TestCase):
@@ -142,7 +142,33 @@ class AdminViewsFunctionalTest(TestCase):
         response = web_client.get("/projects/publish/1/")
         project = Project.objects.get(id=1)
         self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)
-
-
         
+    def test_create_users(self):
+        web_client = Client()
+        web_client.login(username='map_super', password='map_super')
         
+        response = web_client.post("/user_registration/",
+                        {"username" : "user1",
+                         "email" : "e@e.com",
+                         "password" : "password",
+                         "confirm_password" : "password",
+                         "groups" : "editors_publishers, admins"}, follow=True)
+        user = User.objects.get(username="user1")
+        self.assertEquals("user1", user.username)
+        self.assertEquals("e@e.com", user.email)
+        groups = Group.objects.filter(name__in=['editors_publishers', 'admins'])
+        self.assertEquals(set(groups), set(user.groups.all()))
+        
+        def test_confirm_password_should_match_password(self):
+            web_client = Client()
+            web_client.login(username='map_super', password='map_super')
+
+            response = web_client.post("/user_registration/",
+                            {"username" : "user2",
+                             "email" : "e@e.com",
+                             "password" : "password1",
+                             "confirm_password" : "password",
+                             "groups" : "editors_publishers, admins"}, follow=True)
+            self.assertContains(response, "Passwords do not match")
+            self.assertFalse(User.objects.filter(username="user2"))
+    

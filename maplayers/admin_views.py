@@ -37,6 +37,7 @@ def user_registration(request):
     else:
         form = UserForm()
         return _user_registration_response(request, form)
+
         
     
 
@@ -257,7 +258,10 @@ def _create_user(form):
     email = form.cleaned_data['email']
     password = form.cleaned_data['password']
     group_names = form.cleaned_data['groups'].split(", ")
+    group_names = [str(name) for name in group_names]
+    groups = Group.objects.filter(name__in=group_names)
     user = User.objects.create_user(username, email, password)
+    user.groups = groups
     user.save()
 
 def _create_new_project(request):
