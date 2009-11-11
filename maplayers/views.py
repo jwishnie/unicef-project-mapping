@@ -180,4 +180,10 @@ def _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids
         if project.contains_tag(tag) and project.is_parent_project():
             results.append(project)
     return results
-    
+
+def _filter_projects_for_request(request):
+    if request.GET['tag'] == '' :
+      projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    else:
+      projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
+    return projects
