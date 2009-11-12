@@ -1,0 +1,13 @@
+{% autoescape off %}
+{
+    "id" : "{{project.id}}",
+    "name" : "{{project.name}}",
+    "status" : "{{project.status}}",
+    {% if publishable %}
+        "publishable" : true,
+    {% else %}
+        "publishable" : false,
+    {% endif %}
+    "authorized" : true
+}
+{% endautoescape %}
