@@ -2,3 +2,8 @@
     background-color: green;
     color:white;
 }
+
+.youtube_playlist_player {
+    width: 480px;
+    height: 385px;
+}

@@ -42,27 +42,50 @@ if __name__ == '__main__':
 	print "Dumping existing db"
 	try:
 		child = pexpect.spawn ('dropdb -U %s %s' % (DB_USER, DB_NAME))
+		# child.logfile = sys.stdout
 		child.expect_exact ('Password:')
 		child.sendline (DB_PWD)
+		child.wait()
 	except:
 		print "Failed to drop db"
 		sys.exit(1)
 
-
 	print "Creating blank db"
 	try:
-		child = pexpect.spawn ('createdb -U %s %s' % (DB_USER, DB_NAME))
+		child = pexpect.spawn ('createdb -O %(user)s -U %(user)s %(db)s' % \
+				       { 'user': DB_USER, 'db': DB_NAME} )
+		# child.logfile = sys.stdout
 		child.expect_exact ('Password:')
 		child.sendline (DB_PWD)
+		child.wait()
 	except:
 		print "Failed to create db"
 		sys.exit(1)
 
 
 	print "Syncing db and loading initial data"
+	try:
+		child = pexpect.spawn ('./manage.py syncdb')
+		# child.logfile = sys.stdout
+		child.expect ('Would .*: ')
+		child.sendline ('yes')
+		child.expect('Username .*: ')
+		child.sendline('supa')
+		child.expect_exact('E-mail address: ')
+		child.sendline('webmaster@mepemepe.com')
+		child.expect_exact('Password: ')
+		child.sendline('supa')
+		child.expect_exact('Password (again): ') 
+		child.sendline('supa')
+		child.wait()
+	except:
+		print "Failed to sync db"
+		sys.exit(1)
+
+
 	issue_cmd(['python','manage.py','syncdb'], 'Could not sync db')
 
 	print "Starting maplayers server"
-	issue_cmd([INIT_SCRIPT, 'start'], 'Could not stop Maplayers server')
+	issue_cmd([INIT_SCRIPT, 'start'], 'Could not start Maplayers server')
 
 

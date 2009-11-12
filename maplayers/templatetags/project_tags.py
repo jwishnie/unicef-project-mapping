@@ -39,6 +39,8 @@ def publish_project_link(project, user):
     if project.is_publishable_by(user):
         action = ("unpublish" if project.status == PROJECT_STATUS.PUBLISHED else "publish")
         result = '<div><a href="/projects/%s/%s/">%s</a></div>' % (action, str(project.id), action.capitalize())
+    if project.status == PROJECT_STATUS.DRAFT:
+        result += '<div><a href="/projects/submit_for_review/%s/">%s</a></div>' % (str(project.id), "Submit for Review")
     return result
     
 
@@ -121,8 +123,24 @@ class ParseImgRssFeedNode(template.Node):
 
         return ''
   
+
+
+@register.simple_tag
+def youtube_playlist_player(playlist_id):
+    return """
+        <object class="youtube_playlist_player">
+        <param name="movie" value="http://www.youtube.com/p/%(play_id)s&amp;hl=en&amp;fs=1"></param>
+        <param name="allowFullScreen" value="true"></param>
+        <param name="allowscriptaccess" value="always"></param>
+        <embed class="youtube_playlist_player" src="http://www.youtube.com/p/%(play_id)s&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></embed>
+        </object>
+
+        """ % {'play_id':playlist_id}
+
 """
 YouTube feed
+
+DEPRECATED -- Use the playlist player tag instead
   
 """
   

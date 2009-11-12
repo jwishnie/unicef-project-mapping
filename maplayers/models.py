@@ -20,7 +20,7 @@ class Project(models.Model):
     website_url = models.URLField(null=True, blank=True)
     project_image = models.URLField(null=True, blank=True)
     imageset_feedurl = models.CharField(max_length=1000,null=True, blank=True)
-    youtube_username = models.CharField(max_length=100, null=True, blank=True)
+    youtube_playlist_id = models.CharField(max_length=20, null=True, blank=True)
     parent_project = models.ForeignKey('self', null=True, blank=True)
     status = models.CharField(max_length=12)
     created_by = models.ForeignKey(User)
@@ -48,12 +48,15 @@ class Project(models.Model):
     
     def is_editable_by(self, user):
         if self.created_by == user: return True
+        return self._check_user_groups(user)
+        
+    def is_publishable_by(self, user):
+        return self._check_user_groups(user)
+        
+    def _check_user_groups(self, user):
         user_groups = set([group.name for group in user.groups.all()])
         if (user_groups & set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS))) : return True
         return False
-        
-    def is_publishable_by(self, user):
-        return self.is_editable_by(user)
             
         
     def implementors_in_json(self):

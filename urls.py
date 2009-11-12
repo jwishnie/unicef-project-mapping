@@ -22,17 +22,26 @@ urlpatterns += patterns('maplayers',
                          (r'^projects/search/(?P<search_term>.+)/$','views.projects_search'),
                          (r'^permission_denied/(?P<action>.+)/(?P<reason>.+)/$', direct_to_template,
                           {'template': 'permission_denied.html'}),
+                         (r'^user_registration/success/$', direct_to_template, 
+                          {'template' : 'registration_success.html', 'message' : 'User Created'}),
+                         (r'^change_password/success/$', direct_to_template, 
+                          {'template' : 'registration_success.html', 'message' : 'Password changed'}),
                          (r'^projects/tag/(?P<tag_term>.+)/$','views.projects_tag_search'),
                          )
+                         
+urlpatterns += patterns('maplayers.project_admin_views',
+                        (r'^add_project/', 'add_project'),
+                        (r'^edit_project/(?P<project_id>\d+)/$', 'edit_project'),
+                        (r'^upload/$', 'file_upload'),
+                        (r'^remove_attachment/$', 'remove_attachment'),
+                        (r'^projects/publish/(?P<project_id>\d+)/$', 'publish_project'),
+                        (r'^projects/unpublish/(?P<project_id>\d+)/$', 'unpublish_project'),
+                        (r'^projects/submit_for_review/(?P<project_id>\d+)/$', 'submit_for_review'),
+                       )
  
-urlpatterns += patterns('maplayers',
-                        (r'^add_project/', 'admin_views.add_project'),
-                        (r'^edit_project/(?P<project_id>\d+)/$', 'admin_views.edit_project'),
-                        (r'^upload/$', 'admin_views.file_upload'),
-                        (r'^remove_attachment/$', 'admin_views.remove_attachment'),
-                        (r'^projects/publish/(?P<project_id>\d+)/$', 'admin_views.publish_project'),
-                        (r'^projects/unpublish/(?P<project_id>\d+)/$', 'admin_views.unpublish_project'),
-                        (r'^user_registration/$', 'admin_views.user_registration')
+urlpatterns += patterns('maplayers.admin_views',
+                        (r'^user_registration/$', 'user_registration'),
+                        (r'^change_password/$', 'change_password'),
                        )
 
 urlpatterns += patterns('',
