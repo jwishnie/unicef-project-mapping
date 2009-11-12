@@ -47,12 +47,15 @@ class Project(models.Model):
     
     def is_editable_by(self, user):
         if self.created_by == user: return True
+        return self._check_user_groups(user)
+        
+    def is_publishable_by(self, user):
+        return self._check_user_groups(user)
+        
+    def _check_user_groups(self, user):
         user_groups = set([group.name for group in user.groups.all()])
         if (user_groups & set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS))) : return True
         return False
-        
-    def is_publishable_by(self, user):
-        return self.is_editable_by(user)
             
         
     def implementors_in_json(self):

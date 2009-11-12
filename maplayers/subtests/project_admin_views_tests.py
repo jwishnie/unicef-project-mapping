@@ -62,7 +62,7 @@ class ProjectAdminViewsUnitTest(TestCase):
         project_id = ctxt['project_id']
         web_client.post("/add_project/", 
                                  {"project_id": project_id,
-                                  "name" : "test", "description" : "test description", 
+                                  "name" : "test_add", "description" : "test description", 
                                   "latitude" : "-70", "longitude" : "-10", 
                                   "location" : "test location", "website_url" : "www.test.com",
                                   "project_image" : "www.image.com",
@@ -70,8 +70,9 @@ class ProjectAdminViewsUnitTest(TestCase):
                                   "project_implementors" : "TestImplementor, Red Cross Foundation",
                                   "tags": "Health Medical"})
 
-        project = Project.objects.filter(name="test")
+        project = Project.objects.get(name__exact="test_add")
         self.assertTrue(project)
+        self.assertTrue(PROJECT_STATUS.DRAFT, project.status)
         self.assertTrue(Sector.objects.filter(name="TestSector"))
         self.assertTrue(Implementor.objects.filter(name="TestImplementor"))
 
@@ -96,6 +97,7 @@ class ProjectAdminViewsUnitTest(TestCase):
         expected_implementors = Implementor.objects.filter(Q(name="WHO") | Q(name="Red Cross Foundation"))
 
         self.assertEquals(u"Edited", project.name)
+        self.assertEquals(PROJECT_STATUS.DRAFT, project.status)
         self.assertEquals(u"editied description", project.description)
         self.assertEquals(30, project.latitude)
         self.assertEquals(45, project.longitude)
@@ -128,7 +130,16 @@ class ProjectAdminViewsUnitTest(TestCase):
 
         response = web_client.get("/projects/id/7/")
         self.assertContains(response, "Publish")
+        self.assertContains(response, "Submit for Review")
 
+    def test_review_project_for_submission(self):
+        web_client = Client()
+        web_client.login(username='editor', password='editor')
+        web_client.get("/projects/submit_for_review/7/")
+        project = Project.objects.get(id=7)
+        self.assertTrue(PROJECT_STATUS.REVIEW, project.status)
+        
+        
     def test_publish_unpublish_should_update_project_status(self):
         web_client = Client()
         project = Project.objects.get(id=1)

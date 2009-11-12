@@ -39,6 +39,8 @@ def publish_project_link(project, user):
     if project.is_publishable_by(user):
         action = ("unpublish" if project.status == PROJECT_STATUS.PUBLISHED else "publish")
         result = '<div><a href="/projects/%s/%s/">%s</a></div>' % (action, str(project.id), action.capitalize())
+    if project.status == PROJECT_STATUS.DRAFT:
+        result += '<div><a href="/projects/submit_for_review/%s/">%s</a></div>' % (str(project.id), "Submit for Review")
     return result
     
 

@@ -71,6 +71,7 @@ def edit_project(request, project_id):
             project.link_set.all().delete()
             project.sector_set.clear()
             project.implementor_set.clear()
+            project.status = PROJECT_STATUS.DRAFT
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
             _add_project_details(form, project)
@@ -127,6 +128,12 @@ def unpublish_project(request, project_id):
     return _change_project_status(request, project_id, 
                     PROJECT_STATUS.DRAFT, "Unpublished")
                     
+@login_required
+def submit_for_review(request, project_id):
+    project = Project.objects.get(id=int(project_id))
+    project.status=PROJECT_STATUS.REVIEW
+    project.save()
+    return _add_edit_success_page(project, "submitted for review",request)
 
 def _change_project_status(request, project_id, status, message):
     project = Project.objects.get(id=int(project_id))
