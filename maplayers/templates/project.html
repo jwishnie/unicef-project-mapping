@@ -90,8 +90,7 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
                   <p/>
                   
                   <div  id="project_video">
-                    {% parse_youtube_rss_feed %}
-                    {% include 'video_gallery.html' %}
+                    {% youtube_playlist_player youtube_playlist_id %}
                   </div>
                     <div id="map_canvas" class="olMap" style="width: 512px; height:256px; border=1px solid #CCCCCC"></div>
                     <div id="photo_set">

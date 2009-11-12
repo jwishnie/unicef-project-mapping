@@ -19,7 +19,7 @@ class Project(models.Model):
     website_url = models.URLField(null=True, blank=True)
     project_image = models.URLField(null=True, blank=True)
     imageset_feedurl = models.CharField(max_length=1000,null=True, blank=True)
-    youtube_username = models.CharField(max_length=100, null=True, blank=True)
+    youtube_playlist_id = models.CharField(max_length=20, null=True, blank=True)
     parent_project = models.ForeignKey('self', null=True, blank=True)
     status = models.CharField(max_length=12)
     created_by = models.ForeignKey(User)

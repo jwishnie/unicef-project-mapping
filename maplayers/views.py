@@ -70,8 +70,7 @@ def project(request, project_id):
                                'rss_img_feed_url': project.imageset_feedurl,
                                'subprojects' : subprojects,
                                'implementors' : implementors,
-                               'rss_youtube_feed_url':'feed://gdata.youtube.com/feeds/api/users/' + project.youtube_username +'/uploads',
-                               'rss_youtube_feed_max_entries': 4,
+                               'youtube_playlist_id': project.youtube_playlist_id,
                                'tags' : tags,
                                },
                                context_instance=RequestContext(request)
