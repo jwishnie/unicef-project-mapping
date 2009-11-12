@@ -1,10 +1,11 @@
 from django import forms
 from django.forms.util import ErrorList
+from tinymce.widgets import TinyMCE
 
 
 class ProjectForm(forms.Form): 
     name = forms.CharField(max_length=30) 
-    description = forms.CharField(max_length = 2500,widget=forms.Textarea())
+    description = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows':30}))
     latitude = forms.DecimalField(max_digits=10, decimal_places=6)
     longitude = forms.DecimalField(max_digits=10, decimal_places=6)
     location = forms.CharField(max_length=50)

@@ -43,8 +43,10 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 						</div>                      
                         <p/>               
 						<div id="project description">
-							<label>Description: </label>
-							<span>{{project.description}}</span>
+                                                    <label>Description: </label>
+                                                    {% autoescape off %} 
+                                                    <span>{{project.description}}</span>
+                                                    {% endautoescape %} 
 						</div>
 						
 						<div id="project location">
