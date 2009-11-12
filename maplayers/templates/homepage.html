@@ -62,7 +62,9 @@
 		
 <div id="main_pane">
 	<div id="map_canvas"></div>
-	<div id="projects"></div>
+        {% autoescape off %}
+        <div id="projects"></div>
+        {% endautoescape %}
 	<div id="bookmark"></div>
 </div>
 {% endblock %}

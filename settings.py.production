@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'maplayers',
     'tagging',
+    'tinymce',
 )
 
 #
@@ -122,3 +123,14 @@ FANCY_UPLOADER = STATIC_URL + "/fancyuploader"
 FANCY_UPLOADER_SWF = FANCY_UPLOADER + "/Swiff.Uploader.swf"
 
 LOGIN_REDIRECT_URL = '/'
+
+TINYMCE_ROOT = STATIC_URL + '/tiny_mce'
+TINYMCE_JS_URL = TINYMCE_ROOT + '/tiny_mce.js'
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+TINYMCE_SPELLCHECKER = True
+

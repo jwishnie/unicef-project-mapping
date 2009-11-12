@@ -1,6 +1,6 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
-from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import patterns, include
 from django.views.generic.simple import direct_to_template
 from django.conf import settings
 
@@ -44,6 +44,9 @@ urlpatterns += patterns('maplayers.admin_views',
                         (r'^change_password/$', 'change_password'),
                         (r'^my_projects/$', 'my_projects')
                        )
+
+urlpatterns += patterns('',
+                        (r'^tinymce/', include('tinymce.urls')))
 
 # If in debug mode, server statics locally, otherwise the host HTTP server should do this
 if settings.DEBUG:

@@ -7,12 +7,13 @@ from maplayers.constants import GROUPS
 import simplejson as json
 from tagging.fields import TagField
 from tagging.models import Tag
+from tinymce import models as tinymce_models
 
 from maplayers.utils import is_empty
 
 class Project(models.Model): 
     name = models.CharField(max_length=30, null=True, blank=True) 
-    description = models.TextField(null=True, blank=True)
+    description = tinymce_models.HTMLField(null=True, blank=True)
     latitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
