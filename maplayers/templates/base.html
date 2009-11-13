@@ -14,34 +14,36 @@
     <div class="main_wrapper">
         {% block page_header %}
         <div id="header">
-	        <div class="innertube">
-	            <div id="unicef_logo">
+	        <div class="header_innertube">
+	            <div id="unicef_logo" class="floatleft">
 	            	<a href="#">
 	            		<img src="{{ img_url }}/unicef_logo.gif" />
 	            	</a>
 	            </div>
-	            <div id="unite">unite for children</div>
-	            <div id="auth_info">
-		            {% if user.is_authenticated %}
-		                Hello {{ user.username }}, <a href='{% url django.contrib.auth.views.logout %}'>logout</a>
-						{% add_project_link user %}
-		            {% else %}
-		                <a href='{% url django.contrib.auth.views.login %}'>login</a>
-		            {% endif %}
+	            <div id="main_nav" class="ten_pt_text">
+	            	<ul>
+						<li class="first"><a href="#">Home</a></li>
+						<li>
+							{% if user.is_authenticated %}
+				                <a href='{% url django.contrib.auth.views.logout %}'>Logout</a>
+				            {% else %}
+				                <a href='{% url django.contrib.auth.views.login %}'>Login</a>
+				            {% endif %}
+						</li>	
+						<li>{% add_project_link user %}</li>
+					</ul>
 	            </div>
 	        </div>    
         </div>
         {% endblock %}
-        {% block page_nav %}
-        {% endblock %}
-        {% block page_content %}{% endblock %}
-        {% block page_footer %}
-        <div id="footer">
-        	<div class="innertube">
-            	Unicef 2009 : All rights reserved
-            </div>	
-        </div>
-        {% endblock %}
-    </div>
+		<div id="main_content">
+        	{% block page_content %}{% endblock %}
+	        {% block page_footer %}
+	        <div id="footer">
+	        	Unicef 2009 : All rights reserved
+	        </div>
+	        {% endblock %}
+    	</div>
+	</div>
 </body>
 </html>

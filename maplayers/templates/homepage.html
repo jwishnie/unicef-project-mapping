@@ -17,48 +17,49 @@
 {% endblock %}
 		
 {% block page_content %}
-<div id="project_search">
-   <input type="text" name="q" value="{{ query|escape }}">
-   <input type="submit" value="Search" name="Search">
-</div>            
+<div id="explore_nav">
+	<span class="floatleft">Explore by:</span>
+	<ul class="drawers floatleft">
+	    <li class="drawer floatleft sector_drawer">
+			<div class="round_corner">
+				<span class="drawer-handle" id="sector">Sectors</span>
+			</div>
+			
+		</li>
+		<li class="drawer floatleft implementor_drawer">
+			<div class="round_corner">
+				<span class="drawer-handle" id="implementor">Implementors</span>
+			</div>
 
-<div id="left_pane">
-	<div class="innertube">
-		<span class="expand">
-			<a href="#" onClick="expandOrCollapse();" title="Show/Hide Projects">Hide</a>
-		</span>
-		<div class="expandable_content">
-			<ul class="drawers">
-			    <li class="drawer">
-					<h3 class="drawer-handle open">Sectors</h3>
-					<ul class="sectors">
-						{% for sector in sectors %}
-						<li>
-							<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
-							<label>{{sector.name}}</label>
-						</li>
-						{% endfor %}
-					</ul>
-				</li>
-				<li class="drawer">
-					<h3 class="drawer-handle">Implementors</h3>
-					<ul class="implementors">
-						{% for implementor in implementors %}
-						<li>
-							<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
-							<label>{{implementor.name}}</label> <br/>
-						</li>
-						{% endfor %}
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>	
+		</li>
+	</ul>
+	
+	<div id="project_search" class="round_corner">
+		<input type="text" name="q" value="{{ query|escape }}" class="box">
+		<input type="submit" value="Search" name="Search" class="search_text">
+	</div>            
+	
+	<ul class="sectors round_corner">
+		{% for sector in sectors %}
+		<li class="floatleft">
+			<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
+			<label>{{sector.name}}</label>
+		</li>
+		{% endfor %}
+	</ul>
+	
+	<ul class="implementors round_corner">
+		{% for implementor in implementors %}
+		<li class="floatleft">
+			<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
+			<label>{{implementor.name}}</label> <br/>
+		</li>
+		{% endfor %}
+	</ul>
 </div>
-		
 <div id="main_pane">
 	<div id="map_canvas"></div>
-	<div id="projects"></div>
+	<div id="projects" class="round_corner"></div>
 	<div id="bookmark"></div>
 </div>
 {% endblock %}

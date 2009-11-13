@@ -6,11 +6,32 @@ $(document).ready(function() {
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
     // make OL compute scale according to WMS spec
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
+
+    $('ul.sectors').hide();
+    $('ul.implementors').hide();
     
-    $('li.drawer ul:not(:first)').hide();
-    $('h3.drawer-handle').click(function() {
-        $('li.drawer ul:visible').slideUp().prev().removeClass('open');
-        $(this).addClass('open').next().slideDown();
+    $('span#sector').click(function() {
+        if ($('li.implementor_drawer span.open').size() != 0) {
+            collapseImplementors();
+        }
+        if ($('li.sector_drawer span.open').size() != 0) {
+            collapseSectors();
+        }
+        else {
+            expandSectors();
+        }
+    });
+    
+    $('span#implementor').click(function() {
+        if ($('li.sector_drawer span.open').size() != 0) {
+            collapseSectors();
+        }
+        if ($('li.implementor_drawer span.open').size() != 0) {
+            collapseImplementors();
+        }         
+        else {
+            expandImplementors();
+        }
     });
 
 	$("input[type=checkbox]").each(function()
@@ -31,7 +52,7 @@ $(document).ready(function() {
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
 			
-			var html = "<p>Projects : </p><ol>";
+			var html = "<h4 class=\"top_round_corner\">List of Projects: </h4><ol>";
 			for(var i = 0;i<projects.length; i++){
 			    var project = projects[i];
 			    var project_name = project['snippet'].split(":")[0];
@@ -119,7 +140,7 @@ $(document).ready(function() {
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
 			
-			var html = "<p>Projects : </p><ol>";
+			var html = "<h4 class=\"top_round_corner\">List of Projects: </h4><ol>";
 			for(var i = 0;i<projects.length; i++){
 			    var project = projects[i];
 			    var project_name = project['snippet'].split(":")[0];
@@ -184,35 +205,28 @@ $(document).ready(function() {
 	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
 });
 
-function expandOrCollapse(){
-    if ($('#left_pane .expand').size() != 0) {
-        collapse();
-    }
-    else {
-        expand();
-    }
+function collapseSectors(){
+    $('ul.sectors').hide();
+    $('li.sector_drawer div').css("background-color", "#A5A5A5");
+    $('li.sector_drawer span').removeClass('open');   
 }
 
-function collapse(){
-    $('#left_pane span').removeClass("expand");
-    $('.expandable_content').hide();
-    adjustStylesAfterCollapse();
+function expandSectors(){
+    $('ul.sectors').show();
+    $('li.sector_drawer div').css("background-color", "#054862");            
+    $('ul.sectors').css("background-color", "#054862");            
+    $('li.sector_drawer span').addClass('open');   
 }
 
-function expand(){
-    $('#left_pane span').addClass("expand");
-    $('#left_pane span a').html("Hide");
-    adjustStylesAfterExpand();
+function collapseImplementors(){
+    $('ul.implementors').hide();
+    $('li.implementor_drawer div').css("background-color", "#A5A5A5");
+    $('li.implementor_drawer span').removeClass('open');   
 }
 
-function adjustStylesAfterCollapse(){
-    $('#left_pane span a').html("Show");
-    $('#left_pane').css("width", "0");
-    $('#map_canvas').css("width", "974px");
-}
-
-function adjustStylesAfterExpand(){
-    $('#left_pane').css("width", "170px");
-    $('#map_canvas').css("width", "800px");
-    $('.expandable_content').show();
+function expandImplementors(){
+    $('ul.implementors').show();
+    $('li.implementor_drawer div').css("background-color", "#054862");
+    $('ul.implementors').css("background-color", "#054862");
+    $('li.implementor_drawer span').addClass('open');   
 }
