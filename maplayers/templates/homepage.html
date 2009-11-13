@@ -14,7 +14,6 @@
 	  search_tag = '{{ tag }}';
 	{% endif %}
 </script>
-
 <script src="{{ jquery }}" type="text/javascript"></script>
 <script src="{{ openlayers }}" type="text/javascript"></script>
 <script src="{{ js_url }}/homepage.js" type="text/javascript" ></script>
@@ -22,7 +21,7 @@
 		
 {% block page_content %}
 <div id="project_search">
-   <input type="text" name="q" value="{{ query|escape }}">
+   <input type="text" name="q" value="{{ query|escape }}" defaultValue="Search Projects..." id="search">
    <input type="submit" value="Search" name="Search">
 </div>            
 

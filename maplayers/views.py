@@ -43,10 +43,12 @@ def projects_in_map(request, left, bottom, right, top):
     implementor_ids =  _filter_ids(request, "implementor") or \
                 [implementor.id for implementor in Implementor.objects.all()]
     
-    if request.GET['tag'] == '' :
-      projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    if request.GET['tag'] != '' :
+        projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
+    elif request.GET['search_term'] != '' :
+        projects = _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_ids, request.GET['search_term'])
     else:
-      projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
+        projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
       
     
     return render_to_response(
@@ -180,9 +182,25 @@ def _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids
             results.append(project)
     return results
 
+def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_ids, search):
+    left, bottom, right, top = \
+        [decimal.Decimal(p) for p in (left, bottom, right, top)]
+    
+    return Project.objects.filter(_construct_queryset_for_project_search(search),
+                                  longitude__gte=left, 
+                                  longitude__lte=right,  
+                                  latitude__gte=bottom, 
+                                  latitude__lte=top, 
+                                  sector__in=sector_ids,
+                                  implementor__in=implementor_ids,
+                                  status=PROJECT_STATUS.PUBLISHED,
+                                  )
+ 
 def _filter_projects_for_request(request):
-    if request.GET['tag'] == '' :
-      projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
-    else:
+    if request.GET['tag'] != '' :
       projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
+    elif require.GET['search_term'] != '' :
+      projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['search_term'])
+    else:
+      projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     return projects

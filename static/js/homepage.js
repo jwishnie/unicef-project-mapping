@@ -68,6 +68,7 @@ $(document).ready(function() {
 			  });
 			}			
 		});	  
+            bookmarkUrl();
 	}
 	
 	function constructQueryString(selected_filters){
@@ -84,7 +85,9 @@ $(document).ready(function() {
 		var url = document.location.protocol + "//" + document.location.host + 
 				  "/?left=" + boundingBox.left + "&bottom=" + 
 				  boundingBox.bottom + "&right=" + boundingBox.right + 
-				  "&top=" + boundingBox.top;
+				  "&top=" + boundingBox.top +
+                                  "&tag=" + search_tag +
+                                  "&search_term=" + $("#search").val();
 		url += queryString;
 		$('#bookmark').html(url);
 	}
@@ -114,6 +117,7 @@ $(document).ready(function() {
 		});
 		
 		filters["tag"] = search_tag;
+                filters["search_term"] = $("#search").val();
 		
 		$.get(projects_url, filters, function(data){
 			var projects = JSON.parse(data.replace(/'/g, '"'));
@@ -143,7 +147,7 @@ $(document).ready(function() {
 		
 		bookmarkUrl();
     }
-    var popup = null;
+        var popup = null;
 	var bounds= new OpenLayers.Bounds(left, bottom, right, top);
 
         options = {
@@ -220,6 +224,19 @@ function adjustStylesAfterExpand(){
     $('.expandable_content').show();
 }
 
-function drawProjectsOnMap(projects) {
+$(document).ready(function(){ 
+  $('input[type=text]').focus(function(){ 
+    if($(this).val() == $(this).attr('defaultValue'))
+    {
+      $(this).val('');
+    }
+  });
+  
+  $('input[type=text]').blur(function(){
+    if($(this).val() == '')
+    {
+      $(this).val($(this).attr('defaultValue'));
+    } 
+  });
+}); 
 
-}
