@@ -86,9 +86,7 @@ def publish_project_link(project, user):
 def add_project_link(user):
     result = ""
     if user.is_authenticated:
-        result = """<p>
-            			<a href='/add_project/' id="add_project">Add a new project</a>
-            	    </p>"""
+        result = """<a href='/add_project/' id="add_project">Add a new project</a>"""
     return result    
     
     
