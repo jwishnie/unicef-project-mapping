@@ -24,14 +24,12 @@
 	            <div id="main_nav" class="ten_pt_text">
 	            	<ul>
 						<li class="first"><a href="/">Home</a></li>
-						<li>
-							{% if user.is_authenticated %}
-				                <a href='{% url django.contrib.auth.views.logout %}'>Logout</a>
-				            {% else %}
-				                <a href='{% url django.contrib.auth.views.login %}'>Login</a>
-				            {% endif %}
-						</li>	
-						<li>{% add_project_link user %}</li>
+						{% if user.is_authenticated %}
+							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>
+							<li>{% add_project_link user %}</li>
+				        {% else %}
+				        	<li><a href='{% url django.contrib.auth.views.login %}'>Login</a>
+				        {% endif %}
 					</ul>
 	            </div>
 	        </div>    
