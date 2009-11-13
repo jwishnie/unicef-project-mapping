@@ -3,6 +3,45 @@
 {% load project_tags %}
 
 {% block title_extra %} My Projects {% endblock %}
+{% block extrahead %}
+        <link rel="stylesheet" href="{{ css_url }}/main.css" type="text/css" />
+		<script src="{{ jquery }}" type="text/javascript"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function(){
+				
+				$('.publish_link').click(function(){
+					var url = "/projects/publish/" + this.id +"/";
+					$.get(url, function(data){
+						var project = JSON.parse(data);
+						if(project.authorized){
+							message = project.name + ' was published successfully';
+							$('.publish_div').html(message);
+						}
+					});	
+				});
+				
+				$('.review_link').click(function(){
+					var id = this.id;
+					var url = "/projects/submit_for_review/" + this.id + "/"
+					$.get(url, function(data){
+						var project = JSON.parse(data);
+						if(project.authorized){
+							var tr_id = "project_" + project.id;
+							var html = "<td>" + project.name + "</td>";
+							html += "<td>" + project.status + "</td>";
+							html += "<td><a href=\"/edit_project/" + project.id + "/\">Edit</a></td>";
+							html += "<td>Under Review</td>";
+							html += (project.publishable ? 
+									"<a href=\"#publish\" class=\"publish_link\" id=\"" + this.id + "\">Publish</a>" : "<td></td>");
+							$(tr_id).html(html);
+						}
+					});
+				});
+			});
+		</script>
+		
+		
+{% endblock %}
 
 {% block page_content %}
 	<h2>My Projects: </h2>

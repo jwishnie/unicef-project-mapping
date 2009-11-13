@@ -7,3 +7,9 @@
     width: 480px;
     height: 385px;
 }
+
+.highlight{
+    text-align: center;
+    background-color: yellow;
+    color: black;
+}
