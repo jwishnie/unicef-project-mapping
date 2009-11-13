@@ -194,7 +194,7 @@ def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_
                                   sector__in=sector_ids,
                                   implementor__in=implementor_ids,
                                   status=PROJECT_STATUS.PUBLISHED,
-                                  )
+                                  ).distinct()
  
 def _filter_projects_for_request(request):
     if request.GET['tag'] != '' :
