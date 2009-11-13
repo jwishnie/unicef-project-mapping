@@ -120,25 +120,33 @@ def remove_attachment(request):
 
 @login_required                     
 def publish_project(request, project_id):
-    return _change_project_status(request, project_id, 
+    project = Project.objects.get(id=int(project_id))
+    if not project.is_publishable_by(request.user):
+        return HttpResponse("{'authorized' : false}")
+        
+    return _project_status_change_json_response(request, project, 
                     PROJECT_STATUS.PUBLISHED, "Published")
 
 @login_required
 def unpublish_project(request, project_id):
-    return _change_project_status(request, project_id, 
+    project = Project.objects.get(id=int(project_id))
+    if not project.is_publishable_by(request.user):
+        return HttpResponse("{'authorized' : false}")
+        
+    return _project_status_change_json_response(request, project, 
                     PROJECT_STATUS.DRAFT, "Unpublished")
                     
 @login_required
 def submit_for_review(request, project_id):
     project = Project.objects.get(id=int(project_id))
-    project.status=PROJECT_STATUS.REVIEW
-    project.save()
-    return _add_edit_success_page(project, "submitted for review",request)
+    return _project_status_change_json_response(request, project, 
+            PROJECT_STATUS.REVIEW, "submitted for review")
+    
 
 def _change_project_status(request, project_id, status, message):
     project = Project.objects.get(id=int(project_id))
     if not project.is_publishable_by(request.user):
-        return HttpResponseRedirect('/permission_denied/publish_project/not_trusted_partner')
+        return HttpResponse("{'authorized' : false}")
 
     project.status=status
     project.save()
@@ -150,11 +158,23 @@ def _add_edit_success_page(project, message, request):
                               'success.html', 
                               {
                                 'project' : project,
-                                'message' : message
+                                'message' : message,
                               },
                               context_instance=RequestContext(request)
                               )
-
+                              
+def _project_status_change_json_response(request, project, status, message):
+    project.status=status
+    project.save()
+    return render_to_response(
+                              'change_project_status.json', 
+                              {
+                                'project' : project,
+                                'message' : message, 
+                                'publishable' : project.is_publishable_by(request.user)
+                              },
+                              context_instance=RequestContext(request)
+                              )
 
 def _add_project_details(form, project):
     project.name = form.cleaned_data['name']

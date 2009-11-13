@@ -1,10 +1,10 @@
-/* css for mapping main page */
-
 body {
-    margin: 0px;
+    margin: 0 12em;
     padding: 0px;
-    color: #000;
-    width: 974px;
+    color: #A5A5A5;
+    background-color: #0099FF;
+    font-family: verdana;
+    font-size: 10pt;
 }
 
 img {
@@ -12,54 +12,128 @@ img {
 }
 
 .main_wrapper {
-	background-color: #0099FF;
+	width: 974px;
 }
 
 #header,
-#project_search {
-	border: 1px dotted #FBFBEF;
+#explore_nav,
+#main_nav ul,
+ul.sectors,
+ul.implementors,
+#main_pane {
 	overflow: hidden;
-	color: #FFF;
 }
 
-#unicef_logo {
-	float: left;
+ul.sectors,
+ul.implementors {
+    clear: both;
+    padding: 10px;
 }
 
-#project_search {
-  float: right;
-}
-
-#unite {
+#main_nav {
+    background-color: #91DDF7;
 	float: right;
 	font-family: verdana;
-	font-size: 15pt;
-	width: 100px;	
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 
-#auth_info {
-	clear: both;
-	float: right;
+#explore_nav {
+    margin-bottom: 5px;
 }
-	
-.innertube {
-	padding: 10px;
+
+#explore_nav span {
+    padding: 12px 18px 0 5px;
 }
-	
+
+#explore_nav span.drawer-handle {
+    padding: 5px 18px 0 5px;
+}
+
+.round_corner {
+    -moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+.top_round_corner {
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+	-webkit-border-radius-topleft: 10px;
+	-webkit-border-radius-topright: 10px;
+}
+
+.ten_pt_text {
+	font-size: 10pt;
+}
+
+.floatleft {
+    float: left;
+}	
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    color: #91DDF7;
+}
+
+li a {
+    text-decoration: none;
+    color: #0C7094;
+}	
+
+.header_innertube {
+	padding: 20px;
+	overflow: hidden;
+}
+
+#main_nav ul li {
+    border-left: 1px solid #0C7094;
+    float: left;
+    margin: 5px;
+    padding-left: 10px;
+}
+
+#main_nav li.first {
+    border-left: none;
+}
+
+#main_content {
+    background-color: #FFF;
+    border-top: 1px dashed #A5A5A5;
+}
+
 #map_canvas{
-    width: 804px;
+    float: left;
+    width: 60%;
     height: 400px;
+    margin-top: 5px;
+}
+
+#projects {
+    background-color: #E8FFA2;
+    color: #6A8512;
+    float: left;
+    width: 39%;
+    margin: 0 0 0 5px;  
+    font-size: 9pt;
+}
+
+#projects a {
+    font-weight: bold;
+    color: #6A8512;
+}
+
+#projects h4 {
+    background-color: #6A8512;
+    padding: 5px;
+    margin: 0;
+    color: #FFF;
 }
 
 #bookmark{
-    width: 800px;
+    display: none;
 }
-
-#main_pane {
-    float: left;
-    background-color: #EFEFEF;
-}
-
 
 #sectors li {
     float: left;
@@ -67,39 +141,64 @@ img {
     padding-left:0px;
 }
 
-#left_pane {
-    float: left;  
-    height: auto;
-    width: 170px;
+ul.drawers {
+    width: auto;
+    padding-bottom: 0;  
 }
 
-ul.drawers {
-    width: auto;    
+li.drawer {
+    padding-right: 2px;
 }
-    
-ul {
-    list-style-type: none;
-    margin: 0;
+
+li.drawer div {
+    background-color: #A5A5A5;
+    color: #FFF;
     padding: 5px;
 }
 
-li a {
-    text-decoration: none;
-    color: #666;
+li.drawer div span {
+    background: transparent url('../img/collapsed.png') no-repeat 100% 60%;
 }
 
-h3.drawer-handle {
-    margin: 0;
-    padding: 4px;
-    background: transparent url('/static/img/drawer_closed.png') repeat-x top left;
+#project_search {
+    float: right;
+    border-color: #a5a5a5;
+    color: #fff;
+    background-color: #a5a5a5;
+    padding: 5px;
+    margin: 5px 5px 0;
 }
 
-h3.drawer-handle.open {
-    background: transparent url('/static/img/drawer_open.png') repeat-x top left;
+#project_search input {
+    border-style: none;
+    padding: 5px;
+}
+
+#project_search .search_text {
+    padding: 0;
+    font-size: 1em;
+    color: #fff;
+    background-color: #a5a5a5;    
+}
+
+span.drawer-handle {
+    font-size: 1.5em;
 }
 
 #footer {
     clear: both;
-    color: #FFF;
-	border: 1px dotted #FBFBEF;
+    font-size: 8pt;
+    padding: 15px 0;
+    text-align: center;
+    border-top: 1px dashed #A5A5A5;
+}
+
+li.sector_drawer div,
+li.implementor_drawer div {
+    width: auto;
+
+table#projects th,
+table#projects td {
+    width: 20%;
+    text-align: left;
 }
