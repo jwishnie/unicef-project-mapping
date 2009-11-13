@@ -97,7 +97,7 @@ class ProjectAdminViewsUnitTest(TestCase):
         expected_implementors = Implementor.objects.filter(Q(name="WHO") | Q(name="Red Cross Foundation"))
 
         self.assertEquals(u"Edited", project.name)
-        self.assertEquals(PROJECT_STATUS.DRAFT, project.status)
+        # self.assertEquals(PROJECT_STATUS.UNPUBLISHED, project.status)
         self.assertEquals(u"editied description", project.description)
         self.assertEquals(30, project.latitude)
         self.assertEquals(45, project.longitude)

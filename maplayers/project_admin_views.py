@@ -40,17 +40,18 @@ def add_project(request):
 
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
+            _set_project_status(project, request)
             _add_project_details(form, project)
-            return _add_edit_success_page(project, "Added", request)
+            return _add_edit_success_page(project, request)
         else: 
             return _render_response(request, form, "add_project", sectors, 
-                                    implementors, project_id,link_titles, link_urls, 
+                                    implementors, project, link_titles, link_urls, 
                                     project.resource_set.all())
     else: 
         form = ProjectForm()
         project = _create_new_project(request)
         return _render_response(request, form, "add_project", 
-                                sectors, implementors, project.id)
+                                sectors, implementors, project)
 
 
 @login_required
@@ -71,14 +72,14 @@ def edit_project(request, project_id):
             project.link_set.all().delete()
             project.sector_set.clear()
             project.implementor_set.clear()
-            project.status = PROJECT_STATUS.DRAFT
+            _set_project_status(project, request)
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
             _add_project_details(form, project)
-            return _add_edit_success_page(project, "Edited",request)
+            return _add_edit_success_page(project,request)
         else:
             return _render_response(request, form, action, sectors, implementors, 
-                                    project_id, link_titles, link_urls, 
+                                    project, link_titles, link_urls, 
                                     project.resource_set.all())
     else:
         form = _create_initial_data_from_project(project)
@@ -86,7 +87,7 @@ def edit_project(request, project_id):
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
         return _render_response(request, form, action, sectors, implementors, 
-                                project_id,link_titles, link_urls, 
+                                project,link_titles, link_urls, 
                                 project.resource_set.all())
                                 
     
@@ -141,27 +142,19 @@ def submit_for_review(request, project_id):
     project = Project.objects.get(id=int(project_id))
     return _project_status_change_json_response(request, project, 
             PROJECT_STATUS.REVIEW, "submitted for review")
-    
-
-def _change_project_status(request, project_id, status, message):
-    project = Project.objects.get(id=int(project_id))
-    if not project.is_publishable_by(request.user):
-        return HttpResponse("{'authorized' : false}")
-
-    project.status=status
-    project.save()
-    return _add_edit_success_page(project, message,request)
 
 
-def _add_edit_success_page(project, message, request):
-    return render_to_response(
-                              'success.html', 
-                              {
-                                'project' : project,
-                                'message' : message,
-                              },
-                              context_instance=RequestContext(request)
-                              )
+def _add_edit_success_page(project,request):
+    if project.status == PROJECT_STATUS.PUBLISHED:
+        message = "published"
+    elif project.status == PROJECT_STATUS.UNPUBLISHED:
+        message = "unpublished"
+    else:
+        message = "submitted for review"
+        
+    request.session['success_message'] = "Project has been " + message + " successfully"
+    url = "/projects/id/%s/" % str(project.id)
+    return HttpResponseRedirect(url)
                               
 def _project_status_change_json_response(request, project, status, message):
     project.status=status
@@ -264,16 +257,29 @@ def _create_new_project(request):
     return project
 
 def _render_response(request, form, action, sectors, implementors, 
-                     project_id, link_titles=[], link_urls=[], resources=[]):
+                     project, link_titles=[], link_urls=[], resources=[]):
     link_titles_and_values = zip(link_titles, link_urls)
+    publishable = project.is_publishable_by(request.user)
+    check_publish = 'checked="yes"' if PROJECT_STATUS.PUBLISHED == project.status else ""
+    submit_label = "Submit" if publishable else "Submit for Review" 
     return render_to_response(
                               'add_project.html', 
                               {
                                'form': form,
                                'sectors' : sectors, 'implementors' : implementors,
-                               'project_id' : project_id, 'resources' : resources,  
+                               'project_id' : project.id, 'resources' : resources,  
                                'title_and_values' : link_titles_and_values,
-                               'action' : action,
+                               'action' : action, 'publishable' : publishable,
+                               'checked' : check_publish, 'submit_label' : submit_label
                               },
                               context_instance=RequestContext(request)
                               )
+                              
+def _set_project_status(project, request):
+    if project.is_publishable_by(request.user):
+        if request.POST.get('publish_project'):
+            project.status=PROJECT_STATUS.PUBLISHED
+        else:
+            project.status=PROJECT_STATUS.UNPUBLISHED
+    else:
+        project.status = PROJECT_STATUS.REVIEW

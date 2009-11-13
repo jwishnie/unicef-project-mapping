@@ -144,8 +144,14 @@
 				<label for="id_project_tags">Project tags: </label> 
 				{{ form.tags }}
 				<br/> Space separated tags
-			</p>			
+			</p>		
+			
+			{% if publishable %}
+			<p>
+				<input type="checkbox" name="publish_project" {{checked}}>Publish this project</input>
+			</p>
+			{% endif %}
 			<br/><br/>
-			<input type="submit" value="Submit" />
+			<input type="submit" value="{{submit_label}}" />
 		</form>
 {% endblock %}

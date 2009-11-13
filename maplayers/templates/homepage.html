@@ -14,7 +14,6 @@
 	  search_tag = '{{ tag }}';
 	{% endif %}
 </script>
-
 <script src="{{ jquery }}" type="text/javascript"></script>
 <script src="{{ openlayers }}" type="text/javascript"></script>
 <script src="{{ js_url }}/homepage.js" type="text/javascript" ></script>
@@ -34,12 +33,11 @@
 			<div class="round_corner">
 				<span class="drawer-handle" id="implementor">Implementors</span>
 			</div>
-
 		</li>
 	</ul>
 	
 	<div id="project_search" class="round_corner">
-		<input type="text" name="q" value="{{ query|escape }}" class="box">
+		<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
 		<input type="submit" value="Search" name="Search" class="search_text">
 	</div>            
 	
