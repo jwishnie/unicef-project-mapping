@@ -31,7 +31,7 @@ ul.implementors {
 }
 
 #main_nav {
-    background-color: #91DDF7;
+    background-color: #4DBAFE;
 	float: right;
 	font-family: verdana;
 	-moz-border-radius: 10px;
@@ -55,13 +55,6 @@ ul.implementors {
 	-webkit-border-radius: 10px;
 }
 
-.top_round_corner {
-    -moz-border-radius-topleft: 10px;
-    -moz-border-radius-topright: 10px;
-	-webkit-border-radius-topleft: 10px;
-	-webkit-border-radius-topright: 10px;
-}
-
 .ten_pt_text {
 	font-size: 10pt;
 }
@@ -74,7 +67,7 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 5px;
-    color: #91DDF7;
+    color: #0C7094;
 }
 
 li a {
@@ -101,6 +94,11 @@ li a {
 #main_content {
     background-color: #FFF;
     border-top: 1px dashed #A5A5A5;
+    margin: 0 10px;
+}
+
+#main_content_shadow {
+    background-color:#4DB8FF;
 }
 
 #map_canvas{
@@ -115,6 +113,7 @@ li a {
     color: #6A8512;
     float: left;
     width: 39%;
+    height: 400px;
     margin: 0 0 0 5px;  
     font-size: 9pt;
 }
@@ -129,6 +128,18 @@ li a {
     padding: 5px;
     margin: 0;
     color: #FFF;
+}
+
+.project_list {
+    background-color: #FFF;
+    margin: 3px;
+    border: 1px solid;
+    height: 366px;
+    overflow: auto;
+}
+
+.proj_desc {
+    padding-bottom: 10px;
 }
 
 #bookmark{

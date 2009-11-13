@@ -52,13 +52,13 @@ $(document).ready(function() {
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
 			
-			var html = "<h4 class=\"top_round_corner\">List of Projects: </h4><ol>";
+			var html = "<h4>List of Projects: </h4><div class=\"project_list\"><ol>";
 			for(var i = 0;i<projects.length; i++){
 			    var project = projects[i];
 			    var project_name = project['snippet'].split(":")[0];
 			    var project_description = project['snippet'].split(":")[1];			    
 			    var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
-				                        project_name + '</a>' + ' - ' +  project_description + '</div>'
+				                        project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>'
 				html += "<li>" + project_text + '</li>';
 				var marker_icon = icon.clone()
 				marker = new OpenLayers.Marker(
@@ -67,7 +67,7 @@ $(document).ready(function() {
 	            marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
 				markers.addMarker(marker);
 			}
-			html += '</ol>';
+			html += '</div></ol>';
 			$("#projects").html(html);
 			
 			$("input[type=checkbox]").each(function()
@@ -143,13 +143,13 @@ $(document).ready(function() {
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
 			
-			var html = "<h4 class=\"top_round_corner\">List of Projects: </h4><ol>";
+			var html = "<h4>List of Projects: </h4><div class=\"project_list\"><ol>";
 			for(var i = 0;i<projects.length; i++){
 			    var project = projects[i];
 			    var project_name = project['snippet'].split(":")[0];
 			    var project_description = project['snippet'].split(":")[1];			    
 			    var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
-				                        project_name + '</a>' + ' - ' +  project_description + '</div>'
+				                        project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>'
 				html += "<li>" + project_text + '</li>';
 				var marker_icon = icon.clone()
 				marker = new OpenLayers.Marker(
@@ -158,7 +158,7 @@ $(document).ready(function() {
                 marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
 				markers.addMarker(marker);
 			}
-			html += '</ol>';
+			html += '</div></ol>';
 			$("#projects").html(html);
 		});
 		

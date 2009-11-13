@@ -58,6 +58,11 @@ def publish_text(project, user):
         else:
             return '<a href="/projects/publish/%s/">Publish</a>' % project.id
 
+@register.simple_tag
+def my_projects_link():
+    result = """<a href='/my_projects/' id="my_projects">My Projects</a>"""
+    return result
+
     
 @register.simple_tag
 def publish_project_link(project, user):
@@ -75,10 +80,8 @@ def publish_project_link(project, user):
     
 
 @register.simple_tag
-def add_project_link(user):
-    result = ""
-    if user.is_authenticated:
-        result = """<a href='/add_project/' id="add_project">Add a new project</a>"""
+def add_project_link():
+    result = """<a href='/add_project/' id="add_project">Add a new project</a>"""
     return result    
     
     

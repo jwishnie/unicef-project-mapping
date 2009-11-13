@@ -26,7 +26,8 @@
 						<li class="first"><a href="/">Home</a></li>
 						{% if user.is_authenticated %}
 							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>
-							<li>{% add_project_link user %}</li>
+							<li>{% add_project_link %}</li>
+							<li>{% my_projects_link %}</li>
 				        {% else %}
 				        	<li><a href='{% url django.contrib.auth.views.login %}'>Login</a>
 				        {% endif %}
@@ -35,14 +36,16 @@
 	        </div>    
         </div>
         {% endblock %}
-		<div id="main_content">
-        	{% block page_content %}{% endblock %}
-	        {% block page_footer %}
-	        <div id="footer">
-	        	Unicef 2009 : All rights reserved
-	        </div>
-	        {% endblock %}
-    	</div>
+		<div id="main_content_shadow">
+			<div id="main_content">
+	        	{% block page_content %}{% endblock %}
+		        {% block page_footer %}
+		        <div id="footer">
+		        	Unicef 2009 : All rights reserved
+		        </div>
+		        {% endblock %}
+	    	</div>
+		</div>
 	</div>
 </body>
 </html>
