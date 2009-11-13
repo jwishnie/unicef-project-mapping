@@ -10,6 +10,9 @@ Django                     python-django
 TZ definitions             python-tz
 Universal feed parser      (included in project dir as need at least rev295 from svn)
 SimpleJson                 python-simplejson
+django tagging plugin      python-django-tagging
+tinymce                    python-django-tinymce
+PyEnchant                  python-enchant
 ========================   ========================
 
 The following are needed for staging deploy with PostGIS, Memcached, Nginx, Fastcgi, and BuildBot

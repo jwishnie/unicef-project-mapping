@@ -364,7 +364,15 @@
     "fields": {
       "name": "project_authors", 
       "permissions": []
-    }
+   }
+  }, 
+  {
+    "pk": 3, 
+    "model": "auth.group", 
+    "fields": {
+      "name": "editors_publishers", 
+      "permissions": []
+   }
   }, 
   {
     "pk": 1, 
@@ -377,7 +385,7 @@
       "is_superuser": true, 
       "is_staff": true, 
       "last_login": "2009-10-29 11:15:14", 
-      "groups": [], 
+      "groups": [1, 2, 3], 
       "user_permissions": [], 
       "password": "sha1$f11f3$d5f0728ea68bc41e4917bfaf32d0e0a5d953cbb5", 
       "email": "me@me.com", 
@@ -443,6 +451,28 @@
       "date_joined": "2009-10-29 11:13:08"
     }
   }, 
+  {
+    "pk": 5, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "editor", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2009-10-29 11:16:35", 
+      "groups": [
+        1, 
+        2,
+        3
+      ], 
+      "user_permissions": [], 
+      "password": "sha1$0b27d$9fa958ef2158698786ae3485ed13fde02ab502f6", 
+      "email": "", 
+      "date_joined": "2009-10-29 11:13:08"
+    }
+  },
   {
     "pk": 5, 
     "model": "contenttypes.contenttype", 
@@ -673,7 +703,7 @@
     "fields": {
       "name": "School for all", 
       "parent_project": null, 
-      "youtube_username": "unicef", 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
       "created_by": 2,
       "groups": [
           2
@@ -694,7 +724,7 @@
     "fields": {
       "name": "DRC Medical Aid", 
       "parent_project": null, 
-      "youtube_username": "unicef", 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
       "created_by": 2,
       "groups": [
           2
@@ -715,8 +745,8 @@
     "fields": {
       "name": "Myanmar Hurricane Aid", 
       "parent_project": null, 
-      "youtube_username": "unicef", 
-      "created_by": 2,
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
+      "created_by": 5,
       "groups": [
           2
         ],
@@ -736,7 +766,7 @@
     "fields": {
       "name": "Jinja Primary School Project", 
       "parent_project": 1, 
-      "youtube_username": "unicef", 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
       "created_by": 2,
       "groups": [
           2
@@ -757,7 +787,7 @@
     "fields": {
       "name": "Gabbon Medical Center", 
       "parent_project": 2, 
-      "youtube_username": "unicef", 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
       "created_by": 2,
       "groups": [
           2
@@ -778,19 +808,40 @@
     "fields": {
       "name": "Test project for Edit", 
       "parent_project": null, 
-      "youtube_username": "test_project", 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
       "created_by": 2,
       "groups": [
           2
         ],
       "longitude": "0", 
-      "imageset_feedurl": "feed://api.flickr.com/", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
       "location": "test project", 
       "latitude": "50", 
-      "project_image": "http://3.bp.blogspot.com/", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
       "website_url": "http://test.org/", 
       "description": "Test project for Edit",
       "status": "Published"
+    }
+  },
+  {
+    "pk": 7, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": "Draft Project", 
+      "parent_project": null, 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
+      "created_by": 2,
+      "groups": [
+          2
+        ],
+      "longitude": "0", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
+      "location": "draft project", 
+      "latitude": "50", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
+      "website_url": "http://draft.org/", 
+      "description": "Draft Project",
+      "status": "Draft"
     }
   },
   {

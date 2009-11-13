@@ -47,7 +47,7 @@ $(document).ready(function() {
 	function searchEvent(){
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
-			var projects = eval(data);
+			var projects = JSON.parse(data.replace(/'/g, '"'));
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
@@ -99,8 +99,8 @@ $(document).ready(function() {
 	
 	function bookmarkUrl(){
 		var queryString = "";
-		queryString += constructQueryString($(".sectors input[type=checkbox][checked]"));
-		queryString += constructQueryString($(".implementors input[type=checkbox][checked]"));
+		queryString += constructQueryString($(".sectors input[type=checkbox]:checked"));
+		queryString += constructQueryString($(".implementors input[type=checkbox]:checked"));
 		var boundingBox = map.getExtent();
 		var url = document.location.protocol + "//" + document.location.host + 
 				  "/?left=" + boundingBox.left + "&bottom=" + 
@@ -134,8 +134,11 @@ $(document).ready(function() {
 			filters[$(this).attr('name')] = true;
 		});
 		
+		filters["tag"] = search_tag;
+		
 		$.get(projects_url, filters, function(data){
-			var projects = eval(data);
+			var projects = JSON.parse(data.replace(/'/g, '"'));
+
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);

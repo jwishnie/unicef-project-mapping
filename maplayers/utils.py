@@ -5,6 +5,16 @@ Small useful utils
 
 """
 
+def iter_flatten(iterable):
+  it = iter(iterable)
+  for e in it:
+    if isinstance(e, (list, tuple)):
+      for f in iter_flatten(e):
+        yield f
+    else:
+      yield e
+
+
 def is_empty(obj):
     """
     Is the object None, an empty string,
@@ -35,8 +45,12 @@ def is_not_empty(obj):
     """
     return not is_empty(obj)
 
+
 def is_iter(obj):
     return hasattr(obj,'__iter__')
+
+
+
 
     
         

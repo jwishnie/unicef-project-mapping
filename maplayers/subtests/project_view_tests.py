@@ -15,25 +15,24 @@ class ProjectPage(TestCase):
         
     def test_should_return_list_of_projects_in_bounding_box(self):
         webclient = Client()
-        context = webclient.get('/projects/bbox/0/0/40/10/').context
+        context = webclient.get('/projects/bbox/0/0/40/10/', {'tag' : ''}).context
         self.assertEquals(Project.objects.get(id=1), context['projects'][0])
         
     def test_should_return_list_of_projects_in_selected_sectors(self):
         webclient = Client()
-        context = webclient.get('/projects/bbox/-180/-90/180/90/', {'sector_1':'true', 'sector_2':'true'}).context
+        context = webclient.get('/projects/bbox/-180/-90/180/90/', {'sector_1':'true', 'sector_2':'true', 'tag' : ''}).context
         projects = Project.objects.filter(id__in=[1, 3, 2])
         self.assertEquals(set(projects), set(context['projects']))
    
     def test_should_return_list_of_projects_by_selected_implementors(self):
         webclient = Client()
-        context = webclient.get('/projects/bbox/-180/-90/180/90/', {'implementor_1':'true'}).context
+        context = webclient.get('/projects/bbox/-180/-90/180/90/', {'implementor_1':'true', 'tag' : ''}).context
         projects =  Project.objects.filter(longitude__gte=-180, 
                                           longitude__lte=180,  
                                           latitude__gte=-90, 
                                           latitude__lte=90, 
                                           implementor__in=[1]
                                           )
-        
         self.assertEquals(set(projects), set(context['projects']))
 
 

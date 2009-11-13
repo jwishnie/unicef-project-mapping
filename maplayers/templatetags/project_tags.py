@@ -8,6 +8,7 @@ Template tags used to display project content
 from django import template
 from maplayers.tag_utils import parse_img_feed, parse_youtube_feed
 from maplayers.utils import is_empty
+from maplayers.constants import PROJECT_STATUS
 
 register = template.Library()  
 
@@ -27,10 +28,52 @@ def edit_project_link(project, user):
     result = ""
     if project.is_editable_by(user):
         result = """<p>
-            			<a href='/edit_project/%s/' id="edit_project">Edit this project</a>
-            	    </p>""" % project.id
+                        <a href='/edit_project/%s/' id="edit_project">Edit this project</a>
+                    </p>""" % project.id
     return result
     
+
+@register.simple_tag
+def my_project(project, user):
+    result = "<tr><td>%s</td>" % project.name
+    result += "<td>%s</td>" % project.status
+    result += '<td><a href="/edit_project/%s/">Edit</a></td>' % project.id
+    result += '<td>%s</td>' % review_text(project)
+    result += '<td>%s</td></tr>' % publish_text(project, user)
+    return result
+    
+    
+def review_text(project):
+    if project.status == PROJECT_STATUS.DRAFT:
+        return '<a href="/projects/submit_for_review/%s/">Submit for review</a>' % project.id
+    elif project.status == PROJECT_STATUS.REVIEW:
+        return "Under Review"
+    else:
+        return project.status
+    
+def publish_text(project, user):
+    if project.is_publishable_by(user):
+        if project.status == PROJECT_STATUS.PUBLISHED:
+            return '<a href="/projects/unpublish/%s/">Unpublish</a>' % project.id
+        else:
+            return '<a href="/projects/publish/%s/">Publish</a>' % project.id
+
+    
+@register.simple_tag
+def publish_project_link(project, user):
+    result = ""
+    if project.is_publishable_by(user):
+        action = ("unpublish" if project.status == PROJECT_STATUS.PUBLISHED else "publish")
+        result = '''<div class="publish_div">
+                        <a href="#publish" class="publish_link" id="%s">%s</a>
+                    </div>''' % (str(project.id), action.capitalize())
+    if project.status == PROJECT_STATUS.DRAFT:
+        result += '''<div class="review_div">
+                            <a href="#review" class="review_link" id="%s">%s</a>
+                    </div>''' % (str(project.id), "Submit for Review")
+    return result
+    
+
 @register.simple_tag
 def add_project_link(user):
     result = ""
@@ -108,8 +151,24 @@ class ParseImgRssFeedNode(template.Node):
 
         return ''
   
+
+
+@register.simple_tag
+def youtube_playlist_player(playlist_id):
+    return """
+        <object class="youtube_playlist_player">
+        <param name="movie" value="http://www.youtube.com/p/%(play_id)s&amp;hl=en&amp;fs=1"></param>
+        <param name="allowFullScreen" value="true"></param>
+        <param name="allowscriptaccess" value="always"></param>
+        <embed class="youtube_playlist_player" src="http://www.youtube.com/p/%(play_id)s&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></embed>
+        </object>
+
+        """ % {'play_id':playlist_id}
+
 """
 YouTube feed
+
+DEPRECATED -- Use the playlist player tag instead
   
 """
   

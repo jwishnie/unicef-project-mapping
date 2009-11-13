@@ -196,4 +196,9 @@ span.drawer-handle {
 li.sector_drawer div,
 li.implementor_drawer div {
     width: auto;
+
+table#projects th,
+table#projects td {
+    width: 20%;
+    text-align: left;
 }

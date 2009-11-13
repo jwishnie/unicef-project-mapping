@@ -7,13 +7,14 @@
 
 {% block extrahead %}
         <link rel="stylesheet" href="{{ css_url }}/main.css" type="text/css" />
-		<script type="text/javascript" src="{{ mootools }}"></script>
-		<script src="{{ jquery }}" type="text/javascript"></script>
-		<link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
-		<script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
+        <script type="text/javascript" src="{{ mootools }}"></script>
+        <script src="{{ jquery }}" type="text/javascript"></script>
+        <link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
+        <script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
         <script type="text/javascript" src="{{ fancyuploader }}/Swiff.Uploader.js"></script>
         <script type="text/javascript" src="{{ fancyuploader }}/Fx.ProgressBar.js"></script>
         <script type="text/javascript" src="{{ fancyuploader }}/FancyUpload3.Attach.js"></script>
+        <script type="text/javascript" src="{{ tinymce_url }}"></script>
 
 		<script type="text/javascript">
 			jQuery.noConflict();
@@ -116,9 +117,9 @@
 			</p>
 			
 			<p>
-				{{ form.youtube_username.errors }}
-				<label for="id_youtube_username">Youtube username: </label> 
-				{{ form.youtube_username }}
+				{{ form.youtube_playlist_id.errors }}
+				<label for="id_youtube_playlist_id">Youtube playlist: </label> 
+				{{ form.youtube_playlist_id }}
 			</p>	
 			
 			<p>
@@ -137,6 +138,13 @@
 				<div id="project-links"></div>
 				<a href="#" id="add_link">Add another link</a>
 			</p>
+			
+			<p>
+				<div id="project-tags"></div>
+				<label for="id_project_tags">Project tags: </label> 
+				{{ form.tags }}
+				<br/> Space separated tags
+			</p>			
 			<br/><br/>
 			<input type="submit" value="Submit" />
 		</form>

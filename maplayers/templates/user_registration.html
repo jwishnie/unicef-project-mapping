@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load project_tags %}
+
+{% block title_extra %} User Registration {% endblock %}
+
+{% block extrahead %}
+	<script src="{{ jquery }}" type="text/javascript"></script>
+	<script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
+	<link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css"></link>
+	<link rel="stylesheet" type="text/css" href="{{ css_url }}/user_registration.css"></link>
+	
+	<script type="text/javascript">
+		var group_names = "{{groups}}".split(", ");
+		$(document).ready(function(){
+			$("#id_groups").autocomplete(group_names, {
+				multiple: true,
+				autoFill: true,
+				mustMatch :true
+			});
+		});
+	</script>
+	
+{% endblock %}
+
+{% block page_content %}
+	<form action="/user_registration/" method="post">
+		<p>
+			{{ form.username.errors }}
+			<label for="id_username">Username:</label> 
+			{{form.username}}
+		</p>
+		<p>
+			{{ form.email.errors }}
+			<label for="id_email">Email:</label> 
+			{{form.email}}
+		</p>
+		<p>
+			{{ form.password.errors }}
+			<label for="id_password">Password:</label> 
+			{{ form.password }}
+		</p>
+		<p>
+			{{ form.confirm_password.errors }}
+			<label for="id_confirm_password">Confirm Password:</label> 
+			{{ form.confirm_password }}
+		</p>
+		<p>
+			{{ form.groups.errors}}
+			<label for="id_groups">Groups: </label> 
+			{{ form.groups }} 
+		</p>
+		<br/><br/>
+		<input type="submit" value="Submit" />
+	</form>
+{% endblock %}

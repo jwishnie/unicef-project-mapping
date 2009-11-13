@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>{% block title %}UNICEF Maps{% block title_extra %}{% endblock %}{% endblock %}</title>
 <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{{ css_url }}/main.css{% endblock %}" />
+<script src="{{ js_url }}/json2.js" type="text/javascript" ></script>
 {% block extrastyle %}{% endblock %}
 {% block extrahead %}{% endblock %}
 </head>
@@ -22,7 +23,7 @@
 	            </div>
 	            <div id="main_nav" class="ten_pt_text">
 	            	<ul>
-						<li class="first"><a href="#">Home</a></li>
+						<li class="first"><a href="/">Home</a></li>
 						<li>
 							{% if user.is_authenticated %}
 				                <a href='{% url django.contrib.auth.views.logout %}'>Logout</a>
