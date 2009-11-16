@@ -36,7 +36,6 @@ urlpatterns += patterns('maplayers.project_admin_views',
                         (r'^remove_attachment/$', 'remove_attachment'),
                         (r'^projects/publish/(?P<project_id>\d+)/$', 'publish_project'),
                         (r'^projects/unpublish/(?P<project_id>\d+)/$', 'unpublish_project'),
-                        (r'^projects/submit_for_review/(?P<project_id>\d+)/$', 'submit_for_review'),
                        )
  
 urlpatterns += patterns('maplayers.admin_views',
