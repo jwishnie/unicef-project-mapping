@@ -35,7 +35,7 @@ def edit_project_link(project, user):
 @register.simple_tag
 def my_projects_header(user):
     result = '''<tr><th>Project title</th><th>Project Status</th>
-    <th>Edit</th><th>Submit for Review</th>'''
+    <th>Edit</th><th>Review Status</th>'''
     
     if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
         result += '<th>Publish</th>'
@@ -62,18 +62,14 @@ def project_success_message(request):
     
     
 def review_text(project):
-    if project.status == PROJECT_STATUS.DRAFT:
-        return '<a href="#review" class="review_link" id="%s">Submit for review</a>' % str(project.id)
-    elif project.status == PROJECT_STATUS.REVIEW:
-        return "Under Review"
-    else:
-        return project.status
+    return "Under Review" if project.status == PROJECT_STATUS.REVIEW else "Reviewed"
+    
     
 def publish_text(project):
     if project.status == PROJECT_STATUS.PUBLISHED:
-        return '<a href="#unpublish" class="unpublish_link" id="%s">Unpublish</a>' % str(project.id)
+        return '<span class="unpublish_link" id="%s">Unpublish</span>' % str(project.id)
     else:
-        return '<a href="#publish" class="publish_link" id="%s">Publish</a>' % str(project.id)
+        return '<span class="publish_link" id="%s">Publish</span>' % str(project.id)
 
 @register.simple_tag
 def my_projects_link():
