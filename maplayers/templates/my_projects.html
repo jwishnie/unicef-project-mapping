@@ -46,13 +46,7 @@
 {% block page_content %}
 	<h2>My Projects: </h2>
 	<table id="projects">
-		<tr>
-			<th>Project title</th>
-			<th>Project Status</th>
-			<th>Edit</th>
-			<th>Submit for Review</th>
-			<th>Publish</th>
-		</tr>
+	{% my_projects_header user %}
 	{% for project in projects %}
 		{% my_project project user %}
 	{% endfor %}

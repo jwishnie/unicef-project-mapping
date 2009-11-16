@@ -8,7 +8,7 @@ Template tags used to display project content
 from django import template
 from maplayers.tag_utils import parse_img_feed, parse_youtube_feed
 from maplayers.utils import is_empty
-from maplayers.constants import PROJECT_STATUS
+from maplayers.constants import PROJECT_STATUS, GROUPS
 
 register = template.Library()  
 
@@ -32,6 +32,14 @@ def edit_project_link(project, user):
                     </p>""" % project.id
     return result
     
+@register.simple_tag
+def my_projects_header(user):
+    result = '''<tr><th>Project title</th><th>Project Status</th>
+    <th>Edit</th><th>Submit for Review</th>'''
+    
+    if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
+        result += '<th>Publish</th>'
+	result +='</tr>'
 
 @register.simple_tag
 def my_project(project, user):
@@ -39,7 +47,9 @@ def my_project(project, user):
     result += "<td>%s</td>" % project.status
     result += '<td><a href="/edit_project/%s/">Edit</a></td>' % project.id
     result += '<td>%s</td>' % review_text(project)
-    result += '<td>%s</td></tr>' % publish_text(project, user)
+    if set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()]):
+        result += '<td>%s</td>' % publish_text(project)
+    result += '</tr>'
     return result
     
 @register.simple_tag
@@ -59,12 +69,11 @@ def review_text(project):
     else:
         return project.status
     
-def publish_text(project, user):
-    if project.is_publishable_by(user):
-        if project.status == PROJECT_STATUS.PUBLISHED:
-            return '<a href="#unpublish" class="unpublish_link" id="%s">Unpublish</a>' % str(project.id)
-        else:
-            return '<a href="#publish" class="publish_link" id="%s">Publish</a>' % str(project.id)
+def publish_text(project):
+    if project.status == PROJECT_STATUS.PUBLISHED:
+        return '<a href="#unpublish" class="unpublish_link" id="%s">Unpublish</a>' % str(project.id)
+    else:
+        return '<a href="#publish" class="publish_link" id="%s">Publish</a>' % str(project.id)
 
 @register.simple_tag
 def my_projects_link():
