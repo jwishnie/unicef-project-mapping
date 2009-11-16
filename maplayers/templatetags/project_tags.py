@@ -27,9 +27,9 @@ def project_links(titles_and_urls):
 def edit_project_link(project, user):
     result = ""
     if project.is_editable_by(user):
-        result = """<p>
-                        <a href='/edit_project/%s/' id="edit_project">Edit this project</a>
-                    </p>""" % project.id
+        result = """<div id="edit_project">
+                        <a href='/edit_project/%s/'>Edit this project</a>
+                    </div>""" % project.id
     return result
     
 @register.simple_tag
@@ -172,6 +172,11 @@ class ParseImgRssFeedNode(template.Node):
         return ''
   
 
+@register.simple_tag
+def get_thumbnail_img(img_url):
+    url = img_url.replace("_m.", "_s.")
+    return url
+    
 
 @register.simple_tag
 def youtube_playlist_player(playlist_id):

@@ -65,93 +65,101 @@
 {% block page_content %}
 
 		<form action="/{{action}}/" method="post">
-			<p>
-				<input type="hidden" name="project_id" value="{{project_id}}"></input>
-			</p>
-			<p>
-				{{ form.name.errors }}
-				<label for="id_name">Name:</label> 
-				{{form.name}}
-			</p>
-			<p>
-				{{ form.description.errors }}
-				<label for="id_description">Description:</label> 
-				{{form.description}}
-			</p>
-			<p>
-				{{ form.latitude.errors }}
-				<label for="id_latitude">Latitude:</label> 
-				{{ form.latitude }}
-			</p>
-			<p>
-				{{ form.longitude.errors }}
-				<label for="id_longitude">Longitude:</label> 
-				{{ form.longitude }}
-			</p>
-			<p>
-				{{ form.location.errors}}
-				<label for="id_location">Location:</label> 
-				{{ form.location }}
-			</p>
-			<p>
-				{{ form.website_url.errors}}
-				<label for="id_website_url">Website url:</label> 
-				{{ form.website_url }}
-			</p>
-			<p>
-				{{ form.project_image.errors}}
-				<label for="id_project_image">Project image:</label> 
-				{{ form.project_image }}
-			</p>
-			<p>
-				{{ form.project_sectors.errors}}
-				<label for="id_project_sectors">Sectors: </label> 
-				{{ form.project_sectors }} 
-				<label>(Eg : {{sectors}})</label>
-			</p>	
-			<p>
-				{{ form.project_implementors.errors}}
-				<label for="id_project_implementors">Implementors: </label> 
-				{{ form.project_implementors }}
-				<label>(Eg : {{implementors}})</label>
-			</p>
-			
-			<p>
-				{{ form.youtube_playlist_id.errors }}
-				<label for="id_youtube_playlist_id">Youtube playlist: </label> 
-				{{ form.youtube_playlist_id }}
-			</p>	
-			
-			<p>
-				{{ form.imageset_feedurl.errors }}
-				<label for="id_imageset_feedurl">Image set feed url: </label> 
-				{{ form.imageset_feedurl }}
-			</p>
-			<p>
+			<input type="hidden" name="project_id" value="{{project_id}}"></input>
+			<fieldset>
+				<legend><span>About the Project</span></legend>
+				<div>
+					<label for="id_name">Name:</label> 
+					{{form.name}}
+					{{ form.name.errors }}
+				</div>
+				
+				<div>
+					<label for="id_description">Description:</label> 
+					{{form.description}}
+					{{ form.description.errors }}					
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend><span>Location Information</span></legend>				
+				<div>
+					<label for="id_latitude">Latitude:</label> 
+					{{ form.latitude }}
+					{{ form.latitude.errors }}					
+				</div>
+				<div>				
+					<label for="id_longitude">Longitude:</label> 
+					{{ form.longitude }}
+					{{ form.longitude.errors }}					
+				</div>
+				<div>				
+					<label for="id_location">Location:</label> 
+					{{ form.location }}
+					{{ form.location.errors}}					
+				</div>				
+			</fieldset>	
+			<fieldset>
+				<legend><span>Media Information</span></legend>				
+				<div>
+					<label for="id_website_url">Website url:</label> 
+					{{ form.website_url }}
+					{{ form.website_url.errors}}					
+				</div>	
+				<div>
+					<label for="id_project_image">Project image:</label> 
+					{{ form.project_image }}
+					{{ form.project_image.errors}}					
+				</div>
+				<div>
+					<label for="id_youtube_playlist_id">Youtube playlist: </label> 
+					{{ form.youtube_playlist_id }}
+					{{ form.youtube_playlist_id.errors }}					
+				</div>	
+				<div>
+					<label for="id_imageset_feedurl">Image set feed url: </label> 
+					{{ form.imageset_feedurl }}
+					{{ form.imageset_feedurl.errors }}					
+				</div>
+			</fieldset>	
+			<fieldset>
+				<legend><span>Project Filters</span></legend>				
+				<div>
+					<label for="id_project_sectors">Sectors: </label> 
+					{{ form.project_sectors }} 
+					<div>(Eg : {{sectors}})</div>
+					{{ form.project_sectors.errors}}					
+				</div>	
+				<div>
+					<label for="id_project_implementors">Implementors: </label> 
+					{{ form.project_implementors }}
+					<div>(Eg : {{implementors}})</div>
+					{{ form.project_implementors.errors}}					
+				</div>
+				<div id="project-tags">
+					<label for="id_project_tags">Project tags: </label> 
+					{{ form.tags }}
+					<div>Space separated tags</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend><span>Additional Information</span></legend>				
 				<div id="file">
 					{% file_list resources %}
 					<a href="#" id="file-attach" name="file-attach">Attach a file</a>
 					<ul id="file-list"></ul><a href="#" id="file-attach-2" style="display: none;" name="file-attach-2">Attach another file</a>
 				</div>
-			</p>
-			<p>
 				<div id="project-links"></div>
 				<a href="#" id="add_link">Add another link</a>
-			</p>
-			
-			<p>
-				<div id="project-tags"></div>
-				<label for="id_project_tags">Project tags: </label> 
-				{{ form.tags }}
-				<br/> Space separated tags
-			</p>		
+			</fieldset>
 			
 			{% if publishable %}
-			<p>
-				<input type="checkbox" name="publish_project" {{checked}}>Publish this project</input>
-			</p>
+			<div id="publish_project">
+				<input type="checkbox" name="publish_project" {{checked}} />
+				<span>Publish this project</span>
+			</div>
 			{% endif %}
-			<br/><br/>
-			<input type="submit" value="{{submit_label}}" />
+			<div class="main_action">
+				<input type="submit" value="{{submit_label}}" />
+			</div>
 		</form>
 {% endblock %}

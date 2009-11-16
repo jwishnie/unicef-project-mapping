@@ -1,7 +1,7 @@
 body {
     margin: 0 12em;
     padding: 0px;
-    color: #A5A5A5;
+    color: #0C7094;
     background-color: #0099FF;
     font-family: verdana;
     font-size: 10pt;
@@ -20,7 +20,8 @@ img {
 #main_nav ul,
 ul.sectors,
 ul.implementors,
-#main_pane {
+#main_pane,
+#image_pane {
 	overflow: hidden;
 }
 
@@ -95,6 +96,54 @@ li a {
     background-color: #FFF;
     border-top: 1px dashed #A5A5A5;
     margin: 0 10px;
+}
+
+#main_content fieldset {
+    border-color: #4DBAFE;
+    margin: 20px;
+    padding: 20px;
+}
+
+#main_content fieldset legend {
+    color: #0C7094;
+}
+
+#main_content fieldset legend span {
+    background-color: #4DBAFE;
+    display: block;
+    padding: 5px;
+    width: 830px;
+}
+
+#main_content fieldset div {
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+
+#main_content fieldset label {
+    float: left;
+    width: 150px;
+    padding-right: 5px;
+    text-align: right;
+}
+
+#main_content fieldset input {
+    float: left;
+}
+
+#main_content #publish_project {
+    padding-left: 15px;
+}
+
+#main_content .main_action {
+    margin: 18px;
+}
+
+#main_content .main_action input {
+    background-color: #0099FF;
+    color: #FFF;
+    padding: 5px;
+    font-size: 10pt;
 }
 
 #main_content_shadow {

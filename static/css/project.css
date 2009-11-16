@@ -1,11 +1,69 @@
+label {
+    font-weight: bold;
+}
+
 #edit_project {
-    background-color: green;
-    color:white;
+    background-color: #4DBAFE;
+    float: right;
+    margin: 5px;
+    padding: 5px;
+}
+
+#edit_project a {
+    color: #0C7094;    
+}
+
+.publish_div,
+.review_div {
+    margin: 5px;
+    padding: 5px;    
+}
+
+.sub_div {
+    padding: 10px 0 10px 20px;
+}
+
+#project_details {
+    padding: 15px;
+}
+
+#left_pane {
+    line-height: 1.5em;
+    text-align: justify;
+}
+
+#right_pane {
+    float: right;
+    width: 49%;
+    padding: 35px 0 0 10px; 
+}
+
+#image_pane {
+    padding: 30px 0;
+}
+
+#project_image {
+    float: left;
+    width: 50%;
+    height: 275px;
+}
+
+#photo_set {
+    float: left;
+    height: 275px;
+    overflow: auto;
+    width: 46%;
+}
+
+#photo_set ul li .photo {
+    float: left;
+    width: 80px;
 }
 
 .youtube_playlist_player {
-    width: 480px;
+    width: 400px;
     height: 385px;
+    padding: 15px;
 }
 
 .highlight{
