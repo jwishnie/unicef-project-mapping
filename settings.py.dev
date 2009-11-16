@@ -129,7 +129,7 @@ TINYMCE_ROOT = STATIC_URL + '/tiny_mce'
 TINYMCE_JS_URL = TINYMCE_ROOT + '/tiny_mce.js'
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': "table,spellchecker,paste,searchreplace",
-    'theme': "advanced",
+    'theme': "simple",
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 10,
 }

@@ -24,16 +24,15 @@
 	<span class="floatleft">Explore by:</span>
 	<ul class="drawers floatleft">
 	    <li class="drawer floatleft sector_drawer">
-			<div class="round_corner">
-				<span class="drawer-handle" id="sector">Sectors</span>
-			</div>
-			
-		</li>
-		<li class="drawer floatleft implementor_drawer">
-			<div class="round_corner">
-				<span class="drawer-handle" id="implementor">Implementors</span>
-			</div>
-		</li>
+                <div class="round_corner">
+                        <span class="drawer-handle" id="sector">Sectors</span>
+                </div>
+            </li>
+            <li class="drawer floatleft implementor_drawer">
+                <div class="round_corner">
+                        <span class="drawer-handle" id="implementor">Implementors</span>
+                </div>
+            </li>
 	</ul>
 	
 	<div id="project_search" class="round_corner">
@@ -64,6 +63,7 @@
 	{% autoescape off %}
 		<div id="projects" class="round_corner"></div>
     {% endautoescape %}
-	<div id="bookmark"></div>
+    <div id="bookmark">
+    </div>
 </div>
 {% endblock %}
