@@ -28,7 +28,6 @@ class UserForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
-    groups = forms.CharField(max_length = 500)
     
     def clean(self):
         cleaned_data = self.cleaned_data

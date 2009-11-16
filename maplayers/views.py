@@ -43,13 +43,12 @@ def projects_in_map(request, left, bottom, right, top):
     implementor_ids =  _filter_ids(request, "implementor") or \
                 [implementor.id for implementor in Implementor.objects.all()]
     
-    if request.GET['tag'] != '' :
+    if request.GET.get('tag', ''):
         projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
-    elif request.GET['search_term'] != '' :
+    elif request.GET.get('search_term', ''):
         projects = _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_ids, request.GET['search_term'])
     else:
         projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
-      
     
     return render_to_response(
                               'projects_in_map.json',

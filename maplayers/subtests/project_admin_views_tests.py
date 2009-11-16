@@ -91,13 +91,14 @@ class ProjectAdminViewsUnitTest(TestCase):
                                   "project_sectors" : "Education",
                                   "project_implementors" : "WHO, Red Cross Foundation",
                                   "link_title" : ["Link 1", "Link 2", "Link 3"],
+                                  "publish_project" : "on",
                                   "link_url" : project_links})
         project = Project.objects.get(id=6)
         expected_sectors = Sector.objects.filter(name="Education")
         expected_implementors = Implementor.objects.filter(Q(name="WHO") | Q(name="Red Cross Foundation"))
 
         self.assertEquals(u"Edited", project.name)
-        # self.assertEquals(PROJECT_STATUS.UNPUBLISHED, project.status)
+        self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)
         self.assertEquals(u"editied description", project.description)
         self.assertEquals(30, project.latitude)
         self.assertEquals(45, project.longitude)
