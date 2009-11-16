@@ -6,11 +6,11 @@ from django.test.client import Client
 from maplayers.utils import is_iter
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
-from maplayers.constants import PROJECT_STATUS
+from maplayers.constants import PROJECT_STATUS, GROUPS
 
 class AdminViewsFunctionalTest(TestCase):
         
-    def test_create_users(self):
+    def test_create_users_should_create_project_authors_by_default(self):
         web_client = Client()
         web_client.login(username='map_super', password='map_super')
         
@@ -18,13 +18,13 @@ class AdminViewsFunctionalTest(TestCase):
                         {"username" : "user1",
                          "email" : "e@e.com",
                          "password" : "password",
-                         "confirm_password" : "password",
-                         "groups" : "editors_publishers, admins"}, follow=True)
+                         "confirm_password" : "password"}, follow=True)
         user = User.objects.get(username="user1")
         self.assertEquals("user1", user.username)
         self.assertEquals("e@e.com", user.email)
-        groups = Group.objects.filter(name__in=['editors_publishers', 'admins'])
-        self.assertEquals(set(groups), set(user.groups.all()))
+        group = Group.objects.get(name=GROUPS.PROJECT_AUTHORS)
+        self.assertEquals(1, user.groups.all().count())
+        self.assertEquals(group,user.groups.all()[0])
         
     def test_confirm_password_should_match_password(self):
         web_client = Client()

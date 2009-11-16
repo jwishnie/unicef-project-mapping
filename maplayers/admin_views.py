@@ -61,8 +61,7 @@ def my_projects(request):
 def _user_registration_response(request, form):
     group_names = ", ".join([str(group.name) for group in Group.objects.all()])
     return render_to_response('user_registration.html',
-                             {'form' : form,
-                              'groups': group_names},
+                             {'form' : form},
                              context_instance=RequestContext(request)
                              )
                              
@@ -77,11 +76,8 @@ def _create_user(form):
     username = form.cleaned_data['username']
     email = form.cleaned_data['email']
     password = form.cleaned_data['password']
-    group_names = form.cleaned_data['groups'].split(", ")
-    group_names = [str(name) for name in group_names]
-    groups = Group.objects.filter(name__in=group_names)
     user = User.objects.create_user(username, email, password)
-    user.groups = groups
+    user.groups.add(Group.objects.get(name=GROUPS.PROJECT_AUTHORS))
     user.save()
 
 
