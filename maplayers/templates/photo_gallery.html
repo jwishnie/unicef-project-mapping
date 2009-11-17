@@ -1,13 +1,9 @@
 {% load project_tags %}
-<ul>
   {% if rss_img_feed.images %}
 		<div>Related Images</div>
   {% endif %}		
   {% for img in rss_img_feed.images %}
-    <li>
       <div class="photo">
         <a href={{img.entry_url}}><img src={% get_thumbnail_img img.img_url %} /></a>
       </div>
-    </li>   
   {% endfor %}
-</ul>
