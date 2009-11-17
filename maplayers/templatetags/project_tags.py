@@ -27,26 +27,26 @@ def project_links(titles_and_urls):
 def edit_project_link(project, user):
     result = ""
     if project.is_editable_by(user):
-        result = """<p>
-                        <a href='/edit_project/%s/' id="edit_project">Edit this project</a>
-                    </p>""" % project.id
+        result = """<div id="edit_project">
+                        <a href='/edit_project/%s/'>Edit this project</a>
+                    </div>""" % project.id
     return result
     
 @register.simple_tag
 def my_projects_header(user):
     result = '''<tr><th>Project title</th><th>Project Status</th>
-    <th>Edit</th><th>Submit for Review</th>'''
+    <th>Edit</th>'''
     
     if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
         result += '<th>Publish</th>'
 	result +='</tr>'
+	return result
 
 @register.simple_tag
 def my_project(project, user):
     result = '<tr id="project_%s"><td>%s</td>' % (str(project.id), project.name)
     result += "<td>%s</td>" % project.status
     result += '<td><a href="/edit_project/%s/">Edit</a></td>' % project.id
-    result += '<td>%s</td>' % review_text(project)
     if set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()]):
         result += '<td>%s</td>' % publish_text(project)
     result += '</tr>'
@@ -61,19 +61,11 @@ def project_success_message(request):
     return message
     
     
-def review_text(project):
-    if project.status == PROJECT_STATUS.DRAFT:
-        return '<a href="#review" class="review_link" id="%s">Submit for review</a>' % str(project.id)
-    elif project.status == PROJECT_STATUS.REVIEW:
-        return "Under Review"
-    else:
-        return project.status
-    
 def publish_text(project):
     if project.status == PROJECT_STATUS.PUBLISHED:
-        return '<a href="#unpublish" class="unpublish_link" id="%s">Unpublish</a>' % str(project.id)
+        return '<span class="unpublish_link" id="%s">Unpublish</span>' % str(project.id)
     else:
-        return '<a href="#publish" class="publish_link" id="%s">Publish</a>' % str(project.id)
+        return '<span class="publish_link" id="%s">Publish</span>' % str(project.id)
 
 @register.simple_tag
 def my_projects_link():
@@ -172,6 +164,11 @@ class ParseImgRssFeedNode(template.Node):
         return ''
   
 
+@register.simple_tag
+def get_thumbnail_img(img_url):
+    url = img_url.replace("_m.", "_s.")
+    return url
+    
 
 @register.simple_tag
 def youtube_playlist_player(playlist_id):

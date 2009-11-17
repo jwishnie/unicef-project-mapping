@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 from maplayers.models import Project
 
-from maplayers.constants import GROUPS
+from maplayers.constants import GROUPS, PROJECT_STATUS
 from maplayers.forms import UserForm, ChangePasswordForm
 
 
@@ -51,12 +51,25 @@ def change_password(request):
 @login_required
 def my_projects(request):
     user = request.user
-    projects = Project.objects.filter(created_by=user)
+    projects = Project.objects.filter(created_by=user).exclude(status=PROJECT_STATUS.DRAFT)
     return render_to_response('my_projects.html',
                               {'projects' : projects},
                               context_instance=RequestContext(request)  
                              )
 
+@login_required
+def projects_for_review(request):
+    user = request.user
+    if not (set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()])):
+        return HttpResponseRedirect('/permission_denied/add_user/not_admin')
+    
+    projects = Project.objects.filter(status=PROJECT_STATUS.REVIEW)
+    return render_to_response('projects_for_review.html',
+                              {'projects' : projects},
+                              context_instance=RequestContext(request)  
+                             )
+    
+    
 def _user_registration_response(request, form):
     group_names = ", ".join([str(group.name) for group in Group.objects.all()])
     return render_to_response('user_registration.html',

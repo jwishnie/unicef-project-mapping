@@ -132,13 +132,6 @@ class ProjectAdminViewsUnitTest(TestCase):
         response = web_client.get("/projects/id/7/")
         self.assertContains(response, "Publish")
         self.assertContains(response, "Submit for Review")
-
-    def test_review_project_for_submission(self):
-        web_client = Client()
-        web_client.login(username='editor', password='editor')
-        web_client.get("/projects/submit_for_review/7/")
-        project = Project.objects.get(id=7)
-        self.assertTrue(PROJECT_STATUS.REVIEW, project.status)
         
         
     def test_publish_unpublish_should_update_project_status(self):
@@ -148,7 +141,7 @@ class ProjectAdminViewsUnitTest(TestCase):
         web_client.login(username='map_super', password='map_super')
         response = web_client.get("/projects/unpublish/1/")
         project = Project.objects.get(id=1)
-        self.assertEquals(PROJECT_STATUS.DRAFT, project.status)
+        self.assertEquals(PROJECT_STATUS.UNPUBLISHED, project.status)
         response = web_client.get("/projects/publish/1/")
         project = Project.objects.get(id=1)
         self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)

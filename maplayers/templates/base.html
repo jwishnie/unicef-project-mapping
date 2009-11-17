@@ -25,9 +25,9 @@
 	            	<ul>
 						<li class="first"><a href="/">Home</a></li>
 						{% if user.is_authenticated %}
-							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>
 							<li>{% add_project_link %}</li>
 							<li>{% my_projects_link %}</li>
+							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>							
 				        {% else %}
 				        	<li><a href='{% url django.contrib.auth.views.login %}'>Login</a>
 				        {% endif %}

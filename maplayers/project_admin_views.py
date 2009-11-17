@@ -124,24 +124,24 @@ def publish_project(request, project_id):
     project = Project.objects.get(id=int(project_id))
     if not project.is_publishable_by(request.user):
         return HttpResponse("{'authorized' : false}")
-        
     return _project_status_change_json_response(request, project, 
                     PROJECT_STATUS.PUBLISHED, "Published")
+                    
+@login_required                     
+def reject_project(request, project_id):
+    project = Project.objects.get(id=int(project_id))
+    if not project.is_publishable_by(request.user):
+        return HttpResponse("{'authorized' : false}")
+    return _project_status_change_json_response(request, project, 
+                    PROJECT_STATUS.REJECTED, "Rejected")
 
 @login_required
 def unpublish_project(request, project_id):
     project = Project.objects.get(id=int(project_id))
     if not project.is_publishable_by(request.user):
         return HttpResponse("{'authorized' : false}")
-        
     return _project_status_change_json_response(request, project, 
-                    PROJECT_STATUS.DRAFT, "Unpublished")
-                    
-@login_required
-def submit_for_review(request, project_id):
-    project = Project.objects.get(id=int(project_id))
-    return _project_status_change_json_response(request, project, 
-            PROJECT_STATUS.REVIEW, "submitted for review")
+                    PROJECT_STATUS.UNPUBLISHED, "Unpublished")
 
 
 @login_required

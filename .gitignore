@@ -8,6 +8,7 @@ settings.py
 *.swp
 build
 *.sqlite3
+*.sqlite
 *.log*
 *.py.swo
 .settings/*
