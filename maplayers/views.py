@@ -196,9 +196,9 @@ def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_
                                   ).distinct()
  
 def _filter_projects_for_request(request):
-    if request.GET['tag'] != '' :
+    if request.GET.get('tag', ''):
       projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
-    elif require.GET['search_term'] != '' :
+    elif request.GET.get('search_term', ''):
       projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['search_term'])
     else:
       projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
