@@ -35,18 +35,18 @@ def edit_project_link(project, user):
 @register.simple_tag
 def my_projects_header(user):
     result = '''<tr><th>Project title</th><th>Project Status</th>
-    <th>Edit</th><th>Review Status</th>'''
+    <th>Edit</th>'''
     
     if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
         result += '<th>Publish</th>'
 	result +='</tr>'
+	return result
 
 @register.simple_tag
 def my_project(project, user):
     result = '<tr id="project_%s"><td>%s</td>' % (str(project.id), project.name)
     result += "<td>%s</td>" % project.status
     result += '<td><a href="/edit_project/%s/">Edit</a></td>' % project.id
-    result += '<td>%s</td>' % review_text(project)
     if set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()]):
         result += '<td>%s</td>' % publish_text(project)
     result += '</tr>'
@@ -59,10 +59,6 @@ def project_success_message(request):
         message = '<div class="highlight">%s</div>' % request.session["success_message"]
         del request.session["success_message"]
     return message
-    
-    
-def review_text(project):
-    return "Under Review" if project.status == PROJECT_STATUS.REVIEW else "Reviewed"
     
     
 def publish_text(project):

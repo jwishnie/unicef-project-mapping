@@ -8,12 +8,11 @@
 		<script src="{{ jquery }}" type="text/javascript"></script>
 		<script type="text/javascript">
 			function update_project(project){
-				var td_id = "project_" + project.id;
-				result = "<td>"+ project.name +"</td>";
+				var review_status = "";
+				var result = "<td>"+ project.name +"</td>";
 				result += "<td>"+ project.status +"</td>";
 				result += "<td><a href=\"/edit_project/" + project.id +"/\">Edit</a></td>";
-				review_status = (project.status == "Review" ? "Under Review" : "Reviewed");
-				result += "<td>" + review_status + "</td>";
+
 				if(project.authorized){
 					if(project.status == "Published")
 				        result += "<td><span class=\"unpublish_link\" id=\"" + project.id + "\">Unpublish</span></td>";

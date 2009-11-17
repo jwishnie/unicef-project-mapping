@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load project_tags %}
+
+{% block title_extra %} My Projects {% endblock %}
+{% block extrahead %}
+        <link rel="stylesheet" href="{{ css_url }}/main.css" type="text/css" />
+		<script src="{{ jquery }}" type="text/javascript"></script>
+		<script type="text/javascript">
+		
+			jQuery(document).ready(function(){
+				$('.publish_link').click(function(){
+					var url = "/projects/publish/" + this.id +"/";
+					var tr_id = "#project_" + this.id;
+					$.get(url, function(data){
+						$(tr_id).hide();
+					});	
+				});
+				
+				$('.reject_link').click(function(){
+					var url = "/projects/reject/" + this.id +"/";
+					var tr_id = "#project_" + this.id;
+					$.get(url, function(data){
+						$(tr_id).hide();
+					});	
+				});
+
+			});
+		</script>
+		
+		
+{% endblock %}
+
+{% block page_content %}
+	<h2>Projects for Review: </h2>
+	<table id="projects">
+	<tr>
+		<th>Project title</th>
+		<th>Created by</th>
+		<th>Edit</th>
+		<th>Publish</th>
+		<th>Reject</th>
+	</tr>
+	{% for project in projects %}
+		<tr id="project_{{project.id}}">
+			<td>{{project.name}}</td>
+			<td>{{project.created_by}}</td>
+			<td><a href="/edit_project/{{project.id}}/">Edit</a></td>
+			<td><span class="publish_link" id="{{project.id}}">Publish</span></td>
+			<td><span class="reject_link" id="{{project.id}}">Reject</span></td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}

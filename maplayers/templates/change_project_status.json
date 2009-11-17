@@ -3,6 +3,7 @@
     "id" : "{{project.id}}",
     "name" : "{{project.name}}",
     "status" : "{{project.status}}",
+    "created_by" : "{{project.created_by}}",
     {% if publishable %}
         "publishable" : true,
     {% else %}
