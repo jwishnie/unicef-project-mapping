@@ -47,34 +47,27 @@ $(document).ready(function() {
 	function searchEvent(){
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
-			var projects = JSON.parse(data);
-			markers.destroy();
-			markers = new OpenLayers.Layer.Markers( "Markers" );
-			map.addLayer(markers);
-			
-			var html = "<h4>List of Projects: </h4><div class=\"project_list\"><ol>";
-			for(var i = 0;i<projects.length; i++){
-			    var project = projects[i];
-			    var project_name = project['snippet'].split(":")[0];
-			    var project_description = project['snippet'].split(":")[1];			    
-			    var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
-				                        project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>'
-				html += "<li>" + project_text + '</li>';
-				var marker_icon = icon.clone()
-				marker = new OpenLayers.Marker(
-				                new OpenLayers.LonLat(project['longitude'], 
-	    						    project['latitude']),marker_icon);
-	            marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
-				markers.addMarker(marker);
-			}
-			html += '</div></ol>';
-			$("#projects").html(html);
-			
-			$("input[type=checkbox]").each(function()
-			{
-				this.checked = false;
-			});			
-            for(var i = 0;i<projects.length; i++){			
+                  projects = getProjects(data);
+                  addProjectsOnMap(projects);	
+       		  removeAllSectorsAndImplementors();
+                  selectOnlySectorsAndImplementorsForProjects(projects);
+            });	  
+
+            bookmarkUrl();
+	}
+
+        function removeAllSectorsAndImplementors() {
+            $("input[type=checkbox]").each(function() {
+                    this.checked = false;
+            });			
+        }
+
+        function getProjects(data) {
+            return JSON.parse(data);
+        }
+
+        function selectOnlySectorsAndImplementorsForProjects(projects) {
+                for(var i = 0;i<projects.length; i++) {
 			  $("input[type=checkbox]").each(function()
 			  {
 			      var project = projects[i];
@@ -88,9 +81,7 @@ $(document).ready(function() {
 				  }				  
 			  });
 			}			
-		});	  
-            bookmarkUrl();
-	}
+        }
 	
 	function constructQueryString(selected_filters){
 		var qstring = "";
@@ -141,33 +132,38 @@ $(document).ready(function() {
                 filters["search_term"] = $("#search").val();
 		
 		$.get(projects_url, filters, function(data){
-			var projects = JSON.parse(data);
-
-			markers.destroy();
-			markers = new OpenLayers.Layer.Markers( "Markers" );
-			map.addLayer(markers);
-			
-			var html = "<h4>List of Projects: </h4><div class=\"project_list\"><ol>";
-			for(var i = 0;i<projects.length; i++){
-			    var project = projects[i];
-			    var project_name = project['snippet'].split(":")[0];
-			    var project_description = project['snippet'].split(":")[1];			    
-			    var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
-				                        project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>'
-				html += "<li>" + project_text + '</li>';
-				var marker_icon = icon.clone()
-				marker = new OpenLayers.Marker(
-				                new OpenLayers.LonLat(project['longitude'], 
-        						    project['latitude']),marker_icon);
-                marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
-				markers.addMarker(marker);
-			}
-			html += '</div></ol>';
-			$("#projects").html(html);
+                    projects = getProjects(data);
+                    addProjectsOnMap(projects)
 		});
 		
 		bookmarkUrl();
     }
+
+
+    function addProjectsOnMap(projects) {
+        markers.destroy();
+        markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+            
+        var html = "<h4>List of Projects: </h4><div class=\"project_list\"><ol>";
+        for(var i = 0;i<projects.length; i++){
+            var project = projects[i];
+            var project_name = project['snippet'].split(":")[0];
+            var project_description = project['snippet'].split(":")[1];			    
+            var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
+                                        project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>'
+            html += "<li>" + project_text + '</li>';
+            var marker_icon = icon.clone()
+            marker = new OpenLayers.Marker(
+                                new OpenLayers.LonLat(project['longitude'], 
+                                            project['latitude']),marker_icon);
+            marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
+                        markers.addMarker(marker);
+        }
+        html += '</div></ol>';
+        $("#projects").html(html);
+    }
+
         var popup = null;
 	var bounds= new OpenLayers.Bounds(left, bottom, right, top);
 
@@ -191,7 +187,7 @@ $(document).ready(function() {
                    { 
                        layers: 'GADM:UGA_adm1',
                        transparent: true,
-                       format: 'image/png',
+                       format: 'image/png'
                    },
                    {
                        isBaseLayer: false
@@ -259,3 +255,5 @@ function expandImplementors(){
     $('ul.implementors').css("background-color", "#054862");
     $('li.implementor_drawer span').addClass('open');   
 }
+
+
