@@ -47,7 +47,7 @@ $(document).ready(function() {
 	function searchEvent(){
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
-                  projects = getProjects(data);
+                  var projects = getProjects(data);
                   addProjectsOnMap(projects);	
        		  removeAllSectorsAndImplementors();
                   selectOnlySectorsAndImplementorsForProjects(projects);
@@ -132,7 +132,7 @@ $(document).ready(function() {
                 filters["search_term"] = $("#search").val();
 		
 		$.get(projects_url, filters, function(data){
-                    projects = getProjects(data);
+                    var projects = getProjects(data);
                     addProjectsOnMap(projects);
 		});
 		
