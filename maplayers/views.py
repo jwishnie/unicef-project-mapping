@@ -53,11 +53,6 @@ def projects_in_map(request, left, bottom, right, top):
     response = HttpResponse()
     response.write(convert_to_json(projects))
     return response
-    #return render_to_response(
-    #                          'projects_in_map.json',
-    #                          {'projects': projects},
-    #                           context_instance=RequestContext(request)
-    #                          )
 
 def project(request, project_id):
     try:
@@ -214,3 +209,4 @@ def convert_to_json(projects):
         project_json = '''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d}''' %(project.latitude, project.longitude, project.snippet(), project.id)
         result.append(project_json)
     return "[" + ", ".join(result) + "]"
+

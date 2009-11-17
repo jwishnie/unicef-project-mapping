@@ -134,6 +134,14 @@ def reject_project(request, project_id):
         return HttpResponse("{'authorized' : false}")
     return _project_status_change_json_response(request, project, 
                     PROJECT_STATUS.REJECTED, "Rejected")
+                    
+@login_required                     
+def delete_project(request, project_id):
+    project = Project.objects.get(id=int(project_id))
+    if not project.is_editable_by(request.user):
+        return HttpResponse("{'authorized' : false}")
+    project.delete()
+    return HttpResponse("Deleted")
 
 @login_required
 def unpublish_project(request, project_id):
