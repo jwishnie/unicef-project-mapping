@@ -55,7 +55,7 @@ label {
     width: 46%;
 }
 
-#photo_set ul li .photo {
+#photo_set .photo {
     float: left;
     width: 80px;
 }

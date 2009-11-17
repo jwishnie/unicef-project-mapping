@@ -85,7 +85,7 @@ $(document).ready(function() {
 	
 	function constructQueryString(selected_filters){
 		var qstring = "";
-		for(var i=0; i<selected_filters.length; i++){ qstring += "&" + selected_filters[i].name + "=true"}
+		for(var i=0; i<selected_filters.length; i++){ qstring += "&" + selected_filters[i].name + "=true";}
 		return qstring;
 	}
 	
@@ -151,9 +151,9 @@ $(document).ready(function() {
             var project_name = project['snippet'].split(":")[0];
             var project_description = project['snippet'].split(":")[1];			    
             var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
-                                        project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>'
+                                        project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>';
             html += "<li>" + project_text + '</li>';
-            var marker_icon = icon.clone()
+            var marker_icon = icon.clone();
             marker = new OpenLayers.Marker(
                                 new OpenLayers.LonLat(project['longitude'], 
                                             project['latitude']),marker_icon);
@@ -172,7 +172,7 @@ $(document).ready(function() {
             maxScale: MAX_SCALE, 
             minScale: MIN_SCALE,
             eventListeners: { "moveend": mapEvent}
-        }
+        };
 
         var map = new OpenLayers.Map( 'map_canvas' , options );
             
