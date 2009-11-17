@@ -119,7 +119,6 @@ class ProjectAdminViewsUnitTest(TestCase):
         response = web_client.get("/projects/id/3/")
         self.assertContains(response, "Edit this project")
 
-
     def test_only_editors_can_publish_projects(self): 
         web_client = Client()
         response = web_client.get("/projects/id/1/")
@@ -133,7 +132,6 @@ class ProjectAdminViewsUnitTest(TestCase):
         self.assertContains(response, "Publish")
         self.assertContains(response, "Submit for Review")
         
-        
     def test_publish_unpublish_should_update_project_status(self):
         web_client = Client()
         project = Project.objects.get(id=1)
@@ -142,6 +140,21 @@ class ProjectAdminViewsUnitTest(TestCase):
         response = web_client.get("/projects/unpublish/1/")
         project = Project.objects.get(id=1)
         self.assertEquals(PROJECT_STATUS.UNPUBLISHED, project.status)
-        response = web_client.get("/projects/publish/1/")
+
+    def test_reject_project_should_place_the_project_in_rejected_state(self):
+        web_client = Client()
         project = Project.objects.get(id=1)
         self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)
+        web_client.login(username='map_super', password='map_super')
+        response = web_client.get("/projects/reject/1/")
+        project = Project.objects.get(id=1)
+        self.assertEquals(PROJECT_STATUS.REJECTED, project.status)
+        
+    def test_delete_project(self):
+        web_client = Client()
+        project = Project.objects.get(id=1)
+        project_name = project.name
+        web_client.login(username='map_super', password='map_super')
+        response = web_client.get("/projects/delete/1/")
+        self.assertFalse(Project.objects.filter(name__exact=project_name))
+

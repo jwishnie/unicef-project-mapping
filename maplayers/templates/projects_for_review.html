@@ -24,6 +24,14 @@
 						$(tr_id).hide();
 					});	
 				});
+				
+				$('.delete_link').click(function(){
+					var url = "/projects/delete/" + this.id +"/";
+					var tr_id = "#project_" + this.id;
+					$.get(url, function(data){
+						$(tr_id).hide();
+					});	
+				});
 
 			});
 		</script>
@@ -33,21 +41,23 @@
 
 {% block page_content %}
 	<h2>Projects for Review: </h2>
-	<table id="projects">
+	<table id="projects_for_review">
 	<tr>
 		<th>Project title</th>
 		<th>Created by</th>
-		<th>Edit</th>
-		<th>Publish</th>
-		<th>Reject</th>
+		<th>Action</th>
 	</tr>
 	{% for project in projects %}
 		<tr id="project_{{project.id}}">
-			<td>{{project.name}}</td>
+			<td><a href="/projects/id/{{project.id}}/">{{project.name}}</a></td>
 			<td>{{project.created_by}}</td>
-			<td><a href="/edit_project/{{project.id}}/">Edit</a></td>
-			<td><span class="publish_link" id="{{project.id}}">Publish</span></td>
-			<td><span class="reject_link" id="{{project.id}}">Reject</span></td>
+			<td>
+				<span><a href="/edit_project/{{project.id}}/">Edit</a> &nbsp| &nbsp</span>
+				<span class="request_changes_link" id="{{project.id}}">Request Changes &nbsp| &nbsp</span>
+				<span class="publish_link" id="{{project.id}}">Publish &nbsp| &nbsp</span>
+				<span class="reject_link" id="{{project.id}}">Reject &nbsp| &nbsp</span>
+				<span class="delete_link" id="{{project.id}}">Delete</span>
+			</td>
 		</tr>
 	{% endfor %}
 	</table>
