@@ -133,7 +133,7 @@ $(document).ready(function() {
 		
 		$.get(projects_url, filters, function(data){
                     projects = getProjects(data);
-                    addProjectsOnMap(projects)
+                    addProjectsOnMap(projects);
 		});
 		
 		bookmarkUrl();
