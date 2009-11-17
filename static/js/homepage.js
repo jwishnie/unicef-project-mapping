@@ -47,7 +47,7 @@ $(document).ready(function() {
 	function searchEvent(){
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
-			var projects = JSON.parse(data.replace(/'/g, '"'));
+			var projects = JSON.parse(data);
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
 			map.addLayer(markers);
@@ -141,7 +141,7 @@ $(document).ready(function() {
                 filters["search_term"] = $("#search").val();
 		
 		$.get(projects_url, filters, function(data){
-			var projects = JSON.parse(data.replace(/'/g, '"'));
+			var projects = JSON.parse(data);
 
 			markers.destroy();
 			markers = new OpenLayers.Layer.Markers( "Markers" );
