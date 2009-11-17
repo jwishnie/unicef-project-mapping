@@ -5,7 +5,7 @@ import logging
 from django.shortcuts import render_to_response
 from django.http import Http404
 from django.template import RequestContext
-from django.http import HttpResponseRedirect 
+from django.http import HttpResponseRedirect, HttpResponse 
 from django.db.models import Q
 from django.contrib.auth import logout
 
@@ -50,11 +50,14 @@ def projects_in_map(request, left, bottom, right, top):
     else:
         projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     
-    return render_to_response(
-                              'projects_in_map.json',
-                              {'projects': projects},
-                               context_instance=RequestContext(request)
-                              )
+    response = HttpResponse()
+    response.write(convert_to_json(projects))
+    return response
+    #return render_to_response(
+    #                          'projects_in_map.json',
+    #                          {'projects': projects},
+    #                           context_instance=RequestContext(request)
+    #                          )
 
 def project(request, project_id):
     try:
@@ -196,10 +199,18 @@ def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_
                                   ).distinct()
  
 def _filter_projects_for_request(request):
-    if request.GET['tag'] != '' :
+    if request.GET.get('tag', '') != '' :
       projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
-    elif require.GET['search_term'] != '' :
+    elif request.GET.get('search_term', '') != '' :
       projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['search_term'])
     else:
       projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     return projects
+
+
+def convert_to_json(projects):
+    result = []
+    for project in projects:
+        project_json = '''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d}''' %(project.latitude, project.longitude, project.snippet(), project.id)
+        result.append(project_json)
+    return "[" + ", ".join(result) + "]"

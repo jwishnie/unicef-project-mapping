@@ -11,8 +11,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 
 from maplayers.constants import GROUPS, PROJECT_STATUS
-from maplayers.models import Project, Sector, Implementor, Resource, Link
-from maplayers.forms import ProjectForm
+from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit
+from maplayers.forms import ProjectForm, AdminUnitForm
 
 # Authentication helpers
 def _is_project_author(user):
@@ -143,6 +143,35 @@ def submit_for_review(request, project_id):
     return _project_status_change_json_response(request, project, 
             PROJECT_STATUS.REVIEW, "submitted for review")
 
+
+@login_required
+def add_administrative_unit(request):
+    if request.method == 'POST':
+        form = AdminUnitForm(request.POST)
+        if form.is_valid():
+            _create_admin_unit(form)
+            return HttpResponseRedirect('/admin_unit_creation/success/')
+        else:
+            return _add_admin_unit_response(request, form)
+    else:
+        form = AdminUnitForm()
+        return render_to_response('add_admin_unit.html',
+                                  {'form' : form},
+                                  context_instance=RequestContext(request)
+                                  )
+
+def _create_admin_unit(form):
+    name = form.cleaned_data['name']
+    country = form.cleaned_data['country']
+    region_type = form.cleaned_data['type']
+    statistical_data = form.cleaned_data['']
+    admin_unit = AdministrativeUnit()
+
+
+
+
+def _add_admin_unit_response(request, form):
+    pass
 
 def _add_edit_success_page(project,request):
     if project.status == PROJECT_STATUS.PUBLISHED:

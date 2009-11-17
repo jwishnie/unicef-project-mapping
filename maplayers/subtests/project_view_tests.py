@@ -3,6 +3,7 @@
 from django.test import TestCase
 from django.test.client import Client
 from maplayers.models import Project
+from maplayers.views import convert_to_json 
 
 class ProjectPage(TestCase):
     fixtures = ['test_project_data']
@@ -15,18 +16,18 @@ class ProjectPage(TestCase):
         
     def test_should_return_list_of_projects_in_bounding_box(self):
         webclient = Client()
-        context = webclient.get('/projects/bbox/0/0/40/10/', {'tag' : ''}).context
+        context = webclient.get('/projects/bbox/0/0/40/10/', {'tag' : '', 'search_term' : ''}).context
         self.assertEquals(Project.objects.get(id=1), context['projects'][0])
         
     def test_should_return_list_of_projects_in_selected_sectors(self):
         webclient = Client()
-        context = webclient.get('/projects/bbox/-180/-90/180/90/', {'sector_1':'true', 'sector_2':'true', 'tag' : ''}).context
+        context = webclient.get('/projects/bbox/-180/-90/180/90/', {'sector_1':'true', 'sector_2':'true', 'tag' : '', 'search_term' : ''}).context
         projects = Project.objects.filter(id__in=[1, 3, 2])
         self.assertEquals(set(projects), set(context['projects']))
    
     def test_should_return_list_of_projects_by_selected_implementors(self):
         webclient = Client()
-        context = webclient.get('/projects/bbox/-180/-90/180/90/', {'implementor_1':'true', 'tag' : ''}).context
+        context = webclient.get('/projects/bbox/-180/-90/180/90/', {'implementor_1':'true', 'tag' : '', 'search_term' : ''}).context
         projects =  Project.objects.filter(longitude__gte=-180, 
                                           longitude__lte=180,  
                                           latitude__gte=-90, 
@@ -46,4 +47,23 @@ class ProjectPage(TestCase):
         response = webclient.get('/projects/search/unicef/')
         self.assertContains(response, "School for all")
         self.assertContains(response, "'implementors' : [\"Unicef\"]")
+
+    def test_should_give_collection_of_projects_in_json(self):
+        expected_result = '''[{"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 3}, {"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 4}]'''
+        project1 = MockProject()
+        project1.id = 3
+        project1.latitude = 23.50
+        project1.longitude = 45.20
+
+        project2 = MockProject()
+        project2.id = 4
+        project2.latitude = 23.50
+        project2.longitude = 45.20
+
+        actual_result = convert_to_json([project1, project2])
+        self.assertEquals(expected_result, actual_result)
+
+class MockProject:
+    def snippet(self):
+        return "This is test"
 

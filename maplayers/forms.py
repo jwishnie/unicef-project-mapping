@@ -19,9 +19,9 @@ class ProjectForm(forms.Form):
     
 class AdminUnitForm(forms.Form):
     name = forms.CharField(max_length=50)
-    type = forms.CharField(max_length=20)
+    region_type = forms.CharField(max_length=20)
     country = forms.CharField(max_length=20)
-    metrics_data = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows':30}))
+    statistical_data = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows':30}))
     
 class UserForm(forms.Form):
     username = forms.CharField(max_length=30) 

@@ -117,3 +117,9 @@ class Implementor(models.Model):
         
     class Admin:
         pass
+
+class AdministrativeUnit(models.Model):
+    name = models.CharField(max_length = 20)
+    region_type = models.CharField(max_length=10)
+    country = models.CharField(max_length=20)
+    region_metrics = tinymce_models.HTMLField(null=True, blank=True)

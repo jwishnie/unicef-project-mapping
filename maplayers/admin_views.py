@@ -56,8 +56,7 @@ def my_projects(request):
                               {'projects' : projects},
                               context_instance=RequestContext(request)  
                              )
-    
-    
+
 def _user_registration_response(request, form):
     group_names = ", ".join([str(group.name) for group in Group.objects.all()])
     return render_to_response('user_registration.html',
