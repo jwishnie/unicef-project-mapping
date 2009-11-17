@@ -49,10 +49,8 @@ def projects_in_map(request, left, bottom, right, top):
         projects = _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_ids, request.GET['search_term'])
     else:
         projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
-    
-    response = HttpResponse()
-    response.write(convert_to_json(projects))
-    return response
+
+    return write_project_list_to_response(projects)   
 
 def project(request, project_id):
     try:
@@ -77,14 +75,10 @@ def project(request, project_id):
 
 def projects_search(request, search_term):
     qset = _construct_queryset_for_project_search(search_term)
-    results = Project.objects.filter(qset, parent_project=None).distinct()
+    projects = Project.objects.filter(qset, parent_project=None).distinct()
 
-    return render_to_response(
-                              'projects_search_result.json',
-                              {'projects': results},
-                               context_instance=RequestContext(request)
-                              )
-    
+    return write_project_list_to_response(projects)   
+   
 def projects_tag_search(request, tag_term):
     projects = TaggedItem.objects.get_by_model(Project, Tag.objects.filter(name__in=[tag_term]))
     sectors = Sector.objects.all()
@@ -105,7 +99,6 @@ def projects_tag_search(request, tag_term):
                               )     
 
 def _get_sectors_for_projects(projects):
-    all_sectors = Sector.objects.all()
     sectors = [Sector.objects.filter(projects=project.id) for project in projects]
     result = []
     for project_sectors in sectors:
@@ -114,9 +107,9 @@ def _get_sectors_for_projects(projects):
     return list(set(result))
 
 def _get_implementors_for_projects(projects):
-    implementor = [Implementor.objects.filter(projects=project.id) for project in projects]
+    implementors = [Implementor.objects.filter(projects=project.id) for project in projects]
     result = []
-    for project_implementor in implementor:
+    for project_implementor in implementors:
         for implementor in project_implementor:
             result.append(implementor)
     return list(set(result))
@@ -206,7 +199,12 @@ def _filter_projects_for_request(request):
 def convert_to_json(projects):
     result = []
     for project in projects:
-        project_json = '''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d}''' %(project.latitude, project.longitude, project.snippet(), project.id)
+        project_json = '''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d, "sectors" : %s, "implementors" : %s}''' %(project.latitude, project.longitude, project.snippet(), project.id, project.sectors_in_json(), project.implementors_in_json())
         result.append(project_json)
     return "[" + ", ".join(result) + "]"
+
+def write_project_list_to_response(projects):
+    response = HttpResponse()
+    response.write(convert_to_json(projects))
+    return response
 
