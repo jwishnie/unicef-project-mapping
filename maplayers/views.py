@@ -200,12 +200,12 @@ def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_
  
 def _filter_projects_for_request(request):
    if request.GET.get('tag', ''):
-      projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET.get('tag'))
-    elif request.GET.get('search_term', ''):
-      projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET.get('search_term'))
-    else:
-      projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
-    return projects
+       projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET.get('tag'))
+   elif request.GET.get('search_term', ''):
+       projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET.get('search_term'))
+   else:
+       projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+   return projects
 
 
 def convert_to_json(projects):
