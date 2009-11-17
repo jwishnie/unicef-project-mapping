@@ -46,10 +46,10 @@ class ProjectPage(TestCase):
         webclient = Client()
         response = webclient.get('/projects/search/unicef/')
         self.assertContains(response, "School for all")
-        self.assertContains(response, "'implementors' : [\"Unicef\"]")
+        self.assertContains(response, "\"implementors\" : [\"Unicef\"]")
 
     def test_should_give_collection_of_projects_in_json(self):
-        expected_result = '''[{"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 3}, {"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 4}]'''
+        expected_result = '''[{"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 3, "sectors" : ["Disaster Aid"], "implementors" : ["Unicef"]}, {"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 4, "sectors" : ["Disaster Aid"], "implementors" : ["Unicef"]}]'''
         project1 = MockProject()
         project1.id = 3
         project1.latitude = 23.50
@@ -66,10 +66,14 @@ class ProjectPage(TestCase):
 def to_json(projects):
     result = []
     for project in projects:
-        result.append('''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d}''' %(project.latitude, project.longitude, project.snippet(), project.id))
+        result.append('''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d, "sectors" : %s, "implementors" : %s}''' %(project.latitude, project.longitude, project.snippet(), project.id, project.sectors_in_json(), project.implementors_in_json()))
     return "[" + ", ".join(result) + "]"
 
 class MockProject:
     def snippet(self):
         return "This is test"
+    def sectors_in_json(self):
+        return '["Disaster Aid"]'
+    def implementors_in_json(self):
+        return '["Unicef"]'
 
