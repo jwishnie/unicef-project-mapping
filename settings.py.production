@@ -121,6 +121,7 @@ OPENLAYERS = STATIC_URL+'/openlayers/OpenLayers.js'
 JQUERY_PLUGINS = STATIC_URL+'/jqueryplugins'
 FANCY_UPLOADER = STATIC_URL + "/fancyuploader"
 FANCY_UPLOADER_SWF = FANCY_UPLOADER + "/Swiff.Uploader.swf"
+JQUERY_UI_CUSTOM = STATIC_URL + '/jquery-ui/jquery-ui-1.7.2.custom.min.js'
 
 LOGIN_REDIRECT_URL = '/'
 
