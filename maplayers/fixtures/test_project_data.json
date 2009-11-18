@@ -848,7 +848,7 @@
     "pk": 8, 
     "model": "maplayers.project", 
     "fields": {
-      "name": "South Asia earthquake and tsunamis", 
+      "name": "South Asia", 
       "parent_project": null, 
       "youtube_playlist_id": "5F278BBCBB8E6F6C", 
       "created_by": 2,
