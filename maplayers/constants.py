@@ -19,3 +19,4 @@ class PROJECT_STATUS(object):
     UNPUBLISHED = u'Unpublished'
     REVIEW = u'Review'
     REJECTED= u'Rejected'
+    REQUEST_CHANGES= u'Change requested'
