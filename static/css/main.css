@@ -88,6 +88,11 @@ li a {
     padding-left: 10px;
 }
 
+#main_nav ul li a {
+    margin: 0;
+    padding: 0;
+}
+
 #main_nav li.first,
 #project_list td span.first,
 #my_project_list td span.first {
