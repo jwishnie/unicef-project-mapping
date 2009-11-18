@@ -85,7 +85,9 @@
 
 				$('.review_suggestions').click(function() {
 					project_id = (this.id).split("_")[1];
-					$("#project_feedback").append('<input type="hidden" name="project" value="' + project_id + '"></input>')
+					$("#project_feedback").append('<input type="hidden" name="project" value="' + project_id + '"></input>');
+					$(".ui-dialog-titlebar-close").html("X");
+					$(".ui-dialog-titlebar-close").css("color", "#0C7094");
 					$('#dialog').dialog('open');
 				});
 
