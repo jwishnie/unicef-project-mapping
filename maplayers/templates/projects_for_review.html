@@ -18,7 +18,7 @@
 				$('.publish_link').click(function(){
 					project_id = (this.id).split("_")[1];
 					var url = "/projects/publish/" + project_id +"/";
-					var tr_id = "#project_" + this.id;
+					var tr_id = "#project_" + project_id;
 					$.get(url, function(data){
 						$(tr_id).remove();
 					});	
@@ -27,7 +27,7 @@
 				$('.reject_link').click(function(){
 					project_id = (this.id).split("_")[1];
 					var url = "/projects/reject/" + project_id +"/";
-					var tr_id = "#project_" + this.id;
+					var tr_id = "#project_" + project_id;
 					$.get(url, function(data){
 						$(tr_id).remove();
 					});	
@@ -36,7 +36,7 @@
 				$('.delete_link').click(function(){
 					project_id = (this.id).split("_")[1];
 					var url = "/projects/delete/" + project_id +"/";
-					var tr_id = "#project_" + this.id;
+					var tr_id = "#project_" + project_id;
 					$.get(url, function(data){
 						$(tr_id).remove();
 					});	

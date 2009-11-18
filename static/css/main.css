@@ -117,19 +117,25 @@ li a {
     width: 830px;
 }
 
-#main_content fieldset div {
+#main_content fieldset div,
+#change_password div,
+#login div {
     overflow: hidden;
     padding-bottom: 10px;
 }
 
-#main_content fieldset label {
+#main_content fieldset label,
+#change_password div label,
+#login div label {
     float: left;
     width: 150px;
     padding-right: 5px;
     text-align: right;
 }
 
-#main_content fieldset input {
+#main_content fieldset input,
+#change_password div input,
+#login div input {
     float: left;
 }
 
@@ -141,7 +147,9 @@ li a {
     margin: 18px;
 }
 
-#main_content .main_action input {
+#main_content .main_action input,
+#change_password .main_action input,
+#login .main_action input {
     background-color: #0099FF;
     color: #FFF;
     padding: 5px;
@@ -270,7 +278,9 @@ table#projects td {
 
 /*PROJECTS FOR REVIEW, MY PROJECTS*/
 #projects_for_review,
-#my_projects {
+#my_projects,
+#change_password,
+#login {
     margin-left: 15px;
 }
 
@@ -310,10 +320,6 @@ table#projects td {
     padding-left: 5px;
     text-decoration: underline;
     cursor: pointer;
-}
-
-.ui-widget-overlay {
-    opacity: 0.7;
 }
 
 .ui-dialog .ui-dialog-titlebar,

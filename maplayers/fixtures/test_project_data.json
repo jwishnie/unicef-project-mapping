@@ -845,6 +845,69 @@
     }
   },
   {
+    "pk": 8, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": "South Asia", 
+      "parent_project": null, 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
+      "created_by": 2,
+      "groups": [
+          2
+        ],
+      "longitude": "-30", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
+      "location": "South Asia", 
+      "latitude": "10", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
+      "website_url": "http://review.org/", 
+      "description": "Through the UN Flash Appeal, WHO is requesting US$ 67,060,220 to meet health needs of populations affected by the South Asia earthquake and tsunamis. The Appeal aims to cover the January to June 2005 period in Indonesia, Sri Lanka, and the Maldives, and-through a wider approach-ensure that the needs of inhabitants in all affected areas are being addressed to enable a balanced recovery.",
+      "status": "Review"
+    }
+  },
+  {
+    "pk": 9, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": "Indonesia", 
+      "parent_project": null, 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
+      "created_by": 2,
+      "groups": [
+          2
+        ],
+      "longitude": "40", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
+      "location": "draft project", 
+      "latitude": "20", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
+      "website_url": "http://review.org/", 
+      "description": "2 November 2009 -- WHO staff are working around the clock to support Indonesian authorities as they deliver health care to people affected by the massive 30 September 2009 earthquake. Vaccination campaigns, mobile medical clinics and health assessments are ongoing as part of the coordinated response to the emergency. Eight WHO staff are on the ground supporting government and Health Cluster partners in healthcare delivery.",
+      "status": "Review"
+    }
+  },
+  {
+    "pk": 10, 
+    "model": "maplayers.project", 
+    "fields": {
+      "name": "El Salvador", 
+      "parent_project": null, 
+      "youtube_playlist_id": "5F278BBCBB8E6F6C", 
+      "created_by": 2,
+      "groups": [
+          2
+        ],
+      "longitude": "0", 
+      "imageset_feedurl": "feed://api.flickr.com/services/feeds/photoset.gne?set=72157622616758268&nsid=36330826634@N01&lang=en-us", 
+      "location": "draft project", 
+      "latitude": "-20", 
+      "project_image": "http://3.bp.blogspot.com/_c7yI0HSfkOE/SarZw4GjJyI/AAAAAAAAAI0/RP7xTj3-ZwI/S692/IMGP3957.JPG", 
+      "website_url": "http://review.org/", 
+      "description": "11 November 2009 -- WHO has rushed medical supplies and staff to El Salvador in response to the widespread damage caused the communities and health facilities by Hurricane Ida. At least 130 people were killed in mudslides caused by rain and several health facilities were damaged. Health authorities responded quickly by deploying extra medical staff, increasing the number of hospital beds and using mobile clinics to reach people in need.",
+      "status": "Review"
+    }
+  },
+  {
     "pk": 1, 
     "model": "maplayers.link", 
     "fields": {
@@ -888,7 +951,8 @@
       "projects": [
         1, 
         2, 
-        3
+        3,
+        8
       ]
     }
   }, 
@@ -898,7 +962,8 @@
     "fields": {
       "name": "Education", 
       "projects": [
-        1
+        1,
+        9
       ]
     }
   }, 
@@ -908,7 +973,8 @@
     "fields": {
       "name": "Medical", 
       "projects": [
-        2
+        2,
+        10
       ]
     }
   }, 
@@ -930,7 +996,9 @@
       "name": "Red Cross Foundation", 
       "projects": [
         2, 
-        3
+        3,
+        8,
+        9
       ]
     }
   }, 
@@ -940,7 +1008,9 @@
     "fields": {
       "name": "Doctors Without Borders", 
       "projects": [
-        3
+        3,
+        9,
+        10
       ]
     }
   }, 
@@ -952,7 +1022,9 @@
       "projects": [
         1, 
         4,
-        6
+        6,
+        8,
+        10
       ]
     }
   }
