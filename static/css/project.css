@@ -3,10 +3,12 @@ label {
 }
 
 #edit_project {
-    background-color: #4DBAFE;
-    float: right;
-    margin: 5px;
-    padding: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color:#4DBAFE;
+    float:right;
+    margin:5px;
+    padding:5px;
 }
 
 #edit_project a {
