@@ -88,7 +88,8 @@ li a {
     padding-left: 10px;
 }
 
-#main_nav li.first {
+#main_nav li.first,
+#project_list td span.first {
     border-left: none;
 }
 
@@ -147,7 +148,8 @@ li a {
 }
 
 #main_content_shadow {
-    background-color:#4DB8FF;
+    background-color: #4DB8FF;
+    clear: both;
 }
 
 #map_canvas{
@@ -249,6 +251,7 @@ span.drawer-handle {
     clear: both;
     font-size: 8pt;
     padding: 15px 0;
+    margin-top: 10px;
     text-align: center;
     border-top: 1px dashed #A5A5A5;
 }
@@ -256,6 +259,7 @@ span.drawer-handle {
 li.sector_drawer div,
 li.implementor_drawer div {
     width: auto;
+}
 
 table#projects th,
 table#projects td {
@@ -263,3 +267,31 @@ table#projects td {
     text-align: left;
 }
 
+/*PROJECTS FOR REVIEW*/
+#projects_for_review {
+    margin-left: 15px;
+}
+
+#project_list {
+    border-collapse: collapse;
+    width: 80%;
+}
+
+#project_list th,
+#project_list td {
+    padding: 5px;   
+    border: 2px solid #FFF;
+    background-color: #E2EBF4;
+    text-align: center;
+}
+
+#project_list td a {
+    color: #0C7094;
+}
+
+#project_list td span {
+    border-left: 1px solid;
+    padding-left: 5px;
+    text-decoration: underline;
+    cursor: pointer;
+}
