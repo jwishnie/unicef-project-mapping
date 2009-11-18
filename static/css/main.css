@@ -147,7 +147,8 @@ li a {
 }
 
 #main_content_shadow {
-    background-color:#4DB8FF;
+    background-color: #4DB8FF;
+    clear: both;
 }
 
 #map_canvas{
