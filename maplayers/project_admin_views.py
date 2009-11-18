@@ -123,7 +123,7 @@ def remove_attachment(request):
 def publish_project(request, project_id):
     project = Project.objects.get(id=int(project_id))
     if not project.is_publishable_by(request.user):
-        return HttpResponse("{'authorized' : false}")
+        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
     return _project_status_change_json_response(request, project, 
                     PROJECT_STATUS.PUBLISHED, "Published")
                     
@@ -135,6 +135,22 @@ def reject_project(request, project_id):
     return _project_status_change_json_response(request, project, 
                     PROJECT_STATUS.REJECTED, "Rejected")
                     
+@login_required                     
+def request_changes(request, project_id):
+    project = Project.objects.get(id=int(project_id))
+    if not project.is_publishable_by(request.user):
+        return HttpResponse('{"authorized" : false}')
+    print "here"
+    print request.POST.keys()
+    if not request.POST.get('feedback', ''):
+        return HttpResponse('{"error" : "Feedback is required", "authorized" : true}')
+    else:
+        project.status = PROJECT_STATUS.REQUEST_CHANGES
+        return HttpResponse('{"project_status" : "Change Requested", \
+                            "authorized" : true}')
+    
+        
+
 @login_required                     
 def delete_project(request, project_id):
     project = Project.objects.get(id=int(project_id))

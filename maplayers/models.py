@@ -123,3 +123,10 @@ class AdministrativeUnit(models.Model):
     region_type = models.CharField(max_length=10)
     country = models.CharField(max_length=20)
     region_metrics = tinymce_models.HTMLField(null=True, blank=True)
+    
+        
+class ReviewFeedback(models.Model):
+    feedback = models.CharField(max_length=500)
+    project = models.ForeignKey(Project)
+    sent_by = models.ForeignKey(User)
+    
