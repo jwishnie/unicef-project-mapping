@@ -160,7 +160,10 @@ def add_administrative_unit(request):
             _create_admin_unit(form)
             return HttpResponseRedirect('/admin_unit_creation/success/')
         else:
-            return _add_admin_unit_response(request, form)
+            return render_to_response('add_admin_unit.html',
+                                      {'form': form},
+                                      context_instance=RequestContext(request)
+                                      ) 
     else:
         form = AdminUnitForm()
         return render_to_response('add_admin_unit.html',
@@ -169,13 +172,12 @@ def add_administrative_unit(request):
                                   )
 
 def _create_admin_unit(form):
-    name = form.cleaned_data['name']
-    country = form.cleaned_data['country']
-    region_type = form.cleaned_data['type']
-    statistical_data = form.cleaned_data['']
     admin_unit = AdministrativeUnit()
-
-
+    admin_unit.name = form.cleaned_data['name']
+    admin_unit.country = form.cleaned_data['country']
+    admin_unit.region_type = form.cleaned_data['region_type']
+    admin.region_statistics = form.cleaned_data['region_statistics']
+    admin_unit.save()
 
 
 def _add_admin_unit_response(request, form):

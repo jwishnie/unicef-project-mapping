@@ -2,10 +2,11 @@ from django import forms
 from django.forms.util import ErrorList
 from tinymce.widgets import TinyMCE
 
+from maplayers.countries import COUNTRIES
 
 class ProjectForm(forms.Form): 
     name = forms.CharField(max_length=30) 
-    description = forms.CharField(widget=TinyMCE(attrs={'cols':100, 'rows':30}))
+    description = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows':20}))
     latitude = forms.DecimalField(max_digits=10, decimal_places=6)
     longitude = forms.DecimalField(max_digits=10, decimal_places=6)
     location = forms.CharField(max_length=50)
@@ -20,8 +21,8 @@ class ProjectForm(forms.Form):
 class AdminUnitForm(forms.Form):
     name = forms.CharField(max_length=50)
     region_type = forms.CharField(max_length=20)
-    country = forms.CharField(max_length=20)
-    statistical_data = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows':30}))
+    country = forms.ChoiceField(choices=COUNTRIES)
+    region_statistics = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows':30}))
     
 class UserForm(forms.Form):
     username = forms.CharField(max_length=30) 

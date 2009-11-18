@@ -1,3 +1,37 @@
+function collapseSectors(){
+    $('ul.sectors').hide();
+    $('li.sector_drawer div').css("background-color", "#A5A5A5");
+    $('li.sector_drawer span').removeClass('open');   
+}
+
+function expandSectors(){
+    $('ul.sectors').show();
+    $('li.sector_drawer div').css("background-color", "#054862");            
+    $('ul.sectors').css("background-color", "#054862");            
+    $('li.sector_drawer span').addClass('open');   
+}
+
+function collapseImplementors(){
+    $('ul.implementors').hide();
+    $('li.implementor_drawer div').css("background-color", "#A5A5A5");
+    $('li.implementor_drawer span').removeClass('open');   
+}
+
+function adjustStylesAfterExpand(){
+    $('#left_pane').css("width", "170px");
+    $('#map_canvas').css("width", "800px");
+    $('.expandable_content').show();
+}
+
+function expandImplementors(){
+    $('ul.implementors').show();
+    $('li.implementor_drawer div').css("background-color", "#054862");
+    $('ul.implementors').css("background-color", "#054862");
+    $('li.implementor_drawer span').addClass('open');   
+}
+
+
+// On load
 $(document).ready(function() {
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
@@ -11,10 +45,10 @@ $(document).ready(function() {
     $('ul.implementors').hide();
     
     $('span#sector').click(function() {
-        if ($('li.implementor_drawer span.open').size() != 0) {
+        if ($('li.implementor_drawer span.open').size() !== 0) {
             collapseImplementors();
         }
-        if ($('li.sector_drawer span.open').size() != 0) {
+        if ($('li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
         }
         else {
@@ -23,10 +57,10 @@ $(document).ready(function() {
     });
     
     $('span#implementor').click(function() {
-        if ($('li.sector_drawer span.open').size() != 0) {
+        if ($('li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
         }
-        if ($('li.implementor_drawer span.open').size() != 0) {
+        if ($('li.implementor_drawer span.open').size() !== 0) {
             collapseImplementors();
         }         
         else {
@@ -40,16 +74,12 @@ $(document).ready(function() {
 	});
 
 
-	$('.sectorbox').click(mapEvent);
-	$('.implementorbox').click(mapEvent);
-	$('[name=Search]').click(searchEvent);
-	
 	function searchEvent(){
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
                   projects = getProjects(data);
                   addProjectsOnMap(projects);	
-       		  removeAllSectorsAndImplementors();
+                  removeAllSectorsAndImplementors();
                   selectOnlySectorsAndImplementorsForProjects(projects);
             });	  
 
@@ -71,14 +101,12 @@ $(document).ready(function() {
 			  $("input[type=checkbox]").each(function()
 			  {
 			      var project = projects[i];
-			      if($.inArray(this.value, project['implementors']) > -1) 
-			      {
+			      if($.inArray(this.value, project.implementors) > -1) {
 				    this.checked = true;
-				  }
-			      if($.inArray(this.value, project['sectors']) > -1) 
-			      {
+			       }
+			      if($.inArray(this.value, project.sectors) > -1) {
 				    this.checked = true;
-				  }				  
+			      }				  
 			  });
 			}			
         }
@@ -105,7 +133,7 @@ $(document).ready(function() {
 	}
 
     function mousedn(){
-        if(popup != null) {
+        if(popup !== null) {
             popup.destroy();
         }
         popup = new OpenLayers.Popup("project",
@@ -128,8 +156,8 @@ $(document).ready(function() {
 			filters[$(this).attr('name')] = true;
 		});
 		
-		filters["tag"] = search_tag;
-                filters["search_term"] = $("#search").val();
+		filters.tag = search_tag;
+                filters.search_term = $("#search").val();
 		
 		$.get(projects_url, filters, function(data){
                     projects = getProjects(data);
@@ -148,15 +176,15 @@ $(document).ready(function() {
         var html = "<h4>List of Projects: </h4><div class=\"project_list\"><ol>";
         for(var i = 0;i<projects.length; i++){
             var project = projects[i];
-            var project_name = project['snippet'].split(":")[0];
-            var project_description = project['snippet'].split(":")[1];			    
-            var project_text = "<div><a href=\"/projects/id/" + project['id'] + "\">" + 
+            var project_name = project.snippet.split(":")[0];
+            var project_description = project.snippet.split(":")[1];			    
+            var project_text = "<div><a href=\"/projects/id/" + project.id + "\">" + 
                                         project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>';
             html += "<li>" + project_text + '</li>';
             var marker_icon = icon.clone();
             marker = new OpenLayers.Marker(
-                                new OpenLayers.LonLat(project['longitude'], 
-                                            project['latitude']),marker_icon);
+                                new OpenLayers.LonLat(project.longitude, 
+                                            project.latitude),marker_icon);
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
                         markers.addMarker(marker);
         }
@@ -206,54 +234,7 @@ $(document).ready(function() {
 	var size = new OpenLayers.Size(10,17);
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
+	$('.sectorbox').click(mapEvent);
+	$('.implementorbox').click(mapEvent);
+	$('[name=Search]').click(searchEvent);
 });
-
-function collapseSectors(){
-    $('ul.sectors').hide();
-    $('li.sector_drawer div').css("background-color", "#A5A5A5");
-    $('li.sector_drawer span').removeClass('open');   
-}
-
-function expandSectors(){
-    $('ul.sectors').show();
-    $('li.sector_drawer div').css("background-color", "#054862");            
-    $('ul.sectors').css("background-color", "#054862");            
-    $('li.sector_drawer span').addClass('open');   
-}
-
-function collapseImplementors(){
-    $('ul.implementors').hide();
-    $('li.implementor_drawer div').css("background-color", "#A5A5A5");
-    $('li.implementor_drawer span').removeClass('open');   
-}
-
-function adjustStylesAfterExpand(){
-    $('#left_pane').css("width", "170px");
-    $('#map_canvas').css("width", "800px");
-    $('.expandable_content').show();
-}
-
-$(document).ready(function(){ 
-  $('input[type=text]').focus(function(){ 
-    if($(this).val() == $(this).attr('defaultValue'))
-    {
-      $(this).val('');
-    }
-  });
-  
-  $('input[type=text]').blur(function(){
-    if($(this).val() == '')
-    {
-      $(this).val($(this).attr('defaultValue'));
-    } 
-  });
-}); 
-
-function expandImplementors(){
-    $('ul.implementors').show();
-    $('li.implementor_drawer div').css("background-color", "#054862");
-    $('ul.implementors').css("background-color", "#054862");
-    $('li.implementor_drawer span').addClass('open');   
-}
-
-
