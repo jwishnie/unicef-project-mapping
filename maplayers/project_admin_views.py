@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 
 from maplayers.constants import GROUPS, PROJECT_STATUS
-from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit
+from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback
 from maplayers.forms import ProjectForm, AdminUnitForm
 
 # Authentication helpers
@@ -140,12 +140,21 @@ def request_changes(request, project_id):
     project = Project.objects.get(id=int(project_id))
     if not project.is_publishable_by(request.user):
         return HttpResponse('{"authorized" : false}')
-    print "here"
-    print request.POST.keys()
-    if not request.POST.get('feedback', ''):
+    feedback = request.POST.get('feedback', '')
+    if not feedback:
         return HttpResponse('{"error" : "Feedback is required", "authorized" : true}')
     else:
         project.status = PROJECT_STATUS.REQUEST_CHANGES
+        review_changes = ReviewFeedback()
+        review_changes.feedback = feedback
+        review_changes.project = project
+        review_changes.reviewed_by = request.user
+        print "here"
+        review_changes.save()
+        
+        print "feedback saved"
+        project.save()
+        print "project sabved"
         return HttpResponse('{"project_status" : "Change Requested", \
                             "authorized" : true}')
     

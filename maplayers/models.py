@@ -128,5 +128,5 @@ class AdministrativeUnit(models.Model):
 class ReviewFeedback(models.Model):
     feedback = models.CharField(max_length=500)
     project = models.ForeignKey(Project)
-    sent_by = models.ForeignKey(User)
+    reviewed_by = models.ForeignKey(User)
     
