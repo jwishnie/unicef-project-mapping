@@ -183,3 +183,10 @@ class AdministrativeUnit(models.Model):
 
     class Admin:
         pass
+   
+        
+class ReviewFeedback(models.Model):
+    feedback = models.CharField(max_length=500)
+    project = models.ForeignKey(Project)
+    reviewed_by = models.ForeignKey(User)
+    

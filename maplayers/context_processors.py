@@ -25,6 +25,7 @@ def add_settings(request):
             'js_url': '%s%s' % (settings.STATIC_URL, '/js'),
             'img_url': '%s%s' % (settings.STATIC_URL, '/img'),
             'jquery': settings.JQUERY,
+            'jqueryui': settings.JQUERY_UI_CUSTOM,
             'jquery_plugins_url': settings.JQUERY_PLUGINS,
             'openlayers': settings.OPENLAYERS,
             'mootools': settings.MOOTOOLS,

@@ -5,43 +5,103 @@
 {% block title_extra %} My Projects {% endblock %}
 {% block extrahead %}
         <link rel="stylesheet" href="{{ css_url }}/main.css" type="text/css" />
-		<script src="{{ jquery }}" type="text/javascript"></script>
-		<script type="text/javascript">
+		<link rel="stylesheet" href="{{ css_url }}/projects_for_review.css" type="text/css" />
+		<link type="text/css" href="{{ css_url }}/dialog.css" rel="stylesheet" />
 		
+		<script src="{{ jquery }}" type="text/javascript"></script>
+		<script type="text/javascript" src="{{ jqueryui }}"></script>
+		
+ 		<script type="text/javascript">
+			var project_id;
+			
 			jQuery(document).ready(function(){
 				$('.publish_link').click(function(){
-					var url = "/projects/publish/" + this.id +"/";
+					project_id = (this.id).split("_")[1];
+					var url = "/projects/publish/" + project_id +"/";
 					var tr_id = "#project_" + this.id;
 					$.get(url, function(data){
-						$(tr_id).hide();
+						$(tr_id).remove();
 					});	
 				});
 				
 				$('.reject_link').click(function(){
-					var url = "/projects/reject/" + this.id +"/";
+					project_id = (this.id).split("_")[1];
+					var url = "/projects/reject/" + project_id +"/";
 					var tr_id = "#project_" + this.id;
 					$.get(url, function(data){
-						$(tr_id).hide();
+						$(tr_id).remove();
 					});	
 				});
 				
 				$('.delete_link').click(function(){
-					var url = "/projects/delete/" + this.id +"/";
+					project_id = (this.id).split("_")[1];
+					var url = "/projects/delete/" + project_id +"/";
 					var tr_id = "#project_" + this.id;
 					$.get(url, function(data){
-						$(tr_id).hide();
+						$(tr_id).remove();
 					});	
+				});
+				
+				$("#dialog").dialog({
+					bgiframe: true,
+					autoOpen: false,
+					height: 300,
+					width: 400,
+					modal: true,
+					buttons: {
+						Submit: function() {
+							var project_id = $("#project_feedback input")[0].value;
+							var feedback = $("#project_feedback textarea")[0].value
+							var tr_id = "#project_" + project_id;
+							var url = "/request_changes/" + project_id + "/";
+							var dialog_box = this;
+							$.post(url, {"feedback" : feedback}, function(data){
+								var result = JSON.parse(data);
+								if(result.authorized){
+									if(!result.error){
+										$(tr_id).remove();
+									}
+									else{
+										var error = '<div class="error">Feedback is required</div>';
+										$("#project_feedback").append(error);
+										return;
+									}
+									$(dialog_box).dialog('close');
+								}
+							});
+						},
+						Cancel: function() {
+							$(this).dialog('close');
+						}
+					},
+					close: function() {
+						$("#project_feedback input[type=\"hidden\"]").remove();
+						if($(".error")){
+							$(".error").remove();
+						}
+					}
+					
+				});
+
+				$('.review_suggestions').click(function() {
+					project_id = (this.id).split("_")[1];
+					$("#project_feedback").append('<input type="hidden" name="project" value="' + project_id + '"></input>');
+					$(".ui-dialog-titlebar-close").html("X");
+					$(".ui-dialog-titlebar-close").css("color", "#0C7094");
+					$('#dialog').dialog('open');
 				});
 
 			});
 		</script>
 		
 		
+		
 {% endblock %}
 
 {% block page_content %}
+	<div id="projects_for_review">
 	<h2>Projects for Review: </h2>
-	<table id="projects_for_review">
+	<table id="project_list">
 	<tr>
 		<th>Project title</th>
 		<th>Created by</th>
@@ -52,13 +112,21 @@
 			<td><a href="/projects/id/{{project.id}}/">{{project.name}}</a></td>
 			<td>{{project.created_by}}</td>
 			<td>
-				<span><a href="/edit_project/{{project.id}}/">Edit</a> &nbsp| &nbsp</span>
-				<span class="request_changes_link" id="{{project.id}}">Request Changes &nbsp| &nbsp</span>
-				<span class="publish_link" id="{{project.id}}">Publish &nbsp| &nbsp</span>
-				<span class="reject_link" id="{{project.id}}">Reject &nbsp| &nbsp</span>
-				<span class="delete_link" id="{{project.id}}">Delete</span>
+				<span class="first"><a href="/edit_project/{{project.id}}/">Edit</a></span>
+				<span class="review_suggestions" id="review_{{project.id}}">Review Suggestions</span>
+				<span class="publish_link" id="publish_{{project.id}}">Publish</span>
+				<span class="reject_link" id="reject_{{project.id}}">Reject</span>
+				<span class="delete_link" id="delete_{{project.id}}">Delete</span>
 			</td>
 		</tr>
 	{% endfor %}
 	</table>
+	
+	<div id="dialog" title="Review Suggestions">
+		<form id="project_feedback">
+			<textarea rows="8" cols="35" name="feedback" id="feedback"></textarea>
+		</form>
+	</div>
+
+	
 {% endblock %}
