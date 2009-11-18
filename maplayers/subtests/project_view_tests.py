@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.test.client import Client
 from maplayers.models import Project
 from maplayers.views import convert_to_json 
+from maplayers.constants import PROJECT_STATUS
 
 class ProjectPage(TestCase):
     fixtures = ['test_project_data']
@@ -32,7 +33,8 @@ class ProjectPage(TestCase):
                                           longitude__lte=180,  
                                           latitude__gte=-90, 
                                           latitude__lte=90, 
-                                          implementor__in=[1]
+                                          implementor__in=[1],
+                                          status=PROJECT_STATUS.PUBLISHED
                                           )
         self.assertEquals(to_json(projects), content)
 
