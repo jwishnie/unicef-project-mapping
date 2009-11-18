@@ -237,4 +237,6 @@ $(document).ready(function() {
 	$('.sectorbox').click(mapEvent);
 	$('.implementorbox').click(mapEvent);
 	$('[name=Search]').click(searchEvent);
+        $('#search').focus();
+        $('#search').keydown(searchEvent);
 });
