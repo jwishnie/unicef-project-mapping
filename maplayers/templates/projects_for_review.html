@@ -40,8 +40,9 @@
 {% endblock %}
 
 {% block page_content %}
+	<div id="projects_for_review">
 	<h2>Projects for Review: </h2>
-	<table id="projects_for_review">
+	<table id="project_list">
 	<tr>
 		<th>Project title</th>
 		<th>Created by</th>
@@ -52,10 +53,10 @@
 			<td><a href="/projects/id/{{project.id}}/">{{project.name}}</a></td>
 			<td>{{project.created_by}}</td>
 			<td>
-				<span><a href="/edit_project/{{project.id}}/">Edit</a> &nbsp| &nbsp</span>
-				<span class="request_changes_link" id="{{project.id}}">Request Changes &nbsp| &nbsp</span>
-				<span class="publish_link" id="{{project.id}}">Publish &nbsp| &nbsp</span>
-				<span class="reject_link" id="{{project.id}}">Reject &nbsp| &nbsp</span>
+				<span class="first"><a href="/edit_project/{{project.id}}/">Edit</a></span>
+				<span class="request_changes_link" id="{{project.id}}">Request Changes</span>
+				<span class="publish_link" id="{{project.id}}">Publish</span>
+				<span class="reject_link" id="{{project.id}}">Reject</span>
 				<span class="delete_link" id="{{project.id}}">Delete</span>
 			</td>
 		</tr>
