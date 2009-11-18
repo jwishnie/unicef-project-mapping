@@ -89,7 +89,8 @@ li a {
 }
 
 #main_nav li.first,
-#project_list td span.first {
+#project_list td span.first,
+#my_project_list td span.first {
     border-left: none;
 }
 
@@ -267,31 +268,58 @@ table#projects td {
     text-align: left;
 }
 
-/*PROJECTS FOR REVIEW*/
-#projects_for_review {
+/*PROJECTS FOR REVIEW, MY PROJECTS*/
+#projects_for_review,
+#my_projects {
     margin-left: 15px;
 }
 
+#my_project_list,
 #project_list {
     border-collapse: collapse;
     width: 80%;
 }
 
+#my_project_list th,
+#project_list th {
+    background-color: #4DBAFE;    
+}
+
+#my_project_list td,
+#project_list td {
+    background-color: #E2EBF4;    
+}
+
+#my_project_list th,
+#my_project_list td,
 #project_list th,
 #project_list td {
     padding: 5px;   
     border: 2px solid #FFF;
-    background-color: #E2EBF4;
     text-align: center;
 }
 
-#project_list td a {
+#project_list td a,
+#my_project_list td a {
     color: #0C7094;
 }
 
-#project_list td span {
+#project_list td span,
+#my_project_list td span {
     border-left: 1px solid;
     padding-left: 5px;
     text-decoration: underline;
     cursor: pointer;
+}
+
+.ui-widget-overlay {
+    opacity: 0.7;
+}
+
+.ui-dialog .ui-dialog-titlebar,
+.ui-dialog .ui-state-default, 
+.ui-dialog .ui-widget-content .ui-state-default {
+    background: none;
+    background-color: #4DB8FF;
+    color: #0C7094;
 }

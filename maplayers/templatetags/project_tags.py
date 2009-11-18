@@ -34,10 +34,9 @@ def edit_project_link(project, user):
     
 @register.simple_tag
 def my_projects_header(user):
-    result = '''<tr><th>Project title</th><th>Project Status</th>
-    <th>Edit</th>'''
-    
-    if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
+    result = '<tr>'
+    result += '<th>Project title</th><th>Project Status</th><th>Edit</th>'
+    if set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()]):
         result += '<th>Publish</th>'
 	result +='</tr>'
 	return result
@@ -63,9 +62,9 @@ def project_success_message(request):
     
 def publish_text(project):
     if project.status == PROJECT_STATUS.PUBLISHED:
-        return '<span class="unpublish_link" id="%s">Unpublish</span>' % str(project.id)
+        return '<span class="unpublish_link first" id="%s">Unpublish</span>' % str(project.id)
     else:
-        return '<span class="publish_link" id="%s">Publish</span>' % str(project.id)
+        return '<span class="publish_link first" id="%s">Publish</span>' % str(project.id)
 
 @register.simple_tag
 def my_projects_link():
