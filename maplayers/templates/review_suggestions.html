@@ -1,0 +1,8 @@
+<div id="review_suggestions">
+{% for suggestion in suggestions %}
+	<div class="suggestion">
+		<span class="comment floatleft">{{suggestion.feedback}}</span>
+		<span class="comment_by">by : {{suggestion.reviewed_by}}</span>
+	</div>
+{% endfor %}
+</div>

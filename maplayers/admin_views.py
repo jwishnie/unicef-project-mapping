@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
-from maplayers.models import Project
+from maplayers.models import Project, ReviewFeedback
 
 from maplayers.constants import GROUPS, PROJECT_STATUS
 from maplayers.forms import UserForm, ChangePasswordForm
@@ -66,6 +66,15 @@ def projects_for_review(request):
     projects = Project.objects.filter(status=PROJECT_STATUS.REVIEW)
     return render_to_response('projects_for_review.html',
                               {'projects' : projects},
+                              context_instance=RequestContext(request)  
+                             )
+
+@login_required
+def review_suggestions(request, project_id):
+    project = Project.objects.get(id=project_id)
+    suggestions = ReviewFeedback.objects.filter(project=project)
+    return render_to_response('review_suggestions.html',
+                              {'suggestions' : suggestions},
                               context_instance=RequestContext(request)  
                              )
     

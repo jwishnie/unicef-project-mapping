@@ -5,7 +5,14 @@
 {% block title_extra %} My Projects {% endblock %}
 {% block extrahead %}
         <link rel="stylesheet" href="{{ css_url }}/main.css" type="text/css" />
+		<link type="text/css" href="{{ css_url }}/dialog.css" rel="stylesheet" />l
+
 		<script src="{{ jquery }}" type="text/javascript"></script>
+		<script type="text/javascript" src="{{ jqueryui }}"></script>
+		
+		
+		
+		
 		<script type="text/javascript">
 			function update_project(project){
 				var review_status = "";
@@ -24,6 +31,10 @@
 			}
 		
 			jQuery(document).ready(function(){
+				$(".ui-dialog-titlebar-close").html("X");
+				$(".ui-dialog-titlebar-close").css("color", "#0C7094");
+				
+				
 				$('.publish_link').click(function(){
 					var url = "/projects/publish/" + this.id +"/";
 					$.get(url, function(data){
@@ -39,6 +50,39 @@
 						update_project(project);
 					});	
 				});
+				
+				$('.changes_preview').click(function(){
+					var project_id = (this.id).split("_")[1];
+					var url = "/projects/review_suggestions/" + project_id + "/";
+					$.get(url, function(data){
+						
+						$('#dialog').html(data);
+						$('#dialog').dialog('open');
+					});
+
+				});
+				
+				
+				$("#dialog").dialog({
+					bgiframe: true,
+					autoOpen: false,
+					height: 300,
+					width: 400,
+					modal: true,
+					buttons: {
+						Close: function() {
+							$(this).dialog('close');
+						}
+					},
+					close: function() {
+						$("#project_feedback input[type=\"hidden\"]").remove();
+						if($(".error")){
+							$(".error").remove();
+						}
+					}
+				});
+				
+				
 
 			});
 		</script>
@@ -56,4 +100,8 @@
 		{% endfor %}
 		</table>
 	</div>
+	
+	
+	<div id="dialog" title="Review Suggestions"></div>
+	
 {% endblock %}

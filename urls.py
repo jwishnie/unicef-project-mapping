@@ -47,6 +47,7 @@ urlpatterns += patterns('maplayers.admin_views',
                         (r'^change_password/$', 'change_password'),
                         (r'^my_projects/$', 'my_projects'),
                         (r'^projects_for_review/$', 'projects_for_review'),
+                        (r'^projects/review_suggestions/(?P<project_id>\d+)/$', 'review_suggestions'),
                        )
 
 urlpatterns += patterns('',
