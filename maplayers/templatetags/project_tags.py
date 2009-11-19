@@ -50,7 +50,7 @@ def my_projects_header(user):
 @register.simple_tag
 def my_project(project, user):
     result = '<tr id="project_%s"><td>%s</td>' % (str(project.id), project.name)
-    result += "<td>%s</td>" % project.status
+    result += "<td>%s</td>" % status_text(project)
     result += '<td><a href="/edit_project/%s/">Edit</a></td>' % project.id
     if set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()]):
         result += '<td>%s</td>' % publish_text(project)
@@ -65,6 +65,11 @@ def project_success_message(request):
         del request.session["success_message"]
     return message
     
+    
+def status_text(project):
+    if not project.status == PROJECT_STATUS.REQUEST_CHANGES:
+        return project.status
+    return '<span class="first changes_preview" id="previewchanges_' + str(project.id) + '">' + project.status + '</span>'
     
 def publish_text(project):
     if project.status == PROJECT_STATUS.PUBLISHED:

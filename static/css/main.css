@@ -22,7 +22,8 @@ img {
 ul.sectors,
 ul.implementors,
 #main_pane,
-#image_pane {
+#image_pane,
+#review_suggestions .suggestion {
 	overflow: hidden;
 }
 
@@ -334,4 +335,17 @@ table#projects td {
     background: none;
     background-color: #4DB8FF;
     color: #0C7094;
+}
+
+/*REVIEW SUGGESTION*/
+#review_suggestions .suggestion {
+    background-color: #E2EBF4;
+    padding: 5px;
+    margin: 5px 5px 10px;
+}
+
+#review_suggestions .suggestion .comment_by {
+    float: right;
+    color: #0000FF;
+    font-size: 0.8em;
 }
