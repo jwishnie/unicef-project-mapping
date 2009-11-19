@@ -3,13 +3,9 @@
 {% load project_tags %}
 
 {% block title_extra %} &mdash; {{ project.name }}{% endblock %}
- 
-{% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="{{ css_url }}/project.css" />
-{% endblock %}
-
 
 {% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ css_url }}/project.css" />
 <script type="text/javascript">
 var latitude = {{ project.latitude }};
 var longitude = {{ project.longitude }};
