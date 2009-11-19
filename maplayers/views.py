@@ -118,6 +118,12 @@ def projects_tag_search(request, tag_term):
                                context_instance=RequestContext(request)
                               )     
 
+def view_404(request):
+    return render_to_response('404.html', context_instance=RequestContext(request))
+    
+def view_500(request):
+    return render_to_response('500.html', context_instance=RequestContext(request))
+    
 def _get_sectors_for_projects(projects):
     sectors = [Sector.objects.filter(projects=project.id) for project in projects]
     result = []

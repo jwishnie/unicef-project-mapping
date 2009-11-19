@@ -126,14 +126,16 @@ li a {
 
 #main_content fieldset div,
 #change_password div,
-#login div {
+#login div,
+#user_registration div {
     overflow: hidden;
     padding-bottom: 10px;
 }
 
 #main_content fieldset label,
 #change_password div label,
-#login div label {
+#login div label,
+#user_registration div label {
     float: left;
     width: 150px;
     padding-right: 5px;
@@ -142,7 +144,8 @@ li a {
 
 #main_content fieldset input,
 #change_password div input,
-#login div input {
+#login div input,
+#user_registration div input {
     float: left;
 }
 
@@ -156,7 +159,8 @@ li a {
 
 #main_content .main_action input,
 #change_password .main_action input,
-#login .main_action input {
+#login .main_action input,
+#user_registration .main_action input {
     background-color: #0099FF;
     color: #FFF;
     padding: 5px;
@@ -283,11 +287,32 @@ table#projects td {
     text-align: left;
 }
 
+/*ERRORS*/
+.error {
+    color: #FF0000;
+    font-size: 9pt;
+    padding: 5px;
+}
+
+ul.errorlist { 
+	margin: 0; 
+	padding: 0; 
+} 
+.errorlist li { 
+	color: #FF0000; 
+	font-size: 9pt;  
+}
+
+#id_groups {
+    width:40em;
+}
+
 /*PROJECTS FOR REVIEW, MY PROJECTS*/
 #projects_for_review,
 #my_projects,
 #change_password,
-#login {
+#login,
+#user_registration {
     margin-left: 15px;
 }
 

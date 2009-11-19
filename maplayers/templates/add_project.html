@@ -3,10 +3,9 @@
 {% load project_tags %}
 
 {% block title_extra %} &mdash; Add Project{% endblock %}
-{% block stylesheet %}{{ css_url }}/add_project.css{% endblock %}
 
 {% block extrahead %}
-        <link rel="stylesheet" href="{{ css_url }}/main.css" type="text/css" />
+        <link rel="stylesheet" href="{{ css_url }}/add_project.css" type="text/css" />
         <script type="text/javascript" src="{{ mootools }}"></script>
         <script src="{{ jquery }}" type="text/javascript"></script>
         <link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
@@ -74,7 +73,7 @@
 {% endblock %}
 
 {% block page_content %}
-
+	<div id="add_project">
 		<form action="/{{action}}/" method="post">
 			<input type="hidden" name="project_id" value="{{project_id}}"></input>
 			<fieldset>
@@ -173,4 +172,5 @@
 				<input type="submit" value="{{submit_label}}" />
 			</div>
 		</form>
+	</div>	
 {% endblock %}

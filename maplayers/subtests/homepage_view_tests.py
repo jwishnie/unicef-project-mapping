@@ -35,4 +35,6 @@ class HomePage(TestCase):
                                        "sector_1" : "true",
                                        "implementor_1" : "true"}).context
                                        
-
+    def test_should_get_custom_404_page_on_page_not_found(self):
+        response = self.web_client.get("/blah", {})
+        self.assertContains(response, "Something's gone a bit wrong!")                        

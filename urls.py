@@ -53,14 +53,15 @@ urlpatterns += patterns('maplayers.admin_views',
 
 urlpatterns += patterns('',
                         (r'^tinymce/', include('tinymce.urls')))
+                        
 
-# If in debug mode, server statics locally, otherwise the host HTTP server should do this
-if settings.DEBUG:
-    urlpatterns += patterns('',
-                            (r'^static/(?P<path>.*)$', 
-                             'django.views.static.serve',
-                             {'document_root': 'static'})
-                             )
+handler500 = 'maplayers.views.view_500'
+
+urlpatterns += patterns('',
+                        (r'^static/(?P<path>.*)$', 
+                         'django.views.static.serve',
+                         {'document_root': 'static'})
+                         )
 
 
 
