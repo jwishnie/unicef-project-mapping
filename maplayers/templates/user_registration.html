@@ -5,32 +5,35 @@
 {% block title_extra %} User Registration {% endblock %}
 
 {% block extrahead %}
-	<link rel="stylesheet" type="text/css" href="{{ css_url }}/user_registration.css"></link>
 {% endblock %}
 
 {% block page_content %}
+<div id="user_registration">
+	<h2>User Registration</h2>
 	<form action="/user_registration/" method="post">
-		<p>
-			{{ form.username.errors }}
+		<div>
 			<label for="id_username">Username:</label> 
 			{{form.username}}
-		</p>
-		<p>
-			{{ form.email.errors }}
+			{{ form.username.errors }}			
+		</div>
+		<div>
 			<label for="id_email">Email:</label> 
 			{{form.email}}
-		</p>
-		<p>
-			{{ form.password.errors }}
+			{{ form.email.errors }}			
+		</div>
+		<div>
 			<label for="id_password">Password:</label> 
 			{{ form.password }}
-		</p>
-		<p>
-			{{ form.confirm_password.errors }}
+			{{ form.password.errors }}			
+		</div>
+		<div>
 			<label for="id_confirm_password">Confirm Password:</label> 
 			{{ form.confirm_password }}
-		</p>
-		<br/><br/>
-		<input type="submit" value="Submit" />
+			{{ form.confirm_password.errors }}			
+		</div>
+		<div class="main_action">
+			<input type="submit" value="Submit" />
+		</div>	
 	</form>
+</div>	
 {% endblock %}

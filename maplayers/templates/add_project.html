@@ -74,7 +74,7 @@
 {% endblock %}
 
 {% block page_content %}
-
+	<div id="add_project">
 		<form action="/{{action}}/" method="post">
 			<input type="hidden" name="project_id" value="{{project_id}}"></input>
 			<fieldset>
@@ -173,4 +173,5 @@
 				<input type="submit" value="{{submit_label}}" />
 			</div>
 		</form>
+	</div>	
 {% endblock %}
