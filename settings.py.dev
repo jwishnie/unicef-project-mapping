@@ -115,14 +115,14 @@ STATIC_URL = '/static'
 MEDIA_URL = STATIC_URL+'/'
 
 
-JQUERY = STATIC_URL+'/jquery/jquery.js'
-JQUERY_UI = STATIC_URL+'/jquery-ui/jquery-ui.min.js'
-MOOTOOLS =  STATIC_URL+'/mootools/mootools-nc.js'
-OPENLAYERS = STATIC_URL+'/openlayers/OpenLayers.js'
-JQUERY_PLUGINS = STATIC_URL+'/jqueryplugins'
-FANCY_UPLOADER = STATIC_URL + "/fancyuploader"
+JQUERY = STATIC_URL+'/js/jquery/jquery.js'
+JQUERY_UI = STATIC_URL+'/js/jquery-ui/jquery-ui.min.js'
+MOOTOOLS =  STATIC_URL+'/js/mootools/mootools-nc.js'
+OPENLAYERS = STATIC_URL+'/js/openlayers/OpenLayers.js'
+JQUERY_PLUGINS = STATIC_URL+'/js/jqueryplugins'
+FANCY_UPLOADER = STATIC_URL + "/js/fancyuploader"
 FANCY_UPLOADER_SWF = FANCY_UPLOADER + "/Swiff.Uploader.swf"
-JQUERY_UI_CUSTOM = STATIC_URL + '/jquery-ui/jquery-ui-1.7.2.custom.min.js'
+JQUERY_UI_CUSTOM = STATIC_URL + '/js/jquery-ui/jquery-ui-1.7.2.custom.min.js'
 
 LOGIN_REDIRECT_URL = '/'
 

@@ -53,7 +53,7 @@ urlpatterns += patterns('maplayers.admin_views',
 urlpatterns += patterns('',
                         (r'^tinymce/', include('tinymce.urls')))
                         
-handler404 = 'maplayers.views.view_404'
+
 handler500 = 'maplayers.views.view_500'
 
 urlpatterns += patterns('',
