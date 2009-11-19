@@ -25,6 +25,52 @@ $(document).ready(function() {
 					      latitude),icon.clone()));
 	
 	addsubprojects(markers);   
+	
+	$("#published_comment").dialog({
+		bgiframe: true,
+		autoOpen: false,
+		height: 300,
+		width: 400,
+		modal: true,
+		buttons: {
+			Submit: function() {
+				var name = $("#id_username")[0].value;
+				var email = $("#id_email")[0].value;
+				var comment = $("#id_text")[0].value;
+				var project_id = $("#comment_project_id")[0].value;
+				
+				var data = {"name" : name, "email" : email, "comment" : comment};
+				var url = "/projects/" + project_id + "/comment/";
+				var dialog_box = this;
+				
+				$.post(url, data,  function(result){
+					var result = JSON.parse(result);
+					if(result.message!=null){
+					    $('#comment_message').html(result.message);
+					    $(dialog_box).dialog('close');
+					}
+				});
+			},
+			Cancel: function() {
+				$(this).dialog('close');
+			}
+		},
+		close: function() {
+			$("#project_feedback input[type=\"hidden\"]").remove();
+			if($(".error")){
+				$(".error").remove();
+			}
+		}
+		
+	});
+
+	$('#comment_link').click(function() {
+		$(".ui-dialog-titlebar-close").html("X");
+		$(".ui-dialog-titlebar-close").css("color", "#0C7094");
+		$('#published_comment').dialog('open');
+	});
+	
+	
 }
 );
 function addsubprojects(markers) {

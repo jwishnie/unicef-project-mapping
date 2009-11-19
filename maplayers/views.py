@@ -10,11 +10,13 @@ from django.db.models import Q
 from django.contrib.auth import logout
 
 from maplayers.utils import is_empty
-from maplayers.models import Project, Sector, Implementor
+from maplayers.models import Project, Sector, Implementor, ProjectComments
 import decimal
 from tagging.models import TaggedItem, Tag
 from django.contrib.auth import logout
-from maplayers.constants import PROJECT_STATUS
+from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX
+from datetime import datetime
+import simplejson as json
 
 def homepage(request):
     sectors = _get_sectors(request)
@@ -55,9 +57,9 @@ def projects_in_map(request, left, bottom, right, top):
 def project(request, project_id):
     try:
         logging.debug("View project details [project_id] : %s" % project_id)
-        project = Project.objects.get(id=int(project_id))
-        subprojects = Project.objects.filter(parent_project=int(project_id))
-        implementors = ", ".join([implementor.name for implementor in Implementor.objects.filter(projects__in=[project])])
+        project = Project.objects.select_related(depth=1).get(id=int(project_id))
+        subprojects = project.project_set.all()
+        implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
         tags = project.tags.split(" ")
     except Project.DoesNotExist:
         raise Http404
@@ -72,6 +74,24 @@ def project(request, project_id):
                                },
                                context_instance=RequestContext(request)
                               )
+                              
+                              
+def project_comment(request, project_id):
+    project = Project.objects.get(id=int(project_id))
+    username = request.POST.get('name', '')
+    email = request.POST.get('email', '')
+    comment_text = request.POST.get('comment', '')
+    response_json = {}
+    check_for_comment_errors(username, email, comment_text, response_json)
+    
+    if not response_json:
+        comment = ProjectComments(comment_by=username, email = email, 
+                    text = comment_text, project = project, date = datetime.today())
+        comment.save()
+        response_json['message'] = "Thank you for your comment. The Author of the project will be notified of this"
+    
+    return HttpResponse(json.dumps(response_json))
+    
 
 def projects_search(request, search_term):
     qset = _construct_queryset_for_project_search(search_term)
@@ -207,4 +227,19 @@ def write_project_list_to_response(projects):
     response = HttpResponse()
     response.write(convert_to_json(projects))
     return response
+    
+def check_for_comment_errors(username, email, comment_text, errors):
+    print "1"
+    if not username: errors['username'] = 'Name is required'
+    print "2"
+    
+    if not email: errors['email'] = 'Email is required'
+    print "3"
+    
+    if not comment_text: errors['comment'] = 'Comment is required'
+    print "4"
+    
+    if email and not EMAIL_REGEX.match(email): errors['email' ] = "Invalid email"
+    print "5"
+    
 

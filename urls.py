@@ -27,6 +27,7 @@ urlpatterns += patterns('maplayers',
                          (r'^change_password/success/$', direct_to_template, 
                           {'template' : 'registration_success.html', 'message' : 'Password changed'}),
                          (r'^projects/tag/(?P<tag_term>.+)/$','views.projects_tag_search'),
+                         (r'^projects/(?P<project_id>\d+)/comment/$','views.project_comment'),
                          )
                          
 urlpatterns += patterns('maplayers.project_admin_views',

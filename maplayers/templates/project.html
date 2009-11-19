@@ -6,10 +6,14 @@
  
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="{{ css_url }}/project.css" />
+<link type="text/css" href="{{ css_url }}/dialog.css" rel="stylesheet" />
+
 {% endblock %}
 
 
 {% block extrahead %}
+
+
 <script type="text/javascript">
 var latitude = {{ project.latitude }};
 var longitude = {{ project.longitude }};
@@ -21,8 +25,10 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 
 </script>
 <script src="{{ jquery }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ jqueryui }}"></script>
 <script src="{{ openlayers }}" type="text/javascript"></script>
 <script src="{{ js_url }}/projectpage.js" type="text/javascript" ></script>
+
 {% endblock %} 
 
 {% block body_tag_exta %}onload='initialize()'{% endblock %}
@@ -111,5 +117,25 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
                   <div  id="project_video">
                     {% youtube_playlist_player youtube_playlist_id %}
                   </div>
-                    
+
+				<div id="comment_link">Comment</div>
+				<div id="comment_message"></div>
+				
+				<div id="published_comment" title="Comments">
+					<form id="comment_form">
+						<label for="id_username">Name: </label>
+						<input name="username" id="id_username"></input>
+
+						<label for="id_email">Email: </label>
+						<input name="email" id="id_email"></input>
+						
+						<label for="id_text">Comment: </label>
+						<textarea rows="8" cols="35" name="text" id="id_text"></textarea>
+						
+						<input type="hidden" name="project_id" value="{{project.id}}" id="comment_project_id"> 
+					</form>
+				</div>
+
+				<div id="comments">{% project_comments project %}</div>
 {% endblock %}
+

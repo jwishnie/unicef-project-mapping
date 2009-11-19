@@ -8,7 +8,7 @@ Template tags used to display project content
 from django import template
 from maplayers.tag_utils import parse_img_feed, parse_youtube_feed
 from maplayers.utils import is_empty
-from maplayers.constants import PROJECT_STATUS, GROUPS
+from maplayers.constants import PROJECT_STATUS, GROUPS, COMMENT_STATUS
 
 register = template.Library()  
 
@@ -64,6 +64,21 @@ def project_success_message(request):
         message = '<div class="highlight">%s</div>' % request.session["success_message"]
         del request.session["success_message"]
     return message
+    
+    
+@register.simple_tag
+def project_comments(project):
+    result = ""
+    comments = [comment for comment in project.projectcomments_set.all() if comment.status == COMMENT_STATUS.PUBLISHED]
+    if comments:
+        result += '<span>Comments: </span>'
+    for comment in comments:
+        result += '<div id="comment_%s" class="suggestion">' % comment.id
+        result += '<span class="comment floatleft">%s</span>' % comment.text
+        result += '<span class="comment_by">%s</span>' % comment.comment_by
+        result += '<span class="comment_date">%s</span>' % comment.date
+        result += '</div>'
+    return result
     
     
 def status_text(project):

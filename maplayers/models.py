@@ -14,49 +14,6 @@ from maplayers.utils import is_empty
 from maplayers.constants import GROUPS
 
 class Project(models.Model): 
-    '''
-
-    Represents a project user creates
-
-    # Create a project
-    >>> user = User.objects.create_user('author1', 'author1@email.com', 'author1') 
-    >>> admin = Group.objects.get(id=1)
-    >>> user.groups.add(admin)
-    >>> project = Project(name="unicef", description="School for all", latitude=30, longitude=30)
-    >>> project.created_by = user
-    >>> project.save()
-    >>> project.groups.add(admin)
-    >>> project.tags = "Unicef School Education"
-
-    # Check if project contains the tag
-    >>> project.contains_tag("Unicef")
-    True
-    >>> project.contains_tag("test")
-    False
-
-    # Return true if is a parent project (parent_project_id is None)
-    >>> project.is_parent_project()
-    True
-    >>> subproject = Project(parent_project=project)
-    >>> subproject.is_parent_project()
-    False
-
-    # Return a snippet of name and description
-    >>> project.snippet()
-    u'unicef : School for all'
-
-    # Project should be publishable and editable only if author belongs to ADMIN or PUBLISHER group
-    >>> project.is_publishable_by(user)
-    True
-    >>> project.is_editable_by(user)
-    True
-    >>> normal_user = User.objects.create_user('somebody', 'nobody@email.com', 'nobody')
-    >>> project.is_publishable_by(normal_user)
-    False
-    >>> project.is_editable_by(normal_user)
-    False
-    '''
-
     name = models.CharField(max_length=30, null=True, blank=True) 
     description = tinymce_models.HTMLField(null=True, blank=True)
     latitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
@@ -186,7 +143,15 @@ class AdministrativeUnit(models.Model):
    
         
 class ReviewFeedback(models.Model):
-    feedback = models.CharField(max_length=500)
+    feedback = models.CharField(max_length=1000)
     project = models.ForeignKey(Project)
     reviewed_by = models.ForeignKey(User)
+    
+class ProjectComments(models.Model):
+    text = models.CharField(max_length=1000)
+    status = models.CharField(max_length=20)
+    project = models.ForeignKey(Project)
+    comment_by = models.CharField(max_length=100)
+    email = models.EmailField()
+    date = models.DateTimeField()
     
