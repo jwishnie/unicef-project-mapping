@@ -1,5 +1,5 @@
 body {
-    margin: 0 12em;
+    margin: 0 auto;
     padding: 0px;
     color: #0C7094;
     background-color: #0099FF;
@@ -12,7 +12,8 @@ img {
 }
 
 .main_wrapper {
-	width: 974px;
+    margin: auto;
+	width: 70em;
 }
 
 #header,
