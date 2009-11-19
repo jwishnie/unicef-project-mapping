@@ -149,12 +149,8 @@ def request_changes(request, project_id):
         review_changes.feedback = feedback
         review_changes.project = project
         review_changes.reviewed_by = request.user
-        print "here"
         review_changes.save()
-        
-        print "feedback saved"
         project.save()
-        print "project sabved"
         return HttpResponse('{"project_status" : "Change Requested", \
                             "authorized" : true}')
     
