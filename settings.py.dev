@@ -136,7 +136,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'custom_undo_redo_levels': 10,
     'theme_advanced_toolbar_location' : "top",
     'theme_advanced_toolbar_align' : "left",
-    'theme_advanced_buttons1' : "bold,italic,underline,separator,separator,formatselect,separator,bullist,numlist,tablecontrols",
+    'theme_advanced_buttons1' : "bold,italic,underline,separator,separator,bullist,numlist,tablecontrols",
     'theme_advanced_buttons2' : "",
     'theme_advanced_buttons3' : ""
 }
