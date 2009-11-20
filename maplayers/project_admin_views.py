@@ -137,6 +137,7 @@ def reject_project(request, project_id):
                     
 @login_required                     
 def request_changes(request, project_id):
+    return HttpResponse('{"authorized" : true, "hello" : "world"}')
     logging.debug("request changes for [project_id] : %s" % project_id)
     project = Project.objects.get(id=int(project_id))
     if not project.is_publishable_by(request.user):

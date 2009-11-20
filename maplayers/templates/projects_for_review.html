@@ -55,7 +55,6 @@
 							var url = "/request_changes/" + project_id + "/";
 							var dialog_box = this;
 							$.post(url, {"feedback" : feedback}, function(data){
-								alert(data);
 								var result = JSON.parse(data);
 								if(result.authorized){
 									if(!result.error){
