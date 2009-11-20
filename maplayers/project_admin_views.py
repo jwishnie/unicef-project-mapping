@@ -138,7 +138,6 @@ def reject_project(request, project_id):
                     
 @login_required                     
 def request_changes(request, project_id):
-    logging.debug("request changes for [project_id] : %s" % project_id)
     feedback = request.POST.get('feedback', '')
     response_json = {}
     project = Project.objects.get(id=int(project_id))
@@ -152,9 +151,8 @@ def request_changes(request, project_id):
         review_changes.feedback = feedback
         review_changes.project = project
         review_changes.reviewed_by = request.user
-        # review_changes.save()
-        # project.save()
-    
+        review_changes.save()
+        project.save()
     return HttpResponse(json.dumps(response_json))
         
 
