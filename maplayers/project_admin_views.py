@@ -13,6 +13,7 @@ from django.contrib.auth.models import User, Group
 from maplayers.constants import GROUPS, PROJECT_STATUS
 from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback
 from maplayers.forms import ProjectForm, AdminUnitForm
+import simplejson as json
 
 # Authentication helpers
 def _is_project_author(user):
@@ -138,12 +139,12 @@ def reject_project(request, project_id):
 @login_required                     
 def request_changes(request, project_id):
     logging.debug("request changes for [project_id] : %s" % project_id)
+    response_json = {}
     project = Project.objects.get(id=int(project_id))
-    if not project.is_publishable_by(request.user):
-        return HttpResponse('{"authorized" : false}')
-    feedback = request.POST.get('feedback', '')
+    response_json["authorized"] = True if project.is_publishable_by(request.user) else False
+    
     if not feedback:
-        return HttpResponse('{"error" : "Feedback is required", "authorized" : true}')
+        return response_json["error"] = "Feedback is required"
     else:
         project.status = PROJECT_STATUS.REQUEST_CHANGES
         review_changes = ReviewFeedback()
@@ -152,8 +153,8 @@ def request_changes(request, project_id):
         review_changes.reviewed_by = request.user
         # review_changes.save()
         # project.save()
-        # logging.debug("compeleted saving review suggestions for [project_id] : %s" %project_id)
-        return HttpResponse('{"authorized" : false}')
+    
+    return HttpResponse(json.dumps(response_json))
         
 
 @login_required                     
