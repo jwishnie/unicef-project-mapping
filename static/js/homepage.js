@@ -75,6 +75,7 @@ $(document).ready(function() {
 
 
 	function searchEvent(){
+            if($.trim($('[name=q]').val())) {
 	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
 		$.get(search_url, function(data){
                   var projects = getProjects(data);
@@ -84,6 +85,7 @@ $(document).ready(function() {
             });	  
 
             bookmarkUrl();
+            }
 	}
 
         function removeAllSectorsAndImplementors() {
@@ -238,5 +240,10 @@ $(document).ready(function() {
 	$('.implementorbox').click(mapEvent);
 	$('[name=Search]').click(searchEvent);
         $('#search').focus();
-        $('#search').keydown(searchEvent);
+        $("#search").keypress(function (e) {
+        if (e.which == 32 || e.which ==8 || (65 <= e.which && e.which <= 65 + 25)
+                            || (97 <= e.which && e.which <= 97 + 25)) {
+            searchEvent();
+          }
+        });
 });
