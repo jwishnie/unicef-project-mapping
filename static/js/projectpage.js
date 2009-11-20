@@ -97,7 +97,13 @@ $(document).ready(function() {
         });
     });
     
-
+    $(".delete_link").click(function(){
+        var project_id = (this.id).split("_")[1];
+        var delete_url = "/projects/delete/" + project_id + "/";
+        $.post(delete_url, function(data){
+            window.location.href = "/";
+        });
+    });
 
 
 }
