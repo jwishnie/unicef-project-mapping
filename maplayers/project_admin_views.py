@@ -137,6 +137,7 @@ def reject_project(request, project_id):
                     
 @login_required                     
 def request_changes(request, project_id):
+    logging.debug("request changes for [project_id] : %s" % project_id)
     project = Project.objects.get(id=int(project_id))
     if not project.is_publishable_by(request.user):
         return HttpResponse('{"authorized" : false}')
@@ -151,6 +152,7 @@ def request_changes(request, project_id):
         review_changes.reviewed_by = request.user
         review_changes.save()
         project.save()
+        logging.debug("compeleted saving review suggestions for [project_id] : %s" %project_id)
         return HttpResponse('{"project_status" : "Change Requested", \
                             "authorized" : true}')
     
