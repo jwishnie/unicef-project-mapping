@@ -18,7 +18,6 @@ class ProjectForm(forms.Form):
     imageset_feedurl = forms.CharField(max_length=1000, required=False)
     youtube_playlist_id = forms.CharField(max_length=20, required=False)
     tags = forms.CharField(max_length=500, required=False)
-    parent_project = forms.ChoiceField(choices=[[project.id, project.name] for project in Project.objects.all() if project.name])
     
 class AdminUnitForm(forms.Form):
     name = forms.CharField(max_length=50)
