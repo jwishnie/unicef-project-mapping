@@ -68,10 +68,19 @@ label {
     padding: 15px;
 }
 
-.highlight{
-    text-align: center;
-    background-color: yellow;
-    color: black;
+.highlight {
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-topright:5px;
+    background-color:#ECE5B6;
+    color:black;
+    left:520px;
+    padding:5px;
+    position:absolute;
+    text-align:center;
+    top:109px;
+    width:300px;
 }
 
 #comment_message{

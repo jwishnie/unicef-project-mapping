@@ -95,7 +95,7 @@ def project_comment(request, project_id):
 
 def projects_search(request, search_term):
     qset = _construct_queryset_for_project_search(search_term)
-    projects = Project.objects.filter(qset, parent_project=None).distinct()
+    projects = Project.objects.filter(qset, parent_project=None, status=PROJECT_STATUS.PUBLISHED).distinct()
 
     return write_project_list_to_response(projects)   
    
