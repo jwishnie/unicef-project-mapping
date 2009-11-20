@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load project_tags %}
+
+{% block title_extra %} Administrative Units {% endblock %}
+{% block extrahead %}
+		<script src="{{ jquery }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block page_content %}
+	<div id="admin_units">
+		<h2>Administrative Units: </h2>
+		<table id="admin_unit_list">
+                <tbody>
+                  <tr>
+                  <th>Region Name</th>
+                  <th>Region Type</th>
+                  <th>Country</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+              </tr>
+              {% for unit in admin_units %}
+                 <tr>
+                     <td>{{ unit.name }}</td>
+                     <td>{{ unit.region_type }}</td>
+                     <td>{{ unit.country }}</td>
+                     <td><a href="/edit_admin_unit/{{ unit.id }}">Edit</a></td>
+                     <td><a href="/delete_admin_unit/{{ unit.id }}">Delete</a></td>
+                 </tr>
+                  {% endfor %}
+              </tbody>
+		</table>
+	</div>
+{% endblock %}

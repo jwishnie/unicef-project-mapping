@@ -3,10 +3,11 @@ from django.forms.util import ErrorList
 from tinymce.widgets import TinyMCE
 
 from maplayers.countries import COUNTRIES
+from maplayers.models import Project
 
 class ProjectForm(forms.Form): 
     name = forms.CharField(max_length=30) 
-    description = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows':20}))
+    description = forms.CharField(widget=TinyMCE(attrs={'cols' : 80, 'rows' : 20}))
     latitude = forms.DecimalField(max_digits=10, decimal_places=6)
     longitude = forms.DecimalField(max_digits=10, decimal_places=6)
     location = forms.CharField(max_length=50)
@@ -17,6 +18,7 @@ class ProjectForm(forms.Form):
     imageset_feedurl = forms.CharField(max_length=1000, required=False)
     youtube_playlist_id = forms.CharField(max_length=20, required=False)
     tags = forms.CharField(max_length=500, required=False)
+    parent_project = forms.ChoiceField(choices=[[project.id, project.name] for project in Project.objects.all() if project.name])
     
 class AdminUnitForm(forms.Form):
     name = forms.CharField(max_length=50)
