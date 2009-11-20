@@ -144,7 +144,7 @@ def request_changes(request, project_id):
     response_json["authorized"] = True if project.is_publishable_by(request.user) else False
     
     if not feedback:
-        return response_json["error"] = "Feedback is required"
+        response_json["error"] = "Feedback is required"
     else:
         project.status = PROJECT_STATUS.REQUEST_CHANGES
         review_changes = ReviewFeedback()
