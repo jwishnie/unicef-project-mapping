@@ -150,10 +150,10 @@ def request_changes(request, project_id):
         review_changes.feedback = feedback
         review_changes.project = project
         review_changes.reviewed_by = request.user
-        review_changes.save()
-        project.save()
-        logging.debug("compeleted saving review suggestions for [project_id] : %s" %project_id)
-        return HttpResponse('{"project_status" : "Change Requested", "authorized" : true}')
+        # review_changes.save()
+        # project.save()
+        # logging.debug("compeleted saving review suggestions for [project_id] : %s" %project_id)
+        return HttpResponse('{"authorized" : false}')
         
 
 @login_required                     
