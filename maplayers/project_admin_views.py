@@ -144,20 +144,19 @@ def request_changes(request, project_id):
     feedback = request.POST.get('feedback', '')
     if not feedback:
         return HttpResponse('{"error" : "Feedback is required", "authorized" : true}')
+    else:
+        project.status = PROJECT_STATUS.REQUEST_CHANGES
+        review_changes = ReviewFeedback()
+        review_changes.feedback = feedback
+        review_changes.project = project
+        review_changes.reviewed_by = request.user
+        review_changes.save()
+        return HttpResponse('{"authorized" : true, "hello" : "world"}')
         
-    return HttpResponse('{"authorized" : true, "hello" : "world"}')
-    
-    # else:
-    #     project.status = PROJECT_STATUS.REQUEST_CHANGES
-    #     review_changes = ReviewFeedback()
-    #     review_changes.feedback = feedback
-    #     review_changes.project = project
-    #     review_changes.reviewed_by = request.user
-    #     review_changes.save()
-    #     project.save()
-    #     logging.debug("compeleted saving review suggestions for [project_id] : %s" %project_id)
-    #     return HttpResponse('{"project_status" : "Change Requested", \
-    #                         "authorized" : true}')
+        project.save()
+        logging.debug("compeleted saving review suggestions for [project_id] : %s" %project_id)
+        return HttpResponse('{"project_status" : "Change Requested", \
+                            "authorized" : true}')
     
         
 
