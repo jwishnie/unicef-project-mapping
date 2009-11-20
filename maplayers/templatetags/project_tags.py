@@ -99,17 +99,14 @@ def my_projects_link():
 
     
 @register.simple_tag
-def publish_project_link(project, user):
+def admin_links(project, user):
     result = ""
     if project.is_publishable_by(user):
         action = ("unpublish" if project.status == PROJECT_STATUS.PUBLISHED else "publish")
-        result = '''<div class="publish_div">
-                        <a href="#publish" class="publish_link" id="%s">%s</a>
-                    </div>''' % (str(project.id), action.capitalize())
-    if project.status == PROJECT_STATUS.DRAFT:
-        result += '''<div class="review_div">
-                            <a href="#review" class="review_link" id="%s">%s</a>
-                    </div>''' % (str(project.id), "Submit for Review")
+        input_field = '<input type="hidden" name="link" value="/projects/%s/%s/"/>' % (action, project.id)
+        publish_span = '''<span class="publish_link" id="publish_%s">%s%s</span>''' % (str(project.id),  action.capitalize(), input_field)
+        delete_span = '<span class="delete_link" id="delete_%s">Delete</span>' % (str(project.id))
+        result = '<div class="admin_actions">%s | %s</div>' % (publish_span, delete_span)
     return result
     
 

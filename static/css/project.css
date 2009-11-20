@@ -83,6 +83,6 @@ label {
     width:300px;
 }
 
-#comment_message{
+#comment_message, #publish_message{
     background-color: yellow;
 }
