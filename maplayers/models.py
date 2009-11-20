@@ -24,7 +24,7 @@ class Project(models.Model):
     imageset_feedurl = models.CharField(max_length=1000, null=True, blank=True)
     youtube_playlist_id = models.CharField(max_length=20, null=True, blank=True)
     parent_project = models.ForeignKey('self', null=True, blank=True)
-    status = models.CharField(max_length=12)
+    status = models.CharField(max_length=50)
     created_by = models.ForeignKey(User)
     groups = models.ManyToManyField(Group)
 
