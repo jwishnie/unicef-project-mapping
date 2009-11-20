@@ -137,7 +137,6 @@ def reject_project(request, project_id):
                     
 @login_required                     
 def request_changes(request, project_id):
-    return HttpResponse('{"authorized" : true, "hello" : "world"}')
     logging.debug("request changes for [project_id] : %s" % project_id)
     project = Project.objects.get(id=int(project_id))
     if not project.is_publishable_by(request.user):
@@ -145,17 +144,20 @@ def request_changes(request, project_id):
     feedback = request.POST.get('feedback', '')
     if not feedback:
         return HttpResponse('{"error" : "Feedback is required", "authorized" : true}')
-    else:
-        project.status = PROJECT_STATUS.REQUEST_CHANGES
-        review_changes = ReviewFeedback()
-        review_changes.feedback = feedback
-        review_changes.project = project
-        review_changes.reviewed_by = request.user
-        review_changes.save()
-        project.save()
-        logging.debug("compeleted saving review suggestions for [project_id] : %s" %project_id)
-        return HttpResponse('{"project_status" : "Change Requested", \
-                            "authorized" : true}')
+        
+    return HttpResponse('{"authorized" : true, "hello" : "world"}')
+    
+    # else:
+    #     project.status = PROJECT_STATUS.REQUEST_CHANGES
+    #     review_changes = ReviewFeedback()
+    #     review_changes.feedback = feedback
+    #     review_changes.project = project
+    #     review_changes.reviewed_by = request.user
+    #     review_changes.save()
+    #     project.save()
+    #     logging.debug("compeleted saving review suggestions for [project_id] : %s" %project_id)
+    #     return HttpResponse('{"project_status" : "Change Requested", \
+    #                         "authorized" : true}')
     
         
 
