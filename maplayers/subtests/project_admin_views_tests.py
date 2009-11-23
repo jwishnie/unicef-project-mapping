@@ -5,7 +5,7 @@ from django.test.client import Client
 
 from maplayers.project_admin_views import _add_existing_sectors, _create_and_add_new_sectors
 from maplayers.project_admin_views import _add_existing_implementors, _create_and_add_new_implementors
-from maplayers.models import Project, Sector, Implementor
+from maplayers.models import Project, Sector, Implementor, ProjectComment
 from maplayers.utils import is_iter
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
@@ -153,4 +153,17 @@ class ProjectAdminViewsUnitTest(TestCase):
         web_client.login(username='map_super', password='map_super')
         response = web_client.get("/projects/delete/1/")
         self.assertFalse(Project.objects.filter(name__exact=project_name))
-
+        
+    def test_publish_project_comment(self):
+        web_client = Client()
+        web_client.login(username='author', password='author')
+        response = web_client.post("/projects/comments/publish/", {"comment_1" : True})
+        comment = ProjectComment.objects.get(id=1)
+        self.assertEquals("Published", comment.status)
+        
+    def test_delete_project_comment(self):
+        web_client = Client()
+        web_client.login(username='author', password='author')
+        web_client.post("/projects/comments/delete/", {"comment_2" : True})
+        comment = ProjectComment.objects.filter(id=2)
+        self.assertFalse(comment)
