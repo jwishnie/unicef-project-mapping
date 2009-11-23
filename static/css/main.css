@@ -55,7 +55,7 @@ ul.implementors {
 
 .round_corner {
     -moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 
 .ten_pt_text {
@@ -165,6 +165,11 @@ li a {
     color: #FFF;
     padding: 5px;
     font-size: 10pt;
+    border-style:solid;
+    border-width:1px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    width : 80px;
 }
 
 #main_content_shadow {
