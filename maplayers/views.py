@@ -10,11 +10,11 @@ from django.db.models import Q
 from django.contrib.auth import logout
 
 from maplayers.utils import is_empty
-from maplayers.models import Project, Sector, Implementor, ProjectComments
+from maplayers.models import Project, Sector, Implementor, ProjectComment
 import decimal
 from tagging.models import TaggedItem, Tag
 from django.contrib.auth import logout
-from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX
+from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS
 from datetime import datetime
 import simplejson as json
 
@@ -84,7 +84,7 @@ def project_comment(request, project_id):
     response_json = {}
     _check_for_comment_errors(username, email, comment_text, response_json)
     if not response_json:
-        comment = ProjectComments(comment_by=username, email = email, 
+        comment = ProjectComment(comment_by=username, email = email, status = COMMENT_STATUS.UNMODERATED,
                     text = comment_text, project = project, date = datetime.today())
         comment.save()
         response_json['message'] = "Thank you for your comment. The Author of the project will be notified of this"

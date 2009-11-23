@@ -10,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 
-from maplayers.constants import GROUPS, PROJECT_STATUS
-from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback
+from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS
+from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment
 from maplayers.forms import ProjectForm, AdminUnitForm
 import simplejson as json
 
@@ -108,6 +108,27 @@ def file_upload(request):
     project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project, filesize=file_size))
     return HttpResponse("OK")
     
+    
+@login_required
+def project_comments(request, project_id):
+    project = Project.objects.get(id=project_id)
+    comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED)
+    return render_to_response('project_comments.html',
+                              {'project' : project,
+                               'comments' : comments},
+                              context_instance=RequestContext(request)  
+                             )
+                             
+@login_required                       
+def publish_comments(request):
+    _publish_or_delete_comments(request, "publish")
+    return HttpResponseRedirect("/my_projects/")
+    
+    
+@login_required                       
+def delete_comments(request):
+    _publish_or_delete_comments(request, "delete")
+    return HttpResponseRedirect("/my_projects/")
 
 @login_required
 def remove_attachment(request):
@@ -343,3 +364,13 @@ def _set_project_status(project, request):
             project.status=PROJECT_STATUS.UNPUBLISHED
     else:
         project.status = PROJECT_STATUS.REVIEW
+        
+def _publish_or_delete_comments(request, action):
+    comment_ids = [int(comment_id.split("_")[1]) for comment_id in \
+            request.POST.keys() if comment_id.find("comment_") >=0]
+    if not comment_ids: return 
+    if action == "delete":
+        ProjectComment.objects.filter(id__in=comment_ids).delete()
+    else:
+        ProjectComment.objects.filter(id__in=comment_ids).update(status=COMMENT_STATUS.PUBLISHED)    
+    

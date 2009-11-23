@@ -40,6 +40,9 @@ urlpatterns += patterns('maplayers.project_admin_views',
                         (r'^projects/reject/(?P<project_id>\d+)/$', 'reject_project'),
                         (r'^projects/delete/(?P<project_id>\d+)/$', 'delete_project'),
                         (r'^request_changes/(?P<project_id>\d+)/$', 'request_changes'),
+                        (r'^projects/comments/(?P<project_id>\d+)/$', 'project_comments'),
+                        (r'^projects/comments/publish/$', 'publish_comments'),
+                        (r'^projects/comments/delete/$', 'delete_comments'),
                        )
  
 urlpatterns += patterns('maplayers.admin_views',
