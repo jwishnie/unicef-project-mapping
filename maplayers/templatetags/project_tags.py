@@ -44,8 +44,8 @@ def my_projects_header(user):
     result += '<th>Project title</th><th>Project Status</th><th>Edit</th>'
     if set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()]):
         result += '<th>Publish</th>'
-	result +='</tr>'
-	return result
+    result +='</tr>'
+    return result
 
 @register.simple_tag
 def my_project(project, user):
