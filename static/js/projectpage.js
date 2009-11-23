@@ -76,6 +76,7 @@ $(document).ready(function() {
         $(".ui-dialog-titlebar-close").html("X");
         $(".ui-dialog-titlebar-close").css("color", "#0C7094");
         $('#published_comment').dialog('open');
+        $("#published_comment").css("height", "auto");
     });
     
     function reset_publish_link(message, project_id){

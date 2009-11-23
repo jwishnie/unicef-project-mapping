@@ -61,7 +61,7 @@ def my_project(project, user):
 def project_success_message(request):
     message = ""
     if request.session.has_key("success_message"):
-        message = '<div class="highlight">%s</div>' % request.session["success_message"]
+        message = '<div class="flash_message_box"><div class="flash_message">%s</div></div>' % request.session["success_message"]
         del request.session["success_message"]
     return message
     
@@ -199,6 +199,7 @@ def youtube_playlist_player(playlist_id):
         <param name="movie" value="http://www.youtube.com/p/%(play_id)s&amp;hl=en&amp;fs=1"></param>
         <param name="allowFullScreen" value="true"></param>
         <param name="allowscriptaccess" value="always"></param>
+        <param name="wmode" value="opaque"></param>
         <embed class="youtube_playlist_player" src="http://www.youtube.com/p/%(play_id)s&amp;hl=en&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></embed>
         </object>
 
