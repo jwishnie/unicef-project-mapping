@@ -55,6 +55,7 @@ $(document).ready(function() {
                     var result = JSON.parse(result);
                     if (result.message != null) {
                         $('#comment_message').html(result.message);
+                        $('#comment_message').css("background-color", "#ECE5B6");
                         $(dialog_box).dialog('close');
                     }
                 });
@@ -76,6 +77,7 @@ $(document).ready(function() {
         $(".ui-dialog-titlebar-close").html("X");
         $(".ui-dialog-titlebar-close").css("color", "#0C7094");
         $('#published_comment').dialog('open');
+        $("#published_comment").css("height", "auto");
     });
     
     function reset_publish_link(message, project_id){
@@ -86,6 +88,7 @@ $(document).ready(function() {
         $(span_id).html(html_text);
         var message = "Project " + message + " Successfully";
         $("#publish_message").html(message);
+        $("#publish_message").css("background-color", "#ECE5B6");
     }
 
     $(".publish_link").click(function() {

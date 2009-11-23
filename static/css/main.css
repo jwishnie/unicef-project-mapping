@@ -312,6 +312,30 @@ ul.errorlist {
     width:40em;
 }
 
+.flash_message_box {
+    color: black;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.flash_message,
+#comment_message,
+#publish_message {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: right;
+    margin-right: 23em;
+    padding: 5px;    
+}
+
+.flash_message {
+    background-color: #ECE5B6;
+}
+
+#comment_message {
+    margin-right: 15em;
+}
+
 /*PROJECTS FOR REVIEW, MY PROJECTS*/
 #projects_for_review,
 #my_projects,
