@@ -20,3 +20,4 @@ from maplayers.subtests.project_view_tests import *
 from maplayers.subtests.admin_views_tests import *
 from maplayers.subtests.project_admin_views_tests import *
 from maplayers.subtests.project_model_tests import *
+from maplayers.subtests.project_tags_tests import *

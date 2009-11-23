@@ -77,7 +77,7 @@ $(document).ready(function() {
 	function searchEvent(){
             var text = escape($('[name=q]').val());
             if($.trim(text)) {
-	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
+	    var search_url = "/projects/search/" + escape($('[name=q]').val()) + "/";
 		$.get(search_url, function(data){
                   var projects = getProjects(data);
                   addProjectsOnMap(projects);	

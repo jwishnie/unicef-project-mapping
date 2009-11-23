@@ -93,7 +93,7 @@ def add_administrative_unit(request):
         form = AdminUnitForm(request.POST)
         if form.is_valid():
             _create_admin_unit(form)
-            request.session['success_message'] = "Admin unit has been added successfully"
+            request.session['message'] = "Admin unit has been added successfully"
             url = "/admin_units/"
             return HttpResponseRedirect(url)
 
@@ -120,7 +120,7 @@ def edit_administrative_unit(request, id):
         form = AdminUnitForm(request.POST)
         if form.is_valid():
             _edit_admin_unit(form, id)
-            request.session['success_message'] = "Admin unit has been edited successfully"
+            request.session['message'] = "Admin unit has been edited successfully"
             url = "/admin_units/"
             return HttpResponseRedirect(url)
         else:
@@ -149,7 +149,7 @@ def edit_administrative_unit(request, id):
 @login_required
 def delete_administrative_unit(request, id):
     AdministrativeUnit.objects.get(id=int(id)).delete()
-    request.session['success_message'] = "Admin unit has been deleted successfully"
+    request.session['message'] = "Admin unit has been deleted successfully"
     url = "/admin_units/"
     return HttpResponseRedirect(url)
 
