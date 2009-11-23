@@ -240,10 +240,16 @@ $(document).ready(function() {
 	$('.implementorbox').click(mapEvent);
 	$('[name=Search]').click(searchEvent);
         $('#search').focus();
-        $("#search").keypress(function (e) {
-        if (e.which == 32 || e.which ==8 || (65 <= e.which && e.which <= 65 + 25)
-                            || (97 <= e.which && e.which <= 97 + 25)) {
-            searchEvent();
+        $("#search").keyup(function (e) {
+        if (e.which == 32 || e.which == 8 || (47 <= e.which && e.which <= 47 + 10) 
+                          ||(65 <= e.which && e.which <= 65 + 25)
+                          || (97 <= e.which && e.which <= 97 + 25)) {
+            if (e.which == 8 && !($.trim($('[name=q]').val()))) {
+              mapEvent($.Event("MapEvent"));              
+            } else {
+              searchEvent();
+            }
+
           }
         });
 });

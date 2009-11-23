@@ -33,7 +33,7 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 				{% project_success_message request %}
 				{% edit_project_link project user %}
 				{% admin_links project user %}
-				<div id="publish_message"></div>
+				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
 						<h2>{{project.name}}</h2>
 
@@ -117,19 +117,24 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
                   </div>
 
 				<div id="comment_link">Comment</div>
-				<div id="comment_message"></div>
+				<div class="flash_message_box"><div id="comment_message"></div></div>
 				
 				<div id="published_comment" title="Comments">
 					<form id="comment_form">
-						<label for="id_username">Name: </label>
-						<input name="username" id="id_username"></input>
+						<div class="sub_div">
+							<label for="id_username">Name: </label>
+							<input name="username" id="id_username"></input>
+						</div>
+						
+						<div class="sub_div">						
+							<label for="id_email">Email: </label>
+							<input name="email" id="id_email"></input>
+						</div>
 
-						<label for="id_email">Email: </label>
-						<input name="email" id="id_email"></input>
-						
-						<label for="id_text">Comment: </label>
-						<textarea rows="8" cols="35" name="text" id="id_text"></textarea>
-						
+						<div class="sub_div">						
+							<label for="id_text">Comment: </label>
+							<textarea rows="8" cols="35" name="text" id="id_text"></textarea>
+						</div>
 						<input type="hidden" name="project_id" value="{{project.id}}" id="comment_project_id"> 
 					</form>
 				</div>

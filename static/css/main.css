@@ -55,7 +55,7 @@ ul.implementors {
 
 .round_corner {
     -moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 
 .ten_pt_text {
@@ -165,6 +165,11 @@ li a {
     color: #FFF;
     padding: 5px;
     font-size: 10pt;
+    border-style:solid;
+    border-width:1px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    width : 80px;
 }
 
 #main_content_shadow {
@@ -305,6 +310,30 @@ ul.errorlist {
 
 #id_groups {
     width:40em;
+}
+
+.flash_message_box {
+    color: black;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.flash_message,
+#comment_message,
+#publish_message {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: right;
+    margin-right: 23em;
+    padding: 5px;    
+}
+
+.flash_message {
+    background-color: #ECE5B6;
+}
+
+#comment_message {
+    margin-right: 15em;
 }
 
 /*PROJECTS FOR REVIEW, MY PROJECTS*/
