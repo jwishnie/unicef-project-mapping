@@ -233,7 +233,7 @@ def _add_edit_success_page(project,request):
     else:
         message = "submitted for review"
         
-    request.session['success_message'] = "Project has been " + message + " successfully"
+    request.session['message'] = "Project has been " + message + " successfully"
     url = "/projects/id/%s/" % str(project.id)
     return HttpResponseRedirect(url)
                               

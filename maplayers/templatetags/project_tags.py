@@ -65,13 +65,12 @@ def my_project(project, user):
     return result
     
 @register.simple_tag
-def project_success_message(request):
+def flash_message(request):
     message = ""
-    if request.session.has_key("success_message"):
-        message = '<div class="flash_message_box"><div class="flash_message">%s</div></div>' % request.session["success_message"]
-        del request.session["success_message"]
+    if request.session.has_key("message"):
+        message = '<div class="flash_message_box"><div class="flash_message">%s</div></div>' % request.session["message"]
+        del request.session["message"]
     return message
-    
     
 @register.simple_tag
 def project_comments(project):

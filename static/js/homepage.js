@@ -75,8 +75,9 @@ $(document).ready(function() {
 
 
 	function searchEvent(){
-            if($.trim($('[name=q]').val())) {
-	    var search_url = "/projects/search/" + $('[name=q]').val() + "/";
+            var text = escape($('[name=q]').val());
+            if($.trim(text)) {
+	    var search_url = "/projects/search/" + escape($('[name=q]').val()) + "/";
 		$.get(search_url, function(data){
                   var projects = getProjects(data);
                   addProjectsOnMap(projects);	
@@ -134,7 +135,7 @@ $(document).ready(function() {
 		$('#bookmark').html(url);
 	}
 
-    function mousedn(){
+    function mousedn() {
         if(popup !== null) {
             popup.destroy();
         }
@@ -159,9 +160,9 @@ $(document).ready(function() {
 		});
 		
 		filters.tag = search_tag;
-                filters.search_term = $("#search").val();
+                filters.search_term = escape($("#search").val());
 		
-		$.get(projects_url, filters, function(data){
+		$.get(projects_url, filters, function(data) {
                     var projects = getProjects(data);
                     addProjectsOnMap(projects);
 		});
@@ -244,7 +245,7 @@ $(document).ready(function() {
         if (e.which == 32 || e.which == 8 || (47 <= e.which && e.which <= 47 + 10) 
                           ||(65 <= e.which && e.which <= 65 + 25)
                           || (97 <= e.which && e.which <= 97 + 25)) {
-            if (e.which == 8 && !($.trim($('[name=q]').val()))) {
+            if (e.which == 8 && !($.trim(escape($('[name=q]').val())))) {
               mapEvent($.Event("MapEvent"));              
             } else {
               searchEvent();
