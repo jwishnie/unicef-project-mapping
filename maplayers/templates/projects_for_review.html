@@ -12,6 +12,8 @@
 		
  		<script type="text/javascript">
 			var project_id;
+			var delete_url;
+			var delete_tr;
 			
 			jQuery(document).ready(function(){
 				$('.publish_link').click(function(){
@@ -34,11 +36,30 @@
 				
 				$('.delete_link').click(function(){
 					project_id = (this.id).split("_")[1];
-					var url = "/projects/delete/" + project_id +"/";
-					var tr_id = "#project_" + project_id;
-					$.get(url, function(data){
-						$(tr_id).remove();
-					});	
+					delete_url = "/projects/delete/" + project_id +"/";
+					delete_tr = "#project_" + project_id;
+					$('#delete_dialog').dialog('open');
+				});
+				
+				$("#delete_dialog").dialog({
+					bgiframe: true,
+					autoOpen: false,
+					height: 200,
+					width: 300,
+					modal: true,
+					buttons: {
+						Submit: function() {
+							$.post(delete_url, function(data){
+								$(delete_tr).remove();
+							});
+							$(this).dialog('close');
+						},
+						Cancel: function() {
+							$(this).dialog('close');
+						}
+					},
+					close: function() {
+					}
 				});
 				
 				$("#dialog").dialog({
@@ -125,6 +146,10 @@
 		<form id="project_feedback">
 			<textarea rows="8" cols="35" name="feedback" id="feedback"></textarea>
 		</form>
+	</div>
+	
+	<div id="delete_dialog" title="Delete Project !">
+		<p>Are you Sure you want to delete this project ?</p>
 	</div>
 
 	

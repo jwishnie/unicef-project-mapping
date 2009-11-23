@@ -4,6 +4,7 @@
     "name" : "{{project.name}}",
     "status" : "{{project.status}}",
     "created_by" : "{{project.created_by}}",
+    "message" : "{{message}}", 
     {% if publishable %}
         "publishable" : true,
     {% else %}

@@ -127,10 +127,6 @@ class ProjectAdminViewsUnitTest(TestCase):
         web_client.login(username='editor', password='editor')
         response = web_client.get("/projects/id/1/")
         self.assertContains(response, "Unpublish")
-
-        response = web_client.get("/projects/id/7/")
-        self.assertContains(response, "Publish")
-        self.assertContains(response, "Submit for Review")
         
     def test_publish_unpublish_should_update_project_status(self):
         web_client = Client()
