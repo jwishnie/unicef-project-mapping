@@ -55,6 +55,7 @@ $(document).ready(function() {
                     var result = JSON.parse(result);
                     if (result.message != null) {
                         $('#comment_message').html(result.message);
+                        $('#comment_message').css("background-color", "#ECE5B6");
                         $(dialog_box).dialog('close');
                     }
                 });
@@ -87,6 +88,7 @@ $(document).ready(function() {
         $(span_id).html(html_text);
         var message = "Project " + message + " Successfully";
         $("#publish_message").html(message);
+        $("#publish_message").css("background-color", "#ECE5B6");
     }
 
     $(".publish_link").click(function() {

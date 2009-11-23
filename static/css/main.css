@@ -325,8 +325,15 @@ ul.errorlist {
     -webkit-border-radius: 5px;
     float: right;
     margin-right: 23em;
-    padding: 5px;
-    background-color: #ECE5B6;    
+    padding: 5px;    
+}
+
+.flash_message {
+    background-color: #ECE5B6;
+}
+
+#comment_message {
+    margin-right: 15em;
 }
 
 /*PROJECTS FOR REVIEW, MY PROJECTS*/
