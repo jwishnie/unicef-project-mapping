@@ -82,8 +82,7 @@ def project_comment(request, project_id):
     email = request.POST.get('email', '')
     comment_text = request.POST.get('comment', '')
     response_json = {}
-    check_for_comment_errors(username, email, comment_text, response_json)
-    
+    _check_for_comment_errors(username, email, comment_text, response_json)
     if not response_json:
         comment = ProjectComments(comment_by=username, email = email, 
                     text = comment_text, project = project, date = datetime.today())
@@ -234,18 +233,10 @@ def write_project_list_to_response(projects):
     response.write(convert_to_json(projects))
     return response
     
-def check_for_comment_errors(username, email, comment_text, errors):
-    print "1"
+def _check_for_comment_errors(username, email, comment_text, errors):
     if not username: errors['username'] = 'Name is required'
-    print "2"
-    
     if not email: errors['email'] = 'Email is required'
-    print "3"
-    
     if not comment_text: errors['comment'] = 'Comment is required'
-    print "4"
-    
     if email and not EMAIL_REGEX.match(email): errors['email' ] = "Invalid email"
-    print "5"
     
 

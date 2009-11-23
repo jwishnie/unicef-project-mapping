@@ -37,6 +37,7 @@ $(document).ready(function() {
         modal: true,
         buttons: {
             Submit: function() {
+                $(".errorlist").remove();
                 var name = $("#id_username")[0].value;
                 var email = $("#id_email")[0].value;
                 var comment = $("#id_text")[0].value;
@@ -56,6 +57,8 @@ $(document).ready(function() {
                     if (result.message != null) {
                         $('#comment_message').html(result.message);
                         $(dialog_box).dialog('close');
+                    }else{
+                        print_comment_error_messages(result);
                     }
                 });
             },
@@ -64,10 +67,7 @@ $(document).ready(function() {
             }
         },
         close: function() {
-            $("#project_feedback input[type=\"hidden\"]").remove();
-            if ($(".error")) {
-                $(".error").remove();
-            }
+            $(".errorlist").remove();
         }
 
     });
@@ -86,6 +86,22 @@ $(document).ready(function() {
         $(span_id).html(html_text);
         var message = "Project " + message + " Successfully";
         $("#publish_message").html(message);
+    }
+    
+    function print_comment_error_messages(errors){
+        var error_list="";
+        if(errors.username){
+            error_list = '<ul class="errorlist"><li>' + errors.username + '</li></ul>';
+            $("#id_username").after(error_list);
+        }
+        if(errors.email){
+            error_list = '<ul class="errorlist"><li>' + errors.email + '</li></ul>';
+            $("#id_email").after(error_list);
+        }
+        if(errors.comment){
+            error_list = '<ul class="errorlist"><li>' + errors.comment + '</li></ul>';
+            $("#id_text").after(error_list);
+        }
     }
 
     $(".publish_link").click(function() {
