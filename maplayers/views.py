@@ -4,8 +4,9 @@ import decimal
 import logging
 from django.shortcuts import render_to_response
 from django.http import Http404
-from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponse 
+from django.template import RequestContext, loader
+from django.http import HttpResponseRedirect, HttpResponse,\
+                        HttpResponseNotFound, HttpResponseServerError
 from django.db.models import Q
 from django.contrib.auth import logout
 
@@ -118,10 +119,16 @@ def projects_tag_search(request, tag_term):
                               )     
 
 def view_404(request):
-    return render_to_response('404.html', context_instance=RequestContext(request))
+    response = HttpResponseNotFound()
+    template = loader.get_template('404.html')
+    response.write(template.render(RequestContext(request)))
+    return response
     
 def view_500(request):
-    return render_to_response('500.html', context_instance=RequestContext(request))
+    response = HttpResponseServerError()
+    template = loader.get_template('500.html')
+    response.write(template.render(RequestContext(request)))
+    return response
     
 def _get_sectors_for_projects(projects):
     sectors = [Sector.objects.filter(projects=project.id) for project in projects]

@@ -37,4 +37,4 @@ class HomePage(TestCase):
                                        
     def test_should_get_custom_404_page_on_page_not_found(self):
         response = self.web_client.get("/blah", {})
-        self.assertContains(response, "Something's gone a bit wrong!")                        
+        self.assertContains(response, "Something's gone a bit wrong!", status_code=404)                        
