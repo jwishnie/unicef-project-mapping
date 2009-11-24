@@ -341,7 +341,8 @@ ul.errorlist {
 #my_projects,
 #change_password,
 #login,
-#user_registration {
+#user_registration,
+#project_comments {
     margin-left: 15px;
 }
 
@@ -376,8 +377,15 @@ ul.errorlist {
 }
 
 #project_list td span,
-#my_project_list td span {
+#my_project_list td span,
+#project_comments span.delete_comment {
     border-left: 1px solid;
+    padding-left: 5px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#project_comments span.publish_comment {
     padding-left: 5px;
     text-decoration: underline;
     cursor: pointer;
@@ -402,4 +410,40 @@ ul.errorlist {
     float: right;
     color: #0000FF;
     font-size: 0.8em;
+}
+
+#review_suggestions .unread_suggestion {
+    background-color: #ECE5B6;
+}
+
+/*PROJECT COMMENTS*/
+#comments{
+    padding: 20px 20px 20px 0;
+}
+
+#comments div {
+    overflow: hidden;
+    background-color: #E2EBF4;
+    margin-bottom: 5px;
+}
+
+#comments div input {
+    float: left;
+    width: 2em;
+}
+
+#project_details #comments div span.comment_text {
+    padding: 1em 0 0 2em;
+}
+
+#comments div span.comment_text {
+    float: left;
+    width: 60em;
+}
+
+#comments .comment_metainfo {
+    color: #0000FF;
+    font-size: 9pt;
+    clear: left;
+    padding: 10px 0 0 30px;
 }

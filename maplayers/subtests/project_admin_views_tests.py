@@ -59,7 +59,7 @@ class ProjectAdminViewsUnitTest(TestCase):
         self.assertTrue(web_client.login(username='author', password='author'))
         ctxt = web_client.get("/add_project/").context
         ctxt = ( ctxt[0] if is_iter(ctxt) else ctxt )
-        project_id = ctxt['project_id']
+        project_id = ctxt['project'].id
         web_client.post("/add_project/", 
                                  {"project_id": project_id,
                                   "name" : "test_add", "description" : "test description", 

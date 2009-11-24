@@ -35,109 +35,107 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 				{% admin_links project user %}
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
-                                        <h2>{{project.name}}</h2>
-                                <div id="project_implementors">
+					<h2>{{project.name}}</h2>
+                    <div id="project_implementors">
 						{% if project.implementor_set %}
 							<label>Project Implementors : </label>
 							<div class="sub_div">{{implementors}}</div>
 						{% endif %}
+					</div>
+					<div id="main_pane">
+						<div id="right_pane">
+							<div id="map_canvas" class="olMap" style="width: 460px; height:256px; border=1px solid #CCCCCC"></div>
 						</div>
-						<div id="main_pane">
-							<div id="right_pane">
-								<div id="map_canvas" class="olMap" style="width: 460px; height:256px; border=1px solid #CCCCCC"></div>
+													
+						<div id="left_pane">
+							<div id="project description">
+								<label>Description: </label>
+								{% autoescape off %} 
+	                            <div class="sub_div">{{project.description}}</div>
+	                            {% endautoescape %} 
 							</div>
-														
-							<div id="left_pane">
-								<div id="project description">
-									<label>Description: </label>
-									{% autoescape off %} 
-		                            <div class="sub_div">{{project.description}}</div>
-		                            {% endautoescape %} 
-								</div>
-						
-								<div id="project location">
-										<label>Location: </label>
-										<span>{{project.location}}</span>
-		                        </div>
-
-		                        <div id="project_website">
-		                            <label>Project WebSite: </label>
-		                            <span><a href="{{project.website_url}}">{{project.name}} home page</a></span>
-		                        </div>
-                        
-		                        <div id="parent_project">
-		                          {% if project.parent_project %}
-		                            <label>Main Project : </label>
-		                            <span><a href="/projects/id/{{project.parent_project.id}}/">{{project.parent_project.name}}</a></span>
-		                          {% endif %}
-		                        </div>
-                        
-		                        <div id="subprojects">
-		                          {% if subprojects %}
-		                            <label>Sub Projects : </label>
-		                            {% for subproject in subprojects %}
-		                              <div class="sub_div"><a href="/projects/id/{{subproject.id}}/">{{subproject.name}}</a></div>
-		                            {% endfor %}
-		                          {% endif %}
-		                        </div>
-								
-								{% if project.link_set %}
-									<div id="project links">
-										<label>Links : </label>
-										{% for link in links %}
-											<div class="sub_div"><a href="{{link.url}}">{{link.title}}</a></div>
-										{% endfor %}
-									</div>	
-								{% endif %}
-								
-								<div id="tags">
-									{% for tag in tags %}
-									  <div class="sub_div"><a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></div>
-									{%endfor%}
-								</div>                     
-							</div>
-						</div>
-						
-						<div id="image_pane">	
-	                        <div id="project_image">
-								<div>Project Image</div>
-	                            <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
+					
+							<div id="project location">
+								<label>Location: </label>
+								<span>{{project.location}}</span>
 	                        </div>
-	
-							<div id="photo_set">
-			                    {% parse_img_rss_feed %}
-								{% include 'photo_gallery.html' %}
-			                </div>
-                        </div>
-				  </div>
-                  
-                  <div  id="project_video">
-                    {% youtube_playlist_player youtube_playlist_id %}
-                  </div>
 
-				<div id="comment_link">Comment</div>
-				<div class="flash_message_box"><div id="comment_message"></div></div>
-				
-				<div id="published_comment" title="Comments">
-					<form id="comment_form">
-						<div class="sub_div">
-							<label for="id_username">Name: </label>
-							<input name="username" id="id_username"></input>
+	                        <div id="project_website">
+	                            <label>Project WebSite: </label>
+	                            <span><a href="{{project.website_url}}">{{project.name}} home page</a></span>
+	                        </div>
+                       
+	                        <div id="parent_project">
+	                          {% if project.parent_project %}
+	                            <label>Main Project : </label>
+	                            <span><a href="/projects/id/{{project.parent_project.id}}/">{{project.parent_project.name}}</a></span>
+	                          {% endif %}
+	                        </div>
+                       
+	                        <div id="subprojects">
+	                          {% if subprojects %}
+	                            <label>Sub Projects : </label>
+	                            {% for subproject in subprojects %}
+	                              <div class="sub_div"><a href="/projects/id/{{subproject.id}}/">{{subproject.name}}</a></div>
+	                            {% endfor %}
+	                          {% endif %}
+	                        </div>
+							
+							{% if project.link_set %}
+								<div id="project links">
+									<label>Links : </label>
+									{% for link in links %}
+										<div class="sub_div"><a href="{{link.url}}">{{link.title}}</a></div>
+									{% endfor %}
+								</div>	
+							{% endif %}
+							
+							<div id="tags">
+								{% for tag in tags %}
+								  <div class="sub_div"><a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></div>
+								{%endfor%}
+							</div>                     
 						</div>
+					</div>
 						
-						<div class="sub_div">						
-							<label for="id_email">Email: </label>
-							<input name="email" id="id_email"></input>
-						</div>
+					<div id="image_pane">	
+                        <div id="project_image">
+							<div>Project Image</div>
+                            <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
+                        </div>
 
-						<div class="sub_div">						
-							<label for="id_text">Comment: </label>
-							<textarea rows="8" cols="35" name="text" id="id_text"></textarea>
-						</div>
-						<input type="hidden" name="project_id" value="{{project.id}}" id="comment_project_id"> 
-					</form>
+						<div id="photo_set">
+		                    {% parse_img_rss_feed %}
+							{% include 'photo_gallery.html' %}
+		                </div>
+					</div>
+                  	<div  id="project_video">
+                    	{% youtube_playlist_player youtube_playlist_id %}
+                  	</div>				
+					
+					<div id="comment_link"><label>Post a comment</label></div>
+					<div class="flash_message_box"><div id="comment_message"></div></div>
+
+					<div id="published_comment" title="Comments">
+						<form id="comment_form">
+							<div class="sub_div">
+								<label for="id_username">Name: </label>
+								<input name="username" id="id_username"></input>
+							</div>
+							<div class="sub_div">						
+								<label for="id_email">Email: </label>
+								<input name="email" id="id_email"></input>
+							</div>
+
+							<div class="sub_div">						
+								<label for="id_text">Comment: </label>
+								<textarea rows="8" cols="35" name="text" id="id_text"></textarea>
+							</div>
+							<input type="hidden" name="project_id" value="{{project.id}}" id="comment_project_id"> 
+						</form>
+					</div>
+
+					<div id="comments">{% project_comments project %}</div>
 				</div>
-
-				<div id="comments">{% project_comments project%}</div>
 {% endblock %}
 

@@ -33,4 +33,12 @@ jQuery(document).ready(function(){
 		return false;
 	});
 	
+	jQuery(".delete_comment").click(function(){
+        var url = "/projects/comments/delete/";
+        comment_id = this.id;
+        jQuery.post(url, {comment_id : true}, function(data){
+                            jQuery("#" + comment_id).remove();
+                        });
+    });
+	
 });

@@ -35,7 +35,7 @@ def edit_project_link(project, user):
 @register.simple_tag
 def projects_for_review_link(user):
     if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
-        return '<li><a href="/projects_for_review/">Projects for Review</li>'
+        return '<li><a href="/projects_for_review/">Projects for Review</a></li>'
     return ''
     
 @register.simple_tag
@@ -77,14 +77,16 @@ def project_comments(project, mode="display"):
     result = ""
     comments = [comment for comment in project.projectcomment_set.all() if comment.status == COMMENT_STATUS.PUBLISHED]
     if comments:
-        result += '<span>Comments: </span>'
+        result += '<span>So far there\'s been %d comments </span>' % len(comments)
     for comment in comments:
-        result += '<div id="comment_%s" class="suggestion">' % comment.id
-        result += '<span class="comment floatleft">%s</span>' % comment.text
-        result += '<span class="comment_by">%s</span>' % comment.comment_by
-        result += '<span class="comment_date">%s</span>' % comment.date
+        result += '<div id="comment_%s">' % comment.id
+        result += '<span class="comment_text">%s</span>' % comment.text
+        result += '<p class="comment_metainfo">'
+        result += '<span class="comment_by">By: %s,</span>' % comment.comment_by
+        result += '<span class="comment_date"> %s</span>' % comment.date.strftime("%B %d, %Y")
+        result += '</p>'
         if(mode=="edit"):
-            result += '<span class="delete_comment" id="comment_%s">Remove</span>' % comment.id
+            result += '<span class="delete_comment" id="delete_comment_%s">Remove</span>' % comment.id
         result += '</div>'
     return result
     
