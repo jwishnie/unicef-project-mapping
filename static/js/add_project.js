@@ -35,10 +35,13 @@ jQuery(document).ready(function(){
 	
 	jQuery(".delete_comment").click(function(){
         var url = "/projects/comments/delete/";
-        comment_id = this.id;
-        jQuery.post(url, {comment_id : true}, function(data){
-                            jQuery("#" + comment_id).remove();
-                        });
+        var span_id = this.id;
+        var comment_id = span_id.replace("delete_", "");
+        data = {};
+        data[comment_id] = true;
+        jQuery.post(url, data, function(result){
+            jQuery("#" + comment_id).remove();
+        });
     });
 	
 });
