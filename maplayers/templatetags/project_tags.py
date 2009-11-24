@@ -84,7 +84,7 @@ def project_comments(project, mode="display"):
         result += '<span class="comment_by">%s</span>' % comment.comment_by
         result += '<span class="comment_date">%s</span>' % comment.date
         if(mode=="edit"):
-            result += '<span class="delete_comment" id="comment_%s">Remove</span>' % comment_id
+            result += '<span class="delete_comment" id="comment_%s">Remove</span>' % comment.id
         result += '</div>'
     return result
     

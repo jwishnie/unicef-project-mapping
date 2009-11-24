@@ -347,10 +347,11 @@ def _render_response(request, form, action, sectors, implementors,
                               {
                                'form': form,
                                'sectors' : sectors, 'implementors' : implementors,
-                               'project_id' : project.id, 'resources' : resources,  
+                               'project' : project, 'resources' : resources,  
                                'title_and_values' : link_titles_and_values,
                                'action' : action, 'publishable' : publishable,
-                               'checked' : check_publish, 'submit_label' : submit_label
+                               'checked' : check_publish, 'submit_label' : submit_label,
+                               'mode' : "edit"
                               },
                               context_instance=RequestContext(request)
                               )
