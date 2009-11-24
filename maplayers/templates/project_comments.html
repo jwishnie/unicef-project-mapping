@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load project_tags %}
+
+{% block title_extra %} Comments{% endblock %}
+
+{% block extrahead %}
+	<script src="{{ jquery }}" type="text/javascript"></script>
+	<script type="text/javascript" src="{{ js_url }}/project_comments.js"></script>
+{% endblock %}
+
+
+
+{% block page_content %}
+	<h1>{{project.name}}</h1>
+	
+	<form action="" method="post" id="comments_form">
+		<p>
+			<span class="publish_comment">Publish</span> | 
+			<span class="delete_comment">Delete</span>
+		</p>
+		
+		{% for comment in comments %}
+			<div id="comment_{{comment.id}}">
+				<input type="checkbox" name="comment_{{comment.id}}" />
+				<span class="comment_text">{{comment.text}}</span>
+				<span class="comment_by">{{comment.comment_by}}</span>
+				<span class="comment_date">{{comment.date|date:"F j, Y"}}</span>
+			</div>
+		{% endfor %}
+		
+		<input type="hidden" name="project_id" value="{{project.id}}"/>
+	</form>
+
+{% endblock %}

@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 from maplayers.models import Project, ReviewFeedback, AdministrativeUnit
 
-from maplayers.constants import GROUPS, PROJECT_STATUS
+from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS
 from maplayers.forms import UserForm, ChangePasswordForm, AdminUnitForm
 
 
@@ -51,11 +51,12 @@ def change_password(request):
 @login_required
 def my_projects(request):
     user = request.user
-    projects = Project.objects.filter(created_by=user).exclude(status=PROJECT_STATUS.DRAFT)
+    projects = Project.objects.select_related(depth=1).filter(created_by=user).exclude(status=PROJECT_STATUS.DRAFT)
     return render_to_response('my_projects.html',
                               {'projects' : projects},
                               context_instance=RequestContext(request)  
                              )
+
 
 @login_required
 def projects_for_review(request):

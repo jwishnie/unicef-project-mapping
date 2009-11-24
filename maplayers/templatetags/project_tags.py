@@ -44,6 +44,7 @@ def my_projects_header(user):
     result += '<th>Project title</th><th>Project Status</th><th>Edit</th>'
     if set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()]):
         result += '<th>Publish</th>'
+    result += "<th>Comments</th>"
     result +='</tr>'
     return result
 
@@ -54,6 +55,12 @@ def my_project(project, user):
     result += '<td><a href="/edit_project/%s/">Edit</a></td>' % project.id
     if set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()]):
         result += '<td>%s</td>' % publish_text(project)
+    no_of_comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED).count()
+    if no_of_comments:
+        comments_text = "comments" if no_of_comments>1 else "comment"
+        result += '<td><a href="/projects/comments/%s"/>%s %s</td>' % (str(project.id), str(no_of_comments), comments_text)
+    else:
+        result += '<td>No comments</td>'
     result += '</tr>'
     return result
     
@@ -68,7 +75,7 @@ def flash_message(request):
 @register.simple_tag
 def project_comments(project):
     result = ""
-    comments = [comment for comment in project.projectcomments_set.all() if comment.status == COMMENT_STATUS.PUBLISHED]
+    comments = [comment for comment in project.projectcomment_set.all() if comment.status == COMMENT_STATUS.PUBLISHED]
     if comments:
         result += '<span>Comments: </span>'
     for comment in comments:

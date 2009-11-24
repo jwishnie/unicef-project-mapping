@@ -147,7 +147,10 @@ class ReviewFeedback(models.Model):
     project = models.ForeignKey(Project)
     reviewed_by = models.ForeignKey(User)
     
-class ProjectComments(models.Model):
+    class Admin:
+        pass
+    
+class ProjectComment(models.Model):
     text = models.CharField(max_length=1000)
     status = models.CharField(max_length=20)
     project = models.ForeignKey(Project)
@@ -155,3 +158,8 @@ class ProjectComments(models.Model):
     email = models.EmailField()
     date = models.DateTimeField()
     
+    def __unicode__(self):
+        return self.text
+        
+    class Admin:
+        pass
