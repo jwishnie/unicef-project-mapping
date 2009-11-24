@@ -5,7 +5,7 @@ window.addEvent('domready', function() {
 	 */
 	var up = new FancyUpload3.Attach('file-list', '#file-attach, #file-attach-2', {
 		path: fancy_uploader_swf,
-		url: '/upload/',
+		url: '/projects/upload/',
 		fileSizeMax: 3 * 1024 * 1024,
         data: {'project_id' : project_id},
 		verbose: true,

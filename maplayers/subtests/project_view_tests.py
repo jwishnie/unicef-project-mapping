@@ -5,6 +5,8 @@ from django.test.client import Client
 from maplayers.models import Project
 from maplayers.views import convert_to_json 
 from maplayers.constants import PROJECT_STATUS
+from  mock import Mock
+from maplayers import views
 
 class ProjectPage(TestCase):
     fixtures = ['test_project_data']
@@ -64,6 +66,19 @@ class ProjectPage(TestCase):
 
         actual_result = convert_to_json([project1, project2])
         self.assertEquals(expected_result, actual_result)
+
+    def test_return_404_response_if_resource_is_not_found(self):
+        request = Mock()
+        request.META = {'HTTP_REFERER' : 'http://localhost:8000'}
+        response = views.view_404(request)
+        self.assertEquals(404, response.status_code)
+
+
+    def test_return_500_response_if_server_throws_exception(self):
+        request = Mock()
+        request.META = {'HTTP_REFERER' : 'http://localhost:8000'}
+        response = views.view_500(request)
+        self.assertEquals(500, response.status_code)
 
 def to_json(projects):
     result = []

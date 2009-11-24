@@ -92,7 +92,6 @@ def edit_project(request, project_id):
                                 project.resource_set.all())
                                 
     
-@login_required                            
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')

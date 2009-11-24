@@ -73,7 +73,7 @@ def flash_message(request):
     return message
     
 @register.simple_tag
-def project_comments(project):
+def project_comments(project, mode="display"):
     result = ""
     comments = [comment for comment in project.projectcomment_set.all() if comment.status == COMMENT_STATUS.PUBLISHED]
     if comments:
@@ -85,6 +85,8 @@ def project_comments(project):
         result += '<span class="comment_by">By: %s,</span>' % comment.comment_by
         result += '<span class="comment_date"> %s</span>' % comment.date.strftime("%B %d, %Y")
         result += '</p>'
+        if(mode=="edit"):
+            result += '<span class="delete_comment" id="comment_%s">Remove</span>' % comment_id
         result += '</div>'
     return result
     
