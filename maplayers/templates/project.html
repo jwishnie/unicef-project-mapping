@@ -32,6 +32,7 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 {% block page_content %}
 				{% flash_message request %}
 				{% edit_project_link project user %}
+				{% add_sub_project_link project user %}
 				{% admin_links project user %}
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
