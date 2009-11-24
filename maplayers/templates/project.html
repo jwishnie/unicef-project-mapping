@@ -98,7 +98,7 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 						</div>
 					</div>
 						
-					<div id="image_pane">	
+					<div id="image_pane">
                         <div id="project_image">
 							<div>Project Image</div>
                             <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
@@ -109,10 +109,11 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 							{% include 'photo_gallery.html' %}
 		                </div>
 					</div>
+					{% if youtube_playlist_id %}
                   	<div  id="project_video">
                     	{% youtube_playlist_player youtube_playlist_id %}
                   	</div>				
-					
+					{% endif %}
 					<div id="comment_link"><label>Post a comment</label></div>
 					<div class="flash_message_box"><div id="comment_message"></div></div>
 

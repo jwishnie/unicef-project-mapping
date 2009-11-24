@@ -62,6 +62,11 @@ label {
     width: 80px;
 }
 
+#project_image span img {
+    width: 400px;
+    height: 250px;
+}
+
 .youtube_playlist_player {
     width: 400px;
     height: 385px;
