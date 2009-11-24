@@ -15,7 +15,10 @@ from maplayers.models import Project, Sector, Implementor, ProjectComment
 import decimal
 from tagging.models import TaggedItem, Tag
 from django.contrib.auth import logout
-from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS
+from maplayers.forms import UserForm, ChangePasswordForm
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
+from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GROUPS
 from datetime import datetime
 import simplejson as json
 
@@ -76,6 +79,37 @@ def project(request, project_id):
                                context_instance=RequestContext(request)
                               )
                               
+
+def user_registration(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            _create_user(form)
+            return HttpResponseRedirect('/user_registration/success/')
+        else:
+            return _user_registration_response(request, form)
+    else:
+        form = UserForm()
+        return _user_registration_response(request, form)     
+        
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid() and form.validated_user(request.user):
+            user = User.objects.get(username=request.user.username)
+            user.set_password(str(form.cleaned_data['new_password']))
+            user.save()
+            return HttpResponseRedirect('/change_password/success/')
+        else:
+            return _change_password_response(request, form)
+
+    else:
+        form = ChangePasswordForm()
+        return _change_password_response(request, form)
+                         
+
                               
 def project_comment(request, project_id):
     project = Project.objects.get(id=int(project_id))
@@ -245,5 +279,27 @@ def _check_for_comment_errors(username, email, comment_text, errors):
     if not email: errors['email'] = 'Email is required'
     if not comment_text: errors['comment'] = 'Comment is required'
     if email and not EMAIL_REGEX.match(email): errors['email' ] = "Invalid email"
+    
+def _user_registration_response(request, form):
+    group_names = ", ".join([str(group.name) for group in Group.objects.all()])
+    return render_to_response('user_registration.html',
+                             {'form' : form},
+                             context_instance=RequestContext(request)
+                             )
+
+def _change_password_response(request, form):
+    return render_to_response('change_password.html',
+                             {'form' : form},
+                             context_instance=RequestContext(request)
+                             )
+
+
+def _create_user(form):
+    username = form.cleaned_data['username']
+    email = form.cleaned_data['email']
+    password = form.cleaned_data['password']
+    user = User.objects.create_user(username, email, password)
+    user.groups.add(Group.objects.get(name=GROUPS.PROJECT_AUTHORS))
+    user.save()
     
 

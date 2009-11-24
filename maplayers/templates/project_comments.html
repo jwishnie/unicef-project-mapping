@@ -12,24 +12,29 @@
 
 
 {% block page_content %}
-	<h1>{{project.name}}</h1>
+<div id="project_comments">
+	<h2>{{project.name}}</h2>
 	
 	<form action="" method="post" id="comments_form">
-		<p>
-			<span class="publish_comment">Publish</span> | 
+		<div>
+			<span class="publish_comment">Publish</span>
 			<span class="delete_comment">Delete</span>
-		</p>
+		</div>
 		
+		<div id="comments">
 		{% for comment in comments %}
 			<div id="comment_{{comment.id}}">
 				<input type="checkbox" name="comment_{{comment.id}}" />
 				<span class="comment_text">{{comment.text}}</span>
-				<span class="comment_by">{{comment.comment_by}}</span>
-				<span class="comment_date">{{comment.date|date:"F j, Y"}}</span>
+				<p class="comment_metainfo">
+					<span class="comment_by">By: {{comment.comment_by}},</span>
+					<span class="comment_date">{{comment.date|date:"F j, Y"}}</span>
+				</p>
 			</div>
 		{% endfor %}
+		</div>
 		
 		<input type="hidden" name="project_id" value="{{project.id}}"/>
 	</form>
-
+</div>
 {% endblock %}
