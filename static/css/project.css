@@ -67,3 +67,8 @@ label {
     height: 385px;
     padding: 15px;
 }
+
+#comment_link {
+    padding-top: 20px;
+    text-decoration: underline;    
+}
