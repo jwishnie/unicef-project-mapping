@@ -35,7 +35,7 @@ def edit_project_link(project, user):
 @register.simple_tag
 def projects_for_review_link(user):
     if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
-        return '<li><a href="/projects_for_review/">Projects for Review</li>'
+        return '<li><a href="/projects_for_review/">Projects for Review</a></li>'
     return ''
     
 @register.simple_tag

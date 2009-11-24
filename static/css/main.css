@@ -403,3 +403,7 @@ ul.errorlist {
     color: #0000FF;
     font-size: 0.8em;
 }
+
+#review_suggestions .unread_suggestion {
+    background-color: #ECE5B6;
+}
