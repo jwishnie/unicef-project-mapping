@@ -34,10 +34,10 @@ class ProjectTagsTest(TestCase):
 
     def test_should_not_provide_link_to_edit_for_unauthorized_user(self):
         project = Mock()
-        project.id = 4
+        project.id = 3
         mock_user = object()
         project.is_editable_by.return_value = False
-        self.assertFalse(project_tags.edit_project_link(project, mock_user).__contains__('/edit_project/4/'))
+        self.assertFalse(project_tags.edit_project_link(project, mock_user).__contains__('/edit_project/3/'))
 
     def test_should_give_empty_string_for_link_for_unauthorized_user(self):
         project = Mock()
