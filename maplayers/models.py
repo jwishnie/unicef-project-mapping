@@ -146,6 +146,7 @@ class ReviewFeedback(models.Model):
     feedback = models.CharField(max_length=1000)
     project = models.ForeignKey(Project)
     reviewed_by = models.ForeignKey(User)
+    viewed = models.BooleanField(default=False)
     
     class Admin:
         pass
