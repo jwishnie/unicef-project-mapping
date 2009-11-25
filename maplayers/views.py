@@ -29,17 +29,13 @@ def homepage(request):
     implementor_ids = [implementor.id for implementor in implementors]
     left, bottom, right, top = _get_bounding_box(request)
     projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    context_data = {'projects' : projects, 'sectors' : sectors, 'tag': "",
+                    'implementors' : implementors,'left': left, 'right' : right,
+                    'top': top, 'bottom' : bottom}
     return render_to_response(
                               'homepage.html', 
-                              {
-                               'projects' : projects, 
-                               'sectors' : sectors, 
-                               'tag': "",
-                               'implementors' : implementors,
-                               'left': left, 'right' : right,
-                               'top': top, 'bottom' : bottom
-                               },
-                               context_instance=RequestContext(request)
+                              context_data,
+                              context_instance=RequestContext(request)
                               ) 
     
     
@@ -301,5 +297,5 @@ def _create_user(form):
     user = User.objects.create_user(username, email, password)
     user.groups.add(Group.objects.get(name=GROUPS.PROJECT_AUTHORS))
     user.save()
-    
+
 

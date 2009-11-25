@@ -9,6 +9,7 @@ from django import template
 from maplayers.tag_utils import parse_img_feed, parse_youtube_feed
 from maplayers.utils import is_empty
 from maplayers.constants import PROJECT_STATUS, GROUPS, COMMENT_STATUS
+from maplayers.models import Project, ProjectComment, ReviewFeedback
 
 register = template.Library()  
 
@@ -44,8 +45,13 @@ def add_sub_project_link(project, user):
 @register.simple_tag
 def projects_for_review_link(user):
     if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
-        return '<li><a href="/projects_for_review/">Projects for Review</a></li>'
+        projects_for_review_count = Project.objects.filter(status=PROJECT_STATUS.REVIEW).count()
+        if projects_for_review_count:
+            return '<li><a href="/projects_for_review/">Projects for Review (%s)</a></li>' % str(projects_for_review_count)
+        else:
+            return '<li><a href="/projects_for_review/">Projects for Review</a></li>'
     return ''
+    
     
 @register.simple_tag
 def my_projects_header(user):
@@ -56,6 +62,7 @@ def my_projects_header(user):
     result += "<th>Comments</th>"
     result +='</tr>'
     return result
+    
 
 @register.simple_tag
 def my_project(project, user):
@@ -112,9 +119,18 @@ def publish_text(project):
         return '<span class="publish_link first" id="%s">Publish</span>' % str(project.id)
 
 @register.simple_tag
-def my_projects_link():
-    result = """<a href='/my_projects/' id="my_projects">My Projects</a>"""
-    return result
+def my_projects_link(user):
+    projects = Project.objects.select_related(depth=1).filter(created_by=user)
+    project_comments_count = ProjectComment.objects.filter(
+                                project__in=projects,
+                                status=COMMENT_STATUS.UNMODERATED
+                             ).count()
+    change_requested_count = len([project for project in projects if project.status == PROJECT_STATUS.REQUEST_CHANGES])
+    my_project_notifications = project_comments_count + change_requested_count
+    if my_project_notifications:
+        return '<a href="/my_projects/" id="my_projects">My Projects(%s)</a>' % str(my_project_notifications)
+    else:
+        return '<a href="/my_projects/" id="my_projects">My Projects</a>'
 
     
 @register.simple_tag
