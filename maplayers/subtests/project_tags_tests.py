@@ -3,7 +3,8 @@
 from django.test import TestCase
 from mock import Mock
 from maplayers.templatetags import project_tags
-
+from maplayers.models import Project
+from django.contrib.auth.models import User, Group
 
 class ProjectTagsTest(TestCase):
     def test_should_display_flash_message(self):
@@ -82,4 +83,23 @@ class ProjectTagsTest(TestCase):
         header = project_tags.sub_project_header(parent_project)
         self.assertEquals("", header)
 
+        
+    ### Non Mock tests    
+    def test_my_projects_link_should_show_notifications(self):
+        author = User.objects.get(id=2)
+        html_snippet = project_tags.my_projects_link(author)
+        self.assertEquals('<a href="/my_projects/" id="my_projects">My Projects(3)</a>', html_snippet)
+        
+        map_super = User.objects.get(id=1)
+        html_snippet = project_tags.my_projects_link(map_super)
+        self.assertEquals('<a href="/my_projects/" id="my_projects">My Projects</a>', html_snippet)
+        
 
+    def test_projects_for_Review_link_should_show_notifications(self):
+        editor = User.objects.get(id=5)
+        html_snippet = project_tags.projects_for_review_link(editor)
+        self.assertEquals('<li><a href="/projects_for_review/">Projects for Review (3)</a></li>', html_snippet)
+
+        
+    
+        
