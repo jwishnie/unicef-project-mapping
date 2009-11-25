@@ -181,3 +181,7 @@ class ProjectAdminViewsUnitTest(TestCase):
         self.assertEquals(302, response.status_code)
         self.assertEquals('/permission_denied/add_project/not_author', response.items()[1][1])
 
+    def test_return_project_form_with_project_id(self):
+        pass
+
+
