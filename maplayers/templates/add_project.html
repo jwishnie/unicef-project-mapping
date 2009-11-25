@@ -33,6 +33,7 @@
 	<div id="add_project">
 		<form action="/{{action}}/" method="post">
 			<input type="hidden" name="project_id" value="{{project.id}}"></input>
+			<input type="hidden" name="parent_project_id" value="{{parent_project_id}}"></input>
 			<fieldset>
 				<legend><span>About the Project</span></legend>
 				<div>

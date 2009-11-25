@@ -275,7 +275,7 @@ def write_project_list_to_response(projects):
     return response
     
 def _check_for_comment_errors(username, email, comment_text, errors):
-    if not username: errors['username'] = 'Name is required'
+    if not username: errors['username'] = "Name is required"
     if not email: errors['email'] = 'Email is required'
     if not comment_text: errors['comment'] = 'Comment is required'
     if email and not EMAIL_REGEX.match(email): errors['email' ] = "Invalid email"

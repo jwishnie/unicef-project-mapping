@@ -90,8 +90,40 @@ def edit_project(request, project_id):
         return _render_response(request, form, action, sectors, implementors, 
                                 project,link_titles, link_urls, 
                                 project.resource_set.all())
-                                
+
+def reject_if_not_project_author(user):
+    if not _is_project_author(user):
+        return HttpResponseRedirect('/permission_denied/add_project/not_author')
     
+@login_required
+def add_sub_project(request, parent_id): 
+    reject_if_not_project_author(request.user)
+
+    sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
+    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        project_id = request.POST.get("project_id")
+        link_titles = request.POST.getlist('link_title')
+        link_urls =  request.POST.getlist('link_url')
+        project = Project.objects.get(id=int(project_id))
+
+        if form.is_valid(): 
+            _create_links(request, project_id, link_titles, link_urls)
+            _set_project_status(project, request)
+            _add_project_details(form, project)
+            return _add_edit_success_page(project, request)
+        else: 
+            return _render_response(request, form, "add_project", sectors, 
+                                    implementors, project, link_titles, link_urls, 
+                                    project.resource_set.all())
+    else: 
+        form = ProjectForm()
+        project = _create_new_project(request)
+        return _render_response(request, form, "add_project", 
+                                sectors, implementors, project)
+
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')

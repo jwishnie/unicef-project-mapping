@@ -10,6 +10,8 @@ from maplayers.utils import is_iter
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from maplayers.constants import PROJECT_STATUS
+from mock import Mock
+from maplayers import project_admin_views as views
 
 class ProjectAdminViewsUnitTest(TestCase):
     def setUp(self):
@@ -167,3 +169,15 @@ class ProjectAdminViewsUnitTest(TestCase):
         web_client.post("/projects/comments/delete/", {"comment_2" : True})
         comment = ProjectComment.objects.filter(id=2)
         self.assertFalse(comment)
+
+    def test_allow_only_authors_to_add_project(self):
+        group = Mock()
+        group.name = "User"
+        user = Mock()
+        user.groups.all.return_value = [group]
+        request = Mock()
+        request.user = user 
+        response = views.add_project(request)
+        self.assertEquals(302, response.status_code)
+        self.assertEquals('/permission_denied/add_project/not_author', response.items()[1][1])
+
