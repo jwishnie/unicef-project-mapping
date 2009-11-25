@@ -259,7 +259,6 @@ def _add_project_details(form, project):
     project.project_image = form.cleaned_data['project_image']
     sector_names = form.cleaned_data['project_sectors']
     implementor_names = form.cleaned_data['project_implementors']
-    project.youtube_playlist_id = form.cleaned_data['youtube_playlist_id']
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
     project.tags = form.cleaned_data['tags']
     project.save()
@@ -322,7 +321,6 @@ def _create_initial_data_from_project(project):
     form.fields['project_sectors'].initial = ", ".join([sector.name for sector in project.sector_set.all()])
     form.fields['project_implementors'].initial = ", ".join([implementor.name for implementor \
                                                             in project.implementor_set.all()])
-    form.fields['youtube_playlist_id'].initial = project.youtube_playlist_id
     form.fields['imageset_feedurl'].initial = project.imageset_feedurl
     form.fields['tags'].initial = project.tags
     return form

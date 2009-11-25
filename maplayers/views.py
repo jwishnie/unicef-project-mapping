@@ -69,7 +69,6 @@ def project(request, project_id):
                                'rss_img_feed_url': project.imageset_feedurl,
                                'subprojects' : subprojects,
                                'implementors' : implementors,
-                               'youtube_playlist_id': project.youtube_playlist_id,
                                'tags' : tags,
                                },
                                context_instance=RequestContext(request)
