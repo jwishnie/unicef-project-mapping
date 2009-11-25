@@ -24,3 +24,45 @@ class ProjectTagsTest(TestCase):
         request.session = {}
         actual = project_tags.flash_message(request)
         self.assertEquals("", actual)
+
+    def test_should_provide_link_to_edit_only_for_authorized_user(self):
+        project = Mock()
+        project.id = 3
+        mock_user = object()
+        project.is_editable_by.return_value = True
+        self.assertTrue(project_tags.edit_project_link(project, mock_user).__contains__('/edit_project/3/'))
+
+    def test_should_not_provide_link_to_edit_for_unauthorized_user(self):
+        project = Mock()
+        project.id = 3
+        mock_user = object()
+        project.is_editable_by.return_value = False
+        self.assertFalse(project_tags.edit_project_link(project, mock_user).__contains__('/edit_project/3/'))
+
+    def test_should_give_empty_string_for_link_for_unauthorized_user(self):
+        project = Mock()
+        project.id = 3
+        mock_user = object()
+        project.is_editable_by.return_value = False
+        self.assertEquals(project_tags.edit_project_link(project, mock_user), '')
+
+    def test_should_provide_add_subproject_link_only_for_authorized_user(self):
+        project = Mock()
+        project.id = 3
+        mock_user = object()
+        project.is_editable_by.return_value = True
+        self.assertTrue(project_tags.add_sub_project_link(project, mock_user).__contains__('/add_sub_project/parent_id/3/'))
+
+    def test_should_not_provide_link_to_edit_for_unauthorized_user(self):
+        project = Mock()
+        project.id = 3
+        mock_user = object()
+        project.is_editable_by.return_value = False
+        self.assertFalse(project_tags.add_sub_project_link(project, mock_user).__contains__('/add_sub_project/parent_id/3/'))
+
+    def test_should_give_empty_string_for_link_for_unauthorized_user(self):
+        project = Mock()
+        project.id = 3
+        mock_user = object()
+        project.is_editable_by.return_value = False
+        self.assertEquals(project_tags.add_sub_project_link(project, mock_user), '')
