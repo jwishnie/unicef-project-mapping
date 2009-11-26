@@ -83,6 +83,10 @@ class Project(models.Model):
         
     def snippet(self):
         return self.name + " : " + text.truncate_html_words(self.description, 25)
+        
+    def default_video(self):
+        if not self.video_set.all(): return ''
+        return self.video_set.all()[0]
     
     class Admin: 
         pass
