@@ -1,7 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 import uuid
-import os, stat
+import os, stat, re
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -10,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 
-from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS
-from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment
+from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS, VIMEO_REGEX, YOUTUBE_REGEX, VIDEO_PROVIDER
+from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video
 from maplayers.forms import ProjectForm, AdminUnitForm
 import simplejson as json
 
@@ -43,7 +43,7 @@ def add_project(request):
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
             _set_project_status(project, request)
-            _add_project_details(form, project)
+            _add_project_details(form, project, request)
             return _add_edit_success_page(project, request)
         else: 
             return _render_response(request, form, "add_project", sectors, 
@@ -77,7 +77,7 @@ def edit_project(request, project_id):
             _set_project_status(project, request)
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
-            _add_project_details(form, project)
+            _add_project_details(form, project, request)
             return _add_edit_success_page(project,request)
         else:
             return _render_response(request, form, action, sectors, implementors, 
@@ -115,7 +115,7 @@ def add_sub_project(request, parent_project_id):
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
             _set_project_status(project, request)
-            _add_project_details(form, project, parent_project)
+            _add_project_details(form, project, request, parent_project)
             return _add_edit_success_page(project, request)
         else: 
             return _render_response(request, form, "add_sub_project/parent_project_id/%d" %(parent_project.id), sectors, 
@@ -282,7 +282,7 @@ def _project_status_change_json_response(request, project, status, message):
                               context_instance=RequestContext(request)
                               )
 
-def _add_project_details(form, project, parent_project=None):
+def _add_project_details(form, project, request, parent_project=None):
     project.name = form.cleaned_data['name']
     project.description = form.cleaned_data['description']
     project.latitude = form.cleaned_data['latitude']
@@ -298,6 +298,8 @@ def _add_project_details(form, project, parent_project=None):
         project.parent_project = parent_project
     project.save()
     _add_sectors_and_implementors(project, sector_names, implementor_names)
+    _add_project_videos(project, request)
+
 
 def _create_links(request, project_id, link_titles, link_urls):
     for i in range(len(link_titles)):
@@ -317,6 +319,21 @@ def _add_sectors_and_implementors(p, sectors_names,implementor_names):
     _create_and_add_new_implementors(p, all_implementors, implementor_names)
 
 
+def _add_project_videos(project, request):
+    project.video_set.all().delete()
+    video_urls = [request.POST.get(video_id) for video_id in request.POST.keys() if video_id.startswith("video_url")]
+    for video_url in video_urls:
+        if(video_url.__contains__("youtube")):
+            provider = VIDEO_PROVIDER.YOUTUBE
+            pattern = re.compile(YOUTUBE_REGEX)
+            video_id = pattern.match(video_url).group(1)
+        else:
+            provider = VIDEO_PROVIDER.VIMEO
+            pattern = re.compile(VIMEO_REGEX)
+            video_id = pattern.match(video_url).group(1)
+        video = Video(provider=provider, project=project, video_id = video_id)
+        video.save()
+        
 
 def _add_existing_sectors(p, all_sectors, sectors_names):
     existing_sectors = [sector for sector in all_sectors \

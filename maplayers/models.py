@@ -163,3 +163,14 @@ class ProjectComment(models.Model):
         
     class Admin:
         pass
+        
+class Video(models.Model):
+    provider = models.CharField(max_length=50)
+    video_id = models.CharField(max_length=50)
+    project = models.ForeignKey(Project)
+    
+    def __unicode__(self):
+        return self.provider + self.video_id
+        
+    class Admin:
+        pass
