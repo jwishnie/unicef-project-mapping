@@ -101,6 +101,15 @@ li a {
     border-left: none;
 }
 
+#main_nav span.my_project_notification {
+    padding: 0 3px;
+    margin-left: 3px;
+    background-color: #0C7094;
+    color: #FFF;
+    -moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
 #main_content {
     background-color: #FFF;
     border-top: 1px dashed #A5A5A5;
