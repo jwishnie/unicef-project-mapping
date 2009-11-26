@@ -26,7 +26,7 @@
 						<li class="first"><a href="/">Home</a></li>
 						{% if user.is_authenticated %}
 							<li>{% add_project_link %}</li>
-							<li>{% my_projects_link %}</li>
+							<li>{% my_projects_link user %}</li>
 							{% projects_for_review_link user %}
 							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>							
 				        {% else %}

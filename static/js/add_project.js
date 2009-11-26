@@ -11,6 +11,15 @@ jQuery(document).ready(function(){
 		autoFill: true
 	});
 
+    function add_video(){
+        video_id += 1;
+        var div_element = '<div id="video_url_' + video_id + '">';
+        div_element +=  '<label>Video URL : </label>';
+        div_element +=  '<input type="text" name="video_url_' + video_id + '"></input>';
+        div_element +=  '<input type="radio" name="default_video" value="video_'+ video_id + '"></input>';
+        div_element +=  '</div>';
+        jQuery("#video_urls").append(div_element);
+    }
 	
 	function add_link(){
 		link_id +=1;
@@ -24,7 +33,9 @@ jQuery(document).ready(function(){
 	
 	jQuery("#project-links").html(project_links);
 	
-	jQuery("#add_link").click(add_link);
+    jQuery("#add_link").click(add_link);
+    
+    jQuery("#add_video").click(add_video);
 	
 	jQuery('.file-remove-edit').click(function(){
 		var filename = jQuery(this).prev().prev().html();
@@ -35,10 +46,13 @@ jQuery(document).ready(function(){
 	
 	jQuery(".delete_comment").click(function(){
         var url = "/projects/comments/delete/";
-        comment_id = this.id;
-        jQuery.post(url, {comment_id : true}, function(data){
-                            jQuery("#" + comment_id).remove();
-                        });
+        var span_id = this.id;
+        var comment_id = span_id.replace("delete_", "");
+        data = {};
+        data[comment_id] = true;
+        jQuery.post(url, data, function(result){
+            jQuery("#" + comment_id).remove();
+        });
     });
 	
 });

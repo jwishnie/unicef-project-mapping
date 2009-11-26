@@ -920,7 +920,6 @@
     "fields": {
         "status": "Published",
         "name": "School for all",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": null,
         "created_by": 2,
         "longitude": "32.57304",
@@ -939,7 +938,6 @@
     "fields": {
         "status": "Published",
         "name": "DRC Medical Aid",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": null,
         "created_by": 2,
         "longitude": "15.126343",
@@ -958,7 +956,6 @@
     "fields": {
         "status": "Published",
         "name": "Myanmar Hurricane Aid",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": null,
         "created_by": 5,
         "longitude": "96.192627",
@@ -977,7 +974,6 @@
     "fields": {
         "status": "Published",
         "name": "Jinja Primary School Project",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": 1,
         "created_by": 2,
         "longitude": "33.199768",
@@ -996,7 +992,6 @@
     "fields": {
         "status": "Published",
         "name": "Gabbon Medical Center",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": 2,
         "created_by": 2,
         "longitude": "14.840698",
@@ -1015,7 +1010,6 @@
     "fields": {
         "status": "Published",
         "name": "Test project for Edit",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": null,
         "created_by": 2,
         "longitude": "0",
@@ -1034,7 +1028,6 @@
     "fields": {
         "status": "Draft",
         "name": "Draft Project",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": null,
         "created_by": 2,
         "longitude": "0",
@@ -1053,7 +1046,6 @@
     "fields": {
         "status": "Review",
         "name": "South Asia",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": null,
         "created_by": 2,
         "longitude": "-30",
@@ -1072,7 +1064,6 @@
     "fields": {
         "status": "Review",
         "name": "Indonesia",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": null,
         "created_by": 2,
         "longitude": "40",
@@ -1091,7 +1082,6 @@
     "fields": {
         "status": "Review",
         "name": "El Salvador",
-        "youtube_playlist_id": "5F278BBCBB8E6F6C",
         "parent_project": null,
         "created_by": 2,
         "longitude": "0",

@@ -25,13 +25,13 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 <script type="text/javascript" src="{{ jqueryui }}"></script>
 <script src="{{ openlayers }}" type="text/javascript"></script>
 <script src="{{ js_url }}/projectpage.js" type="text/javascript" ></script>
-
 {% endblock %} 
 
 {% block body_tag_exta %}onload='initialize()'{% endblock %}
 {% block page_content %}
 				{% flash_message request %}
 				{% edit_project_link project user %}
+				{% add_sub_project_link project user %}
 				{% admin_links project user %}
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
@@ -109,11 +109,11 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 							{% include 'photo_gallery.html' %}
 		                </div>
 					</div>
-					{% if youtube_playlist_id %}
+					<!-- {% if youtube_playlist_id %}
                   	<div  id="project_video">
                     	{% youtube_playlist_player youtube_playlist_id %}
                   	</div>				
-					{% endif %}
+					{% endif %} -->
 					<div id="comment_link"><label>Post a comment</label></div>
 					<div class="flash_message_box"><div id="comment_message"></div></div>
 

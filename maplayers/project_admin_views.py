@@ -38,6 +38,7 @@ def add_project(request):
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
         project = Project.objects.get(id=int(project_id))
+        parent_project_id = ''
 
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
@@ -46,7 +47,7 @@ def add_project(request):
             return _add_edit_success_page(project, request)
         else: 
             return _render_response(request, form, "add_project", sectors, 
-                                    implementors, project, link_titles, link_urls, 
+                                    implementors, project, parent_project_id,link_titles, link_urls, 
                                     project.resource_set.all())
     else: 
         form = ProjectForm()
@@ -80,7 +81,7 @@ def edit_project(request, project_id):
             return _add_edit_success_page(project,request)
         else:
             return _render_response(request, form, action, sectors, implementors, 
-                                    project, link_titles, link_urls, 
+                                    project, '', link_titles, link_urls, 
                                     project.resource_set.all())
     else:
         form = _create_initial_data_from_project(project)
@@ -88,10 +89,46 @@ def edit_project(request, project_id):
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
         return _render_response(request, form, action, sectors, implementors, 
-                                project,link_titles, link_urls, 
+                                project,'', link_titles, link_urls, 
                                 project.resource_set.all())
-                                
+
+def reject_if_not_project_author(user):
+    if not _is_project_author(user):
+        return HttpResponseRedirect('/permission_denied/add_project/not_author')
     
+@login_required
+def add_sub_project(request, parent_project_id): 
+    if not _is_project_author(request.user):
+        return HttpResponseRedirect('/permission_denied/add_project/not_author')
+
+    sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
+    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        project_id = request.POST.get("project_id")
+        link_titles = request.POST.getlist('link_title')
+        link_urls =  request.POST.getlist('link_url')
+        project = Project.objects.get(id=int(project_id))
+        parent_project = Project.objects.get(id=int(parent_project_id))
+
+        if form.is_valid(): 
+            _create_links(request, project_id, link_titles, link_urls)
+            _set_project_status(project, request)
+            _add_project_details(form, project, parent_project)
+            return _add_edit_success_page(project, request)
+        else: 
+            return _render_response(request, form, "add_sub_project/parent_project_id/%d" %(parent_project.id), sectors, 
+                                    implementors, project, parent_project,
+                                    link_titles, link_urls,
+                                    project.resource_set.all())
+    else: 
+        form = ProjectForm()
+        project = _create_new_project(request)
+        parent_project = Project.objects.get(id=int(parent_project_id))
+        return _render_response(request, form, "add_sub_project/parent_project_id/%d" %(parent_project.id), 
+                                sectors, implementors, project, parent_project)
+
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')
@@ -111,7 +148,7 @@ def file_upload(request):
 @login_required
 def project_comments(request, project_id):
     project = Project.objects.get(id=project_id)
-    comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED)
+    comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED).order_by('viewed')
     return render_to_response('project_comments.html',
                               {'project' : project,
                                'comments' : comments},
@@ -220,10 +257,6 @@ def _create_admin_unit(form):
     admin.region_statistics = form.cleaned_data['region_statistics']
     admin_unit.save()
 
-
-def _add_admin_unit_response(request, form):
-    pass
-
 def _add_edit_success_page(project,request):
     if project.status == PROJECT_STATUS.PUBLISHED:
         message = "published"
@@ -249,7 +282,7 @@ def _project_status_change_json_response(request, project, status, message):
                               context_instance=RequestContext(request)
                               )
 
-def _add_project_details(form, project):
+def _add_project_details(form, project, parent_project=None):
     project.name = form.cleaned_data['name']
     project.description = form.cleaned_data['description']
     project.latitude = form.cleaned_data['latitude']
@@ -259,9 +292,10 @@ def _add_project_details(form, project):
     project.project_image = form.cleaned_data['project_image']
     sector_names = form.cleaned_data['project_sectors']
     implementor_names = form.cleaned_data['project_implementors']
-    project.youtube_playlist_id = form.cleaned_data['youtube_playlist_id']
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
     project.tags = form.cleaned_data['tags']
+    if parent_project:
+        project.parent_project = parent_project
     project.save()
     _add_sectors_and_implementors(project, sector_names, implementor_names)
 
@@ -269,7 +303,6 @@ def _create_links(request, project_id, link_titles, link_urls):
     for i in range(len(link_titles)):
         link = Link(project_id=project_id, title=link_titles[i], url=link_urls[i])
         link.save()
-
 
 def _add_sectors_and_implementors(p, sectors_names,implementor_names):
     sector_names = [name.strip() for name in sectors_names.split(",") if name.strip()]
@@ -322,7 +355,6 @@ def _create_initial_data_from_project(project):
     form.fields['project_sectors'].initial = ", ".join([sector.name for sector in project.sector_set.all()])
     form.fields['project_implementors'].initial = ", ".join([implementor.name for implementor \
                                                             in project.implementor_set.all()])
-    form.fields['youtube_playlist_id'].initial = project.youtube_playlist_id
     form.fields['imageset_feedurl'].initial = project.imageset_feedurl
     form.fields['tags'].initial = project.tags
     return form
@@ -337,7 +369,7 @@ def _create_new_project(request):
     return project
 
 def _render_response(request, form, action, sectors, implementors, 
-                     project, link_titles=[], link_urls=[], resources=[]):
+                     project, parent_project=None, link_titles=[], link_urls=[], resources=[]):
     link_titles_and_values = zip(link_titles, link_urls)
     publishable = project.is_publishable_by(request.user)
     check_publish = 'checked="yes"' if PROJECT_STATUS.PUBLISHED == project.status else ""
@@ -351,7 +383,8 @@ def _render_response(request, form, action, sectors, implementors,
                                'title_and_values' : link_titles_and_values,
                                'action' : action, 'publishable' : publishable,
                                'checked' : check_publish, 'submit_label' : submit_label,
-                               'mode' : "edit"
+                               'mode' : "edit",
+                               'parent_project': parent_project
                               },
                               context_instance=RequestContext(request)
                               )

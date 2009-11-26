@@ -188,42 +188,4 @@ def parse_img_feed(url, max_entries=None):
                         (f.link if f.has_key('link') else '')}
 
     return { 'feed': feed_meta, 'images': media }
-
-def parse_youtube_feed(url, max_entries=None):  
-    parsed_feed=parse_feed(url)
-
-    if parsed_feed is None:
-        return []
-          
-    # extract media info
-    max_ = (int(max_entries) \
-            if max_entries is not None else -1)
-
-    media = []
-    for e in parsed_feed.entries:
-        if max_ == 0:
-            break
-        
-        # check for media content
-        if e.has_key('media_content'):
-            flash = (m for m in e.media_content if \
-                     
-                     m['type']==YOUTUBE_EMBED_TYPE).next()
-            if flash.has_key('url'):
-                # add info
-                media.append({'video_url': flash['url'],
-                              'title': 
-                                  (e['title'] if e.has_key('title') else ''),
-                              'entry_url': 
-                                  (e['link'] if e.has_key('link') else '')})
-                max_ = max_ -1
-
-    # extract feed info
-    f = parsed_feed.feed
-    feed_meta = {'title':
-                        (f.title if f.has_key('title') else ''),
-                  'url':
-                        (f.link if f.has_key('link') else '')}
- 
-    return { 'feed': feed_meta, 'videos': media }
         

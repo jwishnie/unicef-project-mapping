@@ -34,6 +34,7 @@ urlpatterns += patterns('maplayers',
                          
 urlpatterns += patterns('maplayers.project_admin_views',
                         (r'^add_project/', 'add_project'),
+                        (r'^add_sub_project/parent_project_id/(?P<parent_project_id>\d+)/$', 'add_sub_project'),
                         (r'^edit_project/(?P<project_id>\d+)/$', 'edit_project'),
                         (r'^projects/upload/$', 'file_upload'),
                         (r'^remove_attachment/$', 'remove_attachment'),

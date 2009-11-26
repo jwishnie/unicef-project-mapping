@@ -181,7 +181,7 @@ $(document).ready(function() {
             var project = projects[i];
             var project_name = project.snippet.split(":")[0];
             var project_description = project.snippet.split(":")[1];			    
-            var project_text = "<div><a href=\"/projects/id/" + project.id + "\">" + 
+            var project_text = "<div><a href=\"/projects/id/" + project.id + "/" +"\">" + 
                                         project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>';
             html += "<li>" + project_text + '</li>';
             var marker_icon = icon.clone();
