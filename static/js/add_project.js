@@ -12,11 +12,16 @@ jQuery(document).ready(function(){
 	});
 
     function add_video(){
+        if(video_id==1){
+            jQuery("#video_url_1").append('<input type="radio" name="default_video" value="video_1"></input>');
+            jQuery("#video_url_1").append('<span class="remove_video" id="remove_video_1">x</span>');
+        }
         video_id += 1;
-        var div_element = '<div id="video_url_' + video_id + '">';
+        var div_element = '<div id="video_url_' + video_id + '" class="add_video_url">';
         div_element +=  '<label>Video URL : </label>';
         div_element +=  '<input type="text" name="video_url_' + video_id + '"></input>';
         div_element +=  '<input type="radio" name="default_video" value="video_'+ video_id + '"></input>';
+        div_element +=  '<span class="remove_video" id="remove_video_' + video_id + '">xxxxxxxxxxx</span>'
         div_element +=  '</div>';
         jQuery("#video_urls").append(div_element);
     }
@@ -32,10 +37,20 @@ jQuery(document).ready(function(){
 	}
 	
 	jQuery("#project-links").html(project_links);
-	
     jQuery("#add_link").click(add_link);
-    
     jQuery("#add_video").click(add_video);
+    
+    
+    jQuery(".remove_video").click(function(){
+        alert("#video_url_" + this.id.split("_")[2]);
+	    var video_url_count = jQuery(".add_video_url").length;
+	    if(video_url_count==2){
+	        jQuery("#remove_video_1").remove();
+	        jQuery("#video_url_1 input[type='radio']").remove();
+	    }
+	    alert("#video_url_" + this.id.split("_")[2]);
+	    jQuery("#video_url_" + this.id.split("_")[2]).remove();
+    });
 	
 	jQuery('.file-remove-edit').click(function(){
 		var filename = jQuery(this).prev().prev().html();
