@@ -152,7 +152,7 @@ def file_upload(request):
 @login_required
 def project_comments(request, project_id):
     project = Project.objects.get(id=project_id)
-    comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED).order_by('viewed')
+    comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED)
     return render_to_response('project_comments.html',
                               {'project' : project,
                                'comments' : comments},
