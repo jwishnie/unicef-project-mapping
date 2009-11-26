@@ -20,6 +20,7 @@
 			var project_id = "{{project.id}}";
 			var fancy_uploader_swf = "{{ fancyuploader_swf }}";
 			var link_id = 0;
+			var video_id = 1;
 			var sectors = "{{sectors}}";
 			var implementors = "{{implementors}}";
 			var project_links = '{% project_links title_and_values %}';
@@ -77,6 +78,15 @@
 					{{ form.project_image }}
 					{{ form.project_image.errors}}					
 				</div>
+				<div id="video_urls">
+					<div id="video_url_1">
+						<label>Video URL : </label>
+						<input type="text" name="video_url_1"></input>
+						<input type="radio" name="default_video" value="video_1"></input>
+					</div>	
+				</div>
+				<div id="add_video_link"><span id="add_video">Add another video</span></div>
+				
 				<!-- <div>
 					<label for="id_youtube_playlist_id">Youtube playlist: </label> 
 					{{ form.youtube_playlist_id }}
