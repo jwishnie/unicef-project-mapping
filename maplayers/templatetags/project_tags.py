@@ -67,7 +67,7 @@ def projects_for_review_link(user):
     if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
         projects_for_review_count = Project.objects.filter(status=PROJECT_STATUS.REVIEW).count()
         if projects_for_review_count:
-            return '<li><a href="/projects_for_review/">Projects for Review (%s)</a></li>' % str(projects_for_review_count)
+            return '<li><a href="/projects_for_review/">Projects for Review<span class="notification">%s</span></a></li>' % str(projects_for_review_count)
         else:
             return '<li><a href="/projects_for_review/">Projects for Review</a></li>'
     return ''
@@ -148,7 +148,7 @@ def my_projects_link(user):
     change_requested_count = len([project for project in projects if project.status == PROJECT_STATUS.REQUEST_CHANGES])
     my_project_notifications = project_comments_count + change_requested_count
     if my_project_notifications:
-        return '<a href="/my_projects/" id="my_projects">My Projects<span class="my_project_notification">%s</span></a>' % str(my_project_notifications)
+        return '<a href="/my_projects/" id="my_projects">My Projects<span class="notification">%s</span></a>' % str(my_project_notifications)
     else:
         return '<a href="/my_projects/" id="my_projects">My Projects</a>'
 
