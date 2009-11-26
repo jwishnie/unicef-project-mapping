@@ -264,7 +264,7 @@ OpenLayers.Popup = OpenLayers.Class({
         this.border = OpenLayers.Popup.BORDER;
 
         this.div = OpenLayers.Util.createDiv(this.id, null, null, 
-                                             null, null, null, "");
+                                             null, "relative", null, "");
         this.div.className = this.displayClass;
         
         var groupDivId = this.id + "_GroupDiv";
@@ -693,6 +693,7 @@ OpenLayers.Popup = OpenLayers.Class({
             // for IE
             this.div.style.filter = 'alpha(opacity=' + this.opacity*100 + ')';
         }
+        this.opacity = 100;
     },  
     
     /**
