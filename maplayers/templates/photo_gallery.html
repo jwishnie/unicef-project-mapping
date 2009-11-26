@@ -4,6 +4,6 @@
   {% endif %}		
   {% for img in rss_img_feed.images %}
       <div class="photo">
-        <a href={{img.entry_url}}><img src={% get_thumbnail_img img.img_url %} /></a>
+          <a href={{ img.img_url }} rel="facebox"><img src={% get_thumbnail_img img.img_url %} /></a>
       </div>
   {% endfor %}

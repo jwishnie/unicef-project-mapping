@@ -129,6 +129,10 @@ def add_sub_project(request, parent_project_id):
         return _render_response(request, form, "add_sub_project/parent_project_id/%d" %(parent_project.id), 
                                 sectors, implementors, project, parent_project)
 
+@login_required
+def edit_sub_project(request, project_id): 
+    pass
+
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')
