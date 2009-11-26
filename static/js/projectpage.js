@@ -5,7 +5,7 @@ $(document).ready(function() {
     WIDTH = 10
     HEIGHT = 17
 
-    $('a[rel*=facebox]').facebox();
+    $('#photo_set a').lightBox({fixedNavigation:true});
 
     var map = new OpenLayers.Map('map_canvas', {
         maxScale: MAX_SCALE,

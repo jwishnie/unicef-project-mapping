@@ -246,6 +246,10 @@ def get_thumbnail_img(img_url):
     url = img_url.replace("_m.", "_s.")
     return url
     
+@register.simple_tag
+def get_img(img_url):
+    url = img_url.replace("_m.", ".")
+    return url
 
 @register.simple_tag
 def youtube_playlist_player(playlist_id):
