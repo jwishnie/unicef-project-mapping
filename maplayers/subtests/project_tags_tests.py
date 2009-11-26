@@ -88,7 +88,7 @@ class ProjectTagsTest(TestCase):
     def test_my_projects_link_should_show_notifications(self):
         author = User.objects.get(id=2)
         html_snippet = project_tags.my_projects_link(author)
-        self.assertEquals('<a href="/my_projects/" id="my_projects">My Projects(3)</a>', html_snippet)
+        self.assertEquals('<a href="/my_projects/" id="my_projects">My Projects<span class="my_project_notification">3</span></a>', html_snippet)
         
         map_super = User.objects.get(id=1)
         html_snippet = project_tags.my_projects_link(map_super)
