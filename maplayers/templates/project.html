@@ -83,7 +83,7 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 	                          {% endif %}
 	                        </div>
 							
-							{% if project.link_set %}
+							{% if links %}
 								<div id="project links">
 									<label>Links : </label>
 									{% for link in links %}
@@ -92,11 +92,13 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 								</div>	
 							{% endif %}
 							
-							<div id="tags">
-								{% for tag in tags %}
-								  <div class="sub_div"><a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></div>
-								{%endfor%}
-							</div>                     
+							{% if tags %}
+								<div id="tags">
+									{% for tag in tags %}
+									  <div class="sub_div"><a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></div>
+									{%endfor%}
+								</div>
+							{% endif %}                
 						</div>
 					</div>
 						

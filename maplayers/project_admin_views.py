@@ -152,7 +152,7 @@ def file_upload(request):
 @login_required
 def project_comments(request, project_id):
     project = Project.objects.get(id=project_id)
-    comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED).order_by('viewed')
+    comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED)
     return render_to_response('project_comments.html',
                               {'project' : project,
                                'comments' : comments},
@@ -326,7 +326,10 @@ def _add_sectors_and_implementors(p, sectors_names,implementor_names):
 def _add_project_videos(project, request):
     project.video_set.all().delete()
     video_urls = [request.POST.get(video_id) for video_id in request.POST.keys() if video_id.startswith("video_url")]
+    
     for video_url in video_urls:
+        if not (video_url and (video_url.__contains__(VIDEO_PROVIDER.YOUTUBE) 
+                or (video_url.__contains__(VIDEO_PROVIDER.VIMEO)))): continue
         if(video_url.__contains__("youtube")):
             provider = VIDEO_PROVIDER.YOUTUBE
             pattern = re.compile(YOUTUBE_REGEX)
