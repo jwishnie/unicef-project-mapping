@@ -131,7 +131,10 @@ def project_comments(project, mode="display"):
     result = ""
     comments = [comment for comment in project.projectcomment_set.all() if comment.status == COMMENT_STATUS.PUBLISHED]
     if comments:
-        result += '<span>So far there\'s been %d comments </span>' % len(comments)
+        if(mode=="display"):
+            result += '<span>So far there\'s been %d comments </span>' % len(comments)
+        else:
+            result += '<span class="comments_header">Comments:</span>'    
     for comment in comments:
         result += '<div id="comment_%s">' % comment.id
         result += '<span class="comment_text">%s</span>' % comment.text

@@ -71,6 +71,9 @@ jQuery(document).ready(function(){
         data[comment_id] = true;
         jQuery.post(url, data, function(result){
             jQuery("#" + comment_id).remove();
+            if(jQuery(".comment_metainfo").size() === 0){
+                jQuery(".comments_header").hide();
+            }
         });
     });
 	
