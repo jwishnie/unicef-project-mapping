@@ -42,6 +42,11 @@ $(document).ready(function() {
     // make OL compute scale according to WMS spec
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 
+    var is_chrome = (/chrome/).test(navigator.userAgent.toLowerCase());
+    if(is_chrome) {
+        OpenLayers.DOTS_PER_INCH = 1;
+    }
+
     $('ul.sectors').hide();
     $('ul.implementors').hide();
     
