@@ -22,6 +22,7 @@
  * map.addPopup(popup);
  * (end)
  */
+
  CORNERS = {
 
      /* top images*/
