@@ -5,6 +5,8 @@ $(document).ready(function() {
     WIDTH = 10
     HEIGHT = 17
 
+    $('a[rel*=facebox]').facebox();
+
     var map = new OpenLayers.Map('map_canvas', {
         maxScale: MAX_SCALE,
         minScale: MIN_SCALE

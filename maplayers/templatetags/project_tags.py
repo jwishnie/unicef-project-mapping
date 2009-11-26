@@ -148,7 +148,7 @@ def my_projects_link(user):
     change_requested_count = len([project for project in projects if project.status == PROJECT_STATUS.REQUEST_CHANGES])
     my_project_notifications = project_comments_count + change_requested_count
     if my_project_notifications:
-        return '<a href="/my_projects/" id="my_projects">My Projects(%s)</a>' % str(my_project_notifications)
+        return '<a href="/my_projects/" id="my_projects">My Projects<span class="my_project_notification">%s</span></a>' % str(my_project_notifications)
     else:
         return '<a href="/my_projects/" id="my_projects">My Projects</a>'
 

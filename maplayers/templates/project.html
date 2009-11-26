@@ -24,6 +24,8 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 <script src="{{ jquery }}" type="text/javascript"></script>
 <script type="text/javascript" src="{{ jqueryui }}"></script>
 <script src="{{ openlayers }}" type="text/javascript"></script>
+<link href="/static/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css"/>
+<script src="/static/facebox/facebox.js" type="text/javascript"></script> 
 <script src="{{ js_url }}/projectpage.js" type="text/javascript" ></script>
 {% endblock %} 
 
@@ -99,15 +101,15 @@ projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproje
 					</div>
 						
 					<div id="image_pane">
-                        <div id="project_image">
-							<div>Project Image</div>
-                            <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
-                        </div>
+                                            <div id="project_image">
+                                                <div>Project Image</div>
+                                                <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
+                                            </div>
 
-						<div id="photo_set">
-		                    {% parse_img_rss_feed %}
-							{% include 'photo_gallery.html' %}
-		                </div>
+                                            <div id="photo_set">
+                                                {% parse_img_rss_feed %}
+                                                {% include 'photo_gallery.html' %}
+                                            </div>
 					</div>
 					<!-- {% if youtube_playlist_id %}
                   	<div  id="project_video">
