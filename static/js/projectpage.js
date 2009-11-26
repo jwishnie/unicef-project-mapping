@@ -80,7 +80,19 @@ $(document).ready(function() {
         $(".ui-dialog-titlebar-close").css("color", "#0C7094");
         $('#published_comment').dialog('open');
         $("#published_comment").css("height", "auto");
+        styleDialogBox();
     });
+    
+    function styleDialogBox(){
+        var doc_height = document.body.offsetHeight;
+        var ui_dialog_height = $(".ui-dialog")[0].style.height;
+        var top = height - ui_dialog_height + 20;
+        
+        $(".ui-dialog").css("top", top+"px");
+        $(".ui-dialog").css("width", "450px");
+        $(".ui-widget-overlay").css("z-index", "1005");
+        $(".ui-dialog").css("z-index", "1006");    
+    }
     
     function reset_publish_link(message, project_id){
         var action = (message=="Published" ? "unpublish" : "publish");
