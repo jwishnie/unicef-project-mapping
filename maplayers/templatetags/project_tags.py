@@ -180,7 +180,7 @@ def file_list(resources):
         result.append('<li id="file-%s" class="file" style="background-color: transparent;">' % str(index+1))
         result.append('<span class="file-title">%s</span>' % filename)
         result.append('<span class="file-size">%s KB</span>' % str(filesize))
-        result.append('<a class="file-remove-edit" href="#">remove</a>')
+        result.append('<a class="file-remove-edit" href="#">removef tfytrfytf</a>')
         result.append('</li>')
         
     result = "".join(result)
