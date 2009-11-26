@@ -2,6 +2,7 @@
 
 from django.test import TestCase
 from django.test.client import Client
+import re
 
 from maplayers.project_admin_views import _add_existing_sectors, _create_and_add_new_sectors
 from maplayers.project_admin_views import _add_existing_implementors, _create_and_add_new_implementors
@@ -9,7 +10,7 @@ from maplayers.models import Project, Sector, Implementor, ProjectComment
 from maplayers.utils import is_iter
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
-from maplayers.constants import PROJECT_STATUS
+from maplayers.constants import PROJECT_STATUS, VIMEO_REGEX, YOUTUBE_REGEX
 from mock import Mock
 from maplayers import project_admin_views as views
 
@@ -183,5 +184,17 @@ class ProjectAdminViewsUnitTest(TestCase):
 
     def test_return_project_form_with_project_id(self):
         pass
+
+    def test_youtube_regex(self):
+        youtube_url = "http://www.youtube.com/watch?v=ezkxxpwPvic"
+        pattern = re.compile(YOUTUBE_REGEX)
+        video_id = pattern.match(youtube_url).group(1)
+        self.assertEquals("ezkxxpwPvic", video_id)
+
+    def test_vimeo_regex(self):
+        vimeo_url = "http://vimeo.com/7715536"
+        pattern = re.compile(VIMEO_REGEX)
+        video_id = pattern.match(vimeo_url).group(1)
+        self.assertEquals("7715536", video_id)
 
 
