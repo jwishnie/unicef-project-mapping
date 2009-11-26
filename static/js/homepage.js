@@ -35,7 +35,8 @@ function expandImplementors(){
 $(document).ready(function() {
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
-    MIN_SCALE = 141700000;
+    MIN_SCALE = 200000000;
+
     // pink tile avoidance
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
     // make OL compute scale according to WMS spec
@@ -199,7 +200,6 @@ $(document).ready(function() {
 	var bounds= new OpenLayers.Bounds(left, bottom, right, top);
 
         options = {
-            restrictedExtent: new OpenLayers.Bounds(-180,-90, 180, 90), 
             maxScale: MAX_SCALE, 
             minScale: MIN_SCALE,
             eventListeners: { "moveend": mapEvent}
