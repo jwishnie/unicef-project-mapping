@@ -8,7 +8,7 @@ Template tags used to display project content
 from django import template
 from maplayers.tag_utils import parse_img_feed
 from maplayers.utils import is_empty
-from maplayers.constants import PROJECT_STATUS, GROUPS, COMMENT_STATUS
+from maplayers.constants import PROJECT_STATUS, GROUPS, COMMENT_STATUS, VIDEO_PROVIDER
 from maplayers.models import Project, ProjectComment, ReviewFeedback
 
 register = template.Library()  
@@ -61,6 +61,24 @@ def sub_project_header(parent_project):
 				</div>
                  """ % (parent_project.id, parent_project.name)
     return result
+    
+@register.simple_tag
+def project_video(project):
+    video = project.default_video()
+    if not video: return 
+    if(video.provider == VIDEO_PROVIDER.YOUTUBE):
+        video_url = "http://www.youtube.com/v/" + video.video_id
+    else:
+        video_url = "http://vimeo.com/moogaloop.swf?clip_id=" + video.video_id
+        
+    result = '''<object width="400" height="385">
+                    <param name="allowfullscreen" value="true">
+                    <param name="allowscriptaccess" value="always"> 
+                    <param name="movie" value="%s">
+                    <embed src="%s" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="385">
+               </object> ''' % (video_url, video_url)
+    return result
+               
 
 @register.simple_tag
 def projects_for_review_link(user):
