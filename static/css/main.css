@@ -400,6 +400,11 @@ ul.errorlist {
     cursor: pointer;
 }
 
+#project_comments span.delete_comment {
+    float: none;
+    padding: 0 0 0 5px;
+}
+
 #project_comments span.publish_comment {
     padding-left: 5px;
     text-decoration: underline;
