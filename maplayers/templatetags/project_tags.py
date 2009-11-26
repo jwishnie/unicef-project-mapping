@@ -36,10 +36,30 @@ def edit_project_link(project, user):
 @register.simple_tag
 def add_sub_project_link(project, user):
     result = ""
-    if project.is_editable_by(user):
+    if project.is_editable_by(user) and project.is_parent_project():
         result = """<div id="add_sub_project">
-                        <a href='/add_sub_project/parent_id/%s/'>Add SubProject</a>
+                        <a href='/add_sub_project/parent_project_id/%s/'>Add SubProject</a>
                     </div>""" % project.id
+    return result
+
+@register.simple_tag
+def add_parent_project_input_tag(parent_project):
+    result = ""
+    if parent_project:
+        result = """<input type="hidden" name="parent_project_id" value="%s"></input>""" % parent_project.id
+    return result
+
+@register.simple_tag
+def sub_project_header(parent_project):
+    result = ""
+    if parent_project:
+        result = """
+				<div>
+                    <input type="hidden" name="parent_project_id" value="%s"></input>
+					<label for="id_parent_project">Parent Project:</label> 
+                        Adding Sub Project for %s
+				</div>
+                 """ % (parent_project.id, parent_project.name)
     return result
 
 @register.simple_tag

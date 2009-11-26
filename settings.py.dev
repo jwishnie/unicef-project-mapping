@@ -25,7 +25,7 @@ logging.basicConfig(
 # for development, memory cache
 CACHE_BACKEND = 'locmem:///?timeout=2592000' 
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
