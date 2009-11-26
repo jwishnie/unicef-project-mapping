@@ -110,7 +110,6 @@ li a {
 #main_content fieldset {
     border-color: #4DBAFE;
     margin: 20px;
-    padding: 20px;
 }
 
 #main_content fieldset legend {
@@ -169,7 +168,7 @@ li a {
     border-width:1px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    width : 80px;
+    width : auto;
 }
 
 #main_content_shadow {
@@ -336,13 +335,20 @@ ul.errorlist {
     margin-right: 15em;
 }
 
+.delete_comment {
+    float: right;
+    padding: 5px;
+    text-decoration: underline;
+}
+
 /*PROJECTS FOR REVIEW, MY PROJECTS*/
 #projects_for_review,
 #my_projects,
 #change_password,
 #login,
 #user_registration,
-#project_comments {
+#project_comments,
+#add_project {
     margin-left: 15px;
 }
 
@@ -432,7 +438,8 @@ ul.errorlist {
     width: 2em;
 }
 
-#project_details #comments div span.comment_text {
+#project_details #comments div span.comment_text,
+#add_project #comments div span.comment_text {
     padding: 1em 0 0 2em;
 }
 

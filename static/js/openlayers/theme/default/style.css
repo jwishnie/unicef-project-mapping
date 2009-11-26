@@ -309,8 +309,9 @@ div.olControlMousePosition {
 }
 
 .olPopupCloseBox {
-  background: url("img/close.gif") no-repeat;
+  background: url("../../img/close.gif") no-repeat;
   cursor: pointer;
+  z-index: 1000;
 }
 
 .olFramedCloudPopupContent {
