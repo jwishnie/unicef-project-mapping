@@ -48,12 +48,12 @@ def add_project(request):
         else: 
             return _render_response(request, form, "add_project", sectors, 
                                     implementors, project, parent_project_id,link_titles, link_urls, 
-                                    project.resource_set.all())
+                                    project.resource_set.all(), title="Add Project")
     else: 
         form = ProjectForm()
         project = _create_new_project(request)
         return _render_response(request, form, "add_project", 
-                                sectors, implementors, project)
+                                sectors, implementors, project, title="Add Project")
 
 
 @login_required
@@ -82,7 +82,7 @@ def edit_project(request, project_id):
         else:
             return _render_response(request, form, action, sectors, implementors, 
                                     project,  link_titles, link_urls, 
-                                    project.resource_set.all())
+                                    project.resource_set.all(), title="Edit Project")
     else:
         form = _create_initial_data_from_project(project)
         links = project.link_set.all()
@@ -90,7 +90,7 @@ def edit_project(request, project_id):
         link_urls = [link.url for link in links]
         return _render_response(request, form, action, sectors, implementors, 
                                 project, link_titles, link_urls, 
-                                project.resource_set.all())
+                                project.resource_set.all(), title="Edit Project")
 
 def reject_if_not_project_author(user):
     if not _is_project_author(user):
@@ -424,7 +424,7 @@ def _create_new_project(request):
     return project
 
 def _render_response(request, form, action, sectors, implementors, 
-                     project, parent_project=None, link_titles=[], link_urls=[], resources=[]):
+                     project, parent_project=None, link_titles=[], link_urls=[], resources=[], title =""):
     link_titles_and_values = zip(link_titles, link_urls)
     publishable = project.is_publishable_by(request.user)
     check_publish = 'checked="yes"' if PROJECT_STATUS.PUBLISHED == project.status else ""
@@ -439,7 +439,8 @@ def _render_response(request, form, action, sectors, implementors,
                                'action' : action, 'publishable' : publishable,
                                'checked' : check_publish, 'submit_label' : submit_label,
                                'mode' : "edit",
-                               'parent_project': parent_project
+                               'parent_project': parent_project,
+			       'title': title
                               },
                               context_instance=RequestContext(request)
                               )
