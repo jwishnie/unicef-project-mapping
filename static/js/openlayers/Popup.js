@@ -23,20 +23,8 @@
  * (end)
  */
 
- CORNERS = {
-
-     /* top images*/
-     TL : {src:'corners/topl.png', sizing: 'scale'},
-     TM : {src:'corners/topm.png', sizing: 'crop'},
-     TR : {src:'corners/topr.png', sizing: 'scale'},
-
-     /* middle images */
-     ML : {src:'corners/midl.png', sizing: 'crop'},
-     MR : {src:'corners/midr.png', sizing: 'crop'},
-
-     /* bottom images */
-     BL : {src:'corners/botl.png', sizing: 'scale'},
-     BM : {src:'corners/botm.png', sizing: 'crop'},
+ BUBBLE = {
+     /* Bubble beak */
      BR : {src:'corners/botr.png', sizing: 'scale'}
  }
  
@@ -285,62 +273,31 @@ OpenLayers.Popup = OpenLayers.Class({
 
         this.registerEvents();
         this.size = contentSize;
-        this.insertCorners();
+        this.insertBubbleBeak();
     },
-    insertCorners : function ()
+    insertBubbleBeak : function ()
     {   
         // ie hack required for abs positioning  
         var arVersion = navigator.appVersion.split("MSIE");
         var version = parseFloat(arVersion[1]);
 
-        //alert("inserting corners: " + this.size);
         // retrive image path 
         var sImgLoc = OpenLayers.Util.getImagesLocation();
 
-        // insert top left 0,0
-        var topl = OpenLayers.Util.createAlphaImageDiv("", new OpenLayers.Pixel(0,0), new OpenLayers.Size(38, 28), sImgLoc + CORNERS.TL.src, "absolute", 0, CORNERS.TL.sizing);
-        this.div.appendChild(topl);
-
-        // insert top middle 
-        var topm = OpenLayers.Util.createAlphaImageDiv("", new OpenLayers.Pixel(38,0), new OpenLayers.Size(parseInt(this.size.w - 22), 28), sImgLoc + CORNERS.TM.src, "absolute", 0, CORNERS.TM.sizing);
-        this.div.appendChild(topm);
-
-        // insert top right 
-        var topr = OpenLayers.Util.createAlphaImageDiv("", new OpenLayers.Pixel(parseInt(38 + this.size.w - ((version<7) ? 22:23)), 0), new OpenLayers.Size(38, 28), sImgLoc + CORNERS.TR.src, "absolute", 0, CORNERS.TR.sizing);
-        this.div.appendChild(topr);
-
-        // insert middle left
-        var midl = OpenLayers.Util.createAlphaImageDiv("", new OpenLayers.Pixel(0,28), new OpenLayers.Size(38, parseInt(this.size.h - 12)), sImgLoc + CORNERS.ML.src, "absolute", 0, CORNERS.ML.sizing);
-        this.div.appendChild(midl);
-
         // insert content
         this.contentDiv.style.position = "absolute";
-        this.contentDiv.style.backgroundColor="#ffffff";
         this.contentDiv.style.top = 15 + "px";
         this.contentDiv.style.left = 15 + "px";
         this.contentDiv.style.width = this.size.w + "px";
         this.contentDiv.style.height = this.size.h + "px";
 
-        // insert middle right w:38, h:600
-        var midr = OpenLayers.Util.createAlphaImageDiv("", new OpenLayers.Pixel(parseInt(38 + this.size.w -22), 28), new OpenLayers.Size(38, parseInt(this.size.h - 13)), sImgLoc + CORNERS.MR.src, "absolute", 0, CORNERS.MR.sizing);
-        this.div.appendChild(midr);
-
         // calculate middle width inc content
         var iMaxW = 38 + this.size.w + 38;
 
-        // insert bottom left
-        var botl = OpenLayers.Util.createAlphaImageDiv("", new OpenLayers.Pixel(0, 28 + this.size.h - 12), new OpenLayers.Size(38, 39), sImgLoc + CORNERS.BL.src, "absolute", 0, CORNERS.BL.sizing);
-        this.div.appendChild(botl);
-
-        // insert bottom middle
-        var botm = OpenLayers.Util.createAlphaImageDiv("", new OpenLayers.Pixel(38, 28 + this.size.h - 13), new OpenLayers.Size(iMaxW - (38 + 97) -((version<7) ? 21:22), 40), sImgLoc + CORNERS.BM.src, "absolute", 0, CORNERS.BM.sizing);
-        this.div.appendChild(botm);
-
         // insert bottom right inc handle
-        var botr = OpenLayers.Util.createAlphaImageDiv("", new OpenLayers.Pixel((iMaxW - (38 + 97)) + 38 -((version<7) ? 21:22), 28 + this.size.h - 13), new OpenLayers.Size(97, 68), sImgLoc + CORNERS.BR.src, "absolute", 0, CORNERS.BR.sizing);
+        var botr = OpenLayers.Util.createAlphaImageDiv("botr", new OpenLayers.Pixel((iMaxW - (38 + 97)) + 38 -((version<7) ? 21:22), 50 + this.size.h - 13), new OpenLayers.Size(38, 33), sImgLoc + BUBBLE.BR.src, "absolute", 0, BUBBLE.BR.sizing);
         this.div.appendChild(botr);
 
-        //this.div.style.border="1px solid red";
         // append content to main popup.
         // inserted last to ensure the browser assigns correct z-index to place content on top
         this.div.appendChild(this.contentDiv);
@@ -957,8 +914,8 @@ OpenLayers.Popup = OpenLayers.Class({
         // use the content div's css padding to determine if we should
         //  padd the close div
         var contentDivPadding = this.getContentDivPadding();
-        var close_right = contentDivPadding.right - 220;
-        var close_top = contentDivPadding.top + 10;
+        var close_right = contentDivPadding.right - 235;
+        var close_top = contentDivPadding.top + 15;
          
         this.closeDiv.style.right = close_right + "px";
         this.closeDiv.style.top = close_top + "px";

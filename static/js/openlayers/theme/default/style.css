@@ -125,7 +125,21 @@ div.olControlMousePosition {
 .olPopupContent {
     padding:5px;
     overflow: auto;
-}    
+}
+
+.olPopupContent {
+    -moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	font-size: 8pt;
+	color: #A5A5A5;
+	padding: 10px;
+	border: 2px solid #A5A5A5;
+	background-color: #FFF;
+}
+
+.olPopupContent a {
+    color: #A5A5A5;
+}
 .olControlNavToolbar { 
     width:0px;
     height:0px;
@@ -311,7 +325,7 @@ div.olControlMousePosition {
 .olPopupCloseBox {
   background: url("../../img/close.gif") no-repeat;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1;
 }
 
 .olFramedCloudPopupContent {
@@ -321,6 +335,10 @@ div.olControlMousePosition {
 
 .olControlNoSelect {
  -moz-user-select: none;
+}
+
+#botr {
+    z-index: 1;
 }
 
 /**
