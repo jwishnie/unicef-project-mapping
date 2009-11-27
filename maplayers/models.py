@@ -82,7 +82,7 @@ class Project(models.Model):
         return ( 'No Name' if is_empty(self.name) else self.name)
         
     def snippet(self):
-        return self.name + " : " + text.truncate_html_words(self.description, 25)
+        return self.name + " : " + text.truncate_html_words(self.description, 15)
         
     def default_video(self):
         if not self.video_set.all(): return ''
