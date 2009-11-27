@@ -65,7 +65,7 @@ def sub_project_header(parent_project):
 @register.simple_tag
 def project_video(project):
     video = project.default_video()
-    if not video: return 
+    if not video: return ""
     if(video.provider == VIDEO_PROVIDER.YOUTUBE):
         video_url = "http://www.youtube.com/v/" + video.video_id
     else:
