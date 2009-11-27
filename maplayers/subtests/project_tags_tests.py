@@ -26,36 +26,38 @@ class ProjectTagsTest(TestCase):
         actual = project_tags.flash_message(request)
         self.assertEquals("", actual)
 
-    def test_should_provide_link_to_edit_only_for_authorized_user(self):
+    def test_should_allow_authorized_users_to_edit_project(self):
         project = Mock()
+        project.is_parent_project.return_value = True
         project.id = 3
         mock_user = object()
         project.is_editable_by.return_value = True
         self.assertTrue(project_tags.edit_project_link(project, mock_user).__contains__('/edit_project/3/'))
 
-    def test_should_not_provide_link_to_edit_for_unauthorized_user(self):
+    def test_should_not_allow_unauthorized_users_to_edit_project(self):
         project = Mock()
+        project.is_parent_project.return_value = True
         project.id = 3
         mock_user = object()
         project.is_editable_by.return_value = False
         self.assertFalse(project_tags.edit_project_link(project, mock_user).__contains__('/edit_project/3/'))
         self.assertEquals(project_tags.edit_project_link(project, mock_user), '')
 
-    def test_should_provide_add_subproject_link_only_for_authorized_user(self):
+    def test_should_allow_authorized_user_to_add_project(self):
         project = Mock()
         project.is_parent_project.return_value = True
         project.id = 3
         mock_user = object()
         project.is_editable_by.return_value = True
-        self.assertTrue(project_tags.add_sub_project_link(project, mock_user).__contains__('/add_sub_project/parent_project_id/3/'))
+        self.assertTrue(project_tags.add_sub_project_link(project, mock_user).__contains__('/add_project?parent_id='))
 
-    def test_should_not_provide_link_to_add_project_for_unauthorized_user(self):
+    def test_should_not_allow_unauthorized_users_to_add_project(self):
         project = Mock()
         project.id = 3
         project.is_parent_project.return_value = True
         mock_user = object()
         project.is_editable_by.return_value = False
-        self.assertFalse(project_tags.add_sub_project_link(project, mock_user).__contains__('/add_sub_project/parent_project_id/3/'))
+        self.assertFalse(project_tags.add_sub_project_link(project, mock_user).__contains__('/add_project?parent_id=3'))
         self.assertEquals(project_tags.add_sub_project_link(project, mock_user), '')
 
     def test_should_not_provide_add_sub_projects_link_for_sub_projects(self):
@@ -70,7 +72,7 @@ class ProjectTagsTest(TestCase):
         parent_project = Mock()
         parent_project.name = "Unicef"
         header = project_tags.sub_project_header(parent_project)
-        self.assertTrue(header.__contains__('Adding Sub Project for Unicef'))
+        self.assertTrue(header.__contains__('Unicef'))
 
     def test_should_add_hidden_input_with_parent_id_when_adding_subproject(self):
         parent_project = Mock()

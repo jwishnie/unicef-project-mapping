@@ -24,6 +24,7 @@ def _is_project_author(user):
     
 @login_required
 def add_project(request): 
+    parent_project = _get_parent(request.META['QUERY_STRING'])
     # check for authorness... Can't use 'user_passes_test' decorator
     # because it doesn't handle redirects properly
     if not _is_project_author(request.user):
@@ -31,6 +32,9 @@ def add_project(request):
 
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
+    action = 'add_project?parent_id='
+    if parent_project:
+        action = action + str(parent_project.id)
 
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -38,79 +42,6 @@ def add_project(request):
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
         project = Project.objects.get(id=int(project_id))
-        parent_project_id = ''
-
-        if form.is_valid(): 
-            _create_links(request, project_id, link_titles, link_urls)
-            _set_project_status(project, request)
-            _add_project_details(form, project, request)
-            return _add_edit_success_page(project, request)
-        else: 
-            return _render_response(request, form, "add_project", sectors, 
-                                    implementors, project, parent_project_id,link_titles, link_urls, 
-                                    project.resource_set.all())
-    else: 
-        form = ProjectForm()
-        project = _create_new_project(request)
-        return _render_response(request, form, "add_project", 
-                                sectors, implementors, project)
-
-
-@login_required
-def edit_project(request, project_id): 
-    project = Project.objects.get(id=int(project_id))
-    if not project.is_editable_by(request.user):
-        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
-
-    sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
-    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
-    action = "edit_project/" + project_id
-    if request.method == 'POST':
-        form = ProjectForm(request.POST)
-        link_titles = request.POST.getlist('link_title')
-        link_urls =  request.POST.getlist('link_url')
-        tags = request.POST.get("tags")
-        if form.is_valid(): 
-            project.link_set.all().delete()
-            project.sector_set.clear()
-            project.implementor_set.clear()
-            _set_project_status(project, request)
-            project.save()
-            _create_links(request, project_id, link_titles, link_urls)
-            _add_project_details(form, project, request)
-            return _add_edit_success_page(project,request)
-        else:
-            return _render_response(request, form, action, sectors, implementors, 
-                                    project,  link_titles, link_urls, 
-                                    project.resource_set.all())
-    else:
-        form = _create_initial_data_from_project(project)
-        links = project.link_set.all()
-        link_titles = [link.title for link in links]
-        link_urls = [link.url for link in links]
-        return _render_response(request, form, action, sectors, implementors, 
-                                project, link_titles, link_urls, 
-                                project.resource_set.all())
-
-def reject_if_not_project_author(user):
-    if not _is_project_author(user):
-        return HttpResponseRedirect('/permission_denied/add_project/not_author')
-    
-@login_required
-def add_sub_project(request, parent_project_id): 
-    if not _is_project_author(request.user):
-        return HttpResponseRedirect('/permission_denied/add_project/not_author')
-
-    sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
-    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
-
-    if request.method == 'POST':
-        form = ProjectForm(request.POST)
-        project_id = request.POST.get("project_id")
-        link_titles = request.POST.getlist('link_title')
-        link_urls =  request.POST.getlist('link_url')
-        project = Project.objects.get(id=int(project_id))
-        parent_project = Project.objects.get(id=int(parent_project_id))
 
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
@@ -118,19 +49,17 @@ def add_sub_project(request, parent_project_id):
             _add_project_details(form, project, request, parent_project)
             return _add_edit_success_page(project, request)
         else: 
-            return _render_response(request, form, "add_sub_project/parent_project_id/%d" %(parent_project.id), sectors, 
-                                    implementors, project, parent_project,
-                                    link_titles, link_urls,
+            return _render_response(request, form, action, sectors, 
+                                    implementors, project, parent_project,link_titles, link_urls, 
                                     project.resource_set.all())
     else: 
         form = ProjectForm()
         project = _create_new_project(request)
-        parent_project = Project.objects.get(id=int(parent_project_id))
-        return _render_response(request, form, "add_sub_project/parent_project_id/%d" %(parent_project.id), 
+        return _render_response(request, form, action, 
                                 sectors, implementors, project, parent_project)
 
 @login_required
-def edit_sub_project(request, project_id): 
+def edit_project(request, project_id): 
     project = Project.objects.get(id=int(project_id))
     parent_project = project.parent_project
     if not project.is_editable_by(request.user):
@@ -138,7 +67,7 @@ def edit_sub_project(request, project_id):
 
     sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
-    action = "edit_sub_project/project_id/" + project_id  
+    action = "edit_project/" + project_id + "/"
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         link_titles = request.POST.getlist('link_title')
@@ -163,8 +92,20 @@ def edit_sub_project(request, project_id):
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
         return _render_response(request, form, action, sectors, implementors, 
-                                project,parent_project, link_titles, link_urls, 
+                                project, parent_project, link_titles, link_urls, 
                                 project.resource_set.all())
+
+def _get_parent(query_string):
+    match = re.search('parent_id=(?P<parent_id>\d+)', query_string)
+    if match:
+        project_id = match.groups(0)[0]
+        return Project.objects.get(id=int(project_id))
+    return None
+
+def reject_if_not_project_author(user):
+    if not _is_project_author(user):
+        return HttpResponseRedirect('/permission_denied/add_project/not_author')
+    
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')

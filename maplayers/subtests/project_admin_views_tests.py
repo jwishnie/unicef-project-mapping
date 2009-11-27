@@ -60,11 +60,12 @@ class ProjectAdminViewsUnitTest(TestCase):
     def test_adding_a_new_project(self):
         web_client = Client()
         self.assertTrue(web_client.login(username='author', password='author'))
-        ctxt = web_client.get("/add_project/").context
+        ctxt = web_client.get("/add_project?parent_id=").context
         ctxt = ( ctxt[0] if is_iter(ctxt) else ctxt )
         project_id = ctxt['project'].id
-        web_client.post("/add_project/", 
+        web_client.post("/add_project", 
                                  {"project_id": project_id,
+                                  "parent_id" : '',
                                   "name" : "test_add", "description" : "test description", 
                                   "latitude" : "-70", "longitude" : "-10", 
                                   "location" : "test location", "website_url" : "www.test.com",
@@ -176,8 +177,10 @@ class ProjectAdminViewsUnitTest(TestCase):
         group.name = "User"
         user = Mock()
         user.groups.all.return_value = [group]
+        meta = {'QUERY_STRING' : 'parent_id=1'}
         request = Mock()
         request.user = user 
+        request.META = meta
         response = views.add_project(request)
         self.assertEquals(302, response.status_code)
         self.assertEquals('/permission_denied/add_project/not_author', response.items()[1][1])
