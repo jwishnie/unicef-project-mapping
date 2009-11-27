@@ -81,7 +81,7 @@ def edit_project(request, project_id):
             return _add_edit_success_page(project,request)
         else:
             return _render_response(request, form, action, sectors, implementors, 
-                                    project, '', link_titles, link_urls, 
+                                    project,  link_titles, link_urls, 
                                     project.resource_set.all())
     else:
         form = _create_initial_data_from_project(project)
@@ -89,7 +89,7 @@ def edit_project(request, project_id):
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
         return _render_response(request, form, action, sectors, implementors, 
-                                project,'', link_titles, link_urls, 
+                                project, link_titles, link_urls, 
                                 project.resource_set.all())
 
 def reject_if_not_project_author(user):
@@ -131,8 +131,40 @@ def add_sub_project(request, parent_project_id):
 
 @login_required
 def edit_sub_project(request, project_id): 
-    pass
+    project = Project.objects.get(id=int(project_id))
+    parent_project = project.parent_project
+    if not project.is_editable_by(request.user):
+        return HttpResponseRedirect('/permission_denied/edit_project/not_author')
 
+    sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
+    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
+    action = "edit_sub_project/project_id/" + project_id  
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        link_titles = request.POST.getlist('link_title')
+        link_urls =  request.POST.getlist('link_url')
+        tags = request.POST.get("tags")
+        if form.is_valid(): 
+            project.link_set.all().delete()
+            project.sector_set.clear()
+            project.implementor_set.clear()
+            _set_project_status(project, request)
+            project.save()
+            _create_links(request, project_id, link_titles, link_urls)
+            _add_project_details(form, project, request, parent_project)
+            return _add_edit_success_page(project,request)
+        else:
+            return _render_response(request, form, action, sectors, implementors, 
+                                    project, parent_project, link_titles, link_urls, 
+                                    project.resource_set.all())
+    else:
+        form = _create_initial_data_from_project(project)
+        links = project.link_set.all()
+        link_titles = [link.title for link in links]
+        link_urls = [link.url for link in links]
+        return _render_response(request, form, action, sectors, implementors, 
+                                project,parent_project, link_titles, link_urls, 
+                                project.resource_set.all())
 def file_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')

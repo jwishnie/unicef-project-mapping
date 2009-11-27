@@ -28,9 +28,14 @@ def project_links(titles_and_urls):
 def edit_project_link(project, user):
     result = ""
     if project.is_editable_by(user):
-        result = """<div id="edit_project">
-                        <a href='/edit_project/%s/'>Edit this project</a>
-                    </div>""" % project.id
+        if project.is_parent_project():
+            result = """<div id="edit_project">
+                            <a href='/edit_project/%s/'>Edit this project</a>
+                        </div>""" % project.id
+        else:
+            result = """<div id="edit_project">
+                            <a href='/edit_sub_project/project_id/%s/'>Edit this project</a>
+                        </div>""" % project.id
     return result
     
 @register.simple_tag
