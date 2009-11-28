@@ -7,6 +7,7 @@ from maplayers.views import convert_to_json
 from maplayers.constants import PROJECT_STATUS
 from  mock import Mock
 from maplayers import views
+from django.http import Http404
 
 class ProjectPage(TestCase):
     fixtures = ['test_project_data']
@@ -79,6 +80,27 @@ class ProjectPage(TestCase):
         request.META = {'HTTP_REFERER' : 'http://localhost:8000'}
         response = views.view_500(request)
         self.assertEquals(500, response.status_code)
+
+    def test_should_return_resource_not_found_for_nonexistant_project(self):
+        project_manager = Mock(Project.objects)
+        project_manager.select_related(depth=1).get.side_effect = Project.DoesNotExist()
+        self.assertRaises(Http404, views.project, None, 1, project_manager)
+         
+    def test_should_return_404_for_unpublished_project_request_user_not_logged_in(self):
+        request = Mock()
+        request.user = u'AnonymousUser'
+        project_manager = Mock(Project.objects)
+        project = Mock(Project)
+        project.status = PROJECT_STATUS.UNPUBLISHED
+        project.created_by.username = u'author'
+        project_manager.select_related(depth=1).get.return_value = project  
+        self.assertRaises(Http404, views.project, request, 1, project_manager)
+
+    def test_should_return_202_for_unpublished_project_req_user_logged_in(self):
+        web_client=Client()
+        self.assertTrue(web_client.login(username='author', password="author"))
+        response = web_client.get("/projects/id/8")
+        self.assertTrue(202, response.status_code)
 
 def to_json(projects):
     result = []

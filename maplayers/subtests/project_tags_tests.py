@@ -106,7 +106,4 @@ class ProjectTagsTest(TestCase):
         editor = User.objects.get(id=5)
         html_snippet = project_tags.projects_for_review_link(editor)
         self.assertEquals('<li><a href="/projects_for_review/">Projects for Review<span class="notification">3</span></a></li>', html_snippet)
-
-        
-    
         

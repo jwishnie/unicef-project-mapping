@@ -54,27 +54,40 @@ def projects_in_map(request, left, bottom, right, top):
 
     return write_project_list_to_response(projects)   
 
-def project(request, project_id):
+
+def project(request, project_id, project_manager=Project.objects):
     try:
         logging.debug("View project details [project_id] : %s" % project_id)
-        project = Project.objects.select_related(depth=1).get(id=int(project_id))
-        subprojects = project.project_set.all()
-        implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
-        tags = project.tags.split(" ")
-    except Project.DoesNotExist:
-        raise Http404
-    return render_to_response('project.html', 
-                              {'project': project, 
-                               'links' : project.link_set.all(), 
-                               'rss_img_feed_url': project.imageset_feedurl,
-                               'subprojects' : subprojects,
-                               'implementors' : implementors,
-                               'tags' : tags,
-                               },
-                               context_instance=RequestContext(request)
-                              )
-                              
+        project = project_manager.select_related(depth=1).get(id=int(project_id))
+        authenticated_user =  _check_if_user_can_view_project(request.user, project.created_by.username)
+        if (authenticated_user) | (project.status == PROJECT_STATUS.PUBLISHED):
+	    subprojects = project.project_set.all()
+	    implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
+	    tags = project.tags.split(" ")
+	    return render_to_response('project.html', 
+				      {'project': project, 
+				       'links' : project.link_set.all(), 
+				       'rss_img_feed_url': project.imageset_feedurl,
+				       'subprojects' : subprojects,
+				       'implementors' : implementors,
+				       'tags' : tags,
+				       },
+				       context_instance=RequestContext(request)
+				      )
+        else:
+            raise Http404
 
+    except Project.DoesNotExist:
+	raise Http404
+
+def _check_if_user_can_view_project(logged_in_user, project_creator):
+    if unicode(logged_in_user) == u'admin':
+        return True
+    elif unicode(logged_in_user) == project_creator: 
+        return True
+    else:
+        return False
+    
 def user_registration(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
