@@ -63,9 +63,8 @@ class ProjectAdminViewsUnitTest(TestCase):
         ctxt = web_client.get("/add_project?parent_id=").context
         ctxt = ( ctxt[0] if is_iter(ctxt) else ctxt )
         project_id = ctxt['project'].id
-        web_client.post("/add_project", 
+        web_client.post("/add_project?parent_id=", 
                                  {"project_id": project_id,
-                                  "parent_id" : '',
                                   "name" : "test_add", "description" : "test description", 
                                   "latitude" : "-70", "longitude" : "-10", 
                                   "location" : "test location", "website_url" : "www.test.com",
