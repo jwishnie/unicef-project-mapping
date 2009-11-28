@@ -34,7 +34,7 @@ def edit_project_link(project, user):
                         </div>""" % project.id
         else:
             result = """<div id="edit_project">
-                            <a href='/edit_sub_project/project_id/%s/'>Edit this project</a>
+                            <a href='/edit_project/%s/'>Edit this project</a>
                         </div>""" % project.id
     return result
     
@@ -43,7 +43,7 @@ def add_sub_project_link(project, user):
     result = ""
     if project.is_editable_by(user) and project.is_parent_project():
         result = """<div id="add_sub_project">
-                        <a href='/add_sub_project/parent_project_id/%s/'>Add SubProject</a>
+                        <a href='/add_project?parent_id=%s'>Add SubProject</a>
                     </div>""" % project.id
     return result
 
@@ -62,7 +62,7 @@ def sub_project_header(parent_project):
 				<div>
                     <input type="hidden" name="parent_project_id" value="%s"></input>
 					<label for="id_parent_project">Parent Project:</label> 
-                        Adding Sub Project for %s
+                        %s
 				</div>
                  """ % (parent_project.id, parent_project.name)
     return result
@@ -193,7 +193,7 @@ def admin_links(project, user):
 
 @register.simple_tag
 def add_project_link():
-    result = """<a href='/add_project/' id="add_project">Add a new project</a>"""
+    result = """<a href='/add_project?parent_id=' id="add_project">Add a new project</a>"""
     return result    
     
     
