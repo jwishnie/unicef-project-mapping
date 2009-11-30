@@ -13,8 +13,10 @@ from django.contrib.auth.models import User, Group
 from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS, VIMEO_REGEX, YOUTUBE_REGEX, VIDEO_PROVIDER
 from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video
 from maplayers.forms import ProjectForm, AdminUnitForm
+from maplayers.utils import html_escape
 import simplejson as json
 from admin_views import my_projects
+
 
 
 # Authentication helpers
@@ -410,5 +412,6 @@ def _publish_or_delete_comments(request, action):
     if action == "delete":
         ProjectComment.objects.filter(id__in=comment_ids).delete()
     else:
-        ProjectComment.objects.filter(id__in=comment_ids).update(status=COMMENT_STATUS.PUBLISHED)    
-    
+        ProjectComment.objects.filter(id__in=comment_ids).update(status=COMMENT_STATUS.PUBLISHED)
+
+
