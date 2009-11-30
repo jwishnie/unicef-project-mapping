@@ -19,6 +19,7 @@ from maplayers.forms import UserForm, ChangePasswordForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GROUPS
+from maplayers.utils import html_escape
 from datetime import datetime
 import simplejson as json
 
@@ -273,7 +274,8 @@ def _filter_projects_for_request(request):
 def convert_to_json(projects):
     result = []
     for project in projects:
-        project_json = '''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d, "sectors" : %s, "implementors" : %s}''' %(project.latitude, project.longitude, project.snippet(), project.id, project.sectors_in_json(), project.implementors_in_json())
+        project_json = '''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d, "sectors" : %s, "implementors" : %s}''' %(project.latitude, project.longitude,
+                html_escape(project.snippet()), project.id, project.sectors_in_json(), project.implementors_in_json())
         result.append(project_json)
     return "[" + ", ".join(result) + "]"
 

@@ -4,6 +4,11 @@
 Small useful utils
 
 """
+html_escape_table = {
+        "&" : "&amp;",
+        '"' : "&quot;",
+        "'" : "&apos;",
+        }
 
 def iter_flatten(iterable):
   it = iter(iterable)
@@ -50,7 +55,8 @@ def is_iter(obj):
     return hasattr(obj,'__iter__')
 
 
+def html_escape(text):
+    """Produce entities within text"""
+    return "".join(html_escape_table.get(c,c) for c in text)
 
 
-    
-        
