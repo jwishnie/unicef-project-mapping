@@ -117,7 +117,7 @@ def my_project(project, user):
     no_of_comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED).count()
     if no_of_comments:
         comments_text = "comments" if no_of_comments>1 else "comment"
-        result += '<td><a href="/projects/comments/%s"/>%s %s</td>' % (str(project.id), str(no_of_comments), comments_text)
+        result += '<td><a href="/projects/comments/%s" class="comment_number"/>%s %s</td>' % (str(project.id), str(no_of_comments), comments_text)
     else:
         result += '<td>No comments</td>'
     result += '</tr>'
@@ -159,7 +159,7 @@ def status_text(project):
     return '<span class="first changes_preview" id="previewchanges_' + str(project.id) + '">' + project.status + '</span>'
     
 def publish_text(project):
-    if project.status == PROJECT_STATUS.PUBLISHED:
+    if project.is_published():
         return '<span class="unpublish_link first" id="%s">Unpublish</span>' % str(project.id)
     else:
         return '<span class="publish_link first" id="%s">Publish</span>' % str(project.id)
@@ -183,7 +183,7 @@ def my_projects_link(user):
 def admin_links(project, user):
     result = ""
     if project.is_publishable_by(user):
-        action = ("unpublish" if project.status == PROJECT_STATUS.PUBLISHED else "publish")
+        action = ("unpublish" if project.is_published() else "publish")
         input_field = '<input type="hidden" name="link" value="/projects/%s/%s/"/>' % (action, project.id)
         publish_span = '''<span class="publish_link" id="publish_%s">%s%s</span>''' % (str(project.id),  action.capitalize(), input_field)
         delete_span = '<span class="delete_link" id="delete_%s">Delete</span>' % (str(project.id))

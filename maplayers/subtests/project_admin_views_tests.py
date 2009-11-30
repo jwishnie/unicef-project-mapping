@@ -101,7 +101,7 @@ class ProjectAdminViewsUnitTest(TestCase):
         expected_implementors = Implementor.objects.filter(Q(name="WHO") | Q(name="Red Cross Foundation"))
 
         self.assertEquals(u"Edited", project.name)
-        self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)
+        self.assertTrue(project.is_published())
         self.assertEquals(u"editied description", project.description)
         self.assertEquals(30, project.latitude)
         self.assertEquals(45, project.longitude)
@@ -134,7 +134,7 @@ class ProjectAdminViewsUnitTest(TestCase):
     def test_publish_unpublish_should_update_project_status(self):
         web_client = Client()
         project = Project.objects.get(id=1)
-        self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)
+        self.assertTrue(project.is_published())
         web_client.login(username='map_super', password='map_super')
         response = web_client.get("/projects/unpublish/1/")
         project = Project.objects.get(id=1)
@@ -143,7 +143,7 @@ class ProjectAdminViewsUnitTest(TestCase):
     def test_reject_project_should_place_the_project_in_rejected_state(self):
         web_client = Client()
         project = Project.objects.get(id=1)
-        self.assertEquals(PROJECT_STATUS.PUBLISHED, project.status)
+        self.assertTrue(project.is_published())
         web_client.login(username='map_super', password='map_super')
         response = web_client.get("/projects/reject/1/")
         project = Project.objects.get(id=1)
@@ -160,14 +160,14 @@ class ProjectAdminViewsUnitTest(TestCase):
     def test_publish_project_comment(self):
         web_client = Client()
         web_client.login(username='author', password='author')
-        response = web_client.post("/projects/comments/publish/", {"comment_1" : True})
+        response = web_client.post("/projects/comments/publish/", {"comment_1" : True, "project_id" : "2"})
         comment = ProjectComment.objects.get(id=1)
         self.assertEquals("Published", comment.status)
         
     def test_delete_project_comment(self):
         web_client = Client()
         web_client.login(username='author', password='author')
-        web_client.post("/projects/comments/delete/", {"comment_2" : True})
+        web_client.post("/projects/comments/delete/", {"comment_2" : True, "project_id" : "2"})
         comment = ProjectComment.objects.filter(id=2)
         self.assertFalse(comment)
 

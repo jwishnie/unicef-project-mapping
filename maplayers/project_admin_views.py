@@ -14,6 +14,8 @@ from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS, VIMEO_RE
 from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video
 from maplayers.forms import ProjectForm, AdminUnitForm
 import simplejson as json
+from admin_views import my_projects
+
 
 # Authentication helpers
 def _is_project_author(user):
@@ -126,6 +128,7 @@ def file_upload(request):
 def project_comments(request, project_id):
     project = Project.objects.get(id=project_id)
     comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED)
+    if not comments: return my_projects(request)
     return render_to_response('project_comments.html',
                               {'project' : project,
                                'comments' : comments},
@@ -135,13 +138,13 @@ def project_comments(request, project_id):
 @login_required                       
 def publish_comments(request):
     _publish_or_delete_comments(request, "publish")
-    return HttpResponseRedirect("/my_projects/")
+    return project_comments(request, request.POST.get('project_id'))
     
     
 @login_required                       
 def delete_comments(request):
     _publish_or_delete_comments(request, "delete")
-    return HttpResponseRedirect("/my_projects/")
+    return project_comments(request, request.POST.get('project_id'))
 
 @login_required
 def remove_attachment(request):
@@ -235,7 +238,7 @@ def _create_admin_unit(form):
     admin_unit.save()
 
 def _add_edit_success_page(project,request):
-    if project.status == PROJECT_STATUS.PUBLISHED:
+    if project.is_published():
         message = "published"
     elif project.status == PROJECT_STATUS.UNPUBLISHED:
         message = "unpublished"
@@ -373,7 +376,7 @@ def _render_response(request, form, action, sectors, implementors,
                      project, parent_project=None, link_titles=[], link_urls=[], resources=[], title =""):
     link_titles_and_values = zip(link_titles, link_urls)
     publishable = project.is_publishable_by(request.user)
-    check_publish = 'checked="yes"' if PROJECT_STATUS.PUBLISHED == project.status else ""
+    check_publish = 'checked="yes"' if project.is_published() else ""
     submit_label = "Submit" if publishable else "Submit for Review" 
     return render_to_response(
                               'add_project.html', 

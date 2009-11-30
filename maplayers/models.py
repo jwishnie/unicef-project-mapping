@@ -11,7 +11,7 @@ from tinymce import models as tinymce_models
 from maplayers.countries import CountryField, COUNTRIES 
 
 from maplayers.utils import is_empty
-from maplayers.constants import GROUPS
+from maplayers.constants import GROUPS, PROJECT_STATUS
 
 class Project(models.Model): 
     name = models.CharField(max_length=30, null=True, blank=True) 
@@ -87,6 +87,9 @@ class Project(models.Model):
     def default_video(self):
         if not self.video_set.all(): return ''
         return self.video_set.all()[0]
+        
+    def is_published(self):
+        return PROJECT_STATUS.PUBLISHED == self.status 
     
     class Admin: 
         pass
