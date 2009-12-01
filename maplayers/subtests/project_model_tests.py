@@ -1,7 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.test import TestCase
-from maplayers.models import Project
+from maplayers.models import Project, Video
 from django.contrib.auth.models import User, Group
 
 class ProjectModelTest(TestCase):
@@ -43,3 +43,16 @@ class ProjectModelTest(TestCase):
         project.save()
         project.groups.add(admin)
         return project
+        
+    def test_default_video_for_project(self):
+        project = self._create_project(User.objects.get(id=2))
+        self.assertEquals("", project.default_video())
+        video1 = Video(provider="youtube", project=project, video_id = "abcdefg", default=False, url="http://www.youtube.com/v=abcdefg")
+        video2 = Video(provider="vimeo", project=project, video_id = "1234567", default=False, url="http://www.vimeo.com/1234567")
+        video3 = Video(provider="vimeo", project=project, video_id = "a1b2c3", default=True, url="http://www.vimeo.com/a1b2c3")
+        project.video_set.add(video1)
+        project.video_set.add(video2)
+        project.video_set.add(video3)
+        self.assertEquals(video3, project.default_video())
+        
+        
