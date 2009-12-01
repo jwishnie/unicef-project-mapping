@@ -176,6 +176,7 @@ class Video(models.Model):
     video_id = models.CharField(max_length=50)
     project = models.ForeignKey(Project)
     default = models.BooleanField(default=False)
+    url = models.CharField(max_length=500)
     
     def __unicode__(self):
         return self.provider + self.video_id

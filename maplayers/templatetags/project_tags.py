@@ -289,4 +289,25 @@ def youtube_playlist_player(playlist_id):
         </object>
 
         """ % {'play_id':playlist_id}
+        
+        
+@register.simple_tag
+def video_url_tag(video_urls):
+    if not video_urls:
+        return '''<div id="video_urls">
+        			<div id="video_url_1" class="add_video_url">
+        				<label>Video URL : </label>
+        				<input type="text" name="video_url_1"></input>
+        			</div>	
+        		</div>'''
+    i = 1
+    result = '<div id="video_urls">'
+    for video_url in video_urls:
+        result += '<div id="video_url_%s" class="add_video_url"><label>Video URL : </label>' % str(i)
+        result += '<input type="text" name="video_url_%s" value="%s"></input></div>' % (str(i), video_url)
+        i += 1
+    result += "</div>"
+    return result
+        
+    
 
