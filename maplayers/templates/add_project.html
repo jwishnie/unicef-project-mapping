@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ css_url }}/add_project.css" type="text/css" />
         <script type="text/javascript" src="{{ mootools }}"></script>
         <script src="{{ jquery }}" type="text/javascript"></script>
+		<script src="{{ openlayers }}" type="text/javascript"></script>
         <link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
         <script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
         <script type="text/javascript" src="{{ fancyuploader }}/Swiff.Uploader.js"></script>
@@ -66,8 +67,10 @@
 					<label for="id_location">Location:</label> 
 					{{ form.location }}
 					{{ form.location.errors}}					
-				</div>				
+				</div>
 			</fieldset>	
+			<div id="map" class="smallmap"></div>				
+			
 			<fieldset>
 				<legend><span>Media Information</span></legend>				
 				<div>
