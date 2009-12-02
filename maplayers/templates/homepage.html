@@ -14,10 +14,12 @@
 	  search_tag = '{{ tag }}';
 	{% endif %}
 </script>
+<link rel="stylesheet" href="/static/css/jquerystart/jquery-ui-1.7.2.custom.css" type="text/css" media="all" />
 <script src="{{ jquery }}" type="text/javascript"></script>
 <script src="{{ openlayers }}" type="text/javascript"></script>
 <script src="/static/js/openlayers/Popup.js" type="text/javascript" ></script>
 <script src="{{ js_url }}/homepage.js" type="text/javascript" ></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
 {% endblock %}
 		
 {% block page_content %}
@@ -62,7 +64,16 @@
 <div id="main_pane">
 	<div id="map_canvas"></div>
 	{% autoescape off %}
-		<div id="projects"></div>
+		<div id="projects">
+			<div id="tabs">
+				<ul>
+					<li><a href="#proj">List of Projects</a></li>
+					<li><a href="#stats">Region Statistics</a></li>
+				</ul>
+				<div id="proj"></div>
+				<div id="stats"></div>
+			</div>
+		</div>
     {% endautoescape %}
     <div id="bookmark">
     </div>
