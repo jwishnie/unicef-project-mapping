@@ -85,8 +85,9 @@ class Project(models.Model):
         return self.name + " : " + text.truncate_html_words(self.description, 15)
         
     def default_video(self):
-        if not self.video_set.all(): return ''
-        return self.video_set.all()[0]
+        default_video_set = self.video_set.filter(default=True)
+        if not default_video_set: return ''
+        return default_video_set[0]
         
     def is_published(self):
         return PROJECT_STATUS.PUBLISHED == self.status 
@@ -176,6 +177,7 @@ class Video(models.Model):
     video_id = models.CharField(max_length=50)
     project = models.ForeignKey(Project)
     default = models.BooleanField(default=False)
+    url = models.CharField(max_length=500)
     
     def __unicode__(self):
         return self.provider + self.video_id

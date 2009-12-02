@@ -45,17 +45,18 @@ def add_project(request):
         project_id = request.POST.get("project_id")
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
+        video_urls = [request.POST.get(video_id) for video_id in request.POST.keys() if video_id.startswith("video_url")]
         project = Project.objects.get(id=int(project_id))
 
         if form.is_valid(): 
             _create_links(request, project_id, link_titles, link_urls)
             _set_project_status(project, request)
             _add_project_details(form, project, request, parent_project)
-            return _add_edit_success_page(project, request)
+            return _add_edit_success_page(project, request, "add")
         else: 
             return _render_response(request, form, action, sectors, 
-                                    implementors, project, parent_project,link_titles, link_urls, 
-                                    project.resource_set.all(), title="Add Project")
+                                    implementors, project, parent_project, video_urls, link_titles, 
+                                    link_urls, project.resource_set.all(), title="Add Project")
     else: 
         form = ProjectForm()
         project = _create_new_project(request)
@@ -64,7 +65,7 @@ def add_project(request):
 
 @login_required
 def edit_project(request, project_id): 
-    project = Project.objects.get(id=int(project_id))
+    project = Project.objects.select_related(depth=1).get(id=int(project_id))
     parent_project = project.parent_project
     if not project.is_editable_by(request.user):
         return HttpResponseRedirect('/permission_denied/edit_project/not_author')
@@ -77,6 +78,8 @@ def edit_project(request, project_id):
         link_titles = request.POST.getlist('link_title')
         link_urls =  request.POST.getlist('link_url')
         tags = request.POST.get("tags")
+        video_urls = [request.POST.get(video_id) for video_id in request.POST.keys() if video_id.startswith("video_url")]
+        
         if form.is_valid(): 
             project.link_set.all().delete()
             project.sector_set.clear()
@@ -85,18 +88,19 @@ def edit_project(request, project_id):
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
             _add_project_details(form, project, request, parent_project)
-            return _add_edit_success_page(project,request)
+            return _add_edit_success_page(project,request,"edit")
         else:
             return _render_response(request, form, action, sectors, implementors, 
-                                    project, parent_project, link_titles, link_urls, 
+                                    project, parent_project, video_urls, link_titles, link_urls, 
                                     project.resource_set.all(), title="Edit Project")
     else:
         form = _create_initial_data_from_project(project)
+        video_urls = [video.url for video in project.video_set.all()]
         links = project.link_set.all()
         link_titles = [link.title for link in links]
         link_urls = [link.url for link in links]
         return _render_response(request, form, action, sectors, implementors, 
-                                project, parent_project, link_titles, link_urls, 
+                                project, parent_project, video_urls, link_titles, link_urls, 
                                 project.resource_set.all(), title="Edit Project")
 
 def _get_parent(query_string):
@@ -239,11 +243,11 @@ def _create_admin_unit(form):
     admin.region_statistics = form.cleaned_data['region_statistics']
     admin_unit.save()
 
-def _add_edit_success_page(project,request):
+def _add_edit_success_page(project,request, action):
     if project.is_published():
         message = "published"
     elif project.status == PROJECT_STATUS.UNPUBLISHED:
-        message = "unpublished"
+        message = "saved"
     else:
         message = "submitted for review"
         
@@ -320,7 +324,7 @@ def _add_project_videos(project, request):
             provider = VIDEO_PROVIDER.VIMEO
             pattern = re.compile(VIMEO_REGEX)
             video_id = pattern.match(video_url).group(1)
-        video = Video(provider=provider, project=project, video_id = video_id, default=set_default)
+        video = Video(provider=provider, project=project, video_id = video_id, default=set_default, url=video_url)
         video.save()
         
 
@@ -375,7 +379,7 @@ def _create_new_project(request):
     return project
 
 def _render_response(request, form, action, sectors, implementors, 
-                     project, parent_project=None, link_titles=[], link_urls=[], resources=[], title =""):
+                     project, parent_project=None, video_urls = [], link_titles=[], link_urls=[], resources=[], title =""):
     link_titles_and_values = zip(link_titles, link_urls)
     publishable = project.is_publishable_by(request.user)
     check_publish = 'checked="yes"' if project.is_published() else ""
@@ -389,9 +393,8 @@ def _render_response(request, form, action, sectors, implementors,
                                'title_and_values' : link_titles_and_values,
                                'action' : action, 'publishable' : publishable,
                                'checked' : check_publish, 'submit_label' : submit_label,
-                               'mode' : "edit",
-                               'parent_project': parent_project,
-			       'title': title
+                               'mode' : "edit", 'video_urls' : video_urls,
+                               'parent_project': parent_project, 'title': title
                               },
                               context_instance=RequestContext(request)
                               )

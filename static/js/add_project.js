@@ -1,4 +1,49 @@
 jQuery(document).ready(function(){
+    
+    OpenLayers.Control.Click = 
+        OpenLayers.Class(OpenLayers.Control, {                
+            defaultHandlerOptions: {
+                'single': true,
+                'double': false,
+                'pixelTolerance': 0,
+                'stopSingle': false,
+                'stopDouble': false
+            },
+        
+            initialize: function(options) {
+                this.handlerOptions = OpenLayers.Util.extend(
+                    {}, this.defaultHandlerOptions
+                );
+                OpenLayers.Control.prototype.initialize.apply(
+                    this, arguments
+                ); 
+                this.handler = new OpenLayers.Handler.Click(
+                    this, {
+                        'click': this.trigger
+                    }, this.handlerOptions
+                );
+            }, 
+        
+            trigger: function(e) {
+                var lonlat = map.getLonLatFromViewPortPx(e.xy);
+                jQuery("#id_latitude")[0].value = lonlat.lat;
+                jQuery("#id_longitude")[0].value = lonlat.lon;
+            }
+        });
+    
+    
+    var map;
+    map = new OpenLayers.Map('map');
+    var ol_wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+        "http://labs.metacarta.com/wms/vmap0",
+        {layers: 'basic'} );
+    map.addLayer(ol_wms);
+    if (!map.getCenter()) map.zoomToMaxExtent();
+    var click = new OpenLayers.Control.Click();
+    map.addControl(click);
+    click.activate();
+    
+    
 
 	var sector_names = sectors.split(", ");
 	jQuery("#id_project_sectors").autocomplete(sector_names, {
