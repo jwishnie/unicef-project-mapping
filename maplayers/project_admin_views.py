@@ -52,7 +52,7 @@ def add_project(request):
             _create_links(request, project_id, link_titles, link_urls)
             _set_project_status(project, request)
             _add_project_details(form, project, request, parent_project)
-            return _add_edit_success_page(project, request)
+            return _add_edit_success_page(project, request, "add")
         else: 
             return _render_response(request, form, action, sectors, 
                                     implementors, project, parent_project, video_urls, link_titles, 
@@ -88,7 +88,7 @@ def edit_project(request, project_id):
             project.save()
             _create_links(request, project_id, link_titles, link_urls)
             _add_project_details(form, project, request, parent_project)
-            return _add_edit_success_page(project,request)
+            return _add_edit_success_page(project,request,"edit")
         else:
             return _render_response(request, form, action, sectors, implementors, 
                                     project, parent_project, video_urls, link_titles, link_urls, 
@@ -243,11 +243,11 @@ def _create_admin_unit(form):
     admin.region_statistics = form.cleaned_data['region_statistics']
     admin_unit.save()
 
-def _add_edit_success_page(project,request):
+def _add_edit_success_page(project,request, action):
     if project.is_published():
         message = "published"
     elif project.status == PROJECT_STATUS.UNPUBLISHED:
-        message = "unpublished"
+        message = "saved"
     else:
         message = "submitted for review"
         
@@ -394,8 +394,7 @@ def _render_response(request, form, action, sectors, implementors,
                                'action' : action, 'publishable' : publishable,
                                'checked' : check_publish, 'submit_label' : submit_label,
                                'mode' : "edit", 'video_urls' : video_urls,
-                               'parent_project': parent_project,
-			       'title': title
+                               'parent_project': parent_project, 'title': title
                               },
                               context_instance=RequestContext(request)
                               )
