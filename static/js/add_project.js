@@ -56,6 +56,11 @@ jQuery(document).ready(function(){
 		multiple: true, 
 		autoFill: true
 	});
+	
+	var sector_list = sectors.split(", ").splice(0,5).join(", ");
+	var implementor_list = implementors.split(", ").splice(0,5).join(", ");
+	jQuery("#sector_examples").html(sector_list);
+	jQuery("#implementor_examples").html(implementor_list);
 
     function add_video(){
         var video_url_count = jQuery(".add_video_url").length;
