@@ -269,12 +269,18 @@ class ParseImgRssFeedNode(template.Node):
 
 @register.simple_tag
 def get_thumbnail_img(img_url):
-    url = img_url.replace("_m.", "_s.")
+    if(img_url.__contains__("flickr")):
+        url = img_url.replace("_m.", "_s.")
+    else:
+        url = img_url.replace("/s144/", "/s72/")
     return url
     
 @register.simple_tag
 def get_img(img_url):
-    url = img_url.replace("_m.", ".")
+    if(img_url.__contains__("flickr")):
+        url = img_url.replace("_m.", ".")
+    else:
+        url = img_url.replace("/s144/", "/s720/")
     return url
 
 @register.simple_tag
