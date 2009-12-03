@@ -30,9 +30,19 @@ function expandImplementors(){
     $('li.implementor_drawer span').addClass('open');   
 }
 
+function populateRegionStats(response){
+	$.post("/search_admin_unit/",{text:response.responseText},
+	    function(data){
+	        $("#stats").html(data);
+	    });
+}
 
 // On load
 $(document).ready(function() {
+    $(function() {
+    		$("#tabs").tabs();
+    	});
+    
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
     MIN_SCALE = 200000000;
@@ -181,14 +191,14 @@ $(document).ready(function() {
         markers.destroy();
         markers = new OpenLayers.Layer.Markers( "Markers" );
         map.addLayer(markers);
-            
-        var html = "<h4>List of Projects: </h4><div class=\"project_list\"><ol>";
+        cssatrib = "overflow:scroll;height:260px"
+        var html = "<div style="+cssatrib+">";
         for(var i = 0;i<projects.length; i++){
             var project = projects[i];
             var project_name = project.snippet.split(":")[0];
             var project_description = project.snippet.split(":")[1];			    
-            var project_text = "<div><a href=\"/projects/id/" + project.id + "/" +"\">" + 
-                                        project_name + '</a><div class="proj_desc">' +  project_description + '</div></div>';
+            var project_text = "<a href=\"/projects/id/" + project.id + "/" +"\">" + 
+                                        project_name + '</a><div class="proj_desc">' +  project_description;
             html += "<li>" + project_text + '</li>';
             var marker_icon = icon.clone();
             marker = new OpenLayers.Marker(
@@ -197,8 +207,8 @@ $(document).ready(function() {
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
                         markers.addMarker(marker);
         }
-        html += '</div></ol>';
-        $("#projects").html(html);
+        html += '</ol></div>';
+        $("#proj").html(html);
     }
 
         var popup = null;
@@ -210,13 +220,34 @@ $(document).ready(function() {
             eventListeners: { "moveend": mapEvent}
         };
 
+		
+		format = 'image/png';
         var map = new OpenLayers.Map( 'map_canvas' , options );
-            
+ 
+      map.events.register('click', map, function(e){
+			$("#stats").html("Loading. Please wait...");
+			                    var params = {
+			                        REQUEST: "GetFeatureInfo",
+			                        EXCEPTIONS: "application/vnd.ogc.se_xml",
+			                        BBOX: map.getExtent().toBBOX(),
+			                        X: e.xy.x,
+			                        Y: e.xy.y,
+			                        INFO_FORMAT: 'text/plain',
+			                        QUERY_LAYERS: 'GADM:UGA_adm1',
+			                        FEATURE_COUNT: 50,
+			                        Layers: 'GADM:UGA_adm1',
+			                        Styles: '',
+			                        Srs: 'EPSG:4326',
+			                        WIDTH: map.size.w,
+			                        HEIGHT: map.size.h,
+			                        format: format};
+			                    OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, populateRegionStats, populateRegionStats);
+			                    OpenLayers.Event.stop(e);
+			
+});
         var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
         map.addLayer(layer);
-        
-        var gs = "http://"+ window.location.host+"/geoserver/ows";
-        
+        var gs = "http://"+window.location.host+"/geoserver/ows";
         var dists = new OpenLayers.Layer.WMS(
                    "Dists",
                    gs,

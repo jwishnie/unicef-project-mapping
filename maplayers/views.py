@@ -22,7 +22,8 @@ from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GRO
 from maplayers.utils import html_escape
 from datetime import datetime
 import simplejson as json
-
+from maplayers.models import AdministrativeUnit
+from admin_request_parser import convert_text_to_dicts
 def homepage(request):
     sectors = _get_sectors(request)
     sector_ids = [sector.id for sector in sectors]
@@ -39,7 +40,18 @@ def homepage(request):
                               context_instance=RequestContext(request)
                               ) 
     
-    
+
+def search_admin_units(request):
+    if request.method == 'POST':        
+        text = request.POST.get('text')
+        admin_unit_req = convert_text_to_dicts(text)
+        admin_unit = _get_admin_model(admin_unit_req)
+        response = HttpResponse()
+        response.write(admin_unit.region_statistics)
+        return response
+        
+        
+        
 def projects_in_map(request, left, bottom, right, top):
     sector_ids =  _filter_ids(request, "sector") or \
                 [sector.id for sector in Sector.objects.all()]
@@ -226,6 +238,11 @@ def _construct_queryset_for_project_search(search_term):
              Q(description__icontains=search_term) |
              Q(location__icontains=search_term) |
              Q(implementor__name__icontains=search_term))
+             
+def _construct_queryset_for_adminunit_search(detail):
+    return (Q(name=detail['NAME_1']) |
+    Q(region_type=detail['TYPE_1']) |
+    Q(country_type=detail['NAME_0']))
 
 def _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, tag):
     projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
@@ -248,6 +265,15 @@ def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_
                                   implementor__in=implementor_ids,
                                   status=PROJECT_STATUS.PUBLISHED,
                                   ).distinct()
+                                  
+def _get_admin_model(details):
+    try:
+        adminModel = AdministrativeUnit.objects.get(name=details['NAME_1'])
+    except:
+        adminModel = AdministrativeUnit()
+        adminModel.region_statistics = "Sorry, We don't have the Region Statistics for the district"
+    
+    return adminModel
  
 def _filter_projects_for_request(request):
    if request.GET.get('tag', ''):
