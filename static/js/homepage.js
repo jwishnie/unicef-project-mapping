@@ -191,8 +191,8 @@ $(document).ready(function() {
         markers.destroy();
         markers = new OpenLayers.Layer.Markers( "Markers" );
         map.addLayer(markers);
-            
-        var html = "";
+        cssatrib = "overflow:scroll;height:260px"
+        var html = "<div style="+cssatrib+">";
         for(var i = 0;i<projects.length; i++){
             var project = projects[i];
             var project_name = project.snippet.split(":")[0];
@@ -207,7 +207,7 @@ $(document).ready(function() {
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
                         markers.addMarker(marker);
         }
-        html += '</ol>';
+        html += '</ol></div>';
         $("#proj").html(html);
     }
 
