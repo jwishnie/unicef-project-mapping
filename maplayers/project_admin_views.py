@@ -34,8 +34,8 @@ def add_project(request):
     if not _is_project_author(request.user):
         return HttpResponseRedirect('/permission_denied/add_project/not_author')
 
-    sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
-    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
+    sectors = ", ".join([sector.name for sector in Sector.objects.all()])
+    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()])
     action = 'add_project?parent_id='
     if parent_project:
         action = action + str(parent_project.id)
@@ -70,8 +70,8 @@ def edit_project(request, project_id):
     if not project.is_editable_by(request.user):
         return HttpResponseRedirect('/permission_denied/edit_project/not_author')
 
-    sectors = ", ".join([sector.name for sector in Sector.objects.all()[:5]])
-    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()[:5]])
+    sectors = ", ".join([sector.name for sector in Sector.objects.all()])
+    implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()])
     action = "edit_project/" + project_id + "/"
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -133,6 +133,9 @@ def file_upload(request):
 @login_required
 def project_comments(request, project_id):
     project = Project.objects.get(id=project_id)
+    if not project.created_by == request.user:
+        return HttpResponseRedirect('/permission_denied/add_project/not_author')
+        
     comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED)
     if not comments: return my_projects(request)
     return render_to_response('project_comments.html',

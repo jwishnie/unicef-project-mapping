@@ -73,7 +73,7 @@ def project(request, project_id, project_manager=Project.objects):
     project = project_manager.select_related(depth=1).get(id=int(project_id))
     if not (project.is_editable_by(request.user) or project.is_published()): raise Http404
     
-    subprojects = project.project_set.all()
+    subprojects = project.project_set.filter(status=PROJECT_STATUS.PUBLISHED)
     implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
     tags = project.tags.split(" ")
     return render_to_response('project.html', 

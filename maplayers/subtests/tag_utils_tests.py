@@ -7,8 +7,10 @@ Created on Oct 22, 2009
 '''
 import unittest
 from maplayers import tag_utils
-
+import urllib2
+from mock import Mock
 FRMT = tag_utils.FLICKR_FEED_FORMAT
+
 
 class FeedUtilsTest(unittest.TestCase):
     urlList = [
@@ -40,5 +42,23 @@ class FeedUtilsTest(unittest.TestCase):
                     (src, expected, result)
                 self.assertFalse(True)
     
+    # def test_parse_img_feed_for_flickr_feeds(self):
+    #     tag_utils.parse_feed = self._mock_parse_feed
+    #     tag_utils.parse_img_feed("http://www.flickr.com")
+    #     
+    #     
+    # def _mock_parse_feed(self, url):
+    #     feed = Mock()
+    #     content_array = Mock()
+    #     content_array.content.return_value = [{
+    #             'base': u'http://api.flickr.com/services/feeds/photoset.gne?set=72157609408183784&nsid=7496069@N08&format=atom',
+    #             'type': 'text/html',
+    #             'value': u'<p><a href="http://www.flickr.com/people/mylittlefinger/">MyLittleFinger</a> posted a photo:</p>\n<p><a href="http://www.flickr.com/photos/mylittlefinger/3464357201/" title="Mama bulbul, baby bulbul ..."><img alt="Mama bulbul, baby bulbul ..." height="204" src="http://farm4.static.flickr.com/3648/3464357201_b312a76ed9_m.jpg" width="240" /></a></p>\n\n<p>Shot @ my native place Gundmi, Karnataka ...<br />\n<br />\n<a href="http://www.flickr.com/photos/mylittlefinger/3464357201/sizes/o/"> View bigger size here </a></p>',
+    #             'language': None
+    #         }]
+    #     feed.entries.return_value = ["hello", "world"]
+    #     return feed
+        
 if __name__ == '__main__':
     unittest.main() 
+    

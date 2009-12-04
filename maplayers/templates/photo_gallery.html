@@ -3,6 +3,7 @@
 		<div>Related Images</div>
   {% endif %}		
   {% for img in rss_img_feed.images %}
+
       <div class="photo">
           <a href={% get_img img.img_url %}><img src={% get_thumbnail_img img.img_url %} /></a>
       </div>

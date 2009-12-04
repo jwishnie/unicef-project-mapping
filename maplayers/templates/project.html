@@ -7,6 +7,7 @@
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="{{ css_url }}/project.css" />
 <link type="text/css" href="{{ css_url }}/dialog.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ css_url }}/projects_for_review.css" type="text/css" />
 
 {% endblock %}
 
@@ -21,6 +22,8 @@
 		{% endfor %}
 
 	</script>
+
+	
 	<script src="{{ jquery }}" type="text/javascript"></script>
 	<script type="text/javascript" src="{{ jqueryui }}"></script>
 	<script src="{{ openlayers }}" type="text/javascript"></script>
@@ -116,11 +119,7 @@
 					
 					{% project_video project %}
 					
-					<!-- {% if youtube_playlist_id %}
-                  	<div  id="project_video">
-                    	{% youtube_playlist_player youtube_playlist_id %}
-                  	</div>				
-					{% endif %} -->
+
 					<div id="comment_link"><label>Post a comment</label></div>
 					<div class="flash_message_box"><div id="comment_message"></div></div>
 
@@ -144,6 +143,12 @@
 					</div>
 
 					<div id="comments">{% project_comments project %}</div>
+					
+					
+					<div id="delete_dialog" title="Delete Project !">
+						<p>Are you Sure you want to delete this project ?</p>
+					</div>
+
 				</div>
 {% endblock %}
 

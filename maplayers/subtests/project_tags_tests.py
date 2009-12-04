@@ -86,12 +86,12 @@ class ProjectTagsTest(TestCase):
         self.assertEquals("", header)
 
     def test_should_change_flickr_image_from_feed_to_thumbnail(self):
-        image_url = "/static/unicef_m.jpg"
-        self.assertEquals('/static/unicef_s.jpg', project_tags.get_thumbnail_img(image_url))
+        image_url = "http://www.flickr.com/static/unicef_m.jpg"
+        self.assertEquals('http://www.flickr.com/static/unicef_s.jpg', project_tags.get_thumbnail_img(image_url))
         
     def test_should_change_flickr_image_from_medium_to_actual(self):
-        image_url = "/static/unicef_m.jpg"
-        self.assertEquals('/static/unicef.jpg', project_tags.get_img(image_url))
+        image_url = "http://www.flickr.com/static/unicef_m.jpg"
+        self.assertEquals('http://www.flickr.com/static/unicef.jpg', project_tags.get_img(image_url))
 
     ### Non Mock tests    
     def test_my_projects_link_should_show_notifications(self):
