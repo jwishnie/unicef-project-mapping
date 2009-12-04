@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    var delete_url = "";
+
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125
     MIN_SCALE = 110735960.625
@@ -6,7 +8,7 @@ $(document).ready(function() {
     HEIGHT = 17
 
     $('#photo_set a').lightBox({fixedNavigation:true});
-
+    
     var map = new OpenLayers.Map('map_canvas', {
         maxScale: MAX_SCALE,
         minScale: MIN_SCALE
@@ -130,17 +132,36 @@ $(document).ready(function() {
         });
     });
     
-    $(".delete_link").click(function(){
-        var project_id = (this.id).split("_")[1];
-        var delete_url = "/projects/delete/" + project_id + "/";
-        $.post(delete_url, function(data){
-            window.location.href = "/";
-        });
-    });
+    $('.delete_link').click(function(){
+        project_id = (this.id).split("_")[1];
+        delete_url = "/projects/delete/" + project_id +"/";
+        $('#delete_dialog').dialog('open');
+	});
+	
+	$("#delete_dialog").dialog({
+		bgiframe: true,
+		autoOpen: false,
+		height: 200,
+		width: 300,
+		modal: true,
+		buttons: {
+			Submit: function() {
+				$.post(delete_url, function(data){
+					window.location.href = "/";
+				});
+				$(this).dialog('close');
+			},
+			Cancel: function() {
+				$(this).dialog('close');
+			}
+		},
+		close: function() {
+		}
+	});
+
+});
 
 
-}
-);
 function addsubprojects(markers) {
     for (var i = 0; i < projects.length; i++) {
         subproject = projects[i];
