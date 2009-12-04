@@ -179,8 +179,8 @@ $(document).ready(function() {
                 filters.search_term = escape($("#search").val());
 		
 		$.get(projects_url, filters, function(data) {
-                    var projects = getProjects(data);
-                    addProjectsOnMap(projects);
+                var projects = getProjects(data);
+                addProjectsOnMap(projects);
 		});
 		
 		bookmarkUrl();

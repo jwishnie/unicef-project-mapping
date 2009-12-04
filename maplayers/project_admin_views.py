@@ -272,8 +272,11 @@ def _project_status_change_json_response(request, project, status, message):
                               )
 
 def _add_project_details(form, project, request, parent_project=None):
+    description = form.cleaned_data['description']
+    description = description.replace('<p>&nbsp;</p>', '')
+    description = description.replace('\n', '')
     project.name = form.cleaned_data['name']
-    project.description = form.cleaned_data['description']
+    project.description = description
     project.latitude = form.cleaned_data['latitude']
     project.longitude = form.cleaned_data['longitude']
     project.location = form.cleaned_data['location']
