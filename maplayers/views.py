@@ -224,6 +224,7 @@ def _get_projects(left, bottom, right, top, sector_ids, implementor_ids):
                                   sector__in=sector_ids,
                                   implementor__in=implementor_ids,
                                   status=PROJECT_STATUS.PUBLISHED,
+                                  parent_project=None
                                   ).distinct()
                                       
 def _get_bounding_box(request):
