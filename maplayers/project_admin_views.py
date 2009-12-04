@@ -133,6 +133,9 @@ def file_upload(request):
 @login_required
 def project_comments(request, project_id):
     project = Project.objects.get(id=project_id)
+    if not project.created_by == request.user:
+        return HttpResponseRedirect('/permission_denied/add_project/not_author')
+        
     comments = project.projectcomment_set.filter(status=COMMENT_STATUS.UNMODERATED)
     if not comments: return my_projects(request)
     return render_to_response('project_comments.html',
