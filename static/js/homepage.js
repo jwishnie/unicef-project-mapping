@@ -37,6 +37,7 @@ function populateRegionStats(response){
 	    });
 }
 
+var layerSwitcher = new OpenLayers.Control.LayerSwitcher();
 // On load
 $(document).ready(function() {
     $(function() {
@@ -224,7 +225,7 @@ $(document).ready(function() {
 		format = 'image/png';
         var map = new OpenLayers.Map( 'map_canvas' , options );
         
-        var layerSwitcher = new OpenLayers.Control.LayerSwitcher();
+        
  
       map.events.register('click', map, function(e){
 			$("#stats").html("Loading. Please wait...");
@@ -308,7 +309,8 @@ $(document).ready(function() {
     $('#stats-id').bind('click', switchStatsView);
     
     function switchStatsView(){
-        map.addControl(layerSwitcher);
+        //alert(layerSwitcher);
+        map.addControl(new OpenLayers.Control.LayerSwitcher());
         map.addLayer(dists);
         map.addLayer(county);
         map.removeLayer(markers);
@@ -317,7 +319,13 @@ $(document).ready(function() {
     }
         
     function projectview(){
-        map.removeControl(layerSwitcher);            
+        var switcher = map.getControlsByClass("OpenLayers.Control.LayerSwitcher");
+        if(switcher.length > 0){
+            Array.forEach(switcher, function(l){
+                map.removeControl(l);
+            });
+        }
+
         map.removeLayer(dists);
         map.removeLayer(county);
         map.addLayer(markers);
