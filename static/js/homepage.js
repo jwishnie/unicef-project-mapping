@@ -223,6 +223,8 @@ $(document).ready(function() {
 		
 		format = 'image/png';
         var map = new OpenLayers.Map( 'map_canvas' , options );
+        
+        var layerSwitcher = new OpenLayers.Control.LayerSwitcher();
  
       map.events.register('click', map, function(e){
 			$("#stats").html("Loading. Please wait...");
@@ -245,7 +247,7 @@ $(document).ready(function() {
 			                    OpenLayers.Event.stop(e);
 			
 });
-        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'} );
+        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
         map.addLayer(layer);
         var gs = "http://"+window.location.host+"/geoserver/ows";
         var dists = new OpenLayers.Layer.WMS(
@@ -262,9 +264,22 @@ $(document).ready(function() {
         );
         
         dists.setOpacity(0.5);
-        map.addLayer(dists);
+        //map.addLayer(dists);
                                              
-        
+         var county = new OpenLayers.Layer.WMS(
+                       "County",
+                       gs,
+                       { 
+                           layers: 'GADM:UGA_adm2',
+                           transparent: true,
+                           format: 'image/png'
+                       },
+                       {
+                           isBaseLayer: false
+                       }
+            );
+
+            county.setOpacity(0.5);
 
 	map.zoomToExtent(bounds);
 	var markers = new OpenLayers.Layer.Markers( "Markers" );
@@ -289,4 +304,25 @@ $(document).ready(function() {
 
           }
         });
+        
+    $('#stats-id').bind('click', switchStatsView);
+    
+    function switchStatsView(){
+        map.addControl(layerSwitcher);
+        map.addLayer(dists);
+        map.addLayer(county);
+        map.removeLayer(markers);
+        $('#stats-id').unbind('click', switchStatsView);
+        $('#proj-id').bind('click', projectview);
+    }
+        
+    function projectview(){
+        map.removeControl(layerSwitcher);            
+        map.removeLayer(dists);
+        map.removeLayer(county);
+        map.addLayer(markers);
+        $('#stats-id').bind('click', switchStatsView);
+        $('#proj-id').unbind('click', projectview);
+    }
+    
 });
