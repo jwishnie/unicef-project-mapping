@@ -91,18 +91,18 @@ $(document).ready(function() {
 
 
 	function searchEvent(){
-            var text = escape($('[name=q]').val());
-            if($.trim(text)) {
+        var text = escape($('[name=q]').val());
+        if($.trim(text)) {
 	    var search_url = "/projects/search/" + escape($('[name=q]').val()) + "/";
 		$.get(search_url, function(data){
                   var projects = getProjects(data);
                   addProjectsOnMap(projects);	
                   removeAllSectorsAndImplementors();
                   selectOnlySectorsAndImplementorsForProjects(projects);
-            });	  
+        });	  
 
-            bookmarkUrl();
-            }
+        bookmarkUrl();
+        }
 	}
 
         function removeAllSectorsAndImplementors() {
@@ -116,7 +116,7 @@ $(document).ready(function() {
         }
 
         function selectOnlySectorsAndImplementorsForProjects(projects) {
-                for(var i = 0;i<projects.length; i++) {
+            for(var i = 0;i<projects.length; i++) {
 			  $("input[type=checkbox]").each(function()
 			  {
 			      var project = projects[i];
@@ -216,17 +216,17 @@ $(document).ready(function() {
 
         options = {
             maxScale: MAX_SCALE, 
-            minScale: MIN_SCALE,
-            eventListeners: { "moveend": mapEvent}
+            minScale: MIN_SCALE
+            //eventListeners: { "moveend": mapEvent}
         };
 
 		
 		format = 'image/png';
         var map = new OpenLayers.Map( 'map_canvas' , options );
+         map.events.register('moveend', map, mapEvent);
         
-        var layerSwitcher = new OpenLayers.Control.LayerSwitcher();
  
-      map.events.register('click', map, function(e){
+      function queryForRegionData(e){
 			$("#stats").html("Loading. Please wait...");
 			                    var params = {
 			                        REQUEST: "GetFeatureInfo",
@@ -246,7 +246,7 @@ $(document).ready(function() {
 			                    OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, populateRegionStats, populateRegionStats);
 			                    OpenLayers.Event.stop(e);
 			
-});
+}
         var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
         map.addLayer(layer);
         var gs = "http://"+window.location.host+"/geoserver/ows";
@@ -264,22 +264,21 @@ $(document).ready(function() {
         );
         
         dists.setOpacity(0.5);
-        //map.addLayer(dists);
                                              
          var county = new OpenLayers.Layer.WMS(
-                       "County",
-                       gs,
-                       { 
-                           layers: 'GADM:UGA_adm2',
-                           transparent: true,
-                           format: 'image/png'
-                       },
-                       {
-                           isBaseLayer: false
-                       }
-            );
+               "County",
+               gs,
+               { 
+                   layers: 'GADM:UGA_adm2',
+                   transparent: true,
+                   format: 'image/png'
+               },
+               {
+                   isBaseLayer: false
+               }
+           );
 
-            county.setOpacity(0.5);
+    county.setOpacity(0.5);
 
 	map.zoomToExtent(bounds);
 	var markers = new OpenLayers.Layer.Markers( "Markers" );
@@ -308,21 +307,30 @@ $(document).ready(function() {
     $('#stats-id').bind('click', switchStatsView);
     
     function switchStatsView(){
-        map.addControl(layerSwitcher);
+        map.addControl(new OpenLayers.Control.LayerSwitcher());
         map.addLayer(dists);
         map.addLayer(county);
         map.removeLayer(markers);
         $('#stats-id').unbind('click', switchStatsView);
         $('#proj-id').bind('click', projectview);
+        map.events.register('click', map, queryForRegionData);
+        map.events.unregister('moveend', map, mapEvent);
     }
         
     function projectview(){
-        map.removeControl(layerSwitcher);            
+        var switcher = map.getControlsByClass("OpenLayers.Control.LayerSwitcher");
+        if(switcher.length > 0){
+            Array.forEach(switcher, function(l){
+                map.removeControl(l);
+            });
+        }
         map.removeLayer(dists);
         map.removeLayer(county);
         map.addLayer(markers);
         $('#stats-id').bind('click', switchStatsView);
         $('#proj-id').unbind('click', projectview);
+        map.events.register('moveend', map, mapEvent);
+        map.events.unregister('click', map, queryForRegionData);
     }
     
 });
