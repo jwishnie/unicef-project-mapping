@@ -3,6 +3,23 @@
     padding-left: 11.5em;
 }
 
+#add_project .location_info {
+    overflow: hidden;
+}
+
+#add_project .location_info fieldset {
+    float: left;
+    width: 46%;
+}
+
+#add_project .location_info fieldset legend span {
+    width: 140px;
+}
+
+#add_project #map {
+    float: left;
+}
+
 #id_project_sectors, #id_project_implementors{
 	width: 40em;
 }

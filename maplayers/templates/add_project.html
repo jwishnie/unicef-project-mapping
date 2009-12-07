@@ -51,28 +51,30 @@
 					{{ form.description.errors }}					
 				</div>
 			</fieldset>
-			<fieldset>
-				<legend><span>Location Information</span></legend>				
-				<div>
-					<label for="id_latitude">Latitude:</label> 
-					{{ form.latitude }}
-					{{ form.latitude.errors }}					
-				</div>
-				<div>				
-					<label for="id_longitude">Longitude:</label> 
-					{{ form.longitude }}
-					{{ form.longitude.errors }}					
-				</div>
-				<div>				
-					<label for="id_location">Location:</label> 
-					{{ form.location }}
-					{{ form.location.errors}}					
-				</div>
-			</fieldset>	
-			<div id="map" class="smallmap"></div>				
-			
+			<div class="location_info">
+				<fieldset>
+					<legend><span>Location Information</span></legend>
+					<div>
+						<label for="id_latitude">Latitude:</label> 
+						{{ form.latitude }}
+						{{ form.latitude.errors }}					
+					</div>
+					<div>				
+						<label for="id_longitude">Longitude:</label> 
+						{{ form.longitude }}
+						{{ form.longitude.errors }}					
+					</div>
+					<div>				
+						<label for="id_location">Location:</label> 
+						{{ form.location }}
+						{{ form.location.errors}}					
+					</div>
+				</fieldset>	
+				<div id="map" class="smallmap"></div>				
+			</div>
 			<fieldset>
 				<legend><span>Media Information</span></legend>				
+				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div>
 					<label for="id_website_url">Website url:</label> 
 					{{ form.website_url }}
@@ -98,7 +100,8 @@
 				</div>
 			</fieldset>	
 			<fieldset>
-				<legend><span>Project Filters</span></legend>				
+				<legend><span>Project Filters</span></legend>	
+				<a class="back_to_top" href="#add_project">Back to top</a>											
 				<div>
 					<label for="id_project_sectors">Sectors: </label> 
 					{{ form.project_sectors }} 
@@ -119,6 +122,7 @@
 			</fieldset>
 			<fieldset>
 				<legend><span>Additional Information</span></legend>				
+				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div id="file">
 					{% file_list resources %}
 					<a href="#" id="file-attach" name="file-attach">Attach a file</a>

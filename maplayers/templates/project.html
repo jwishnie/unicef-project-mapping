@@ -18,9 +18,8 @@
 		var imgurl = "{{ img_url }}";
 		var projects = new Array();
 		{% for subproject in subprojects %}
-		projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproject.longitude}}});
+		projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproject.longitude}} });
 		{% endfor %}
-		
 	</script>
 
 	
@@ -104,23 +103,28 @@
 							{% endif %}                
 						</div>
 					</div>
-						
+					
+					<div class="back_to_top"><a href="#project_details">Back to top</a></div>						
+					
 					<div id="image_pane">
-                                            <div id="project_image">
-                                                <div>Project Image</div>
-                                                <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
-                                            </div>
+	                    <div id="project_image">
+	                        <div>Project Image</div>
+	                        <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
+	                    </div>
 
-                                            <div id="photo_set">
-                                                {% parse_img_rss_feed %}
-                                                {% include 'photo_gallery.html' %}
-                                            </div>
+	                    <div id="photo_set">
+	                        {% parse_img_rss_feed %}
+	                        {% include 'photo_gallery.html' %}
+	                    </div>
 					</div>
 					
 					{% project_video project %}
 					
 
-					<div id="comment_link"><label>Post a comment</label></div>
+					<div>
+						<label id="comment_link">Post a comment</label>
+						<a class="back_to_top" href="#project_details">Back to top</a>						
+					</div>
 					<div class="flash_message_box"><div id="comment_message"></div></div>
 
 					<div id="published_comment" title="Comments">

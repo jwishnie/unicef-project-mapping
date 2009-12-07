@@ -1,19 +1,19 @@
 function collapseSectors(){
     $('ul.sectors').hide();
-    $('li.sector_drawer div').css("background-color", "#A5A5A5");
+    $('li.sector_drawer div').css("background-color", "#0078AE");
     $('li.sector_drawer span').removeClass('open');   
 }
 
 function expandSectors(){
     $('ul.sectors').show();
-    $('li.sector_drawer div').css("background-color", "#054862");            
-    $('ul.sectors').css("background-color", "#054862");            
+    $('li.sector_drawer div').css("background-color", "#6EAC2C");
+    $('ul.sectors').css("background-color", "#6EAC2C");            
     $('li.sector_drawer span').addClass('open');   
 }
 
 function collapseImplementors(){
     $('ul.implementors').hide();
-    $('li.implementor_drawer div').css("background-color", "#A5A5A5");
+    $('li.implementor_drawer div').css("background-color", "#0078AE");
     $('li.implementor_drawer span').removeClass('open');   
 }
 
@@ -25,8 +25,8 @@ function adjustStylesAfterExpand(){
 
 function expandImplementors(){
     $('ul.implementors').show();
-    $('li.implementor_drawer div').css("background-color", "#054862");
-    $('ul.implementors').css("background-color", "#054862");
+    $('li.implementor_drawer div').css("background-color", "#6EAC2C");
+    $('ul.implementors').css("background-color", "#6EAC2C");
     $('li.implementor_drawer span').addClass('open');   
 }
 
@@ -57,14 +57,14 @@ $(document).ready(function() {
         OpenLayers.DOTS_PER_INCH = 1;
     }
 
-    $('ul.sectors').hide();
-    $('ul.implementors').hide();
+    $('#filterable_criteria ul.sectors').hide();
+    $('#filterable_criteria ul.implementors').hide();
     
-    $('span#sector').click(function() {
-        if ($('li.implementor_drawer span.open').size() !== 0) {
+    $('#filterable_criteria li.sector_drawer div').click(function() {
+        if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
             collapseImplementors();
         }
-        if ($('li.sector_drawer span.open').size() !== 0) {
+        if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
         }
         else {
@@ -72,11 +72,11 @@ $(document).ready(function() {
         }
     });
     
-    $('span#implementor').click(function() {
-        if ($('li.sector_drawer span.open').size() !== 0) {
+    $('#filterable_criteria li.implementor_drawer div').click(function() {
+        if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
         }
-        if ($('li.implementor_drawer span.open').size() !== 0) {
+        if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
             collapseImplementors();
         }         
         else {
@@ -191,23 +191,22 @@ $(document).ready(function() {
         markers.destroy();
         markers = new OpenLayers.Layer.Markers( "Markers" );
         map.addLayer(markers);
-        cssatrib = "overflow:scroll;height:260px"
-        var html = "<div style="+cssatrib+">";
+        var html = "<ul>";
         for(var i = 0;i<projects.length; i++){
             var project = projects[i];
             var project_name = project.snippet.split(":")[0];
             var project_description = project.snippet.split(":")[1];			    
             var project_text = "<a href=\"/projects/id/" + project.id + "/" +"\">" + 
                                         project_name + '</a><div class="proj_desc">' +  project_description;
-            html += "<li>" + project_text + '</li>';
+            html += "<li>" + project_text + "</li>";
             var marker_icon = icon.clone();
             marker = new OpenLayers.Marker(
                                 new OpenLayers.LonLat(project.longitude, 
                                             project.latitude),marker_icon);
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
-                        markers.addMarker(marker);
+            markers.addMarker(marker);
         }
-        html += '</ol></div>';
+        html += "</ul></div>";
         $("#proj").html(html);
     }
 

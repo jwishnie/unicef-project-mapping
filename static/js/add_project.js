@@ -1,4 +1,6 @@
 jQuery(document).ready(function(){
+    var map;
+    var markers;
     
     OpenLayers.Control.Click = 
         OpenLayers.Class(OpenLayers.Control, {                
@@ -26,14 +28,29 @@ jQuery(document).ready(function(){
         
             trigger: function(e) {
                 var lonlat = map.getLonLatFromViewPortPx(e.xy);
+                markers.destroy();
+                markers = new OpenLayers.Layer.Markers( "Markers" );
+                map.addLayer(markers);
+                var marker_icon = icon.clone();
+                marker = new OpenLayers.Marker(
+                                    new OpenLayers.LonLat(lonlat.lon, 
+                                                lonlat.lat),marker_icon);
+                // marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
+                markers.addMarker(marker);
                 jQuery("#id_latitude")[0].value = lonlat.lat;
                 jQuery("#id_longitude")[0].value = lonlat.lon;
             }
         });
     
     
-    var map;
     map = new OpenLayers.Map('map');
+    
+    markers = new OpenLayers.Layer.Markers( "Markers" );
+	map.addLayer(markers);
+	var size = new OpenLayers.Size(10,17);
+	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
+    
     var ol_wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
         "http://labs.metacarta.com/wms/vmap0",
         {layers: 'basic'} );
@@ -42,6 +59,8 @@ jQuery(document).ready(function(){
     var click = new OpenLayers.Control.Click();
     map.addControl(click);
     click.activate();
+    
+    plot_project();
     
     
 
@@ -98,13 +117,37 @@ jQuery(document).ready(function(){
 	    jQuery("#video_url_" + this.id.split("_")[2]).remove();
 	}
 	
+	function plot_project(){
+	    lat = jQuery("#id_latitude")[0].value;
+        lon = jQuery("#id_longitude")[0].value;
+        if(!is_empty(lat) && !is_empty(lon)){
+            markers.destroy();
+            markers = new OpenLayers.Layer.Markers( "Markers" );
+            map.addLayer(markers);
+            var marker_icon = icon.clone();
+            marker = new OpenLayers.Marker(
+                                new OpenLayers.LonLat(lon, 
+                                            lat),marker_icon);
+            markers.addMarker(marker);
+        }
+	}
+	
+	function is_empty(string){
+	    var s = string.trim();
+	    return s=="" || s==null;
+	}
 	
 	jQuery("#project-links").html(project_links);
     jQuery("#add_link").click(add_link);
     jQuery("#add_video").click(add_video);
     jQuery(".remove_video").click(remove_video);
     
-
+    jQuery("#id_latitude").blur(function () {
+        plot_project();
+    });
+    jQuery("#id_longitude").blur(function () {
+        plot_project();
+    });
 	
 	jQuery('.file-remove-edit').click(function(){
 		var filename = jQuery(this).prev().prev().html();

@@ -87,8 +87,8 @@ $(document).ready(function() {
     
     function styleDialogBox(){
         var doc_height = document.body.offsetHeight;
-        var ui_dialog_height = $(".ui-dialog")[0].style.height;
-        var top = height - ui_dialog_height + 20;
+        var ui_dialog_height = 425;
+        var top = doc_height - ui_dialog_height - 100;
         
         $(".ui-dialog").css("top", top+"px");
         $(".ui-dialog").css("width", "450px");

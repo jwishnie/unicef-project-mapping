@@ -4,12 +4,13 @@ from tinymce.widgets import TinyMCE
 
 from maplayers.countries import COUNTRIES
 from maplayers.models import Project
+from decimal import Decimal
 
 class ProjectForm(forms.Form): 
     name = forms.CharField(max_length=30) 
     description = forms.CharField(widget=TinyMCE(attrs={'cols' : 80, 'rows' : 20}))
-    latitude = forms.DecimalField(max_digits=10, decimal_places=6)
-    longitude = forms.DecimalField(max_digits=10, decimal_places=6)
+    latitude = forms.DecimalField()
+    longitude = forms.DecimalField()
     location = forms.CharField(max_length=50)
     website_url = forms.URLField()
     project_image = forms.URLField()
@@ -17,6 +18,23 @@ class ProjectForm(forms.Form):
     project_implementors = forms.CharField(max_length = 500)
     imageset_feedurl = forms.CharField(max_length=1000, required=False)
     tags = forms.CharField(max_length=500, required=False)
+    
+    def clean_latitude(self):
+        cleaned_data = self.cleaned_data
+        lat = cleaned_data.get("latitude")
+        if lat<-90 or lat>90:
+            self._errors['latitude'] = ErrorList([u'Latitude should be between -90 to 90'])
+        lat = lat.quantize(Decimal('.0000001'))
+        return lat
+        
+    def clean_longitude(self):
+        cleaned_data = self.cleaned_data
+        lon = cleaned_data.get("longitude")
+        if lon<-180 or lon>180:
+            self._errors['longitude'] = ErrorList([u'Longitude should be between -180 to 180'])
+        lon = lon.quantize(Decimal('.0000001'))
+        return lon
+    
     
 class AdminUnitForm(forms.Form):
     name = forms.CharField(max_length=50, required=True)

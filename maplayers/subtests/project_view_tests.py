@@ -3,7 +3,7 @@
 from django.test import TestCase
 from django.test.client import Client
 from maplayers.models import Project
-from maplayers.views import convert_to_json 
+from maplayers.views import convert_to_json, _get_bounding_box_for_project
 from maplayers.constants import PROJECT_STATUS
 from  mock import Mock
 from maplayers import views
@@ -96,13 +96,33 @@ class ProjectPage(TestCase):
         self.assertTrue(web_client.login(username='author', password="author"))
         response = web_client.get("/projects/id/8")
         self.assertTrue(200, response.status_code)
-
+        
+        
+    def test_bounding_box_for_project(self):
+        project = MockProjectForBoundingBox({'latitude' : 1, 'longitude' : 1})
+        subproject1 = MockProjectForBoundingBox({'latitude' : 1, 'longitude' : 5})
+        subproject2 = MockProjectForBoundingBox({'latitude' : 1, 'longitude' : -5})
+        subproject3 = MockProjectForBoundingBox({'latitude' : 5, 'longitude' : 1})
+        subproject4 = MockProjectForBoundingBox({'latitude' : -5, 'longitude' : 1})
+        
+        bbox = _get_bounding_box_for_project(project, [subproject1, subproject2, subproject3, subproject4])
+        expected_bbox = {'top': 15, 'right': 25, 'bottom': -15, 'left': -25}
+        self.assertEquals(expected_bbox, bbox)
+        
+        
 def to_json(projects):
     result = []
     for project in projects:
         result.append('''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d, "sectors" : %s, "implementors" : %s}''' %(project.latitude, project.longitude, project.snippet(), project.id, project.sectors_in_json(), project.implementors_in_json()))
     return "[" + ", ".join(result) + "]"
-
+    
+def _create_mock_project(hash_values):
+    mock_project = Mock()
+    for key in hash_values:
+        mock_project.key = hash_values[key]
+    return mock_project
+    
+    
 class MockProject:
     def snippet(self):
         return "This is test"
@@ -110,4 +130,11 @@ class MockProject:
         return '["Disaster Aid"]'
     def implementors_in_json(self):
         return '["Unicef"]'
+        
+        
+class MockProjectForBoundingBox(object):
+    def __init__(self, init_hash):
+        self.latitude = init_hash['latitude']
+        self.longitude = init_hash['longitude']
+        
         
