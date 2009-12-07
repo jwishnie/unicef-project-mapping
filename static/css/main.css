@@ -13,14 +13,12 @@ img {
 
 .main_wrapper {
     margin: auto;
-	width: 70em;
+	width: 80%;
 }
 
 #header,
 #explore_nav,
 #main_nav ul,
-ul.sectors,
-ul.implementors,
 #main_pane,
 #image_pane,
 #review_suggestions .suggestion {
@@ -29,8 +27,10 @@ ul.implementors,
 
 ul.sectors,
 ul.implementors {
+    color: #FFF;
     clear: both;
     padding: 10px;
+    margin-bottom: 2px;
 }
 
 #main_nav {
@@ -53,13 +53,17 @@ ul.implementors {
     padding: 5px 18px 0 5px;
 }
 
+#filterable_criteria {
+    font-size: 9pt;
+    float: left;
+    height: 378px;
+    width: 175px;
+    margin: 0 2px;
+}
+
 .round_corner {
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-}
-
-.ten_pt_text {
-	font-size: 10pt;
 }
 
 .floatleft {
@@ -188,21 +192,25 @@ li a {
 
 #map_canvas{
     float: left;
-    width: 60%;
+    width: 51%;
     height: 400px;
     margin-top: 5px;
 }
 
 #projects {
-    float: left;
-    width: 39%;
+    float: right;
+    width: 350px;
     height: 400px;
-    margin: 0 0 0 5px;  
+    margin: 0 5px 0 0;
     font-size: 9pt;
 }
 
+#projects #tabs {
+    height: 371px;
+}
+
 #proj {
-    height: 315px;
+    height: 320px;
     overflow: auto;
 }
 
@@ -238,17 +246,13 @@ ul.drawers {
 }
 
 li.drawer {
-    padding-right: 2px;
+    padding-bottom: 2px;
 }
 
 li.drawer div {
     background-color: #A5A5A5;
     color: #FFF;
     padding: 5px;
-}
-
-li.drawer div span {
-    background: transparent url('../img/collapsed.png') no-repeat 100% 60%;
 }
 
 #project_search {
@@ -287,6 +291,7 @@ span.drawer-handle {
 
 li.sector_drawer div,
 li.implementor_drawer div {
+    background: #0078AE url(../img/collapsed.png) no-repeat scroll 98% 50%;
     width: auto;
 }
 
