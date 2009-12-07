@@ -16,8 +16,8 @@ from maplayers.constants import GROUPS, PROJECT_STATUS
 class Project(models.Model): 
     name = models.CharField(max_length=30, null=True, blank=True) 
     description = tinymce_models.HTMLField(null=True, blank=True)
-    latitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=10, decimal_places=7, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=10, decimal_places=7, null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
     project_image = models.URLField(null=True, blank=True)

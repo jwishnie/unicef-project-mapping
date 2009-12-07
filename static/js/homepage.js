@@ -205,7 +205,7 @@ $(document).ready(function() {
                                 new OpenLayers.LonLat(project.longitude, 
                                             project.latitude),marker_icon);
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
-                        markers.addMarker(marker);
+            markers.addMarker(marker);
         }
         html += '</ol></div>';
         $("#proj").html(html);
