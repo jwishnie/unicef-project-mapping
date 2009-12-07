@@ -192,15 +192,14 @@ $(document).ready(function() {
         markers.destroy();
         markers = new OpenLayers.Layer.Markers( "Markers" );
         map.addLayer(markers);
-        cssatrib = "overflow:scroll;height:260px"
-        var html = "<div style="+cssatrib+">";
+        var html = "<ul>";
         for(var i = 0;i<projects.length; i++){
             var project = projects[i];
             var project_name = project.snippet.split(":")[0];
             var project_description = project.snippet.split(":")[1];			    
             var project_text = "<a href=\"/projects/id/" + project.id + "/" +"\">" + 
                                         project_name + '</a><div class="proj_desc">' +  project_description;
-            html += "<li>" + project_text + '</li>';
+            html += "<li>" + project_text + "</li>";
             var marker_icon = icon.clone();
             marker = new OpenLayers.Marker(
                                 new OpenLayers.LonLat(project.longitude, 
@@ -208,7 +207,7 @@ $(document).ready(function() {
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
                         markers.addMarker(marker);
         }
-        html += '</ol></div>';
+        html += "</ul></div>";
         $("#proj").html(html);
     }
 

@@ -194,8 +194,6 @@ li a {
 }
 
 #projects {
-    background-color: #E8FFA2;
-    color: #6A8512;
     float: left;
     width: 39%;
     height: 400px;
@@ -203,7 +201,12 @@ li a {
     font-size: 9pt;
 }
 
-#projects a {
+#proj {
+    height: 315px;
+    overflow: auto;
+}
+
+#proj a {
     font-weight: bold;
     color: #6A8512;
 }
@@ -215,15 +218,7 @@ li a {
     color: #FFF;
 }
 
-.project_list {
-    background-color: #FFF;
-    margin: 3px;
-    border: 1px solid;
-    height: 366px;
-    overflow: auto;
-}
-
-.proj_desc {
+#proj .proj_desc {
     padding-bottom: 10px;
 }
 
