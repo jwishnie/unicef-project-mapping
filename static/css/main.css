@@ -301,6 +301,10 @@ table#projects td {
     text-align: left;
 }
 
+.back_to_top {
+    float: right;
+}
+
 /*ERRORS*/
 .error {
     color: #FF0000;
