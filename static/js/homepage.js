@@ -320,7 +320,7 @@ $(document).ready(function() {
     function projectview(){
         var switcher = map.getControlsByClass("OpenLayers.Control.LayerSwitcher");
         if(switcher.length > 0){
-            Array.forEach(switcher, function(l){
+            jQuery.each(switcher, function(l){
                 map.removeControl(l);
             });
         }
