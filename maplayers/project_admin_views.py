@@ -120,6 +120,7 @@ def file_upload(request):
     project_id = request.POST.get('project_id')
     file_size = uploaded_file.size
     destination_name = "static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
+    _create_dir_if_not_exists(destination_name)
     destination = open(destination_name, 'wb+')
     for chunk in uploaded_file.chunks(): 
         destination.write(chunk) 
@@ -422,5 +423,12 @@ def _publish_or_delete_comments(request, action):
         ProjectComment.objects.filter(id__in=comment_ids).delete()
     else:
         ProjectComment.objects.filter(id__in=comment_ids).update(status=COMMENT_STATUS.PUBLISHED)
+        
+
+def _create_dir_if_not_exists(filename):
+    dir_name = os.path.dirname(filename)
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
 
 

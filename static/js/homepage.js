@@ -141,7 +141,6 @@ $(document).ready(function() {
 		queryString += constructQueryString($(".sectors input[type=checkbox]:checked"));
 		queryString += constructQueryString($(".implementors input[type=checkbox]:checked"));
 		var boundingBox = map.getExtent();
-		console.log("left :%s bottom :%s right :%s top:%s", boundingBox.left,boundingBox.bottom, boundingBox.right, boundingBox.top);
 		var url = document.location.protocol + "//" + document.location.host + 
 				  "/?left=" + boundingBox.left + "&bottom=" + 
 				  boundingBox.bottom + "&right=" + boundingBox.right + 
@@ -320,7 +319,7 @@ $(document).ready(function() {
     function projectview(){
         var switcher = map.getControlsByClass("OpenLayers.Control.LayerSwitcher");
         if(switcher.length > 0){
-            Array.forEach(switcher, function(l){
+            jQuery.each(switcher, function(l){
                 map.removeControl(l);
             });
         }
