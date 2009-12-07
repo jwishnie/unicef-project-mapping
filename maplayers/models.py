@@ -143,7 +143,16 @@ class AdministrativeUnit(models.Model):
     name = models.CharField(max_length = 20)
     region_type = models.CharField(max_length=10)
     country = models.CharField(max_length=50)
-    region_statistics = tinymce_models.HTMLField(null=True, blank=True)
+    health = tinymce_models.HTMLField(null=True, blank=True)
+    economy = tinymce_models.HTMLField(null=True, blank=True)
+    environment = tinymce_models.HTMLField(null=True, blank=True)
+    governance = tinymce_models.HTMLField(null=True, blank=True)
+    infrastructure = tinymce_models.HTMLField(null=True, blank=True)
+    social_sector = tinymce_models.HTMLField(null=True, blank=True)
+    agriculture = tinymce_models.HTMLField(null=True, blank=True)
+    dev_partners = tinymce_models.HTMLField(null=True, blank=True)
+    recent_reports = tinymce_models.HTMLField(null=True, blank=True)
+    resources = tinymce_models.HTMLField(null=True, blank=True)
 
     class Admin:
         pass
