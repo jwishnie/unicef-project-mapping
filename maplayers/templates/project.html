@@ -18,9 +18,8 @@
 		var imgurl = "{{ img_url }}";
 		var projects = new Array();
 		{% for subproject in subprojects %}
-		projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproject.longitude}}});
+		projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproject.longitude}} });
 		{% endfor %}
-		
 	</script>
 
 	
