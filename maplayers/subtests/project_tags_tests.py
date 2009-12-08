@@ -92,6 +92,26 @@ class ProjectTagsTest(TestCase):
     def test_should_change_flickr_image_from_medium_to_actual(self):
         image_url = "http://www.flickr.com/static/unicef_m.jpg"
         self.assertEquals('http://www.flickr.com/static/unicef.jpg', project_tags.get_img(image_url))
+        
+    def test_should_return_excel_resource_icon_link_based_on_file_extension(self):
+        resource = Mock()
+        resource.title = "excel-resource.xls"
+        self.assertEquals('/static/img/ms_excel.jpg', project_tags.resource_icon(resource))
+
+    def test_should_return_word_resource_icon_link_based_on_file_extension(self):
+        resource = Mock()
+        resource.title = "excel-resource.doc"
+        self.assertEquals('/static/img/ms_word.jpg', project_tags.resource_icon(resource))
+
+    def test_should_return_mp3_resource_icon_link_based_on_file_extension(self):
+        resource = Mock()
+        resource.title = "excel-resource.mp3"
+        self.assertEquals('/static/img/mp3.jpg', project_tags.resource_icon(resource))                    
+
+    def test_should_return_no_resource_icon_link_if_extension_not_supported(self):
+        resource = Mock()
+        resource.title = "excel-resource.xyz"
+        self.assertEquals('', project_tags.resource_icon(resource))        
 
     ### Non Mock tests    
     def test_my_projects_link_should_show_notifications(self):
@@ -108,4 +128,3 @@ class ProjectTagsTest(TestCase):
         editor = User.objects.get(id=5)
         html_snippet = project_tags.projects_for_review_link(editor)
         self.assertEquals('<li><a href="/projects_for_review/">Projects for Review<span class="notification">3</span></a></li>', html_snippet)
-        

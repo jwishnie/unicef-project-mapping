@@ -32,6 +32,22 @@
     color: blue;
 }
 
+li.file {
+    overflow: hidden;
+}
+
+.resource_icon {
+    display: block;
+    height: 38px;
+    width: 36px;
+    float:left;
+}
+
+#main_content li.file div {
+    float: left;
+    padding: 8px 0 0 8px;
+}
+
 #add_video{
     margin-left: 200px;
 }

@@ -79,11 +79,14 @@ def project(request, project_id, project_manager=Project.objects):
     bbox = _get_bounding_box_for_project(project, subprojects)
     implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
     tags = project.tags.split(" ")
+    resources = project.resource_set.all()
     context = {'project': project, 
                'links' : project.link_set.all(), 
                'rss_img_feed_url': project.imageset_feedurl, 
                'subprojects' : subprojects, 
-               'implementors' : implementors, 'tags' : tags}
+               'implementors' : implementors, 
+               'tags' : tags,
+               'resources' : resources}
     context.update(bbox)          
     
     return render_to_response('project.html', context,
