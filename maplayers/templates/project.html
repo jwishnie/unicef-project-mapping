@@ -96,11 +96,24 @@
 							
 							{% if tags %}
 								<div id="tags">
+									<label>Tags : </label>
 									{% for tag in tags %}
 									  <div class="sub_div"><a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></div>
-									{%endfor%}
+									{% endfor %}
 								</div>
-							{% endif %}                
+							{% endif %}
+							
+							{% if resources %}
+								<div id="resources">
+									<label>Resources : </label>
+									{% for resource in resources %}
+									<div class="resource">
+									  	<div class="resource_icon" style="background:transparent url({% resource_icon resource %}) no-repeat scroll top left"></div>
+										<div class="sub_div"><a href="/static/resources/{{resource}}">{{resource.title}}</a></div>
+									</div>	
+									{% endfor %}
+								</div>
+							{% endif %}
 						</div>
 					</div>
 					

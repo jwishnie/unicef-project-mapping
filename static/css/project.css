@@ -73,3 +73,19 @@ label {
     padding-top: 20px;
     text-decoration: underline;    
 }
+
+#resources .resource {
+    overflow: hidden;
+}
+
+.resource_icon {
+    display: block;
+    height: 38px;
+    width: 36px;
+    float:left;
+}
+
+#resources .sub_div {
+    float: left;
+    padding: 8px 0 0 8px;    
+}
