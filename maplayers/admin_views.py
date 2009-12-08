@@ -102,7 +102,16 @@ def edit_administrative_unit(request, id):
         form.fields['name'].initial = admin_unit.name
         form.fields['country'].initial = admin_unit.country
         form.fields['region_type'].initial = admin_unit.region_type
-        form.fields['region_statistics'].initial = admin_unit.region_statistics
+        form.fields['health'].initial = admin_unit.health
+        form.fields['economy'].initial = admin_unit.economy
+        form.fields['environment'].initial = admin_unit.environment
+        form.fields['governance'].initial = admin_unit.governance
+        form.fields['infrastructure'].initial = admin_unit.infrastructure
+        form.fields['social_sector'].initial = admin_unit.social_sector
+        form.fields['agriculture'].initial = admin_unit.agriculture
+        form.fields['dev_partners'].initial = admin_unit.dev_partners
+        form.fields['recent_reports'].initial = admin_unit.recent_reports
+        form.fields['resources'].initial = admin_unit.resources
 
         return render_to_response('add_admin_unit.html',
                                   {
@@ -124,7 +133,16 @@ def _create_admin_unit(form):
     admin_unit.name = form.cleaned_data['name']
     admin_unit.country = form.cleaned_data['country']
     admin_unit.region_type = form.cleaned_data['region_type']
-    admin_unit.region_statistics = form.cleaned_data['region_statistics']
+    admin_unit.health = form.cleaned_data['health']
+    admin_unit.economy = form.cleaned_data['economy']
+    admin_unit.environment = form.cleaned_data['environment']
+    admin_unit.governance = form.cleaned_data['governance']
+    admin_unit.infrastructure = form.cleaned_data['infrastructure']
+    admin_unit.social_sector = form.cleaned_data['social_sector']    
+    admin_unit.agriculture = form.cleaned_data['agriculture']
+    admin_unit.dev_partners = form.cleaned_data['dev_partners']
+    admin_unit.recent_reports = form.cleaned_data['recent_reports']
+    admin_unit.resources = form.cleaned_data['resources']
     admin_unit.save()
 
 def _edit_admin_unit(form, unit_id):
@@ -132,7 +150,16 @@ def _edit_admin_unit(form, unit_id):
     admin_unit.name = form.cleaned_data['name']
     admin_unit.country = form.cleaned_data['country']
     admin_unit.region_type = form.cleaned_data['region_type']
-    admin_unit.region_statistics = form.cleaned_data['region_statistics']
+    admin_unit.health = form.cleaned_data['health']
+    admin_unit.economy = form.cleaned_data['economy']
+    admin_unit.environment = form.cleaned_data['environment']
+    admin_unit.governance = form.cleaned_data['governance']
+    admin_unit.infrastructure = form.cleaned_data['infrastructure']
+    admin_unit.social_sector = form.cleaned_data['social_sector']
+    admin_unit.agriculture = form.cleaned_data['agriculture']
+    admin_unit.dev_partners = form.cleaned_data['dev_partners']
+    admin_unit.recent_reports = form.cleaned_data['recent_reports']
+    admin_unit.resources = form.cleaned_data['resources']
     admin_unit.save()
 
 
