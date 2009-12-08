@@ -49,7 +49,7 @@ jQuery(document).ready(function(){
 	map.addLayer(markers);
 	var size = new OpenLayers.Size(10,17);
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-	var icon = new OpenLayers.Icon('/static/img/mm_20_blue.png',size,offset);
+	var icon = new OpenLayers.Icon('/static/img/bright_red_marker.png',size,offset);
     
     var ol_wms = new OpenLayers.Layer.VirtualEarth("Hybrid", {
         type: VEMapStyle.Hybrid
