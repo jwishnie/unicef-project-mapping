@@ -42,6 +42,7 @@ $(document).ready(function() {
     $(function() {
     		$("#tabs").tabs();
     	});
+    	
     
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
@@ -246,7 +247,11 @@ $(document).ready(function() {
 			                    OpenLayers.Event.stop(e);
 			
 }
-        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
+        // var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
+        var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
+            type: VEMapStyle.Hybrid
+        });
+        
         map.addLayer(layer);
         var gs = "http://"+window.location.host+"/geoserver/ows";
         var dists = new OpenLayers.Layer.WMS(

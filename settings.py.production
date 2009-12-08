@@ -122,7 +122,7 @@ JQUERY_PLUGINS = STATIC_URL+'/js/jqueryplugins'
 FANCY_UPLOADER = STATIC_URL + "/js/fancyuploader"
 FANCY_UPLOADER_SWF = FANCY_UPLOADER + "/Swiff.Uploader.swf"
 JQUERY_UI_CUSTOM = STATIC_URL + '/js/jquery-ui/jquery-ui-1.7.2.custom.min.js'
-
+BING = 'http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2&mkt=en-us'
 
 LOGIN_REDIRECT_URL = '/'
 
