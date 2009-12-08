@@ -8,6 +8,23 @@
 <link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
 <script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
 <script type="text/javascript" src="{{ tinymce_url }}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".togglefield").click(function(){
+		var id_name = this.id.substring(3);
+		if($(this).attr("show") == "true"){
+			$(this).html("+");
+			$("#"+id_name).hide();
+			$(this).attr("show", "false");
+		}else{
+			$(this).html("-");
+			$("#"+id_name).show();
+			$(this).attr("show", true);
+		}
+	});	
+});
+
+</script>
 {% endblock %}
 {% block page_content %}
 
@@ -29,10 +46,65 @@
 				<label for="id_region_type">Region type:</label> 
 				{{ form.region_type }}
 			</div>
+			<a class="togglefield" id="id-health" show="hide">+</a>			
 			<div>
-				{{ form.region_statistics.errors }}
-				<label for="id_statistical_data">Statistical Data:</label> 
-				{{ form.region_statistics }}
+				{{ form.health.errors}}
+				<label for="id_health">Health:</label>
+				<div id="health" style="display:none">{{ form.health}}</div>
+			</div>
+			<a class="togglefield" id="id-economy" show="hide">+</a>			
+			<div>
+				{{ form.economy.errors}}
+				<label for="id_economy">Economy:</label>
+			<div id="economy" style="display:none">{{ form.economy}}</div>
+			</div>
+			<a class="togglefield" id="id-environment" show="hide">+</a>			
+			<div>
+				{{ form.environment.errors}}
+				<label for="id_environment">Environment:</label>
+				<div id="environment" style="display:none">{{ form.environment}}</div>
+			</div>
+			<a class="togglefield" id="id-governance" show="hide">+</a>			
+			<div>
+				{{ form.governance.errors}}
+				<label for="id_governance">Governance:</label>
+				<div id="governance" style="display:none">{{ form.governance}}</div>
+			</div>
+			<a class="togglefield" id="id-infrastructure" show="hide">+</a>			
+			<div>
+				{{ form.infrastructure.errors}}
+				<label for="id_infrastructure">Infrastructure:</label>
+				<div id="infrastructure" style="display:none">{{ form.infrastructure}}</div>
+			</div>
+			<a class="togglefield" id="id-social_sector" show="hide">+</a>			
+			<div>
+				{{ form.social_sector.errors}}
+				<label for="id_social_sector">Social Sector:</label>
+				<div id="socialsector" style="display:none">{{ form.social_sector}}</div>
+			</div>
+			<a class="togglefield" id="id-agriculture" show="hide">+</a>			
+			<div>
+				{{ form.agriculture.errors}}
+				<label for="id_agriculture">Agriculture:</label>
+				<div id="agriculture" style="display:none">{{ form.agriculture}}</div>
+			</div>
+			<a class="togglefield" id="id-dev_partners" show="hide">+</a>			
+			<div>
+				{{ form.dev_partners.errors}}
+				<label for="id_dev_partners">Dev Partners:</label>
+				<div id="dev_partners" style="display:none">{{ form.dev_partners}}</div>
+			</div>
+			<a class="togglefield" id="id-recent_reports" show="hide">+</a>			
+			<div>
+				{{ form.recent_reports.errors}}
+				<label for="id_recent_reports">Recent Reports:</label>
+				<div id="recent_reports" style="display:none">{{ form.recent_reports}}</div>
+			</div>
+			<a class="togglefield" id="id-resources" show="hide">+</a>			
+			<div>
+				{{ form.resources.errors}}
+				<label for="id_resources">Resources:</label>
+				<div id="resources" style="display:none">{{ form.resources}}</div>
 			</div>
                 </fieldset>
                 <div class="main_action">

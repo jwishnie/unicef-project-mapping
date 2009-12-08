@@ -37,10 +37,20 @@ class ProjectForm(forms.Form):
     
     
 class AdminUnitForm(forms.Form):
-    name = forms.CharField(max_length=50)
-    region_type = forms.CharField(max_length=20)
+    name = forms.CharField(max_length=50, required=True)
+    region_type = forms.CharField(max_length=20, required=True)
     country = forms.ChoiceField(choices=COUNTRIES)
-    region_statistics = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows':30}))
+    health = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    economy = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    environment = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    governance = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    infrastructure = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    social_sector = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    agriculture = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    dev_partners = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    recent_reports = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    resources = forms.CharField(widget=TinyMCE(attrs={'cols':50, 'rows':10}), required=False)
+    
     
 class UserForm(forms.Form):
     username = forms.CharField(max_length=30) 

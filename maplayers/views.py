@@ -74,6 +74,7 @@ def project(request, project_id, project_manager=Project.objects):
     if not (project.is_editable_by(request.user) or project.is_published()): raise Http404
     
     subprojects = project.project_set.filter(status=PROJECT_STATUS.PUBLISHED)
+    bbox = _get_bounding_box_for_project(project, subprojects)
     implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
     tags = project.tags.split(" ")
     return render_to_response('project.html', 
@@ -326,5 +327,19 @@ def _create_user(form):
     user = User.objects.create_user(username, email, password)
     user.groups.add(Group.objects.get(name=GROUPS.PROJECT_AUTHORS))
     user.save()
-
+    
+def _get_bounding_box_for_project(project, subprojects):
+    latitudes = [project.latitude]
+    longitudes = [project.longitude]
+    
+    for subproject in subprojects:
+        latitudes.append(subproject.latitude)
+        longitudes.append(subproject.longitude)
+    
+    left = (min(longitudes) - 20) if min(longitudes) - 20 > -180 else min(longitudes)
+    right = (max(longitudes) + 20) if max(longitudes) + 20 < 180 else max(longitudes)
+    top = (max(latitudes) + 10) if max(latitudes) + 10 < 90 else max(latitudes)
+    bottom = (min(latitudes) - 10) if min(latitudes) - 10 > -90 else min(latitudes)
+    return {'left' : left, 'right' : right, 'top' : top, 'bottom' : bottom}
+        
 
