@@ -37,7 +37,6 @@ function populateRegionStats(response){
 	    });
 }
 
-// On load
 $(document).ready(function() {
     $(function() {
     		$("#tabs").tabs();
