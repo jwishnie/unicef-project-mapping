@@ -73,3 +73,8 @@ label {
     padding-top: 20px;
     text-decoration: underline;    
 }
+
+#nearby_projects{
+    text-align: center;
+    font-weight: bold;
+}

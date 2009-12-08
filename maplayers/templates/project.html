@@ -17,6 +17,10 @@
 		var longitude = {{ project.longitude }};
 		var imgurl = "{{ img_url }}";
 		var projects = new Array();
+		var left = {{left}};
+		var right = {{right}};
+		var top = {{top}};
+		var bottom = {{bottom}};
 		{% for subproject in subprojects %}
 		projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproject.longitude}} });
 		{% endfor %}
@@ -48,6 +52,7 @@
 					</div>
 					<div id="main_pane">
 						<div id="right_pane">
+							<div id="nearby_projects">Show projects around this location</div>
 							<div id="map_canvas" class="olMap" style="width: 460px; height:256px; border=1px solid #CCCCCC"></div>
 						</div>
 													

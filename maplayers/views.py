@@ -24,6 +24,8 @@ from datetime import datetime
 import simplejson as json
 from maplayers.models import AdministrativeUnit
 from admin_request_parser import convert_text_to_dicts
+
+
 def homepage(request):
     sectors = _get_sectors(request)
     sector_ids = [sector.id for sector in sectors]
@@ -77,14 +79,14 @@ def project(request, project_id, project_manager=Project.objects):
     bbox = _get_bounding_box_for_project(project, subprojects)
     implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
     tags = project.tags.split(" ")
-    return render_to_response('project.html', 
-			      {'project': project, 
-			       'links' : project.link_set.all(), 
-			       'rss_img_feed_url': project.imageset_feedurl,
-			       'subprojects' : subprojects,
-			       'implementors' : implementors,
-			       'tags' : tags,
-			       },
+    context = {'project': project, 
+               'links' : project.link_set.all(), 
+               'rss_img_feed_url': project.imageset_feedurl, 
+               'subprojects' : subprojects, 
+               'implementors' : implementors, 'tags' : tags}
+    context.update(bbox)          
+    
+    return render_to_response('project.html', context,
 			       context_instance=RequestContext(request)
 			      )
 
@@ -336,10 +338,10 @@ def _get_bounding_box_for_project(project, subprojects):
         latitudes.append(subproject.latitude)
         longitudes.append(subproject.longitude)
     
-    left = (min(longitudes) - 20) if min(longitudes) - 20 > -180 else min(longitudes)
-    right = (max(longitudes) + 20) if max(longitudes) + 20 < 180 else max(longitudes)
-    top = (max(latitudes) + 10) if max(latitudes) + 10 < 90 else max(latitudes)
-    bottom = (min(latitudes) - 10) if min(latitudes) - 10 > -90 else min(latitudes)
+    left = (min(longitudes) - 2) if min(longitudes) - 2 > -180 else min(longitudes)
+    right = (max(longitudes) + 2) if max(longitudes) + 2 < 180 else max(longitudes)
+    top = (max(latitudes) + 1) if max(latitudes) + 1 < 90 else max(latitudes)
+    bottom = (min(latitudes) - 1) if min(latitudes) - 1 > -90 else min(latitudes)
     return {'left' : left, 'right' : right, 'top' : top, 'bottom' : bottom}
         
 
