@@ -106,7 +106,7 @@ class ProjectPage(TestCase):
         subproject4 = MockProjectForBoundingBox({'latitude' : -5, 'longitude' : 1})
         
         bbox = _get_bounding_box_for_project(project, [subproject1, subproject2, subproject3, subproject4])
-        expected_bbox = {'top': 15, 'right': 25, 'bottom': -15, 'left': -25}
+        expected_bbox = {'top': 6, 'right': 7, 'bottom': -6, 'left': -7}
         self.assertEquals(expected_bbox, bbox)
         
         

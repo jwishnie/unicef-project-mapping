@@ -89,3 +89,8 @@ label {
     float: left;
     padding: 8px 0 0 8px;    
 }
+
+#nearby_projects{
+    text-align: center;
+    font-weight: bold;
+}    
