@@ -197,7 +197,7 @@ $(document).ready(function() {
             var project_name = project.snippet.split(":")[0];
             var project_description = project.snippet.split(":")[1];			    
             var project_text = "<a href=\"/projects/id/" + project.id + "/" +"\">" + 
-                                        project_name + '</a><div class="proj_desc">' +  project_description;
+                                        project_name + '</a><div class="proj_desc">' +  project_description + '</div>';
             html += "<li>" + project_text + "</li>";
             var marker_icon = icon.clone();
             marker = new OpenLayers.Marker(
@@ -206,7 +206,7 @@ $(document).ready(function() {
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
             markers.addMarker(marker);
         }
-        html += "</ul></div>";
+        html += "</ul>";
         $("#proj").html(html);
     }
 
