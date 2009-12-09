@@ -273,6 +273,15 @@ li.drawer div {
     margin: 5px 5px 0;
 }
 
+#project_search span {
+    padding: 0 50px 0 0;
+}
+
+#project_search span a {
+    font-size: 9pt;
+    color: #FFF;
+}
+
 #project_search input {
     border-style: none;
     padding: 5px;
@@ -282,7 +291,9 @@ li.drawer div {
     padding: 3px;
     font-size: 1em;
     color: #fff;
-    background-color: #0C7094;
+    background: #0099ff url('../img/search.gif') no-repeat scroll top left;
+    width: 22px;
+    padding: 1px 0 3px;
 }
 
 span.drawer-handle {
