@@ -14,8 +14,8 @@ title("School for all")
 follow("Login")
 code(200)
 title("UNICEF Maps")
-fv("1", "username", "admin")
-fv("1", "password", "admin")
+fv("2", "username", "admin")
+fv("2", "password", "admin")
 submit()
 
 # Redirect to page before login with logged in state
