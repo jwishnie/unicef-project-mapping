@@ -66,7 +66,8 @@ def sub_project_header(parent_project):
 				</div>
                  """ % (parent_project.id, parent_project.name)
     return result
-    
+
+
 @register.simple_tag
 def project_video(project):
     video = project.default_video()
@@ -196,6 +197,23 @@ def add_project_link():
     result = """<a href='/add_project?parent_id=' id="add_project">Add a new project</a>"""
     return result    
     
+@register.simple_tag
+def project_image(project):
+    result = []
+    images = project.projectphoto_set.all()
+    if len(images) == 1 :
+        project_image = images[0]
+        filename = project_image.filename
+        #result.append('<span class="file-title">%s</span>' % filename)
+        result.append('<img alt="%s" src="../../static/project-photos/%s" />' % (filename, filename))
+        result.append('<a class="photo-remove-edit" href="#">remove</a>')
+        result.append('<a href="#" style="display:none" id="photo-attach" class="photo-attach" name="photo-attach">Attach a file</a>')
+    else:
+        result.append('<a href="#" id="photo-attach" class="photo-attach" name="photo-attach">Attach a file</a>')
+        
+    result = "".join(result)
+    return result
+        
     
 @register.simple_tag
 def file_list(resources):
@@ -214,7 +232,7 @@ def file_list(resources):
         result = '<ul id="file-list">' + result + '</ul>'
     return result
     
-    
+   
  
 @register.tag(name='parse_img_rss_feed')
 def do_parse_img_rss_feed(parser, token):

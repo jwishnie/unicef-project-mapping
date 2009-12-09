@@ -86,11 +86,14 @@ FancyUpload3.Attach = new Class({
 });
 
 FancyUpload3.Attach.File = new Class({
-
+    
 	Extends: Swiff.Uploader.File,
-
+    
+    setRemoveURL: function(url){
+              this.ui.removeUrl = url;
+    },
+    
 	render: function() {
-		
 		if (this.invalid) {
 			if (this.validationError) {
 				var msg = MooTools.lang.get('FancyUpload', 'validationErrors')[this.validationError] || this.validationError;
@@ -122,14 +125,14 @@ FancyUpload3.Attach.File = new Class({
 		this.ui.element = new Element('li', {'class': 'file', id: 'file-' + this.id});
 		this.ui.title = new Element('span', {'class': 'file-title', text: this.name});
 		this.ui.size = new Element('span', {'class': 'file-size', text: Swiff.Uploader.formatUnit(this.size, 'b')});
-		
+        
         this.ui.remove = new Element('a', {
                 			'class': 'file-remove',
                 			href: '#',
                 			html: 'remove',
                 			events: {
                 				click: function() {
-                					jQuery.get("/remove_attachment/", {'project_id' : project_id, 'file-name' : this.name});
+                					jQuery.get(this.ui.removeUrl, {'project_id' : project_id, 'file-name' : this.name});
                 					this.remove();
                 					return false;
                 				}.bind(this)

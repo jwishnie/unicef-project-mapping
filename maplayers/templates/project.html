@@ -107,11 +107,12 @@
 					<div class="back_to_top"><a href="#project_details">Back to top</a></div>						
 					
 					<div id="image_pane">
-	                    <div id="project_image">
-	                        <div>Project Image</div>
-	                        <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
-	                    </div>
-
+	                    {% if project.project_image %}
+							<div id="project_image">
+		                        <div>Project Image</div>
+		                        <span><img alt={{project.name}} src="{{project_photo_url}}{{project.project_image}}"/></span>
+		                    </div>
+						{%endif%}
 	                    <div id="photo_set">
 	                        {% parse_img_rss_feed %}
 	                        {% include 'photo_gallery.html' %}

@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 
 from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS, VIMEO_REGEX, YOUTUBE_REGEX, VIDEO_PROVIDER
-from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video
+from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video, ProjectPhoto
 from maplayers.forms import ProjectForm, AdminUnitForm
 from maplayers.utils import html_escape
 import simplejson as json
@@ -130,6 +130,29 @@ def file_upload(request):
     project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project, filesize=file_size))
     return HttpResponse("OK")
     
+def photo_upload(request):
+    uploaded_file = request.FILES['Filedata']
+    uploaded_file_name = request.POST.get('Filename', '')
+    project_id = request.POST.get('project_id')
+    #file_size = uploaded_file.size
+    destination_name = "static/project-photos/"+uploaded_file_name
+    destination = open(destination_name, 'wb+')
+    for chunk in uploaded_file.chunks(): 
+        destination.write(chunk) 
+        destination.close()
+    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
+    project_in_request = Project.objects.get(id=int(project_id))
+    project_in_request.project_image = uploaded_file_name
+    project_in_request.save()
+    try:
+       photo = ProjectPhoto.objects.get(project=project_in_request)
+       photo.filename = uploaded_file_name
+       photo.save()
+    except Exception, ex:
+        print ex
+        project_in_request.projectphoto_set.add(ProjectPhoto(filename=uploaded_file_name, project=project_in_request, alt=uploaded_file_name))
+        project_in_request.save()
+    return HttpResponse("OK")
     
 @login_required
 def project_comments(request, project_id):
@@ -166,6 +189,18 @@ def remove_attachment(request):
     resource.delete()
     return HttpResponse("OK")
 
+@login_required
+def remove_photo(request):
+    project_id = request.GET.get('project_id')
+    filename = request.GET.get('file-name')
+    project_in_request = Project.objects.get(id=int(project_id))
+    project_in_request.project_image = ""
+    project_in_request.save()
+    photo = ProjectPhoto.objects.get(project=project_in_request)
+    destination_filename = "static/project-photos/"+photo.filename
+    os.remove(destination_filename)
+    photo.delete()
+    return HttpResponse("OK")
 
 @login_required                     
 def publish_project(request, project_id):
@@ -282,7 +317,6 @@ def _add_project_details(form, project, request, parent_project=None):
     project.longitude = form.cleaned_data['longitude']
     project.location = form.cleaned_data['location']
     project.website_url = form.cleaned_data['website_url']
-    project.project_image = form.cleaned_data['project_image']
     sector_names = form.cleaned_data['project_sectors']
     implementor_names = form.cleaned_data['project_implementors']
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
@@ -368,7 +402,6 @@ def _create_initial_data_from_project(project):
     form.fields['longitude'].initial = project.longitude
     form.fields['location'].initial = project.location
     form.fields['website_url'].initial = project.website_url
-    form.fields['project_image'].initial = project.project_image
     form.fields['project_sectors'].initial = ", ".join([sector.name for sector in project.sector_set.all()])
     form.fields['project_implementors'].initial = ", ".join([implementor.name for implementor \
                                                             in project.implementor_set.all()])

@@ -82,8 +82,11 @@
 				</div>	
 				<div>
 					<label for="id_project_image">Project image:</label> 
-					{{ form.project_image }}
-					{{ form.project_image.errors}}					
+					
+					{% project_image project %}
+				<!--	<a href="#" id="photo-attach" class="photo-attach" name="photo-attach">Attach a file</a> -->
+					<ul id="photo-list"></ul>
+					
 				</div>
 				{% video_url_tag video_urls %}
 				<div id="add_video_link"><span id="add_video">Add another video</span></div>
@@ -125,8 +128,8 @@
 				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div id="file">
 					{% file_list resources %}
-					<a href="#" id="file-attach" name="file-attach">Attach a file</a>
-					<ul id="file-list"></ul><a href="#" id="file-attach-2" style="display: none;" name="file-attach-2">Attach another file</a>
+					<a href="#" class="file-attach" name="file-attach">Attach a file</a>
+					<ul id="file-list"></ul><a href="#" class="file-attach-2" style="display: none;" name="file-attach-2">Attach another file</a>
 				</div>
 				<div id="project-links"></div>
 				<a href="#" id="add_link">Add another link</a>
