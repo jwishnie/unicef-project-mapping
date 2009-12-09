@@ -14,6 +14,7 @@ from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS, VIMEO_RE
 from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video
 from maplayers.forms import ProjectForm, AdminUnitForm
 from maplayers.utils import html_escape
+from maplayers.video_url import VideoUrl
 import simplejson as json
 from admin_views import my_projects
 
@@ -317,23 +318,15 @@ def _add_project_videos(project, request):
     video_url_ids = [video_id for video_id in request.POST.keys() if video_id.startswith("video_url")]
     default_video = request.POST.get('default_video', 'video_1').split("_")[1]
     for video_url_id in video_url_ids:
-        video_url = request.POST.get(video_url_id, '')
-        if not (video_url and (video_url.__contains__(VIDEO_PROVIDER.YOUTUBE) 
-                or (video_url.__contains__(VIDEO_PROVIDER.VIMEO)))): continue
-        
+        video_url = VideoUrl(request.POST.get(video_url_id, ''))
+        if not (video_url.is_valid): continue
         video_input_id = video_url_id.split("_")[2]
+        print video_input_id
         set_default = True if default_video == video_input_id else False
-        if(video_url.__contains__("youtube")):
-            provider = VIDEO_PROVIDER.YOUTUBE
-            pattern = re.compile(YOUTUBE_REGEX)
-            video_id = pattern.match(video_url).group(1)
-        else:
-            provider = VIDEO_PROVIDER.VIMEO
-            pattern = re.compile(VIMEO_REGEX)
-            video_id = pattern.match(video_url).group(1)
-        video = Video(provider=provider, project=project, video_id = video_id, default=set_default, url=video_url)
+        video_id = video_url.video_id()
+        provider = video_url.provider
+        video = Video(provider=provider, project=project, video_id = video_id, default=set_default, url=video_url.url)
         video.save()
-        
 
 def _add_existing_sectors(p, all_sectors, sectors_names):
     existing_sectors = [sector for sector in all_sectors \
