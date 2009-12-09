@@ -182,19 +182,3 @@ class ProjectAdminViewsUnitTest(TestCase):
         self.assertEquals(302, response.status_code)
         self.assertEquals('/permission_denied/add_project/not_author', response.items()[1][1])
 
-    def test_return_project_form_with_project_id(self):
-        pass
-
-    def test_youtube_regex(self):
-        youtube_url = "http://www.youtube.com/watch?v=ezkxxpwPvic"
-        pattern = re.compile(YOUTUBE_REGEX)
-        video_id = pattern.match(youtube_url).group(1)
-        self.assertEquals("ezkxxpwPvic", video_id)
-
-    def test_vimeo_regex(self):
-        vimeo_url = "http://vimeo.com/7715536"
-        pattern = re.compile(VIMEO_REGEX)
-        video_id = pattern.match(vimeo_url).group(1)
-        self.assertEquals("7715536", video_id)
-
-

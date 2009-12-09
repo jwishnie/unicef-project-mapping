@@ -23,5 +23,5 @@ class VIDEO_PROVIDER(object):
     VIMEO = u'vimeo'
 
 EMAIL_REGEX = regex.compile("^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$")
-YOUTUBE_REGEX = '^[^v]+v.(.{11}).*'
-VIMEO_REGEX = '.*/(\d+)'
+YOUTUBE_REGEX = 'http://www.youtube.com/watch\?v=(.+)'
+VIMEO_REGEX = 'http://www.vimeo.com/(\d+)'
