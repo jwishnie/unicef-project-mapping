@@ -20,8 +20,8 @@ class Project(models.Model):
     longitude = models.DecimalField(max_digits=10, decimal_places=7, null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
-    project_image = models.URLField(null=True, blank=True)
-    imageset_feedurl = models.CharField(max_length=1000, null=True, blank=True)
+    project_image = models.TextField(null=True, blank=True)
+    imageset_feedurl = models.TextField(max_length=1000, null=True, blank=True)
     parent_project = models.ForeignKey('self', null=True, blank=True)
     status = models.CharField(max_length=50)
     created_by = models.ForeignKey(User)
@@ -117,7 +117,17 @@ class Resource(models.Model):
 
     class Admin: 
         pass
+
+class ProjectPhoto(models.Model):
+    filename = models.CharField(max_length=250)
+    project = models.ForeignKey(Project)
+    alt = models.CharField(max_length=200)
+    
+    def __unicode__(self):
+        return self.filename
         
+    class Admin:
+        pass
         
 class Sector(models.Model):
     name = models.CharField(max_length=50)

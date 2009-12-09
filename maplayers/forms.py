@@ -13,7 +13,6 @@ class ProjectForm(forms.Form):
     longitude = forms.DecimalField()
     location = forms.CharField(max_length=50)
     website_url = forms.URLField()
-    project_image = forms.URLField()
     project_sectors = forms.CharField(max_length = 500)
     project_implementors = forms.CharField(max_length = 500)
     imageset_feedurl = forms.CharField(max_length=1000, required=False)

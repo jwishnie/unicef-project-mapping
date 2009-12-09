@@ -90,7 +90,6 @@ class ProjectAdminViewsUnitTest(TestCase):
                                   "name" : "Edited", "description" : "editied description", 
                                   "latitude" : "30", "longitude" : "45", 
                                   "location" : "edited location", "website_url" : "http://www.edited-test.com/",
-                                  "project_image" : "http://www.edited-image.com/",
                                   "project_sectors" : "Education",
                                   "project_implementors" : "WHO, Red Cross Foundation",
                                   "link_title" : ["Link 1", "Link 2", "Link 3"],
@@ -106,7 +105,6 @@ class ProjectAdminViewsUnitTest(TestCase):
         self.assertEquals(30, project.latitude)
         self.assertEquals(45, project.longitude)
         self.assertEquals(u"http://www.edited-test.com/", project.website_url)
-        self.assertEquals(u"http://www.edited-image.com/", project.project_image)
         self.assertEquals(set(expected_sectors), set(project.sector_set.all()))
         self.assertEquals(set(expected_implementors), set(project.implementor_set.all()))
         self.assertEquals(set(project_links), set([link.url for link in project.link_set.all()]))
