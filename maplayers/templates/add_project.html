@@ -9,7 +9,6 @@
         <script type="text/javascript" src="{{ mootools }}"></script>
         <script src="{{ jquery }}" type="text/javascript"></script>
 		<script src="{{ openlayers }}" type="text/javascript"></script>
-		<script src="{{ bing_js }}"></script>
         <link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
         <script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
         <script type="text/javascript" src="{{ fancyuploader }}/Swiff.Uploader.js"></script>
@@ -26,10 +25,14 @@
 			var sectors = "{{sectors}}";
 			var implementors = "{{implementors}}";
 			var project_links = '{% project_links title_and_values %}';
+			jQuery(document).ready(function(){
+				Fx.ProgressBar.prototype.options.url = "/static/img/bar.gif";
+			});
 		</script>
 
         <script type="text/javascript" src="{{ js_url }}/add_project.js"></script>
         <script type="text/javascript" src="{{ js_url }}/fileupload.js"></script>
+	<script src="{{ bing_js }}"></script>
 {% endblock %}
 
 {% block page_content %}

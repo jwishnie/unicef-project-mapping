@@ -122,6 +122,7 @@ def file_upload(request):
     destination_name = "static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
     _create_dir_if_not_exists(destination_name)
     destination = open(destination_name, 'wb+')
+    print destination_name
     for chunk in uploaded_file.chunks(): 
         destination.write(chunk) 
         destination.close()
@@ -462,6 +463,3 @@ def _create_dir_if_not_exists(filename):
     dir_name = os.path.dirname(filename)
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
-
-
-
