@@ -22,13 +22,22 @@
 	            	</a>
 	            </div>
 	            <div id="main_nav">
+					<div id="project_search" class="round_corner">
+						<span>
+						Welcome, {{user}}!
+						{% if user.is_authenticated %}
+							(<a href='{% url django.contrib.auth.views.logout %}'>Logout</a>)
+						{% endif %}
+						</span>
+						<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
+						<input type="submit" value="" name="Search" class="search_text">
+					</div>		
 	            	<ul>
 						<li class="first"><a href="/">Home</a></li>
 						{% if user.is_authenticated %}
 							<li>{% add_project_link %}</li>
 							<li>{% my_projects_link user %}</li>
 							{% projects_for_review_link user %}
-							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>							
 				        {% else %}
 				        	<li><a href='{% url django.contrib.auth.views.login %}'>Login</a>
 				        {% endif %}

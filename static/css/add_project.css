@@ -16,6 +16,10 @@
     width: 140px;
 }
 
+#add_project .location_info fieldset div div {
+    padding: 0 0 0 5px;
+}
+
 #add_project #map {
     float: left;
 }

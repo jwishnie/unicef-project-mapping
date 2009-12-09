@@ -166,7 +166,7 @@ $(document).ready(function() {
             subproject = projects[i];
             var size = new OpenLayers.Size(WIDTH, HEIGHT);
             var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
-            var icon = new OpenLayers.Icon(imgurl + '/mini-blue-marker.png', size, offset);
+            var icon = new OpenLayers.Icon(imgurl + '/bright_red_marker.png', size, offset);
             markers.addMarker(new OpenLayers.Marker
             (new OpenLayers.LonLat(subproject['longitude'],
             subproject['latitude']), icon.clone()));
