@@ -18,11 +18,16 @@ img {
 
 #header,
 #explore_nav,
+#main_nav,
 #main_nav ul,
 #main_pane,
 #image_pane,
 #review_suggestions .suggestion {
 	overflow: hidden;
+}
+
+#header {
+    color: #FFF;
 }
 
 ul.sectors,
@@ -34,11 +39,16 @@ ul.implementors {
 }
 
 #main_nav {
-    background-color: #4DBAFE;
 	float: right;
 	font-family: verdana;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
+}
+
+#main_nav ul {
+    clear: right;
+    padding: 0;
+    font-size: 9pt;
 }
 
 #explore_nav {
@@ -57,8 +67,9 @@ ul.implementors {
     font-size: 9pt;
     float: left;
     height: 378px;
-    width: 175px;
+    width: 15%;
     margin: 0 2px;
+    overflow: auto;
 }
 
 .round_corner {
@@ -88,7 +99,7 @@ li a {
 }
 
 #main_nav ul li {
-    border-left: 1px solid #0C7094;
+    border-left: 1px solid #FFF;
     float: left;
     margin: 5px;
     padding-left: 10px;
@@ -97,6 +108,7 @@ li a {
 #main_nav ul li a {
     margin: 0;
     padding: 0;
+    color: #FFF;
 }
 
 #main_nav li.first,
@@ -109,8 +121,8 @@ li a {
 #main_nav span.notification {
     padding: 0 3px;
     margin-left: 3px;
-    background-color: #0C7094;
-    color: #FFF;
+    background-color: #FFF;
+    color: #0C7094;
     -moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
@@ -199,7 +211,7 @@ li a {
 
 #projects {
     float: right;
-    width: 350px;
+    width: 32%;
     height: 400px;
     margin: 0 5px 0 0;
     font-size: 9pt;
@@ -210,7 +222,7 @@ li a {
 }
 
 #proj {
-    height: 320px;
+    height: 305px;
     overflow: auto;
 }
 
@@ -257,9 +269,6 @@ li.drawer div {
 
 #project_search {
     float: right;
-    border-color: #a5a5a5;
-    color: #fff;
-    background-color: #a5a5a5;
     padding: 5px;
     margin: 5px 5px 0;
 }
@@ -270,14 +279,14 @@ li.drawer div {
 }
 
 #project_search .search_text {
-    padding: 0;
+    padding: 3px;
     font-size: 1em;
     color: #fff;
-    background-color: #a5a5a5;    
+    background-color: #0C7094;
 }
 
 span.drawer-handle {
-    font-size: 1.5em;
+    font-size: 1em;
 }
 
 #footer {
@@ -481,4 +490,3 @@ ul.errorlist {
     clear: left;
     padding: 10px 0 0 30px;
 }
-

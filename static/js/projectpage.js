@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var delete_url = "";
+    var map;
 
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125
@@ -9,27 +10,26 @@ $(document).ready(function() {
 
     $('#photo_set a').lightBox({fixedNavigation:true});
     
-    var map = new OpenLayers.Map('map_canvas', {
+    map = new OpenLayers.Map('map_canvas', {
         maxScale: MAX_SCALE,
         minScale: MIN_SCALE
     });
-    var layer = new OpenLayers.Layer.WMS("OpenLayers WMS",
-    BASE_LAYER, {
-        layers: 'basic'
+    var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
+        type: VEMapStyle.Hybrid
     });
     map.addLayer(layer);
+    // map.setCenter(new OpenLayers.LonLat(longitude, latitude));
+    var bounds = new OpenLayers.Bounds(left, bottom, right, top);
+    map.zoomToExtent(bounds);
 
-
-    map.setCenter(new OpenLayers.LonLat(longitude, latitude));
     var markers = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(markers);
 
     var size = new OpenLayers.Size(WIDTH, HEIGHT);
     var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
     var icon = new OpenLayers.Icon(imgurl + '/red-marker.png', size, offset);
-    markers.addMarker(new OpenLayers.Marker
-    (new OpenLayers.LonLat(longitude,
-    latitude), icon.clone()));
+    markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(longitude,
+                                            latitude), icon.clone()));
 
     addsubprojects(markers);
 
@@ -158,18 +158,72 @@ $(document).ready(function() {
 		close: function() {
 		}
 	});
+	
+	$('#nearby_projects').click(get_nearby_projects);
+	
+	function addsubprojects(markers) {
+        for (var i = 0; i < projects.length; i++) {
+            subproject = projects[i];
+            var size = new OpenLayers.Size(WIDTH, HEIGHT);
+            var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
+            var icon = new OpenLayers.Icon(imgurl + '/bright_red_marker.png', size, offset);
+            markers.addMarker(new OpenLayers.Marker
+            (new OpenLayers.LonLat(subproject['longitude'],
+            subproject['latitude']), icon.clone()));
+        }
+    }
+
+
+    function get_nearby_projects(){
+        var text = $('#nearby_projects').html();
+        var action = text.substring(0, 4);
+        if(action == "Show"){
+            $('#nearby_projects').html("Hide projects around this location");
+            var boundingBox = map.getExtent();
+        	var projects_url = "/projects/bbox/" + boundingBox.left + "/" + 
+        						boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
+
+        	$.get(projects_url, function(data) {
+                    var projects = JSON.parse(data);
+                    addProjectsOnMap(projects);
+            });
+            
+        }else{
+            $('#nearby_projects').html("Show projects around this location");
+            markers.destroy();
+            markers = new OpenLayers.Layer.Markers( "Markers" );
+            map.addLayer(markers);
+            markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(longitude,
+                                                    latitude), icon.clone()));
+            addsubprojects(markers);
+        }
+    }
+
+
+    function addProjectsOnMap(projects) {
+        // var html = "<ul>";
+        for(var i = 0;i<projects.length; i++){
+            var project = projects[i];
+            // var project_name = project.snippet.split(":")[0];
+            //       var project_description = project.snippet.split(":")[1];               
+            //       var project_text = "<a href=\"/projects/id/" + project.id + "/" +"\">" + 
+            //                                   project_name + '</a><div class="proj_desc">' +  project_description;
+            //       html += "<li>" + project_text + "</li>";
+            var marker_icon = icon.clone();
+            marker = new OpenLayers.Marker(
+                                new OpenLayers.LonLat(project.longitude, 
+                                            project.latitude),marker_icon);
+            // marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
+            markers.addMarker(marker);
+        }
+        // html += "</ul></div>";
+        // $("#proj").html(html);
+    }
 
 });
 
 
-function addsubprojects(markers) {
-    for (var i = 0; i < projects.length; i++) {
-        subproject = projects[i];
-        var size = new OpenLayers.Size(WIDTH, HEIGHT);
-        var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
-        var icon = new OpenLayers.Icon(imgurl + '/mini-blue-marker.png', size, offset);
-        markers.addMarker(new OpenLayers.Marker
-        (new OpenLayers.LonLat(subproject['longitude'],
-        subproject['latitude']), icon.clone()));
-    }
-}
+
+
+
+

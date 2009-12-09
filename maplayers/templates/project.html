@@ -17,6 +17,10 @@
 		var longitude = {{ project.longitude }};
 		var imgurl = "{{ img_url }}";
 		var projects = new Array();
+		var left = {{left}};
+		var right = {{right}};
+		var top = {{top}};
+		var bottom = {{bottom}};
 		{% for subproject in subprojects %}
 		projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproject.longitude}} });
 		{% endfor %}
@@ -26,6 +30,7 @@
 	<script src="{{ jquery }}" type="text/javascript"></script>
 	<script type="text/javascript" src="{{ jqueryui }}"></script>
 	<script src="{{ openlayers }}" type="text/javascript"></script>
+	<script src="{{ bing_js }}"></script>
 	<script src="/static/js/jquery-lightbox/js/jquery.lightbox-0.5.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="/static/js/jquery-lightbox/css/jquery.lightbox-0.5.css" media="screen" />
 	<script src="{{ js_url }}/projectpage.js" type="text/javascript" ></script>
@@ -40,33 +45,35 @@
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
 					<h2>{{project.name}}</h2>
-                    <div id="project_implementors">
-						{% if project.implementor_set %}
-							<label>Project Implementors : </label>
-							<div class="sub_div">{{implementors}}</div>
-						{% endif %}
-					</div>
 					<div id="main_pane">
 						<div id="right_pane">
+							<div id="back_to_main_map"><a href="/">Back to main map</a></div>
 							<div id="map_canvas" class="olMap" style="width: 460px; height:256px; border=1px solid #CCCCCC"></div>
 						</div>
 													
 						<div id="left_pane">
-							<div id="project description">
+		                    <div id="project_implementors">
+								{% if project.implementor_set %}
+									<label>Project Implementors : </label>
+									<div class="sub_div">{{implementors}}</div>
+								{% endif %}
+							</div>							
+							<div id="project_description">
 								<label>Description: </label>
 								{% autoescape off %} 
 	                            <div class="sub_div">{{project.description}}</div>
 	                            {% endautoescape %} 
 							</div>
 					
-							<div id="project location">
+							<div id="project_location">
 								<label>Location: </label>
 								<span>{{project.location}}</span>
+								<span id="nearby_projects">Show projects around this location on the map</span>
 	                        </div>
 
 	                        <div id="project_website">
 	                            <label>Project WebSite: </label>
-	                            <span><a href="{{project.website_url}}">{{project.name}} home page</a></span>
+	                            <span><a href="{{project.website_url}}" target="_new">{{project.name}} home page</a></span>
 	                        </div>
                        
 	                        <div id="parent_project">
@@ -89,18 +96,31 @@
 								<div id="project links">
 									<label>Links : </label>
 									{% for link in links %}
-										<div class="sub_div"><a href="{{link.url}}">{{link.title}}</a></div>
+										<div class="sub_div"><a href="{{link.url}}" target="_new">{{link.title}}</a></div>
 									{% endfor %}
 								</div>	
 							{% endif %}
 							
 							{% if tags %}
 								<div id="tags">
+									<label>Tags : </label>
 									{% for tag in tags %}
 									  <div class="sub_div"><a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></div>
-									{%endfor%}
+									{% endfor %}
 								</div>
-							{% endif %}                
+							{% endif %}
+							
+							{% if resources %}
+								<div id="resources">
+									<label>Resources : </label>
+									{% for resource in resources %}
+									<div class="resource">
+									  	<div class="resource_icon" style="background:transparent url({% resource_icon resource %}) no-repeat scroll top left"></div>
+										<div class="sub_div"><a href="/static/resources/{{resource}}">{{resource.title}}</a></div>
+									</div>	
+									{% endfor %}
+								</div>
+							{% endif %}
 						</div>
 					</div>
 					

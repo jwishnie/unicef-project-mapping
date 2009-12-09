@@ -16,6 +16,10 @@
     width: 140px;
 }
 
+#add_project .location_info fieldset div div {
+    padding: 0 0 0 5px;
+}
+
 #add_project #map {
     float: left;
 }
@@ -30,6 +34,22 @@
 
 .file-title{
     color: blue;
+}
+
+li.file {
+    overflow: hidden;
+}
+
+.resource_icon {
+    display: block;
+    height: 38px;
+    width: 36px;
+    float:left;
+}
+
+#main_content li.file div {
+    float: left;
+    padding: 8px 0 0 8px;
 }
 
 #add_video{

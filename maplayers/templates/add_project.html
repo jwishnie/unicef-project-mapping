@@ -9,6 +9,7 @@
         <script type="text/javascript" src="{{ mootools }}"></script>
         <script src="{{ jquery }}" type="text/javascript"></script>
 		<script src="{{ openlayers }}" type="text/javascript"></script>
+		<script src="{{ bing_js }}"></script>
         <link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
         <script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
         <script type="text/javascript" src="{{ fancyuploader }}/Swiff.Uploader.js"></script>
@@ -36,7 +37,7 @@
 		<form action="/{{action}}" method="post">
 			<input type="hidden" name="project_id" value="{{project.id}}"></input>
 			<fieldset>
-				<legend><span>About the Project</span></legend>
+				<legend><span>Project Information</span></legend>
 				<div>
 					<label for="id_name">Name:</label> 
 					{{form.name}}
@@ -53,10 +54,11 @@
 			</fieldset>
 			<div class="location_info">
 				<fieldset>
-					<legend><span>Location Information</span></legend>
+					<legend><span>Project Location</span></legend>
 					<div>
 						<label for="id_latitude">Latitude:</label> 
 						{{ form.latitude }}
+						<div>Click on the map to set latitude and longitude</div>						
 						{{ form.latitude.errors }}					
 					</div>
 					<div>				
@@ -73,7 +75,7 @@
 				<div id="map" class="smallmap"></div>				
 			</div>
 			<fieldset>
-				<legend><span>Media Information</span></legend>				
+				<legend><span>Project Media</span></legend>				
 				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div>
 					<label for="id_website_url">Website url:</label> 
@@ -103,7 +105,7 @@
 				</div>
 			</fieldset>	
 			<fieldset>
-				<legend><span>Project Filters</span></legend>	
+				<legend><span>Project Sector, Implementor and Tags</span></legend>	
 				<a class="back_to_top" href="#add_project">Back to top</a>											
 				<div>
 					<label for="id_project_sectors">Sectors: </label> 
@@ -120,7 +122,7 @@
 				<div id="project-tags">
 					<label for="id_project_tags">Project tags: </label> 
 					{{ form.tags }}
-					<div>Space separated tags</div>
+					<div>separate tags with a space</div>
 				</div>
 			</fieldset>
 			<fieldset>

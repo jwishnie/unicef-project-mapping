@@ -37,11 +37,11 @@ function populateRegionStats(response){
 	    });
 }
 
-// On load
 $(document).ready(function() {
     $(function() {
     		$("#tabs").tabs();
     	});
+    	
     
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
@@ -197,7 +197,7 @@ $(document).ready(function() {
             var project_name = project.snippet.split(":")[0];
             var project_description = project.snippet.split(":")[1];			    
             var project_text = "<a href=\"/projects/id/" + project.id + "/" +"\">" + 
-                                        project_name + '</a><div class="proj_desc">' +  project_description;
+                                        project_name + '</a><div class="proj_desc">' +  project_description + '</div>';
             html += "<li>" + project_text + "</li>";
             var marker_icon = icon.clone();
             marker = new OpenLayers.Marker(
@@ -206,7 +206,7 @@ $(document).ready(function() {
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
             markers.addMarker(marker);
         }
-        html += "</ul></div>";
+        html += "</ul>";
         $("#proj").html(html);
     }
 
@@ -246,7 +246,11 @@ $(document).ready(function() {
 			                    OpenLayers.Event.stop(e);
 			
 }
-        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
+        // var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
+        var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
+            type: VEMapStyle.Hybrid
+        });
+        
         map.addLayer(layer);
         var gs = "http://"+window.location.host+"/geoserver/ows";
         var dists = new OpenLayers.Layer.WMS(
@@ -285,7 +289,7 @@ $(document).ready(function() {
 	
 	var size = new OpenLayers.Size(10,17);
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-	var icon = new OpenLayers.Icon('/static/img//mm_20_blue.png',size,offset);
+	var icon = new OpenLayers.Icon('/static/img//bright_red_marker.png',size,offset);
 	$('.sectorbox').click(mapEvent);
 	$('.implementorbox').click(mapEvent);
 	$('[name=Search]').click(searchEvent);

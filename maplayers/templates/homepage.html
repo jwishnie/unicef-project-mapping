@@ -18,17 +18,13 @@
 <script src="{{ jquery }}" type="text/javascript"></script>
 <script src="{{ openlayers }}" type="text/javascript"></script>
 <script src="/static/js/openlayers/Popup.js" type="text/javascript" ></script>
+<script src="{{ bing_js }}"></script>
 <script src="{{ js_url }}/homepage.js" type="text/javascript" ></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
 {% endblock %}
 		
 {% block page_content %}
 <div id="explore_nav">
-
-	<div id="project_search" class="round_corner">
-		<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
-		<input type="submit" value="Search" name="Search" class="search_text">
-	</div>            
 	
 </div>
 <div id="main_pane">

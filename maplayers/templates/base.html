@@ -22,6 +22,11 @@
 	            	</a>
 	            </div>
 	            <div id="main_nav">
+					<div id="project_search" class="round_corner">
+						<span>Welcome, {{user}}!</span>
+						<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
+						<input type="submit" value="Search" name="Search" class="search_text">
+					</div>		
 	            	<ul>
 						<li class="first"><a href="/">Home</a></li>
 						{% if user.is_authenticated %}

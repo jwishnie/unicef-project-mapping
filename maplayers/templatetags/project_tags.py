@@ -10,6 +10,7 @@ from maplayers.tag_utils import parse_img_feed
 from maplayers.utils import is_empty
 from maplayers.constants import PROJECT_STATUS, GROUPS, COMMENT_STATUS, VIDEO_PROVIDER
 from maplayers.models import Project, ProjectComment, ReviewFeedback
+from maplayers.resource_icons import ResourceIcon
 
 register = template.Library()  
 
@@ -220,11 +221,16 @@ def file_list(resources):
     result = []
     for index, resource in enumerate(resources):
         filename = "_".join(resource.filename.split("_")[1:])
+        file_extension = filename.split(".")[-1:][0]
+        resource_icon = ResourceIcon().icon(file_extension)
         filesize = resource.filesize / 1024
         result.append('<li id="file-%s" class="file" style="background-color: transparent;">' % str(index+1))
+        result.append('<span class="resource_icon" style="background:transparent url(%s) no-repeat scroll top left"></span>' % resource_icon)
+        result.append('<div>')
         result.append('<span class="file-title">%s</span>' % filename)
         result.append('<span class="file-size">%s KB</span>' % str(filesize))
         result.append('<a class="file-remove-edit" href="#">remove</a>')
+        result.append('</div>')
         result.append('</li>')
         
     result = "".join(result)
@@ -232,8 +238,11 @@ def file_list(resources):
         result = '<ul id="file-list">' + result + '</ul>'
     return result
     
-   
- 
+@register.simple_tag
+def resource_icon(resource):
+    file_extension = resource.title.split(".")[-1:][0]
+    return ResourceIcon().icon(file_extension)
+        
 @register.tag(name='parse_img_rss_feed')
 def do_parse_img_rss_feed(parser, token):
     return ParseImgRssFeedNode()
