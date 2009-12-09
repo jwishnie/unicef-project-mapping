@@ -59,6 +59,7 @@ ul.implementors {
     height: 378px;
     width: 15%;
     margin: 0 2px;
+    overflow: auto;
 }
 
 .round_corner {
@@ -481,4 +482,3 @@ ul.errorlist {
     clear: left;
     padding: 10px 0 0 30px;
 }
-
