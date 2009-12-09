@@ -13,10 +13,10 @@ img {
 
 .main_wrapper {
     margin: auto;
-	width: 80%;
 }
 
 #header,
+#logo,
 #explore_nav,
 #main_nav,
 #main_nav ul,
@@ -30,6 +30,23 @@ img {
     color: #FFF;
 }
 
+#logo,
+#main_nav,
+#main_content_shadow {
+    margin: auto;
+}
+
+#logo, 
+#main_nav {
+    width: 80%;
+}
+
+#unicef_tagline {
+    font-size: 16pt;
+    float: left;
+    width: 5em;
+}
+
 ul.sectors,
 ul.implementors {
     color: #FFF;
@@ -38,11 +55,8 @@ ul.implementors {
     margin-bottom: 2px;
 }
 
-#main_nav {
-	float: right;
-	font-family: verdana;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
+#main_nav_wrapper {
+    background-color: #007CD8;
 }
 
 #main_nav ul {
@@ -81,6 +95,10 @@ ul.implementors {
     float: left;
 }	
 
+.floatright {
+    float: right;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -94,7 +112,7 @@ li a {
 }	
 
 .header_innertube {
-	padding: 20px;
+	padding: 20px 0 0;
 	overflow: hidden;
 }
 
@@ -103,6 +121,8 @@ li a {
     float: left;
     margin: 5px;
     padding-left: 10px;
+    height: 4.5em;
+    width: 7em;
 }
 
 #main_nav ul li a {
@@ -111,6 +131,7 @@ li a {
     color: #FFF;
 }
 
+#main_nav #project_search li,
 #main_nav li.first,
 #project_list td span.first,
 #admin_unit_list td span.first,
@@ -200,6 +221,7 @@ li a {
 #main_content_shadow {
     background-color: #4DB8FF;
     clear: both;
+    width: 80%;
 }
 
 #map_canvas{
@@ -210,7 +232,6 @@ li a {
 }
 
 #projects {
-    float: right;
     width: 32%;
     height: 400px;
     margin: 0 5px 0 0;
@@ -268,23 +289,20 @@ li.drawer div {
 }
 
 #project_search {
-    float: right;
     padding: 5px;
-    margin: 5px 5px 0;
-}
-
-#project_search span {
-    padding: 0 50px 0 0;
+    width: 15em;
 }
 
 #project_search span a {
     font-size: 9pt;
     color: #FFF;
+    padding-left: 25px;
 }
 
 #project_search input {
     border-style: none;
     padding: 5px;
+    margin-top: 7px;
 }
 
 #project_search .search_text {

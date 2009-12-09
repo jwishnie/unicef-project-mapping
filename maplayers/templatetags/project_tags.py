@@ -196,7 +196,16 @@ def admin_links(project, user):
 def add_project_link():
     result = """<a href='/add_project?parent_id=' id="add_project">Add a new project</a>"""
     return result    
-    
+
+@register.simple_tag
+def sign_up_link():
+    result = """<a href='/user_registration' id="sign_up">Sign up</a>"""
+    return result   
+
+@register.simple_tag
+def add_admin_unit_link():
+    result = """<a href='/add_admin_unit' id="add_admin_unit">Add a new administrative unit</a>"""
+    return result     
     
 @register.simple_tag
 def file_list(resources):
