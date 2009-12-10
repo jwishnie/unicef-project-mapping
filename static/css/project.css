@@ -5,14 +5,14 @@ label {
 #edit_project {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    background-color:#4DBAFE;
-    float:right;
-    margin:5px;
-    padding:5px;
+    background-color: #007BD6;
+    float: right;
+    margin: 5px;
+    padding: 5px;
 }
 
 #edit_project a {
-    color: #0C7094;    
+    color: #000;
 }
 
 .publish_div,
@@ -108,7 +108,7 @@ label {
 #nearby_projects{
     padding: 5px;
     margin: 5px 0;
-    background-color: #4DBAFE;
+    background-color: #007BD6;
     text-decoration: none;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;

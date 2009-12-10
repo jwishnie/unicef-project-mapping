@@ -79,7 +79,7 @@ $(document).ready(function() {
 
     $('#comment_link').click(function() {
         $(".ui-dialog-titlebar-close").html("X");
-        $(".ui-dialog-titlebar-close").css("color", "#0C7094");
+        $(".ui-dialog-titlebar-close").css("color", "#000");
         $('#published_comment').dialog('open');
         $("#published_comment").css("height", "auto");
         styleDialogBox();

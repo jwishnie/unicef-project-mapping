@@ -1,9 +1,9 @@
 body {
     margin: 0 auto;
     padding: 0px;
-    color: #0C7094;
+    color: #000;
     background-color: #0099FF;
-    font-family: verdana;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 10pt;
 }
 
@@ -42,8 +42,9 @@ img {
 }
 
 #unicef_tagline {
-    font-size: 16pt;
+    font-size: 14pt;
     float: left;
+    padding: 5px 0 0 15px;
     width: 5em;
 }
 
@@ -56,7 +57,7 @@ ul.implementors {
 }
 
 #main_nav_wrapper {
-    background-color: #007CD8;
+    background-color: #007BD6;
 }
 
 #main_nav ul {
@@ -103,12 +104,11 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 5px;
-    color: #0C7094;
 }
 
 li a {
     text-decoration: none;
-    color: #0C7094;
+    color: #000;
 }	
 
 .header_innertube {
@@ -143,28 +143,27 @@ li a {
     padding: 0 3px;
     margin-left: 3px;
     background-color: #FFF;
-    color: #0C7094;
+    color: #000;
     -moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
 
 #main_content {
     background-color: #FFF;
-    border-top: 1px dashed #A5A5A5;
     margin: 0 10px;
 }
 
 #main_content fieldset {
-    border-color: #4DBAFE;
+    border-color: #007BD6;
     margin: 20px;
 }
 
 #main_content fieldset legend {
-    color: #0C7094;
+    color: #000;
 }
 
 #main_content fieldset legend span {
-    background-color: #4DBAFE;
+    background-color: #007BD6;
     display: block;
     padding: 5px;
     width: 830px;
@@ -243,24 +242,16 @@ li a {
 }
 
 #proj {
-    height: 305px;
+    height: 325px;
     overflow: auto;
 }
 
 #proj a {
     font-weight: bold;
-    color: #6A8512;
-}
-
-#projects h4 {
-    background-color: #6A8512;
-    padding: 5px;
-    margin: 0;
-    color: #FFF;
 }
 
 #proj .proj_desc {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 #bookmark{
@@ -283,7 +274,6 @@ li.drawer {
 }
 
 li.drawer div {
-    background-color: #A5A5A5;
     color: #FFF;
     padding: 5px;
 }
@@ -324,12 +314,11 @@ span.drawer-handle {
     padding: 15px 0;
     margin-top: 10px;
     text-align: center;
-    border-top: 1px dashed #A5A5A5;
 }
 
 li.sector_drawer div,
 li.implementor_drawer div {
-    background: #0078AE url(../img/collapsed.png) no-repeat scroll 98% 50%;
+    background: #007BD6 url('../img/collapsed.png') no-repeat scroll 98% 50%;
     width: auto;
 }
 
@@ -415,7 +404,7 @@ ul.errorlist {
 #my_project_list th,
 #admin_unit_list th,
 #project_list th {
-    background-color: #4DBAFE;    
+    background-color: #007BD6;    
 }
 
 #my_project_list td,
@@ -438,7 +427,7 @@ ul.errorlist {
 #project_list td a,
 #admin_unit_list td a,
 #my_project_list td a {
-    color: #0C7094;
+    color: #000;
 }
 
 #project_list td span,
@@ -466,8 +455,8 @@ ul.errorlist {
 .ui-dialog .ui-state-default, 
 .ui-dialog .ui-widget-content .ui-state-default {
     background: none;
-    background-color: #4DB8FF;
-    color: #0C7094;
+    background-color: #007BD6;
+    color: #000;
 }
 
 /*REVIEW SUGGESTION*/
