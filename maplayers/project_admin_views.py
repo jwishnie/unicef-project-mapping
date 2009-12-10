@@ -136,7 +136,6 @@ def photo_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
-    #file_size = uploaded_file.size
     destination_name = "static/project-photos/"+uploaded_file_name
     destination = open(destination_name, 'wb+')
     for chunk in uploaded_file.chunks(): 
