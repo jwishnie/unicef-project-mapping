@@ -186,22 +186,6 @@ def view_500(request):
     response.write(template.render(RequestContext(request)))
     return response
     
-def _get_sectors_for_projects(projects):
-    sectors = [Sector.objects.filter(projects=project.id) for project in projects]
-    result = []
-    for project_sectors in sectors:
-        for sector in project_sectors:
-            result.append(sector)
-    return list(set(result))
-
-def _get_implementors_for_projects(projects):
-    implementors = [Implementor.objects.filter(projects=project.id) for project in projects]
-    result = []
-    for project_implementor in implementors:
-        for implementor in project_implementor:
-            result.append(implementor)
-    return list(set(result))
-    
 def _filter_ids(request, filter_name):
     """
     returns a list of selected filter_id from the request
