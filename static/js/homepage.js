@@ -363,6 +363,7 @@ $(document).ready(function() {
         map.addLayer(county);
         map.removeLayer(markers);
         var layersInMap = map.layers;
+        $("#layerholder").html("");
         $.each(layersInMap, function(){
             if(! this.isBaseLayer){
                 var isChecked = "";
