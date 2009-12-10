@@ -321,6 +321,21 @@ $(document).ready(function() {
         });
         
     $('#stats-id').bind('click', switchStatsView);
+    $('#kml-id').bind('click', switchKMLView);
+    
+    function switchKMLView(){
+        var layers;
+        $.get("/kml_layers/", function(data){
+            layers = eval(data);
+            if(layers.length >0){
+               add_kml_info(layers);
+            }else{
+                $('#kml').html('No KML layers to overlay');
+            }
+            
+        });
+        
+    }
     
     function switchStatsView(){
         map.addControl(new OpenLayers.Control.LayerSwitcher());
@@ -347,6 +362,19 @@ $(document).ready(function() {
         $('#proj-id').unbind('click', projectview);
         map.events.register('moveend', map, mapEvent);
         map.events.unregister('click', map, queryForRegionData);
+    }
+    
+    function add_kml_info(layers){
+        var kml_html = "<ul>";
+        for(var i=0; i < layers.length; i++){
+            var layer = layers[i];
+            kml_html += "<li>";
+            kml_html += "<input type='checkbox' id='kml_" + layer.id + "'></input>";
+            kml_html += "<span>" + layer.name + "</span>";
+            kml_html += "</li>";
+        }
+        kml_html += "</ul>";
+        $('#kml').html(kml_html);
     }
     
 });

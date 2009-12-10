@@ -1,0 +1,5 @@
+[
+    {% for kml in kmls %}
+        {'kml_id' : '{{kml.id}}', 'name' : '{{kml.name}}', 'file' : '{{kml.filename}}' },
+    {% endfor %}
+]

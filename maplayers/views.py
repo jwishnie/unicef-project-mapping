@@ -22,7 +22,7 @@ from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GRO
 from maplayers.utils import html_escape
 from datetime import datetime
 import simplejson as json
-from maplayers.models import AdministrativeUnit
+from maplayers.models import AdministrativeUnit, KMLFile
 from admin_request_parser import convert_text_to_dicts
 
 
@@ -93,6 +93,13 @@ def project(request, project_id, project_manager=Project.objects):
                                context_instance=RequestContext(request)
                               )
 
+
+def kml_layers(request):
+    kml_files = KMLFile.objects.all()
+    return render_to_response("kml_files.json",
+                            {'kmls' : kml_files},
+                            context_instance=RequestContext(request)
+                            )
 
     
 def user_registration(request):
