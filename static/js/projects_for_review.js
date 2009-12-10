@@ -90,7 +90,7 @@ jQuery(document).ready(function(){
 		project_id = (this.id).split("_")[1];
 		$("#project_feedback").append('<input type="hidden" name="project" value="' + project_id + '"></input>');
 		$(".ui-dialog-titlebar-close").html("X");
-		$(".ui-dialog-titlebar-close").css("color", "#0C7094");
+		$(".ui-dialog-titlebar-close").css("color", "#000");
 		$('#dialog').dialog('open');
 	});
 
