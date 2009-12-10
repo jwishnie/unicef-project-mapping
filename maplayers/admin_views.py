@@ -7,10 +7,11 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
-from maplayers.models import Project, ReviewFeedback, AdministrativeUnit
+from maplayers.models import Project, ReviewFeedback, AdministrativeUnit, KMLFile
 
 from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS
-from maplayers.forms import AdminUnitForm
+from maplayers.forms import AdminUnitForm, KMLFilesForm
+from utils import create_dir_if_not_exists
 
 
 @login_required
@@ -127,6 +128,45 @@ def delete_administrative_unit(request, id):
     request.session['message'] = "Admin unit has been deleted successfully"
     url = "/admin_units/"
     return HttpResponseRedirect(url)
+    
+    
+@login_required
+def add_kml_file(request):
+    if request.method == 'POST':
+        form = KMLFilesForm(request.POST, request.FILES)
+        if form.is_valid():
+            kml_name = form.cleaned_data['name']
+            uploaded_file = request.FILES['filename']
+            file_name = uploaded_file.name
+            destination_name = 'static/kml/' + file_name
+            create_dir_if_not_exists(destination_name)
+            destination = open(destination_name, 'wb+')
+            for chunk in uploaded_file.chunks(): 
+                destination.write(chunk) 
+                destination.close()
+            kml_file = KMLFile(name=kml_name, filename=destination_name)
+            kml_file.save()
+            return HttpResponseRedirect('/')
+        else:
+            return _render_response(form, request)
+    else:
+        form = KMLFilesForm()
+        return _render_response(form, request)
+        
+        
+@login_required
+def delete_kml(request, id):
+    KMLFile.objects.get(id=int(id)).delete()
+    return HttpResponse('OK')
+    
+def _render_response(form, request):
+     existing_kmls = KMLFile.objects.all()
+     return render_to_response('add_kml_files.html',
+                               {'form': form,
+                               'existing_kmls' : existing_kmls},
+                               context_instance=RequestContext(request)
+                               )
+
 
 def _create_admin_unit(form):
     admin_unit = AdministrativeUnit()

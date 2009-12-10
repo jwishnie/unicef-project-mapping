@@ -251,9 +251,20 @@ $(document).ready(function() {
          var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
         // var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
         //     type: VEMapStyle.Hybrid
-        // });
+
         
         map.addLayer(layer);
+        
+        // map.addLayer(new OpenLayers.Layer.GML("KML", "/static/fertility_world_polygon.kml", 
+        //    {
+        //     format: OpenLayers.Format.KML, 
+        //     formatOptions: {
+        //       extractStyles: true, 
+        //       extractAttributes: true,
+        //       maxDepth: 2
+        //     }
+        //    }));
+        
         var gs = "http://"+window.location.host+"/geoserver/ows";
         var countryLayer = new OpenLayers.Layer.WMS(
             "Uganda",
@@ -328,6 +339,21 @@ $(document).ready(function() {
         });
         
     $('#stats-id').bind('click', switchStatsView);
+    $('#kml-id').bind('click', switchKMLView);
+    
+    function switchKMLView(){
+        var layers;
+        $.get("/kml_layers/", function(data){
+            layers = eval(data);
+            if(layers.length >0){
+               add_kml_info(layers);
+            }else{
+                $('#kml').html('No KML layers to overlay');
+            }
+            
+        });
+        
+    }
     
     function switchStatsView(){
         $("#filterable_criteria").hide();
@@ -366,6 +392,7 @@ $(document).ready(function() {
         map.events.unregister('click', map, queryForRegionData);
     }
     
+<<<<<<< HEAD:static/js/homepage.js
     function switchLayer(event){
         var layerName = $(this).attr("value");
         var layersInMap = map.layers;
@@ -378,6 +405,19 @@ $(document).ready(function() {
                 }
             }
         });
+=======
+    function add_kml_info(layers){
+        var kml_html = "<ul>";
+        for(var i=0; i < layers.length; i++){
+            var layer = layers[i];
+            kml_html += "<li>";
+            kml_html += "<input type='checkbox' id='kml_" + layer.id + "'></input>";
+            kml_html += "<span>" + layer.name + "</span>";
+            kml_html += "</li>";
+        }
+        kml_html += "</ul>";
+        $('#kml').html(kml_html);
+>>>>>>> f69b225610fc56fa9fb92fa51c267d641f28e787:static/js/homepage.js
     }
     
 });

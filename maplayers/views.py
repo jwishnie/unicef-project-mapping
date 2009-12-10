@@ -22,7 +22,7 @@ from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GRO
 from maplayers.utils import html_escape
 from datetime import datetime
 import simplejson as json
-from maplayers.models import AdministrativeUnit
+from maplayers.models import AdministrativeUnit, KMLFile
 from admin_request_parser import convert_text_to_dicts
 
 
@@ -93,6 +93,13 @@ def project(request, project_id, project_manager=Project.objects):
                                context_instance=RequestContext(request)
                               )
 
+
+def kml_layers(request):
+    kml_files = KMLFile.objects.all()
+    return render_to_response("kml_files.json",
+                            {'kmls' : kml_files},
+                            context_instance=RequestContext(request)
+                            )
 
     
 def user_registration(request):
@@ -178,22 +185,6 @@ def view_500(request):
     template = loader.get_template('500.html')
     response.write(template.render(RequestContext(request)))
     return response
-    
-def _get_sectors_for_projects(projects):
-    sectors = [Sector.objects.filter(projects=project.id) for project in projects]
-    result = []
-    for project_sectors in sectors:
-        for sector in project_sectors:
-            result.append(sector)
-    return list(set(result))
-
-def _get_implementors_for_projects(projects):
-    implementors = [Implementor.objects.filter(projects=project.id) for project in projects]
-    result = []
-    for project_implementor in implementors:
-        for implementor in project_implementor:
-            result.append(implementor)
-    return list(set(result))
     
 def _filter_ids(request, filter_name):
     """

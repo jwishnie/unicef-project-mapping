@@ -203,3 +203,14 @@ class Video(models.Model):
         
     class Admin:
         pass
+        
+        
+class KMLFile(models.Model): 
+    name = models.CharField(max_length=50)
+    filename = models.CharField(max_length=500)
+    
+    def __unicode__(self):
+        return self.name
+        
+    class Admin:
+        pass

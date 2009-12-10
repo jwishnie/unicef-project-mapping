@@ -207,6 +207,14 @@ def sign_up_link():
 def add_admin_unit_link():
     result = """<a href='/add_admin_unit' id="add_admin_unit">Add a new administrative unit</a>"""
     return result
+
+@register.simple_tag
+def truncate_and_ellipsise(text):
+    if(len(text) > 10):
+        truncated_and_ellipsised_text = text[:10] + "..."
+    else:
+        truncated_and_ellipsised_text = text    
+    return truncated_and_ellipsised_text
             
 @register.simple_tag
 def project_image(project):

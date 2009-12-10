@@ -17,9 +17,7 @@ from maplayers.utils import html_escape
 from maplayers.video_url import VideoUrl
 import simplejson as json
 from admin_views import my_projects
-
-
-
+    
 # Authentication helpers
 def _is_project_author(user):
     for g in user.groups.all():

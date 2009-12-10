@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load project_tags %}
 
 {% block title_extra %} &mdash; Home{% endblock %}
 	
@@ -39,7 +40,7 @@
 				{% for sector in sectors %}
 				<li>
 					<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
-					<label>{{sector.name}}</label>
+					<label title="{{sector.name}}">{% truncate_and_ellipsise sector.name %}</label>
 				</li>
 				{% endfor %}
 			</ul>
@@ -52,7 +53,7 @@
 				{% for implementor in implementors %}
 				<li>
 					<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
-					<label>{{implementor.name}}</label> <br/>
+					<label title="{{implementor.name}}">{% truncate_and_ellipsise implementor.name %}</label> <br/>
 				</li>
 				{% endfor %}
 			</ul>
@@ -76,9 +77,11 @@
 				<ul>
 					<li><a id="proj-id" href="#proj">List of Projects</a></li>
 					<li><a id="stats-id" href="#stats">Region Statistics</a></li>
+					<li><a id="kml-id" href="#kml">KML overlays</a></li>
 				</ul>
 				<div id="proj"></div>
 				<div id="stats"></div>
+				<div id="kml"></div>
 			</div>
 		</div>
     {% endautoescape %}

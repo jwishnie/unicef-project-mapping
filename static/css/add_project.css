@@ -32,12 +32,9 @@
     padding-left: 10px;
 }
 
-.file-title{
-    color: #000;
-}
-
 li.file {
     overflow: hidden;
+    color: #007BD6;
 }
 
 .resource_icon {
