@@ -199,13 +199,22 @@ def add_project_link():
     return result    
     
 @register.simple_tag
+def sign_up_link():
+    result = """<a href='/user_registration' id="sign_up">Sign up</a>"""
+    return result   
+
+@register.simple_tag
+def add_admin_unit_link():
+    result = """<a href='/add_admin_unit' id="add_admin_unit">Add a new administrative unit</a>"""
+    return result
+            
+@register.simple_tag
 def project_image(project):
     result = []
     images = project.projectphoto_set.all()
     if len(images) == 1 :
         project_image = images[0]
         filename = project_image.filename
-        #result.append('<span class="file-title">%s</span>' % filename)
         result.append('<img alt="%s" src="../../static/project-photos/%s" />' % (filename, filename))
         result.append('<a class="photo-remove-edit" href="#">remove</a>')
         result.append('<a href="#" style="display:none" id="photo-attach" class="photo-attach" name="photo-attach">Attach a file</a>')
@@ -214,7 +223,6 @@ def project_image(project):
         
     result = "".join(result)
     return result
-        
     
 @register.simple_tag
 def file_list(resources):
