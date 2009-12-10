@@ -392,7 +392,6 @@ $(document).ready(function() {
         map.events.unregister('click', map, queryForRegionData);
     }
     
-<<<<<<< HEAD:static/js/homepage.js
     function switchLayer(event){
         var layerName = $(this).attr("value");
         var layersInMap = map.layers;
@@ -405,7 +404,8 @@ $(document).ready(function() {
                 }
             }
         });
-=======
+    }
+        
     function add_kml_info(layers){
         var kml_html = "<ul>";
         for(var i=0; i < layers.length; i++){
@@ -417,7 +417,6 @@ $(document).ready(function() {
         }
         kml_html += "</ul>";
         $('#kml').html(kml_html);
->>>>>>> f69b225610fc56fa9fb92fa51c267d641f28e787:static/js/homepage.js
     }
     
 });
