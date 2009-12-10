@@ -558,4 +558,13 @@
         "date": "2009-11-23 19:18:03",
         "email": "sai.venkat@gmail.com"
     }
-}]
+},
+{
+    "pk": 1,
+    "model": "maplayers.kmlfile",
+    "fields": {
+        "name": "Africa Fertility ploygons",
+        "filename": "/static/kml/fertility_world_polygon.kml"
+    }
+}
+]
