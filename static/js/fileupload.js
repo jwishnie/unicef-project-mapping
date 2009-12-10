@@ -59,6 +59,10 @@ window.addEvent('domready', function() {
    		fileSizeMax: 1 * 1024 * 1024,
         data: {'project_id' : project_id},
    		verbose: true,
+   		typeFilter: {
+        			'Images (*.jpg, *.jpeg, *.gif, *.png)': '*.jpg; *.jpeg; *.gif; *.png'
+                    },
+        
 
    		onSelectFail: function(files) {
    			files.each(function(file) {
