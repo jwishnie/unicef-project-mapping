@@ -16,9 +16,7 @@ from maplayers.forms import ProjectForm, AdminUnitForm
 from maplayers.utils import html_escape
 import simplejson as json
 from admin_views import my_projects
-
-
-
+    
 # Authentication helpers
 def _is_project_author(user):
     for g in user.groups.all():
@@ -425,10 +423,7 @@ def _publish_or_delete_comments(request, action):
         ProjectComment.objects.filter(id__in=comment_ids).update(status=COMMENT_STATUS.PUBLISHED)
         
 
-def _create_dir_if_not_exists(filename):
-    dir_name = os.path.dirname(filename)
-    if not os.path.exists(dir_name):
-        os.makedirs(dir_name)
+
 
 
 

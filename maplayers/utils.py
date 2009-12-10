@@ -1,4 +1,5 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
+import os
 
 """
 Small useful utils
@@ -60,3 +61,7 @@ def html_escape(text):
     return "".join(html_escape_table.get(c,c) for c in text)
 
 
+def create_dir_if_not_exists(filename):
+    dir_name = os.path.dirname(filename)
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)

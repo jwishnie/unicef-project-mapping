@@ -246,12 +246,23 @@ $(document).ready(function() {
 			                    OpenLayers.Event.stop(e);
 			
 }
-        // var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
-        var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
-            type: VEMapStyle.Hybrid
-        });
+        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
+        // var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
+        //     type: VEMapStyle.Aerial
+        // });
         
         map.addLayer(layer);
+        
+        // map.addLayer(new OpenLayers.Layer.GML("KML", "/static/fertility_world_polygon.kml", 
+        //    {
+        //     format: OpenLayers.Format.KML, 
+        //     formatOptions: {
+        //       extractStyles: true, 
+        //       extractAttributes: true,
+        //       maxDepth: 2
+        //     }
+        //    }));
+        
         var gs = "http://"+window.location.host+"/geoserver/ows";
         var dists = new OpenLayers.Layer.WMS(
                    "Districts",

@@ -91,3 +91,9 @@ class ChangePasswordForm(forms.Form):
         if not user.check_password(str(old_password)):
             self._errors["old_password"] = ErrorList(["Incorrect password"])
         return cleaned_data
+        
+class KMLFilesForm(forms.Form):
+    name = forms.CharField(max_length = 50)
+    filename = forms.FileField()
+
+        
