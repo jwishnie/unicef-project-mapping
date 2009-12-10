@@ -52,8 +52,14 @@ li.file {
     padding: 8px 0 0 8px;
 }
 
-#add_video{
+#add_video {
     margin-left: 200px;
+}
+
+.remove_video,
+#add_video {
+    text-decoration: underline;    
+    cursor: pointer;
 }
 
 .smallmap {
