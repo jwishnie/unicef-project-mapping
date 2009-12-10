@@ -137,23 +137,29 @@ def photo_upload(request):
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
     destination_name = "static/project-photos/"+uploaded_file_name
-    destination = open(destination_name, 'wb+')
-    for chunk in uploaded_file.chunks(): 
-        destination.write(chunk) 
-        destination.close()
-    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
-    project_in_request = Project.objects.get(id=int(project_id))
-    project_in_request.project_image = uploaded_file_name
-    project_in_request.save()
     try:
-       photo = ProjectPhoto.objects.get(project=project_in_request)
-       photo.filename = uploaded_file_name
-       photo.save()
-    except Exception, ex:
-        print ex
-        project_in_request.projectphoto_set.add(ProjectPhoto(filename=uploaded_file_name, project=project_in_request, alt=uploaded_file_name))
+        _create_dir_if_not_exists(destination_name)
+        destination = open(destination_name, 'wb+')
+        for chunk in uploaded_file.chunks(): 
+            destination.write(chunk) 
+            destination.close()
+        os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
+        project_in_request = Project.objects.get(id=int(project_id))
+        project_in_request.project_image = uploaded_file_name
         project_in_request.save()
-    return HttpResponse("OK")
+        try:
+           photo = ProjectPhoto.objects.get(project=project_in_request)
+           photo.filename = uploaded_file_name
+           photo.save()
+        except Exception, ex:
+            print ex
+            project_in_request.projectphoto_set.add(ProjectPhoto(filename=uploaded_file_name, project=project_in_request, alt=uploaded_file_name))
+            project_in_request.save()
+        return HttpResponse("OK")
+    except Exception, ex:
+        response = HttpResponse()
+        response.write("Photo upload failed")
+        return response
     
 @login_required
 def project_comments(request, project_id):
