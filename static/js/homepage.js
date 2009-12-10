@@ -248,10 +248,10 @@ $(document).ready(function() {
 			                    OpenLayers.Event.stop(e);
 			
 }
-        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
+         var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
         // var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
-        //     type: VEMapStyle.Aerial
-        // });
+        //     type: VEMapStyle.Hybrid
+
         
         map.addLayer(layer);
         
@@ -266,6 +266,22 @@ $(document).ready(function() {
         //    }));
         
         var gs = "http://"+window.location.host+"/geoserver/ows";
+        var countryLayer = new OpenLayers.Layer.WMS(
+            "Uganda",
+            gs,
+            { 
+               layers: 'GADM:UGA_adm0',
+               transparent: true,
+               format: 'image/png'
+            },
+            {
+               isBaseLayer: false,
+               visibility: true
+            }
+        );
+
+        countryLayer.setOpacity(0.5);
+
         var dists = new OpenLayers.Layer.WMS(
                    "Districts",
                    gs,
@@ -275,7 +291,8 @@ $(document).ready(function() {
                        format: 'image/png'
                    },
                    {
-                       isBaseLayer: false
+                       isBaseLayer: false,
+                       visibility: false
                    }
         );
         
@@ -290,7 +307,8 @@ $(document).ready(function() {
                    format: 'image/png'
                },
                {
-                   isBaseLayer: false
+                   isBaseLayer: false,
+                   visibility: false
                }
            );
 
@@ -340,10 +358,25 @@ $(document).ready(function() {
     }
     
     function switchStatsView(){
-        map.addControl(new OpenLayers.Control.LayerSwitcher());
+        $("#filterable_criteria").hide();
+        $("#layercontrols").show();
+        map.addLayer(countryLayer);
         map.addLayer(dists);
         map.addLayer(county);
         map.removeLayer(markers);
+        var layersInMap = map.layers;
+        $("#layerholder").html("");
+        $.each(layersInMap, function(){
+            if(! this.isBaseLayer){
+                var isChecked = "";
+                if(this.visibility) {
+                    isChecked = 'checked="checked"';
+                }
+                var htmlLayer = '<li><input type="radio" name="layergroup" value="'+this.name+'" class="radiolayer"'+isChecked+'" /><label>'+this.name+'</label></li><p/>';
+                $("#layerholder").append(htmlLayer);
+                $(".radiolayer").bind('click', switchLayer);
+            }
+        });
         $('#stats-id').unbind('click', switchStatsView);
         $('#proj-id').bind('click', projectview);
         map.events.register('click', map, queryForRegionData);
@@ -351,12 +384,8 @@ $(document).ready(function() {
     }
         
     function projectview(){
-        var switcher = map.getControlsByClass("OpenLayers.Control.LayerSwitcher");
-        if(switcher.length > 0){
-            jQuery.each(switcher, function(l){
-                map.removeControl(l);
-            });
-        }
+        $("#filterable_criteria").show();
+        $("#layercontrols").hide();
         map.removeLayer(dists);
         map.removeLayer(county);
         map.addLayer(markers);
@@ -366,6 +395,20 @@ $(document).ready(function() {
         map.events.unregister('click', map, queryForRegionData);
     }
     
+    function switchLayer(event){
+        var layerName = $(this).attr("value");
+        var layersInMap = map.layers;
+        $.each(layersInMap, function(){
+            if(!this.isBaseLayer){
+                if(this.name === layerName){
+                    this.setVisibility(true);
+                }else{
+                    this.setVisibility(false);
+                }
+            }
+        });
+    }
+        
     function add_kml_info(layers){
         var kml_html = "<ul>";
         for(var i=0; i < layers.length; i++){
