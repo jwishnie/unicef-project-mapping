@@ -113,6 +113,14 @@ class ProjectTagsTest(TestCase):
         resource.title = "excel-resource.xyz"
         self.assertEquals('', project_tags.resource_icon(resource))        
 
+    def test_should_return_truncated_and_ellipsised_text(self):
+        text= "Red Cross Foundaiton"
+        self.assertEquals('Red Cross ...', project_tags.truncate_and_ellipsise(text))
+
+    def test_should_not_return_truncated_and_ellipsised_text(self):
+        text= "Red Cross"
+        self.assertEquals('Red Cross', project_tags.truncate_and_ellipsise(text))        
+        
     ### Non Mock tests    
     def test_my_projects_link_should_show_notifications(self):
         author = User.objects.get(id=2)
