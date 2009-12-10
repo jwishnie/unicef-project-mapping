@@ -12,27 +12,46 @@
 {% load project_tags %}
 
 <body class="{% block bodyclass %}{% endblock %}{% block body_tag_extra %}{% endblock %}">
-    <div class="main_wrapper">
+
         {% block page_header %}
         <div id="header">
 	        <div class="header_innertube">
-	            <div id="unicef_logo" class="floatleft">
-	            	<a href="/">
-	            		<img src="{{ img_url }}/unicef_logo.gif" />
-	            	</a>
-	            </div>
-	            <div id="main_nav">
-	            	<ul>
-						<li class="first"><a href="/">Home</a></li>
-						{% if user.is_authenticated %}
-							<li>{% add_project_link %}</li>
-							<li>{% my_projects_link user %}</li>
-							{% projects_for_review_link user %}
-							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>							
-				        {% else %}
-				        	<li><a href='{% url django.contrib.auth.views.login %}'>Login</a>
-				        {% endif %}
-					</ul>
+				<div id="logo">
+					<div id="unicef_tagline" class="floatleft">
+						<span id="tagline_top">unite for</span>
+						<span id="tagline_bottom">children</span>
+					</div>	
+		            <div id="unicef_logo" class="floatright">
+		            	<a href="/">
+		            		<img src="{{ img_url }}/unicef_logo.gif" />
+		            	</a>
+		            </div>
+				</div>
+	            <div id="main_nav_wrapper">
+					<div id="main_nav">
+		            	<ul class="floatleft">
+							<li class="first"><a href="/">Home</a></li>
+							{% if user.is_authenticated %}
+								<li>{% my_projects_link user %}</li>							
+								{% projects_for_review_link user %}								
+								<li>{% add_project_link %}</li>
+								<li>{% add_admin_unit_link %}</li>
+					        {% endif %}
+						</ul>
+						<div id="project_search" class="floatright">
+							<span>
+							{% if user.is_authenticated %}								
+								Welcome, {{user}}!
+								<a href='{% url django.contrib.auth.views.logout %}'>Logout</a>
+							{% else %}	
+								<a href='{% url django.contrib.auth.views.login %}'>Login</a>
+								{% sign_up_link %}
+							{% endif %}
+							</span>
+							<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
+							<input type="submit" value="" name="Search" class="search_text">
+						</div>
+					</div>
 	            </div>
 	        </div>    
         </div>
@@ -47,6 +66,6 @@
 		        {% endblock %}
 	    	</div>
 		</div>
-	</div>
+
 </body>
 </html>

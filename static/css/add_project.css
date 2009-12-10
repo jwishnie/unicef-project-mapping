@@ -16,6 +16,10 @@
     width: 140px;
 }
 
+#add_project .location_info fieldset div div {
+    padding: 0 0 0 5px;
+}
+
 #add_project #map {
     float: left;
 }
@@ -24,16 +28,13 @@
 	width: 40em;
 }
 
-.file-size, .file-remove, .file-remove-edit {
+.file-size, .file-remove, .file-remove-edit, .photo-remove-edit {
     padding-left: 10px;
-}
-
-.file-title{
-    color: blue;
 }
 
 li.file {
     overflow: hidden;
+    color: #007BD6;
 }
 
 .resource_icon {
@@ -48,8 +49,14 @@ li.file {
     padding: 8px 0 0 8px;
 }
 
-#add_video{
+#add_video {
     margin-left: 200px;
+}
+
+.remove_video,
+#add_video {
+    text-decoration: underline;    
+    cursor: pointer;
 }
 
 .smallmap {

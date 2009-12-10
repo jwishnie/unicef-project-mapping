@@ -79,7 +79,7 @@ $(document).ready(function() {
 
     $('#comment_link').click(function() {
         $(".ui-dialog-titlebar-close").html("X");
-        $(".ui-dialog-titlebar-close").css("color", "#0C7094");
+        $(".ui-dialog-titlebar-close").css("color", "#000");
         $('#published_comment').dialog('open');
         $("#published_comment").css("height", "auto");
         styleDialogBox();
@@ -166,7 +166,7 @@ $(document).ready(function() {
             subproject = projects[i];
             var size = new OpenLayers.Size(WIDTH, HEIGHT);
             var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
-            var icon = new OpenLayers.Icon(imgurl + '/mini-blue-marker.png', size, offset);
+            var icon = new OpenLayers.Icon(imgurl + '/bright_red_marker.png', size, offset);
             markers.addMarker(new OpenLayers.Marker
             (new OpenLayers.LonLat(subproject['longitude'],
             subproject['latitude']), icon.clone()));

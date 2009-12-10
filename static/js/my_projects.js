@@ -16,7 +16,7 @@ function update_project(project){
 
 jQuery(document).ready(function(){
 	$(".ui-dialog-titlebar-close").html("X");
-	$(".ui-dialog-titlebar-close").css("color", "#0C7094");
+	$(".ui-dialog-titlebar-close").css("color", "#000");
 	
 	
 	$('.publish_link').click(function(){

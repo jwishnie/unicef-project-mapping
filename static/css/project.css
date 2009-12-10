@@ -5,14 +5,14 @@ label {
 #edit_project {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    background-color:#4DBAFE;
-    float:right;
-    margin:5px;
-    padding:5px;
+    background-color: #007BD6;
+    float: right;
+    margin: 5px;
+    padding: 5px;
 }
 
 #edit_project a {
-    color: #0C7094;    
+    color: #000;
 }
 
 .publish_div,
@@ -36,8 +36,8 @@ label {
 
 #right_pane {
     float: right;
-    width: 49%;
-    padding: 35px 0 0 10px; 
+    width: 43%;
+    padding: 15px 0 10px 25px; 
 }
 
 #image_pane {
@@ -90,7 +90,26 @@ label {
     padding: 8px 0 0 8px;    
 }
 
+#project_location {
+    margin: 10px 0;
+}
+
+#project_location #nearby_projects {
+    margin-left: 50px;
+    cursor: pointer;
+}
+
+#back_to_main_map {
+    margin: 5px 0;
+    padding: 5px 0;
+}
+
+#back_to_main_map a,
 #nearby_projects{
-    text-align: center;
-    font-weight: bold;
-}    
+    padding: 5px;
+    margin: 5px 0;
+    background-color: #007BD6;
+    text-decoration: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}

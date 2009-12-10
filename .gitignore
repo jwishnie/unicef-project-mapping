@@ -15,3 +15,4 @@ build
 static/resources/
 initial_data.json
 *.log
+.DS_Store

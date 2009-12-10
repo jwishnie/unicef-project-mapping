@@ -90,8 +90,8 @@ def project(request, project_id, project_manager=Project.objects):
     context.update(bbox)          
     
     return render_to_response('project.html', context,
-			       context_instance=RequestContext(request)
-			      )
+                               context_instance=RequestContext(request)
+                              )
 
 
     

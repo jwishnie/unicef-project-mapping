@@ -9,7 +9,6 @@
         <script type="text/javascript" src="{{ mootools }}"></script>
         <script src="{{ jquery }}" type="text/javascript"></script>
 		<script src="{{ openlayers }}" type="text/javascript"></script>
-		<script src="{{ bing_js }}"></script>
         <link rel="stylesheet" href="{{ jquery_plugins_url }}/jquery.autocomplete.css" type="text/css" />
         <script type="text/javascript" src="{{ jquery_plugins_url }}/jquery.autocomplete.min.js"></script>
         <script type="text/javascript" src="{{ fancyuploader }}/Swiff.Uploader.js"></script>
@@ -26,10 +25,14 @@
 			var sectors = "{{sectors}}";
 			var implementors = "{{implementors}}";
 			var project_links = '{% project_links title_and_values %}';
+			jQuery(document).ready(function(){
+				Fx.ProgressBar.prototype.options.url = "/static/img/bar.gif";
+			});
 		</script>
 
         <script type="text/javascript" src="{{ js_url }}/add_project.js"></script>
         <script type="text/javascript" src="{{ js_url }}/fileupload.js"></script>
+	<script src="{{ bing_js }}"></script>
 {% endblock %}
 
 {% block page_content %}
@@ -37,7 +40,7 @@
 		<form action="/{{action}}" method="post">
 			<input type="hidden" name="project_id" value="{{project.id}}"></input>
 			<fieldset>
-				<legend><span>About the Project</span></legend>
+				<legend><span>Project Information</span></legend>
 				<div>
 					<label for="id_name">Name:</label> 
 					{{form.name}}
@@ -54,10 +57,11 @@
 			</fieldset>
 			<div class="location_info">
 				<fieldset>
-					<legend><span>Location Information</span></legend>
+					<legend><span>Project Location</span></legend>
 					<div>
 						<label for="id_latitude">Latitude:</label> 
 						{{ form.latitude }}
+						<div>Click on the map to set latitude and longitude</div>						
 						{{ form.latitude.errors }}					
 					</div>
 					<div>				
@@ -74,7 +78,7 @@
 				<div id="map" class="smallmap"></div>				
 			</div>
 			<fieldset>
-				<legend><span>Media Information</span></legend>				
+				<legend><span>Project Media</span></legend>				
 				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div>
 					<label for="id_website_url">Website url:</label> 
@@ -83,8 +87,11 @@
 				</div>	
 				<div>
 					<label for="id_project_image">Project image:</label> 
-					{{ form.project_image }}
-					{{ form.project_image.errors}}					
+					
+					{% project_image project %}
+				<!--	<a href="#" id="photo-attach" class="photo-attach" name="photo-attach">Attach a file</a> -->
+					<ul id="photo-list"></ul>
+					
 				</div>
 				{% video_url_tag video_urls %}
 				<div id="add_video_link"><span id="add_video">Add another video</span></div>
@@ -101,7 +108,7 @@
 				</div>
 			</fieldset>	
 			<fieldset>
-				<legend><span>Project Filters</span></legend>	
+				<legend><span>Project Sector, Implementor and Tags</span></legend>	
 				<a class="back_to_top" href="#add_project">Back to top</a>											
 				<div>
 					<label for="id_project_sectors">Sectors: </label> 
@@ -118,7 +125,7 @@
 				<div id="project-tags">
 					<label for="id_project_tags">Project tags: </label> 
 					{{ form.tags }}
-					<div>Space separated tags</div>
+					<div>separate tags with a space</div>
 				</div>
 			</fieldset>
 			<fieldset>
@@ -126,8 +133,8 @@
 				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div id="file">
 					{% file_list resources %}
-					<a href="#" id="file-attach" name="file-attach">Attach a file</a>
-					<ul id="file-list"></ul><a href="#" id="file-attach-2" style="display: none;" name="file-attach-2">Attach another file</a>
+					<a href="#" class="file-attach" name="file-attach">Attach a file</a>
+					<ul id="file-list"></ul><a href="#" class="file-attach-2" style="display: none;" name="file-attach-2">Attach another file</a>
 				</div>
 				<div id="project-links"></div>
 				<a href="#" id="add_link">Add another link</a>

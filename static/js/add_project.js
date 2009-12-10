@@ -156,6 +156,15 @@ jQuery(document).ready(function(){
 		return false;
 	});
 	
+	jQuery('.photo-remove-edit').click(function(){
+		var filename = jQuery(this).prev().html();
+		jQuery.get("/remove_photo/", {'project_id' : project_id, 'file-name' : filename});
+		jQuery(this).prev().remove();
+		jQuery(this).remove();
+		jQuery("#photo-attach").show();
+		return false;
+	});
+	
 	jQuery(".delete_comment").click(function(){
         var url = "/projects/comments/delete/";
         var span_id = this.id;

@@ -1,9 +1,9 @@
 body {
     margin: 0 auto;
     padding: 0px;
-    color: #0C7094;
+    color: #000;
     background-color: #0099FF;
-    font-family: verdana;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 10pt;
 }
 
@@ -13,16 +13,39 @@ img {
 
 .main_wrapper {
     margin: auto;
-	width: 80%;
 }
 
 #header,
+#logo,
 #explore_nav,
+#main_nav,
 #main_nav ul,
 #main_pane,
 #image_pane,
 #review_suggestions .suggestion {
 	overflow: hidden;
+}
+
+#header {
+    color: #FFF;
+}
+
+#logo,
+#main_nav,
+#main_content_shadow {
+    margin: auto;
+}
+
+#logo, 
+#main_nav {
+    width: 80%;
+}
+
+#unicef_tagline {
+    font-size: 14pt;
+    float: left;
+    padding: 5px 0 0 15px;
+    width: 5em;
 }
 
 ul.sectors,
@@ -33,12 +56,14 @@ ul.implementors {
     margin-bottom: 2px;
 }
 
-#main_nav {
-    background-color: #4DBAFE;
-	float: right;
-	font-family: verdana;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
+#main_nav_wrapper {
+    background-color: #007BD6;
+}
+
+#main_nav ul {
+    clear: right;
+    padding: 0;
+    font-size: 9pt;
 }
 
 #explore_nav {
@@ -59,6 +84,7 @@ ul.implementors {
     height: 378px;
     width: 15%;
     margin: 0 2px;
+    overflow: auto;
 }
 
 .round_corner {
@@ -70,35 +96,42 @@ ul.implementors {
     float: left;
 }	
 
+.floatright {
+    float: right;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 5px;
-    color: #0C7094;
 }
 
 li a {
     text-decoration: none;
-    color: #0C7094;
+    color: #000;
 }	
 
 .header_innertube {
-	padding: 20px;
+	padding: 20px 0 0;
 	overflow: hidden;
 }
 
 #main_nav ul li {
-    border-left: 1px solid #0C7094;
+    border-left: 1px solid #FFF;
     float: left;
     margin: 5px;
     padding-left: 10px;
+    height: 4.5em;
+    width: 7em;
 }
 
 #main_nav ul li a {
     margin: 0;
     padding: 0;
+    color: #FFF;
 }
 
+#main_nav #project_search li,
 #main_nav li.first,
 #project_list td span.first,
 #admin_unit_list td span.first,
@@ -109,29 +142,28 @@ li a {
 #main_nav span.notification {
     padding: 0 3px;
     margin-left: 3px;
-    background-color: #0C7094;
-    color: #FFF;
+    background-color: #FFF;
+    color: #000;
     -moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
 
 #main_content {
     background-color: #FFF;
-    border-top: 1px dashed #A5A5A5;
     margin: 0 10px;
 }
 
 #main_content fieldset {
-    border-color: #4DBAFE;
+    border-color: #007BD6;
     margin: 20px;
 }
 
 #main_content fieldset legend {
-    color: #0C7094;
+    color: #FFF;
 }
 
 #main_content fieldset legend span {
-    background-color: #4DBAFE;
+    background-color: #007BD6;
     display: block;
     padding: 5px;
     width: 830px;
@@ -188,6 +220,7 @@ li a {
 #main_content_shadow {
     background-color: #4DB8FF;
     clear: both;
+    width: 80%;
 }
 
 #map_canvas{
@@ -198,7 +231,6 @@ li a {
 }
 
 #projects {
-    float: right;
     width: 32%;
     height: 400px;
     margin: 0 5px 0 0;
@@ -210,24 +242,16 @@ li a {
 }
 
 #proj {
-    height: 305px;
+    height: 325px;
     overflow: auto;
 }
 
 #proj a {
     font-weight: bold;
-    color: #6A8512;
-}
-
-#projects h4 {
-    background-color: #6A8512;
-    padding: 5px;
-    margin: 0;
-    color: #FFF;
 }
 
 #proj .proj_desc {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 #bookmark{
@@ -250,30 +274,34 @@ li.drawer {
 }
 
 li.drawer div {
-    background-color: #A5A5A5;
     color: #FFF;
     padding: 5px;
 }
 
 #project_search {
-    float: right;
-    border-color: #a5a5a5;
-    color: #fff;
-    background-color: #a5a5a5;
     padding: 5px;
-    margin: 5px 5px 0;
+    width: 15em;
+}
+
+#project_search span a {
+    font-size: 9pt;
+    color: #FFF;
+    padding-left: 25px;
 }
 
 #project_search input {
     border-style: none;
     padding: 5px;
+    margin-top: 7px;
 }
 
 #project_search .search_text {
-    padding: 0;
+    padding: 3px;
     font-size: 1em;
     color: #fff;
-    background-color: #a5a5a5;    
+    background: #0099ff url('../img/search.gif') no-repeat scroll top left;
+    width: 22px;
+    padding: 1px 0 3px;
 }
 
 span.drawer-handle {
@@ -286,12 +314,11 @@ span.drawer-handle {
     padding: 15px 0;
     margin-top: 10px;
     text-align: center;
-    border-top: 1px dashed #A5A5A5;
 }
 
 li.sector_drawer div,
 li.implementor_drawer div {
-    background: #0078AE url(../img/collapsed.png) no-repeat scroll 98% 50%;
+    background: #007BD6 url('../img/collapsed.png') no-repeat scroll 98% 50%;
     width: auto;
 }
 
@@ -377,7 +404,7 @@ ul.errorlist {
 #my_project_list th,
 #admin_unit_list th,
 #project_list th {
-    background-color: #4DBAFE;    
+    background-color: #007BD6;    
 }
 
 #my_project_list td,
@@ -400,7 +427,7 @@ ul.errorlist {
 #project_list td a,
 #admin_unit_list td a,
 #my_project_list td a {
-    color: #0C7094;
+    color: #000;
 }
 
 #project_list td span,
@@ -428,8 +455,8 @@ ul.errorlist {
 .ui-dialog .ui-state-default, 
 .ui-dialog .ui-widget-content .ui-state-default {
     background: none;
-    background-color: #4DB8FF;
-    color: #0C7094;
+    background-color: #007BD6;
+    color: #000;
 }
 
 /*REVIEW SUGGESTION*/
@@ -481,4 +508,3 @@ ul.errorlist {
     clear: left;
     padding: 10px 0 0 30px;
 }
-

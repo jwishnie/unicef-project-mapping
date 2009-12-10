@@ -1,19 +1,20 @@
 function collapseSectors(){
     $('ul.sectors').hide();
-    $('li.sector_drawer div').css("background-color", "#0078AE");
+    $('li.sector_drawer div').css("background-color", "#007BD6");
     $('li.sector_drawer span').removeClass('open');   
 }
 
 function expandSectors(){
     $('ul.sectors').show();
-    $('li.sector_drawer div').css("background-color", "#6EAC2C");
-    $('ul.sectors').css("background-color", "#6EAC2C");            
+    $('li.sector_drawer div').css("background-color", "#007BD6");
+    $('ul.sectors').css("background-color", "#FFF");            
+    $('ul.sectors').css("color", "#000");            
     $('li.sector_drawer span').addClass('open');   
 }
 
 function collapseImplementors(){
     $('ul.implementors').hide();
-    $('li.implementor_drawer div').css("background-color", "#0078AE");
+    $('li.implementor_drawer div').css("background-color", "#007BD6");
     $('li.implementor_drawer span').removeClass('open');   
 }
 
@@ -25,8 +26,9 @@ function adjustStylesAfterExpand(){
 
 function expandImplementors(){
     $('ul.implementors').show();
-    $('li.implementor_drawer div').css("background-color", "#6EAC2C");
-    $('ul.implementors').css("background-color", "#6EAC2C");
+    $('li.implementor_drawer div').css("background-color", "#007BD6");
+    $('ul.implementors').css("background-color", "#FFF");
+    $('ul.implementors').css("color", "#000");
     $('li.implementor_drawer span').addClass('open');   
 }
 

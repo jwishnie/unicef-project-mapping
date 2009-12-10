@@ -45,34 +45,35 @@
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
 					<h2>{{project.name}}</h2>
-                    <div id="project_implementors">
-						{% if project.implementor_set %}
-							<label>Project Implementors : </label>
-							<div class="sub_div">{{implementors}}</div>
-						{% endif %}
-					</div>
 					<div id="main_pane">
 						<div id="right_pane">
-							<div id="nearby_projects">Show projects around this location</div>
+							<div id="back_to_main_map"><a href="/">Back to main map</a></div>
 							<div id="map_canvas" class="olMap" style="width: 460px; height:256px; border=1px solid #CCCCCC"></div>
 						</div>
 													
 						<div id="left_pane">
-							<div id="project description">
+		                    <div id="project_implementors">
+								{% if project.implementor_set %}
+									<label>Project Implementors : </label>
+									<div class="sub_div">{{implementors}}</div>
+								{% endif %}
+							</div>							
+							<div id="project_description">
 								<label>Description: </label>
 								{% autoescape off %} 
 	                            <div class="sub_div">{{project.description}}</div>
 	                            {% endautoescape %} 
 							</div>
 					
-							<div id="project location">
+							<div id="project_location">
 								<label>Location: </label>
 								<span>{{project.location}}</span>
+								<span id="nearby_projects">Show projects around this location on the map</span>
 	                        </div>
 
 	                        <div id="project_website">
 	                            <label>Project WebSite: </label>
-	                            <span><a href="{{project.website_url}}">{{project.name}} home page</a></span>
+	                            <span><a href="{{project.website_url}}" target="_new">{{project.name}} home page</a></span>
 	                        </div>
                        
 	                        <div id="parent_project">
@@ -95,7 +96,7 @@
 								<div id="project links">
 									<label>Links : </label>
 									{% for link in links %}
-										<div class="sub_div"><a href="{{link.url}}">{{link.title}}</a></div>
+										<div class="sub_div"><a href="{{link.url}}" target="_new">{{link.title}}</a></div>
 									{% endfor %}
 								</div>	
 							{% endif %}
@@ -115,7 +116,7 @@
 									{% for resource in resources %}
 									<div class="resource">
 									  	<div class="resource_icon" style="background:transparent url({% resource_icon resource %}) no-repeat scroll top left"></div>
-										<div class="sub_div"><a href="/static/resources/{{resource}}">{{resource.title}}</a></div>
+										<div class="sub_div"><a href="../../../{{resource.filename}}">{{resource.title}}</a></div>
 									</div>	
 									{% endfor %}
 								</div>
@@ -126,11 +127,12 @@
 					<div class="back_to_top"><a href="#project_details">Back to top</a></div>						
 					
 					<div id="image_pane">
-	                    <div id="project_image">
-	                        <div>Project Image</div>
-	                        <span><img alt={{project.name}} src="{{project.project_image}}"/></span>
-	                    </div>
-
+	                    {% if project.project_image %}
+							<div id="project_image">
+		                        <div>Project Image</div>
+		                        <span><img alt={{project.name}} src="{{project_photo_url}}{{project.project_image}}"/></span>
+		                    </div>
+						{%endif%}
 	                    <div id="photo_set">
 	                        {% parse_img_rss_feed %}
 	                        {% include 'photo_gallery.html' %}

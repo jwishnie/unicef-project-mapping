@@ -25,11 +25,6 @@
 		
 {% block page_content %}
 <div id="explore_nav">
-
-	<div id="project_search" class="round_corner">
-		<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
-		<input type="submit" value="Search" name="Search" class="search_text">
-	</div>            
 	
 </div>
 <div id="main_pane">
@@ -65,7 +60,7 @@
 	</div>
 	<div id="map_canvas"></div>
 	{% autoescape off %}
-		<div id="projects">
+		<div id="projects" class="floatright">
 			<div id="tabs">
 				<ul>
 					<li><a id="proj-id" href="#proj">List of Projects</a></li>
