@@ -35,7 +35,14 @@ function expandImplementors(){
 function populateRegionStats(response){
 	$.post("/search_admin_unit/",{text:response.responseText},
 	    function(data){
-	        $("#stats").html(data);
+	        var statistics = JSON.parse(data);
+	        var statsHtml = " "
+	        if(statistics.found){
+	            statsHtml='<ul><li> Health :'+statistics.health+'</li><li>Economy :'+statistics.economy+'</li><li>Environment :'+statistics.environment+'</li></ul>'
+	        }else{
+	            statsHtml = 'Sorry the data is not found.'
+	        }
+	        $("#stats").html(statsHtml);
 	    });
 }
 
@@ -366,6 +373,8 @@ $(document).ready(function() {
     }
     
     function switchStatsView(){
+        var bounds = new OpenLayers.Bounds(29.571,-1.479,35.0,4.234);
+        map.zoomToExtent(bounds);
         $("#filterable_criteria").hide();
         $("#layercontrols").show();
         map.addLayer(countryLayer);
@@ -392,6 +401,7 @@ $(document).ready(function() {
     }
         
     function projectview(){
+        map.zoomToScale(0);
         $("#filterable_criteria").show();
         $("#layercontrols").hide();
         map.removeLayer(dists);
@@ -406,15 +416,21 @@ $(document).ready(function() {
     function switchLayer(event){
         var layerName = $(this).attr("value");
         var layersInMap = map.layers;
+        var shapeFileName = "";
         $.each(layersInMap, function(){
             if(!this.isBaseLayer){
                 if(this.name === layerName){
                     this.setVisibility(true);
+                    shapeFileName = this.params.LAYERS;
                 }else{
                     this.setVisibility(false);
                 }
             }
         });
+        var featureRequestUrl = "http://localhost/geoserver/wfs?request=GetFeature&version=1.1.0&typeName=" + shapeFileName;
+        var xml = $.get(featureRequestUrl, function (data) {
+            upperCorner = $(data).find("gml:lowerCorner");
+        }, "xml");
     }
         
     function add_kml_info(layers){
