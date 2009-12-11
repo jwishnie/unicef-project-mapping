@@ -352,6 +352,7 @@ $(document).ready(function() {
     
     
     function switchKMLView(){
+        map.removeLayer(markers);
         var layers;
         $.get("/kml_layers/", function(data){
             layers = eval(data);
@@ -434,16 +435,21 @@ $(document).ready(function() {
     }
     
     function show_hide_kml_layers(){
-        kml_file = $("#file_" + this.id).html();
-        map.addLayer(new OpenLayers.Layer.GML("KML", kml_file, 
-           {
-            format: OpenLayers.Format.KML, 
-            formatOptions: {
-              extractStyles: true, 
-              extractAttributes: true,
-              maxDepth: 2
-            }
-           }));
+        if(this.checked == false){
+            layer = map.getLayersByName(this.id)[0];
+            map.removeLayer(layer);
+        }else{
+            kml_file = $("#file_" + this.id).html();
+            map.addLayer(new OpenLayers.Layer.GML(this.id, kml_file, 
+               {
+                format: OpenLayers.Format.KML, 
+                formatOptions: {
+                  extractStyles: true, 
+                  extractAttributes: true,
+                  maxDepth: 2
+                }
+               }));
+        }
     }
     
 });
