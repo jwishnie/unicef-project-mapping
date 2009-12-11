@@ -232,12 +232,21 @@ li a {
 
 #projects {
     width: 32%;
+}
+
+#projects_searched {
+    width: 48%;
+}
+
+#projects,
+#projects_searched {
     height: 400px;
     margin: 0 5px 0 0;
     font-size: 9pt;
 }
 
-#projects #tabs {
+#projects #tabs,
+#projects_searched #tabs {
     height: 371px;
 }
 
@@ -507,4 +516,13 @@ ul.errorlist {
     font-size: 9pt;
     clear: left;
     padding: 10px 0 0 30px;
+}
+
+/*SEARCH RESULTS*/
+#main_pane h3 {
+    padding-left: 10px;
+}
+
+#main_pane span.search_term {
+    color: #007BD6;
 }

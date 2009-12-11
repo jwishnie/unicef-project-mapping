@@ -3,7 +3,7 @@
 from django.test import TestCase
 from django.test.client import Client
 from maplayers.models import Project
-from maplayers.views import convert_to_json, _get_bounding_box_for_project
+from maplayers.views import convert_to_json, _get_bounding_box_for_project, projects_search
 from maplayers.constants import PROJECT_STATUS
 from  mock import Mock
 from maplayers import views
@@ -47,12 +47,18 @@ class ProjectPage(TestCase):
         context = webclient.get('/projects/id/1/').context
         self.assertEquals(1, len(context[0]['subprojects']))
         
-    def test_should_return_list_of_projects_in_json_matching_search_term(self):
-        webclient = Client()
-        response = webclient.get('/projects/search/unicef/')
-        self.assertContains(response, "School for all")
-        self.assertContains(response, "\"implementors\" : [\"Unicef\"]")
-
+    def test_should_return_list_of_projects_matching_search_term(self):
+        request = Mock()
+        project_manager = Mock()
+        request.POST.get.return_value = "Congo"
+        request.META = {"HTTP_REFERER" : "http://mapping"}
+        filtered_projects = Mock()
+        project_manager.filter.return_value = filtered_projects
+        filtered_projects.distinct.return_value = [MockProject(), MockProjectForSearch()]
+        actual_response = projects_search(request, project_manager)
+        self.assertTrue(str(actual_response).__contains__("Congo Project"))        
+        self.assertTrue(str(actual_response).__contains__("Search results for"))
+            
     def test_should_give_collection_of_projects_in_json(self):
         expected_result = '''[{"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 3, "sectors" : ["Disaster Aid"], "implementors" : ["Unicef"]}, {"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 4, "sectors" : ["Disaster Aid"], "implementors" : ["Unicef"]}]'''
         project1 = MockProject()
@@ -124,14 +130,29 @@ def _create_mock_project(hash_values):
     
     
 class MockProject:
+    def __init__(self):
+        self.id = 1
+        self.latitude = 30
+        self.longitude = 30
     def snippet(self):
         return "This is test"
     def sectors_in_json(self):
         return '["Disaster Aid"]'
     def implementors_in_json(self):
         return '["Unicef"]'
-        
-        
+
+class MockProjectForSearch:
+    def __init__(self):
+        self.id = 2
+        self.latitude = 30
+        self.longitude = 30
+    def snippet(self):
+        return "Congo Project"
+    def sectors_in_json(self):
+        return '["Disaster Aid"]'
+    def implementors_in_json(self):
+        return '["Unicef"]'
+                
 class MockProjectForBoundingBox(object):
     def __init__(self, init_hash):
         self.latitude = init_hash['latitude']
