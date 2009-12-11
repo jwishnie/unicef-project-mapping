@@ -350,11 +350,8 @@ $(document).ready(function() {
     $('#stats-id').bind('click', switchStatsView);
     $('#kml-id').bind('click', switchKMLView);
 
-    
-    
     function switchKMLView(){
-        active_kml_layers = new Array();
-        map.removeLayer(markers);
+        remove_all_layers();
         var layers;
         $.get("/kml_layers/", function(data){
             layers = eval(data);
@@ -373,11 +370,10 @@ $(document).ready(function() {
     function switchStatsView(){
         $("#filterable_criteria").hide();
         $("#layercontrols").show();
+        remove_all_layers();
         map.addLayer(countryLayer);
         map.addLayer(dists);
         map.addLayer(county);
-        map.removeLayer(markers);
-        remove_active_kml_layers();
         var layersInMap = map.layers;
         $("#layerholder").html("");
         $.each(layersInMap, function(){
@@ -400,10 +396,8 @@ $(document).ready(function() {
     function projectview(){
         $("#filterable_criteria").show();
         $("#layercontrols").hide();
-        map.removeLayer(dists);
-        map.removeLayer(county);
+        remove_all_layers();
         map.addLayer(markers);
-        remove_active_kml_layers();
         $('#stats-id').bind('click', switchStatsView);
         $('#proj-id').unbind('click', projectview);
         map.events.register('moveend', map, mapEvent);
@@ -442,11 +436,9 @@ $(document).ready(function() {
     
     function show_hide_kml_layers(){
         if(this.checked == false){
-            active_kml_layers[this.id] = false;
             layer = map.getLayersByName(this.id)[0];
             map.removeLayer(layer);
         }else{
-            active_kml_layers[this.id] = true;
             kml_file = $("#file_" + this.id).html();
             map.addLayer(new OpenLayers.Layer.GML(this.id, kml_file, 
                {
@@ -460,13 +452,15 @@ $(document).ready(function() {
         }
     }
     
-    function remove_active_kml_layers(){
-        alert("hello");
-        for(layer_name in active_kml_layers){
-            if(active_kml_layers[layer_name]){
-                map.removeLayer(map.getLayersByName(layer_name)[0]);
+    function remove_all_layers(){
+        var layersInMap = map.layers;
+        $.each(layersInMap, function(){
+            alert(this.name);
+            if(!this.isBaseLayer){
+                map.removeLayer(this);
             }
-        }
+        });
     }
+    
     
 });
