@@ -49,6 +49,7 @@ $(document).ready(function() {
     MAX_SCALE = 865124.6923828125;
     MIN_SCALE = 200000000;
 
+    var active_kml_layers;
     // pink tile avoidance
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
     // make OL compute scale according to WMS spec
@@ -352,6 +353,7 @@ $(document).ready(function() {
     
     
     function switchKMLView(){
+        active_kml_layers = new Array();
         map.removeLayer(markers);
         var layers;
         $.get("/kml_layers/", function(data){
@@ -363,6 +365,8 @@ $(document).ready(function() {
             }
             
         });
+        $('#stats-id').bind('click', switchStatsView);
+        $('#proj-id').bind('click', projectview);
         
     }
     
@@ -373,6 +377,7 @@ $(document).ready(function() {
         map.addLayer(dists);
         map.addLayer(county);
         map.removeLayer(markers);
+        remove_active_kml_layers();
         var layersInMap = map.layers;
         $("#layerholder").html("");
         $.each(layersInMap, function(){
@@ -398,6 +403,7 @@ $(document).ready(function() {
         map.removeLayer(dists);
         map.removeLayer(county);
         map.addLayer(markers);
+        remove_active_kml_layers();
         $('#stats-id').bind('click', switchStatsView);
         $('#proj-id').unbind('click', projectview);
         map.events.register('moveend', map, mapEvent);
@@ -436,9 +442,11 @@ $(document).ready(function() {
     
     function show_hide_kml_layers(){
         if(this.checked == false){
+            active_kml_layers[this.id] = false;
             layer = map.getLayersByName(this.id)[0];
             map.removeLayer(layer);
         }else{
+            active_kml_layers[this.id] = true;
             kml_file = $("#file_" + this.id).html();
             map.addLayer(new OpenLayers.Layer.GML(this.id, kml_file, 
                {
@@ -449,6 +457,15 @@ $(document).ready(function() {
                   maxDepth: 2
                 }
                }));
+        }
+    }
+    
+    function remove_active_kml_layers(){
+        alert("hello");
+        for(layer_name in active_kml_layers){
+            if(active_kml_layers[layer_name]){
+                map.removeLayer(map.getLayersByName(layer_name)[0]);
+            }
         }
     }
     
