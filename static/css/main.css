@@ -48,6 +48,7 @@ img {
     width: 5em;
 }
 
+ul.layers,
 ul.sectors,
 ul.implementors {
     color: #FFF;
@@ -78,7 +79,7 @@ ul.implementors {
     padding: 5px 18px 0 5px;
 }
 
-#filterable_criteria {
+#layercontrols, #filterable_criteria {
     font-size: 9pt;
     float: left;
     height: 378px;
@@ -267,7 +268,7 @@ li a {
     display: none;
 }
 
-#sectors li {
+#layers #sectors li {
     float: left;
     margin: 1px;
     padding-left:0px;
@@ -325,6 +326,7 @@ span.drawer-handle {
     text-align: center;
 }
 
+li.layers_drawer div,
 li.sector_drawer div,
 li.implementor_drawer div {
     background: #007BD6 url('../img/collapsed.png') no-repeat scroll 98% 50%;
@@ -341,6 +343,10 @@ table#projects td {
     float: right;
 }
 
+.kml_file {
+    display: none;
+}
+    
 /*ERRORS*/
 .error {
     color: #FF0000;

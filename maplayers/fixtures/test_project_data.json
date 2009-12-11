@@ -558,4 +558,29 @@
         "date": "2009-11-23 19:18:03",
         "email": "sai.venkat@gmail.com"
     }
-}]
+},
+{
+    "pk": 1,
+    "model": "maplayers.kmlfile",
+    "fields": {
+        "name": "Africa Impact of Bill and Melinda gates foundation",
+        "filename": "/static/kml/Bill_and_melinda_gates_foundation_africa_impact.kml"
+    }
+},
+{
+    "pk": 2,
+    "model": "maplayers.kmlfile",
+    "fields": {
+        "name": "Africa Fertility polygons",
+        "filename": "/static/kml/fertility_africa_high_polygon.kml"
+    }
+},
+{
+    "pk": 3,
+    "model": "maplayers.kmlfile",
+    "fields": {
+        "name": "North America Fertility polygons",
+        "filename": "/static/kml/fertility_north_america_high_polygon.kml"
+    }
+}
+]

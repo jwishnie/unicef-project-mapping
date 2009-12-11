@@ -44,6 +44,7 @@ $(document).ready(function() {
     MAX_SCALE = 865124.6923828125;
     MIN_SCALE = 200000000;
 
+    var active_kml_layers;
     // pink tile avoidance
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
     // make OL compute scale according to WMS spec
@@ -171,18 +172,130 @@ $(document).ready(function() {
     map.events.register('moveend', map, mapEvent);
     map.addLayer(layer);
     map.zoomToExtent(bounds);
+
 	map.addLayer(markers);
 	
     $('.sectorbox').click(mapEvent);
 	$('.implementorbox').click(mapEvent);
 	
     $('#stats-id').bind('click', switchStatsView);
-    	
-	function switchStatsView(){
-        map.addControl(new OpenLayers.Control.LayerSwitcher());
+    $('#kml-id').bind('click', switchKMLView);
+    var gs = "http://"+window.location.host+"/geoserver/ows";
+    var dists = new OpenLayers.Layer.WMS(
+               "Districts",
+               gs,
+               { 
+                   layers: 'GADM:UGA_adm1',
+                   transparent: true,
+                   format: 'image/png'
+               },
+               {
+                   isBaseLayer: false
+               }
+    );
+    
+    dists.setOpacity(0.5);
+    
+    var countryLayer = new OpenLayers.Layer.WMS(
+                "Uganda",
+                gs,
+                { 
+                   layers: 'GADM:UGA_adm0',
+                   transparent: true,
+                   format: 'image/png'
+                },
+                {
+                   isBaseLayer: false,
+                   visibility: true
+                }
+    );
+    
+    countryLayer.setOpacity(0.5);
+            
+     var county = new OpenLayers.Layer.WMS(
+           "County",
+           gs,
+           { 
+               layers: 'GADM:UGA_adm2',
+               transparent: true,
+               format: 'image/png'
+           },
+           {
+               isBaseLayer: false
+           }
+       );
+    
+    county.setOpacity(0.5);
+    
+    function queryForRegionData(e){
+        var layersInMap = map.layers;
+            var layerToQuery = "";
+            $.each(layersInMap, function(){
+                if(! this.isBaseLayer){
+                    if(this.visibility){
+                        layerToQuery = this.params.LAYERS;
+                    }
+                }
+            });
+		$("#stats").html("Loading. Please wait...");
+        var params = {
+            REQUEST: "GetFeatureInfo",
+            EXCEPTIONS: "application/vnd.ogc.se_xml",
+            BBOX: map.getExtent().toBBOX(),
+            X: e.xy.x,
+            Y: e.xy.y,
+            INFO_FORMAT: 'text/plain',
+            QUERY_LAYERS: 'GADM:UGA_adm1',
+            FEATURE_COUNT: 50,
+            Layers: 'GADM:UGA_adm1',
+            Styles: '',
+            Srs: 'EPSG:4326',
+            WIDTH: map.size.w,
+            HEIGHT: map.size.h,
+            format: format
+            };
+        OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, populateRegionStats, populateRegionStats);
+		OpenLayers.Event.stop(e);
+
+    }
+        
+    function switchKMLView(){
+        remove_all_layers();
+        var layers;
+        $.get("/kml_layers/", function(data){
+            layers = eval(data);
+            if(layers.length >0){
+               add_kml_info(layers);
+            }else{
+                $('#kml').html('No KML layers to overlay');
+            }
+            
+        });
+        $('#stats-id').bind('click', switchStatsView);
+        $('#proj-id').bind('click', projectview);
+        
+    }
+    
+    function switchStatsView(){
+        $("#filterable_criteria").hide();
+        $("#layercontrols").show();
+        remove_all_layers();
+        map.addLayer(countryLayer);
         map.addLayer(dists);
         map.addLayer(county);
-        map.removeLayer(markers);
+        var layersInMap = map.layers;
+        $("#layerholder").html("");
+        $.each(layersInMap, function(){
+            if(! this.isBaseLayer){
+                var isChecked = "";
+                if(this.visibility) {
+                    isChecked = 'checked="checked"';
+                }
+                var htmlLayer = '<li><input type="radio" name="layergroup" value="'+this.name+'" class="radiolayer"'+isChecked+'" /><label>'+this.name+'</label></li><p/>';
+                $("#layerholder").append(htmlLayer);
+                $(".radiolayer").bind('click', switchLayer);
+            }
+        });
         $('#stats-id').unbind('click', switchStatsView);
         $('#proj-id').bind('click', projectview);
         map.events.register('click', map, queryForRegionData);
@@ -190,19 +303,71 @@ $(document).ready(function() {
     }
 
     function projectview(){
-        var switcher = map.getControlsByClass("OpenLayers.Control.LayerSwitcher");
-        if(switcher.length > 0){
-            jQuery.each(switcher, function(l){
-                map.removeControl(l);
-            });
-        }
-        map.removeLayer(dists);
-        map.removeLayer(county);
+        $("#filterable_criteria").show();
+        $("#layercontrols").hide();
+        remove_all_layers();
         map.addLayer(markers);
         $('#stats-id').bind('click', switchStatsView);
         $('#proj-id').unbind('click', projectview);
         map.events.register('moveend', map, mapEvent);
         map.events.unregister('click', map, queryForRegionData);
+    }
+    
+    function switchLayer(event){
+        var layerName = $(this).attr("value");
+        var layersInMap = map.layers;
+        $.each(layersInMap, function(){
+            if(!this.isBaseLayer){
+                if(this.name === layerName){
+                    this.setVisibility(true);
+                }else{
+                    this.setVisibility(false);
+                }
+            }
+        });
+    }
+        
+    function add_kml_info(layers){
+        var kml_html = "<ul>";
+        for(var i=0; i < layers.length; i++){
+            var layer = layers[i];
+            kml_html += "<li>";
+            kml_html += "<input type='checkbox' class='kml_checkbox' id='kml_" + layer.kml_id + "'></input>";
+            kml_html += "<span>" + layer.name + "</span>";
+            kml_html += '<span class="kml_file" id="file_kml_' + layer.kml_id + '">' + layer.file + "</span>";
+            kml_html += "</li>";
+            
+        }
+        kml_html += "</ul>";
+        $('#kml').html(kml_html);
+        $(".kml_checkbox").click(show_hide_kml_layers);
+    }
+    
+    function show_hide_kml_layers(){
+        if(this.checked == false){
+            layer = map.getLayersByName(this.id)[0];
+            map.removeLayer(layer);
+        }else{
+            kml_file = $("#file_" + this.id).html();
+            map.addLayer(new OpenLayers.Layer.GML(this.id, kml_file, 
+               {
+                format: OpenLayers.Format.KML, 
+                formatOptions: {
+                  extractStyles: true, 
+                  extractAttributes: true,
+                  maxDepth: 2
+                }
+               }));
+        }
+    }
+    
+    function remove_all_layers(){
+        var layersInMap = map.layers;
+        $.each(layersInMap, function(){
+            if(!this.isBaseLayer){
+                map.removeLayer(this);
+            }
+        });
     }
     
 });
