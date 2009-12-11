@@ -405,7 +405,8 @@ ul.errorlist {
 #user_registration,
 #project_comments,
 #add_project,
-#admin_units {
+#admin_units,
+#add_admin_unit {
     margin-left: 15px;
 }
 
@@ -531,4 +532,10 @@ ul.errorlist {
 
 #main_pane span.search_term {
     color: #007BD6;
+}
+
+/*ADD ADMIN UNITS*/
+#add_admin_unit .togglefield {
+    float: left;
+    cursor: pointer;
 }
