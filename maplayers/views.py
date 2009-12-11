@@ -44,8 +44,8 @@ def homepage(request):
     
 
 def search_admin_units(request, admin_manager=AdministrativeUnit.objects):
-    if request.method == 'POST':        
-        text = request.POST.get('text')
+    if request.method == 'GET':        
+        text = request.GET.get('text')
         admin_unit_req = convert_text_to_dicts(text)
         admin_unit = _get_admin_model(admin_manager, admin_unit_req)
         admin_unit_json = convert_admin_units_to_json(admin_unit)

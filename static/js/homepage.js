@@ -33,7 +33,7 @@ function expandImplementors(){
 }
 
 function populateRegionStats(response){
-	$.post("/search_admin_unit/",{text:response.responseText},
+	$.get("/search_admin_unit/",{text:response.responseText},
 	    function(data){
 	        var statistics = JSON.parse(data);
 	        var statsHtml = " "
