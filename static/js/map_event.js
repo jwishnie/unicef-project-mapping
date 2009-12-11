@@ -1,81 +1,12 @@
-function collapseSectors(){
-    $('ul.sectors').hide();
-    $('li.sector_drawer div').css("background-color", "#007BD6");
-    $('li.sector_drawer span').removeClass('open');   
-}
-
-function expandSectors(){
-    $('ul.sectors').show();
-    $('li.sector_drawer div').css("background-color", "#007BD6");
-    $('ul.sectors').css("background-color", "#FFF");            
-    $('ul.sectors').css("color", "#000");            
-    $('li.sector_drawer span').addClass('open');   
-}
-
-function collapseImplementors(){
-    $('ul.implementors').hide();
-    $('li.implementor_drawer div').css("background-color", "#007BD6");
-    $('li.implementor_drawer span').removeClass('open');   
-}
-
-function adjustStylesAfterExpand(){
-    $('#left_pane').css("width", "170px");
-    $('#map_canvas').css("width", "800px");
-    $('.expandable_content').show();
-}
-
-function expandImplementors(){
-    $('ul.implementors').show();
-    $('li.implementor_drawer div').css("background-color", "#007BD6");
-    $('ul.implementors').css("background-color", "#FFF");
-    $('ul.implementors').css("color", "#000");
-    $('li.implementor_drawer span').addClass('open');   
-}
-
-function populateRegionStats(response){
-	$.post("/search_admin_unit/",{text:response.responseText},
-	    function(data){
-	        $("#stats").html(data);
-	    });
-}
-
 $(document).ready(function() {
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
     MIN_SCALE = 200000000;
 
-    var active_kml_layers;
     // pink tile avoidance
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
     // make OL compute scale according to WMS spec
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
-    
-    $('#filterable_criteria ul.sectors').hide();
-    $('#filterable_criteria ul.implementors').hide();
-    
-    $('#filterable_criteria li.sector_drawer div').click(function() {
-        if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
-            collapseImplementors();
-        }
-        if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
-            collapseSectors();
-        }
-        else {
-            expandSectors();
-        }
-    });
-    
-    $('#filterable_criteria li.implementor_drawer div').click(function() {
-        if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
-            collapseSectors();
-        }
-        if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
-            collapseImplementors();
-        }         
-        else {
-            expandImplementors();
-        }
-    });
     
     function constructQueryString(selected_filters){
     	var qstring = "";
@@ -97,17 +28,13 @@ $(document).ready(function() {
 		url += queryString;
 		$('#bookmark').html(url);
 	}
-	
-	function getProjects(data) {
-        return JSON.parse(data);
-    }
-    
+
 	var size = new OpenLayers.Size(10,17);
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img//bright_red_marker.png',size,offset);
     var popup = null;
-    
-    function mousedn() {
+    	
+	function mousedn() {
         if(popup !== null) {
             popup.destroy();
         }
@@ -119,11 +46,21 @@ $(document).ready(function() {
         map.addPopup(popup);
     }
     	
-    function addProjectsOnMap(projects) {
+	function addProjectsOnMap(projects) {
         markers.destroy();
         markers = new OpenLayers.Layer.Markers( "Markers" );
         map.addLayer(markers);
         var html = "<ul>";
+        if(projects.length == 0) {
+            $("#main_pane h3").hide();
+            $("#map_canvas").hide();
+            $("#projects").hide();
+            $("#projects_searched").hide();
+            
+            var html_text = "<h3>Sorry. No results found for : <span class='search_term'>" + search_term + "</span></h3>";
+            $("#main_pane").html(html_text);
+        }
+        
         for(var i = 0;i<projects.length; i++){
             var project = projects[i];
             var project_name = project.snippet.split(":")[0];
@@ -147,10 +84,10 @@ $(document).ready(function() {
 		var projects_url = "/projects/bbox/" + boundingBox.left + "/" + 
 							boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
 		var filters = {};
+
 		filters.tag = search_tag;
 
 		$.get(projects_url, filters, function(data) {
-            var projects = getProjects(data);            
             addProjectsOnMap(projects);
 		});
         
@@ -171,14 +108,10 @@ $(document).ready(function() {
     map.events.register('moveend', map, mapEvent);
     map.addLayer(layer);
     map.zoomToExtent(bounds);
-
 	map.addLayer(markers);
-	
-    $('.sectorbox').click(mapEvent);
-	$('.implementorbox').click(mapEvent);
-	
-    $('#stats-id').bind('click', switchStatsView);
-    $('#kml-id').bind('click', switchKMLView);
+	 
+	$('#stats-id').bind('click', switchStatsView); 
+	$('#kml-id').bind('click', switchKMLView);
     var gs = "http://"+window.location.host+"/geoserver/ows";
     var dists = new OpenLayers.Layer.WMS(
                "Districts",
@@ -225,7 +158,7 @@ $(document).ready(function() {
        );
     
     county.setOpacity(0.5);
-    
+   
     function queryForRegionData(e){
         var layersInMap = map.layers;
             var layerToQuery = "";
@@ -257,8 +190,8 @@ $(document).ready(function() {
 		OpenLayers.Event.stop(e);
 
     }
-        
-    function switchKMLView(){
+	
+	function switchKMLView(){
         remove_all_layers();
         var layers;
         $.get("/kml_layers/", function(data){
@@ -302,7 +235,6 @@ $(document).ready(function() {
     }
 
     function projectview(){
-        $("#filterable_criteria").show();
         $("#layercontrols").hide();
         remove_all_layers();
         map.addLayer(markers);
@@ -325,7 +257,7 @@ $(document).ready(function() {
             }
         });
     }
-        
+    
     function add_kml_info(layers){
         var kml_html = "<ul>";
         for(var i=0; i < layers.length; i++){
@@ -367,12 +299,5 @@ $(document).ready(function() {
                 map.removeLayer(this);
             }
         });
-        
-        
-        layersInMap = map.layers;
-        $.each(layersInMap, function(){
-            alert(this.name);
-        });
-    }
-    
+    } 
 });
