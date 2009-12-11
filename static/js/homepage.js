@@ -228,26 +228,34 @@ $(document).ready(function() {
         
  
       function queryForRegionData(e){
-			$("#stats").html("Loading. Please wait...");
-			                    var params = {
-			                        REQUEST: "GetFeatureInfo",
-			                        EXCEPTIONS: "application/vnd.ogc.se_xml",
-			                        BBOX: map.getExtent().toBBOX(),
-			                        X: e.xy.x,
-			                        Y: e.xy.y,
-			                        INFO_FORMAT: 'text/plain',
-			                        QUERY_LAYERS: 'GADM:UGA_adm1',
-			                        FEATURE_COUNT: 50,
-			                        Layers: 'GADM:UGA_adm1',
-			                        Styles: '',
-			                        Srs: 'EPSG:4326',
-			                        WIDTH: map.size.w,
-			                        HEIGHT: map.size.h,
-			                        format: format};
-			                    OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, populateRegionStats, populateRegionStats);
-			                    OpenLayers.Event.stop(e);
-			
-}
+        var layersInMap = map.layers;
+        var layerToQuery = "";
+        $.each(layersInMap, function(){
+            if(! this.isBaseLayer){
+                if(this.visibility){
+                    layerToQuery = this.params.LAYERS;
+                }
+            }
+        });
+		$("#stats").html("Loading. Please wait...");
+		                    var params = {
+		                        REQUEST: "GetFeatureInfo",
+		                        EXCEPTIONS: "application/vnd.ogc.se_xml",
+		                        BBOX: map.getExtent().toBBOX(),
+		                        X: e.xy.x,
+		                        Y: e.xy.y,
+		                        INFO_FORMAT: 'text/plain',
+		                        QUERY_LAYERS: layerToQuery,
+		                        FEATURE_COUNT: 50,
+		                        Layers: layerToQuery,
+		                        Styles: '',
+		                        Srs: 'EPSG:4326',
+		                        WIDTH: map.size.w,
+		                        HEIGHT: map.size.h,
+		                        format: format};
+		                    OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, populateRegionStats, populateRegionStats);
+		                    OpenLayers.Event.stop(e);
+        }
          var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
         // var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
         //     type: VEMapStyle.Hybrid
