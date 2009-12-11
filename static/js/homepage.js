@@ -426,9 +426,7 @@ $(document).ready(function() {
     }
     
     function show_hide_kml_layers(){
-        // alert($("#file_" + this.id));
         kml_file = $("#file_" + this.id).html();
-        alert(kml_file);
         map.addLayer(new OpenLayers.Layer.GML("KML", kml_file, 
            {
             format: OpenLayers.Format.KML, 
