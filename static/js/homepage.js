@@ -348,6 +348,8 @@ $(document).ready(function() {
         
     $('#stats-id').bind('click', switchStatsView);
     $('#kml-id').bind('click', switchKMLView);
+
+    
     
     function switchKMLView(){
         var layers;
@@ -420,12 +422,28 @@ $(document).ready(function() {
         for(var i=0; i < layers.length; i++){
             var layer = layers[i];
             kml_html += "<li>";
-            kml_html += "<input type='checkbox' id='kml_" + layer.id + "'></input>";
+            kml_html += "<input type='checkbox' class='kml_checkbox' id='kml_" + layer.kml_id + "'></input>";
             kml_html += "<span>" + layer.name + "</span>";
+            kml_html += '<span class="kml_file" id="file_kml_' + layer.kml_id + '">' + layer.file + "</span>";
             kml_html += "</li>";
+            
         }
         kml_html += "</ul>";
         $('#kml').html(kml_html);
+        $(".kml_checkbox").click(show_hide_kml_layers);
+    }
+    
+    function show_hide_kml_layers(){
+        kml_file = $("#file_" + this.id).html();
+        map.addLayer(new OpenLayers.Layer.GML("KML", kml_file, 
+           {
+            format: OpenLayers.Format.KML, 
+            formatOptions: {
+              extractStyles: true, 
+              extractAttributes: true,
+              maxDepth: 2
+            }
+           }));
     }
     
 });

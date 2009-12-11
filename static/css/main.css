@@ -510,3 +510,7 @@ ul.errorlist {
     clear: left;
     padding: 10px 0 0 30px;
 }
+
+.kml_file{
+    display: none;
+}
