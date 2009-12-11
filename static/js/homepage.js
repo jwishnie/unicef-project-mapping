@@ -1,12 +1,13 @@
 function collapseSectors(){
     $('ul.sectors').hide();
+    $('li.sector_drawer div').removeClass('expanded');
     $('li.sector_drawer div').css("background-color", "#007BD6");
     $('li.sector_drawer span').removeClass('open');   
 }
 
 function expandSectors(){
     $('ul.sectors').show();
-    $('li.sector_drawer div').css("background-color", "#007BD6");
+    $('li.sector_drawer div').addClass('expanded');
     $('ul.sectors').css("background-color", "#FFF");            
     $('ul.sectors').css("color", "#000");            
     $('li.sector_drawer span').addClass('open');   
@@ -14,6 +15,7 @@ function expandSectors(){
 
 function collapseImplementors(){
     $('ul.implementors').hide();
+    $('li.implementor_drawer div').removeClass('expanded');
     $('li.implementor_drawer div').css("background-color", "#007BD6");
     $('li.implementor_drawer span').removeClass('open');   
 }
@@ -26,7 +28,7 @@ function adjustStylesAfterExpand(){
 
 function expandImplementors(){
     $('ul.implementors').show();
-    $('li.implementor_drawer div').css("background-color", "#007BD6");
+    $('li.implementor_drawer div').addClass('expanded');
     $('ul.implementors').css("background-color", "#FFF");
     $('ul.implementors').css("color", "#000");
     $('li.implementor_drawer span').addClass('open');   

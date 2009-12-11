@@ -173,7 +173,8 @@ li a {
 #main_content fieldset div,
 #change_password div,
 #login div,
-#user_registration div {
+#user_registration div,
+#add_kml_file p {
     overflow: hidden;
     padding-bottom: 10px;
 }
@@ -181,7 +182,8 @@ li a {
 #main_content fieldset label,
 #change_password div label,
 #login div label,
-#user_registration div label {
+#user_registration div label,
+#add_kml_file label {
     float: left;
     width: 150px;
     padding-right: 5px;
@@ -329,7 +331,14 @@ span.drawer-handle {
 li.layers_drawer div,
 li.sector_drawer div,
 li.implementor_drawer div {
-    background: #007BD6 url('../img/collapsed.png') no-repeat scroll 98% 50%;
+    background: #007BD6 url('../img/collapsed.png') no-repeat scroll 95% 50%;
+    width: auto;
+}
+
+li.layers_drawer .expanded,
+li.sector_drawer .expanded,
+li.implementor_drawer .expanded {
+    background: #007BD6 url('../img/expanded.png') no-repeat scroll 95% 50%;
     width: auto;
 }
 
@@ -406,12 +415,14 @@ ul.errorlist {
 #project_comments,
 #add_project,
 #admin_units,
-#add_admin_unit {
+#add_admin_unit,
+#add_kml_file {
     margin-left: 15px;
 }
 
 #my_project_list,
 #project_list,
+#kml_list,
 #admin_unit_list {
     border-collapse: collapse;
     width: 80%;
@@ -419,12 +430,14 @@ ul.errorlist {
 
 #my_project_list th,
 #admin_unit_list th,
+#kml_list th,
 #project_list th {
     background-color: #007BD6;    
 }
 
 #my_project_list td,
 #admin_unit_list td,
+#kml_list td,
 #project_list td {
     background-color: #E2EBF4;    
 }
@@ -433,6 +446,8 @@ ul.errorlist {
 #my_project_list td,
 #admin_unit_list th,
 #admin_unit_list td,
+#kml_list th,
+#kml_list td,
 #project_list th,
 #project_list td {
     padding: 5px;   
@@ -538,4 +553,10 @@ ul.errorlist {
 #add_admin_unit .togglefield {
     float: left;
     cursor: pointer;
+}
+
+/*KML*/
+#kml_list .delete_link {
+    cursor: pointer;
+    text-decoration: underline;
 }
