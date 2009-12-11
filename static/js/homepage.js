@@ -259,7 +259,8 @@ $(document).ready(function() {
     }
         
     function switchKMLView(){
-        remove_all_layers();
+        remove_markers_and_admin_boundaries();
+        active_kml_layers = new Array();
         var layers;
         $.get("/kml_layers/", function(data){
             layers = eval(data);
@@ -278,7 +279,8 @@ $(document).ready(function() {
     function switchStatsView(){
         $("#filterable_criteria").hide();
         $("#layercontrols").show();
-        remove_all_layers();
+        remove_all_kml_layers();
+        remove_markers_and_admin_boundaries();
         map.addLayer(countryLayer);
         map.addLayer(dists);
         map.addLayer(county);
@@ -304,7 +306,8 @@ $(document).ready(function() {
     function projectview(){
         $("#filterable_criteria").show();
         $("#layercontrols").hide();
-        remove_all_layers();
+        remove_all_kml_layers();
+        remove_markers_and_admin_boundaries();
         map.addLayer(markers);
         $('#stats-id').bind('click', switchStatsView);
         $('#proj-id').unbind('click', projectview);
@@ -344,9 +347,11 @@ $(document).ready(function() {
     
     function show_hide_kml_layers(){
         if(this.checked == false){
+            active_kml_layers[this.id] = false;
             layer = map.getLayersByName(this.id)[0];
             map.removeLayer(layer);
         }else{
+            active_kml_layers[this.id] = true;
             kml_file = $("#file_" + this.id).html();
             map.addLayer(new OpenLayers.Layer.GML(this.id, kml_file, 
                {
@@ -360,19 +365,33 @@ $(document).ready(function() {
         }
     }
     
-    function remove_all_layers(){
-        var layersInMap = map.layers;
-        $.each(layersInMap, function(){
-            if(!this.isBaseLayer){
-                map.removeLayer(this);
+    function remove_all_kml_layers(){
+        for(layer_name in active_kml_layers){
+            if(active_kml_layers[layer_name]==true){
+                var layer = map.getLayersByName(layer_name)[0];
+                map.removeLayer(layer);
             }
-        });
+        }
+    }
+    
+    function remove_markers_and_admin_boundaries(){
+        var layer = map.getLayersByName("Markers");
+        if(layer.length >0){
+            map.removeLayer(layer[0]);
+        }
+        layer = map.getLayersByName("Uganda");
+        if(layer.length >0){
+            map.removeLayer(layer[0]);
+        }
+        layer = map.getLayersByName("Districts");
+        if(layer.length >0){
+            map.removeLayer(layer[0]);
+        }
+        layer = map.getLayersByName("County");
+        if(layer.length >0){
+            map.removeLayer(layer[0]);
+        }
         
-        
-        layersInMap = map.layers;
-        $.each(layersInMap, function(){
-            alert(this.name);
-        });
     }
     
 });
