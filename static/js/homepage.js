@@ -257,22 +257,9 @@ $(document).ready(function() {
 		                    OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, populateRegionStats, populateRegionStats);
 		                    OpenLayers.Event.stop(e);
         }
-         var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
-        // var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
-        //     type: VEMapStyle.Hybrid
-
-        
+        var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
         map.addLayer(layer);
-        
-        // map.addLayer(new OpenLayers.Layer.GML("KML", "/static/fertility_world_polygon.kml", 
-        //    {
-        //     format: OpenLayers.Format.KML, 
-        //     formatOptions: {
-        //       extractStyles: true, 
-        //       extractAttributes: true,
-        //       maxDepth: 2
-        //     }
-        //    }));
+
         
         var gs = "http://"+window.location.host+"/geoserver/ows";
         var countryLayer = new OpenLayers.Layer.WMS(
@@ -455,10 +442,15 @@ $(document).ready(function() {
     function remove_all_layers(){
         var layersInMap = map.layers;
         $.each(layersInMap, function(){
-            alert(this.name);
             if(!this.isBaseLayer){
                 map.removeLayer(this);
             }
+        });
+        
+        
+        layersInMap = map.layers;
+        $.each(layersInMap, function(){
+            alert(this.name);
         });
     }
     
