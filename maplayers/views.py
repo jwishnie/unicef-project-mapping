@@ -61,10 +61,11 @@ def projects_in_map(request, left, bottom, right, top):
                 [sector.id for sector in Sector.objects.all()]
     implementor_ids =  _filter_ids(request, "implementor") or \
                 [implementor.id for implementor in Implementor.objects.all()]
-    
+    search_term = request.POST.get("q", "")
     if request.GET.get('tag', ''):
         projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
-    elif request.GET.get('search_term', ''):
+        
+    elif request.GET.get(search_term, ''):
         projects = _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_ids, request.GET['search_term'])
     else:
         projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
@@ -151,25 +152,29 @@ def project_comment(request, project_id):
     return HttpResponse(json.dumps(response_json))
     
 
-def projects_search(request, search_term):
+def projects_search(request, project_manager=Project.objects):
+    search_term = request.POST.get("q", "")
     qset = _construct_queryset_for_project_search(search_term)
-    projects = Project.objects.filter(qset, parent_project=None, status=PROJECT_STATUS.PUBLISHED).distinct()
+    filtered_projects = project_manager.filter(qset, parent_project=None, status=PROJECT_STATUS.PUBLISHED).distinct()
+    left, right, top, bottom = (-180, 180, -90, 90)
 
-    return write_project_list_to_response(projects)   
+    return render_to_response("projects_search.html", { 'projects' : convert_to_json(filtered_projects),
+                                                        'left' : left, 'right' : right,
+                                                        'top' : top, 'bottom' : bottom,
+                                                        'search_term' : search_term
+                                                        },
+                                                        context_instance=RequestContext(request))
    
 def projects_tag_search(request, tag_term):
     projects = TaggedItem.objects.get_by_model(Project, Tag.objects.filter(name__in=[tag_term]))
-    sectors = Sector.objects.all()
-    implementors = Implementor.objects.all() 
     left, right, top, bottom = (-180, 180, -90, 90)
     
     return render_to_response(
-                              'homepage.html',
+                              'projects_search.html',
                               {
-                               'projects' : projects, 
-                               'sectors' : sectors, 
-                               'implementors' : implementors,
+                               'projects' : convert_to_json(projects), 
                                'tag' : tag_term,
+                               'search_term' : tag_term,
                                'left' : left, 'right' : right,
                                'top' : top, 'bottom' : bottom
                                },
@@ -314,7 +319,7 @@ def _check_for_comment_errors(username, email, comment_text, errors):
     if not username: errors['username'] = "Name is required"
     if not email: errors['email'] = 'Email is required'
     if not comment_text: errors['comment'] = 'Comment is required'
-    if email and not EMAIL_REGEX.match(email): errors['email' ] = "Invalid email"
+    if email and not EMAIL_REGEX.match(email): errors['email'] = "Invalid email"
     
 def _user_registration_response(request, form):
     group_names = ", ".join([str(group.name) for group in Group.objects.all()])

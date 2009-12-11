@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load project_tags %}
+
+{% block title_extra %} &mdash; Home{% endblock %}
+	
+{% block extrahead %}
+<script src="{{ jquery }}" type="text/javascript"></script>
+<script type="text/javascript">
+	var left = {{left}};
+	var right = {{right}};
+	var bottom = {{bottom}};
+	var top = {{top}};
+	var search_tag = '';
+	{% if tag %}
+	  search_tag = '{{ tag }}';
+	{% endif %}
+	{% autoescape off %}	
+		var projects = {{projects}};
+	{% endautoescape %}
+	var search_term = "{{search_term}}";	
+</script>
+<link rel="stylesheet" href="/static/css/jquerystart/jquery-ui-1.7.2.custom.css" type="text/css" media="all" />
+<script src="{{ openlayers }}" type="text/javascript"></script>
+<script src="/static/js/openlayers/Popup.js" type="text/javascript" ></script>
+<script src="{{ bing_js }}"></script>
+<script src="{{ js_url }}/map_event.js" type="text/javascript" ></script>
+<script src="{{ js_url }}/projects_search.js" type="text/javascript" ></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
+{% endblock %}
+		
+{% block page_content %}
+<div id="main_pane">
+	<h3>Search results for <span class="search_term">{{search_term}} :</span></h3>
+	<div id="map_canvas"></div>
+	{% autoescape off %}
+		<div id="projects_searched" class="floatright">
+			<div id="tabs">
+				<ul>
+					<li><a id="proj-id" href="#proj">List of Projects</a></li>
+					<li><a id="stats-id" href="#stats">Region Statistics</a></li>
+					<li><a id="kml-id" href="#kml">KML overlays</a></li>					
+				</ul>
+				<div id="proj"></div>
+				<div id="stats"></div>
+				<div id="kml"></div>				
+			</div>
+		</div>
+    {% endautoescape %}
+    <div id="bookmark">
+    </div>
+</div>
+{% endblock %}

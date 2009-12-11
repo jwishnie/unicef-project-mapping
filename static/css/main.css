@@ -233,12 +233,21 @@ li a {
 
 #projects {
     width: 32%;
+}
+
+#projects_searched {
+    width: 48%;
+}
+
+#projects,
+#projects_searched {
     height: 400px;
     margin: 0 5px 0 0;
     font-size: 9pt;
 }
 
-#projects #tabs {
+#projects #tabs,
+#projects_searched #tabs {
     height: 371px;
 }
 
@@ -334,6 +343,10 @@ table#projects td {
     float: right;
 }
 
+.kml_file {
+    display: none;
+}
+    
 /*ERRORS*/
 .error {
     color: #FF0000;
@@ -392,7 +405,8 @@ ul.errorlist {
 #user_registration,
 #project_comments,
 #add_project,
-#admin_units {
+#admin_units,
+#add_admin_unit {
     margin-left: 15px;
 }
 
@@ -511,6 +525,17 @@ ul.errorlist {
     padding: 10px 0 0 30px;
 }
 
-.kml_file{
-    display: none;
+/*SEARCH RESULTS*/
+#main_pane h3 {
+    padding-left: 10px;
+}
+
+#main_pane span.search_term {
+    color: #007BD6;
+}
+
+/*ADD ADMIN UNITS*/
+#add_admin_unit .togglefield {
+    float: left;
+    cursor: pointer;
 }
