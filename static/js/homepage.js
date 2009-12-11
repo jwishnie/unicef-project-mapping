@@ -380,7 +380,6 @@ $(document).ready(function() {
         var layersInMap = map.layers;
         $.each(layersInMap, function(){
             if(!this.isBaseLayer){
-                alert(this.name);
                 map.removeLayer(this);
             }
         });
