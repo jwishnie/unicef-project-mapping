@@ -300,14 +300,6 @@ def convert_to_json(projects):
     return "[" + ", ".join(result) + "]"
     
 def convert_admin_units_to_json(admin_unit):
-    # result = []
-    # admin_unit_json = '''{"health": "%s", "economy": "%s", "environment": "%s", "governance": "%s","infrastructure": "%s",
-    #                 "social_sector": "%s","agriculture": "%s", "dev_partners": "%s", "recent_reports": "%s", "resources": "%s"}'''
-    #                     %(admin_unit.health, admin_unit.economy, admin_unit.environment, admin_unit.governance, admin_unit.infrastructure
-    #                     , admin_unit.social_sector, admin_unit.agriculture, admin_unit.dev_partners, admin_unit.recent_reports,
-    #                     admin_unit.resources)
-    # result.append(admin_unit_json)
-    # return "["+",".join(result)+"]"
     return json.dumps(admin_unit.__dict__)
 
 def write_project_list_to_response(projects):
