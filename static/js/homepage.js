@@ -244,6 +244,7 @@ $(document).ready(function() {
                     }
                 }
             });
+        alert(layerToQuery);
 		$("#stats").html("Loading. Please wait...");
         var params = {
             REQUEST: "GetFeatureInfo",
@@ -252,9 +253,9 @@ $(document).ready(function() {
             X: e.xy.x,
             Y: e.xy.y,
             INFO_FORMAT: 'text/plain',
-            QUERY_LAYERS: 'GADM:UGA_adm1',
+            QUERY_LAYERS: layerToQuery,
             FEATURE_COUNT: 50,
-            Layers: 'GADM:UGA_adm1',
+            Layers: layerToQuery,
             Styles: '',
             Srs: 'EPSG:4326',
             WIDTH: map.size.w,
