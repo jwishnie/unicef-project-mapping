@@ -244,7 +244,6 @@ $(document).ready(function() {
                     }
                 }
             });
-        alert(layerToQuery);
 		$("#stats").html("Loading. Please wait...");
         var params = {
             REQUEST: "GetFeatureInfo",
