@@ -43,13 +43,15 @@ def homepage(request):
                               ) 
     
 
-def search_admin_units(request):
+def search_admin_units(request, admin_manager=AdministrativeUnit.objects):
     if request.method == 'POST':        
         text = request.POST.get('text')
         admin_unit_req = convert_text_to_dicts(text)
-        admin_unit = _get_admin_model(admin_unit_req)
+        admin_unit = _get_admin_model(admin_manager, admin_unit_req)
+        admin_unit_json = convert_admin_units_to_json(admin_unit)
+
         response = HttpResponse()
-        response.write(admin_unit.region_statistics)
+        response.write(admin_unit_json)
         return response
         
         
@@ -269,12 +271,13 @@ def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_
                                   status=PROJECT_STATUS.PUBLISHED,
                                   ).distinct()
                                   
-def _get_admin_model(details):
+def _get_admin_model(admin_manager, details):
     try:
-        adminModel = AdministrativeUnit.objects.get(name=details['NAME_1'])
+        adminModel = admin_manager.get(name=details['NAME_1'])
+        adminModel.found = True
     except:
         adminModel = AdministrativeUnit()
-        adminModel.region_statistics = "Sorry, We don't have the Region Statistics for the district"
+        adminModel.found = False
     
     return adminModel
  
@@ -295,6 +298,17 @@ def convert_to_json(projects):
                 html_escape(project.snippet()), project.id, project.sectors_in_json(), project.implementors_in_json())
         result.append(project_json)
     return "[" + ", ".join(result) + "]"
+    
+def convert_admin_units_to_json(admin_unit):
+    # result = []
+    # admin_unit_json = '''{"health": "%s", "economy": "%s", "environment": "%s", "governance": "%s","infrastructure": "%s",
+    #                 "social_sector": "%s","agriculture": "%s", "dev_partners": "%s", "recent_reports": "%s", "resources": "%s"}'''
+    #                     %(admin_unit.health, admin_unit.economy, admin_unit.environment, admin_unit.governance, admin_unit.infrastructure
+    #                     , admin_unit.social_sector, admin_unit.agriculture, admin_unit.dev_partners, admin_unit.recent_reports,
+    #                     admin_unit.resources)
+    # result.append(admin_unit_json)
+    # return "["+",".join(result)+"]"
+    return json.dumps(admin_unit.__dict__)
 
 def write_project_list_to_response(projects):
     response = HttpResponse()

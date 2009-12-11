@@ -582,5 +582,138 @@
         "name": "North America Fertility polygons",
         "filename": "/static/kml/fertility_north_america_high_polygon.kml"
     }
+},
+{
+	"pk": 1,
+	"model": "maplayers.AdministrativeUnit",
+	"fields": {
+		"name": "Gulu",
+		"region_type": "District",
+		"country": "Uganda",
+		"health": "20",
+		"economy": "30",
+		"environment": "40",
+		"governance": "",
+		"infrastructure": "",
+		"social_sector": "",
+		"agriculture": "",
+		"dev_partners": "",
+		"recent_reports": "",
+		"resources": ""
+	}
+},
+{
+	"pk": 2,
+	"model": "maplayers.AdministrativeUnit",
+	"fields": {
+		"name": "Masindi",
+		"region_type": "District",
+		"country": "Uganda",
+		"health": "8000",
+		"economy": "90000",
+		"environment": "50000",
+		"governance": "",
+		"infrastructure": "",
+		"social_sector": "",
+		"agriculture": "",
+		"dev_partners": "",
+		"recent_reports": "",
+		"resources": ""
+	}
+},
+{
+	"pk": 3,
+	"model": "maplayers.AdministrativeUnit",
+	"fields": {
+		"name": "Kitgum",
+		"region_type": "District",
+		"country": "Uganda",
+		"health": "$50",
+		"economy": "$75",
+		"environment": "$32",
+		"governance": "",
+		"infrastructure": "",
+		"social_sector": "",
+		"agriculture": "",
+		"dev_partners": "",
+		"recent_reports": "",
+		"resources": ""
+	}
+},
+{
+	"pk": 4,
+	"model": "maplayers.AdministrativeUnit",
+	"fields": {
+		"name": "Pader",
+		"region_type": "District",
+		"country": "Uganda",
+		"health": ".45",
+		"economy": ".76",
+		"environment": ".49",
+		"governance": "",
+		"infrastructure": "",
+		"social_sector": "",
+		"agriculture": "",
+		"dev_partners": "",
+		"recent_reports": "",
+		"resources": ""
+	}
+},
+{
+	"pk": 5,
+	"model": "maplayers.AdministrativeUnit",
+	"fields": {
+		"name": "Apac",
+		"region_type": "District",
+		"country": "Uganda",
+		"health": "12",
+		"economy": "45",
+		"environment": "67",
+		"governance": "",
+		"infrastructure": "",
+		"social_sector": "",
+		"agriculture": "",
+		"dev_partners": "",
+		"recent_reports": "",
+		"resources": ""
+	}
+},
+{
+	"pk": 6,
+	"model": "maplayers.AdministrativeUnit",
+	"fields": {
+		"name": "Adjumani",
+		"region_type": "District",
+		"country": "Uganda",
+		"health": "90",
+		"economy": "98",
+		"environment": "99",
+		"governance": "",
+		"infrastructure": "",
+		"social_sector": "",
+		"agriculture": "",
+		"dev_partners": "",
+		"recent_reports": "",
+		"resources": ""
+	}
+},
+{
+	"pk": 7,
+	"model": "maplayers.AdministrativeUnit",
+	"fields": {
+		"name": "Lira",
+		"region_type": "District",
+		"country": "Uganda",
+		"health": "5.6",
+		"economy": "7.8",
+		"environment": "3.4",
+		"governance": "",
+		"infrastructure": "",
+		"social_sector": "",
+		"agriculture": "",
+		"dev_partners": "",
+		"recent_reports": "",
+		"resources": ""
+	}
 }
 ]
