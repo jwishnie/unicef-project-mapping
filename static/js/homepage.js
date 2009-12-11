@@ -35,9 +35,16 @@ function expandImplementors(){
 }
 
 function populateRegionStats(response){
-	$.post("/search_admin_unit/",{text:response.responseText},
+	$.get("/search_admin_unit/",{text:response.responseText},
 	    function(data){
-	        $("#stats").html(data);
+	        var statistics = JSON.parse(data);
+	        var statsHtml = " "
+	        if(statistics.found){
+	            statsHtml='<ul><li> Health :'+statistics.health+'</li><li>Economy :'+statistics.economy+'</li><li>Environment :'+statistics.environment+'</li></ul>'
+	        }else{
+	            statsHtml = 'Sorry the data is not found.'
+	        }
+	        $("#stats").html(statsHtml);
 	    });
 }
 
@@ -149,7 +156,6 @@ $(document).ready(function() {
 		var projects_url = "/projects/bbox/" + boundingBox.left + "/" + 
 							boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
 		var filters = {};
-
 		filters.tag = search_tag;
 
 		$.get(projects_url, filters, function(data) {
@@ -175,7 +181,7 @@ $(document).ready(function() {
     map.addLayer(layer);
     map.zoomToExtent(bounds);
 
-	map.addLayer(markers);
+//	map.addLayer(markers);
 	
     $('.sectorbox').click(mapEvent);
 	$('.implementorbox').click(mapEvent);
@@ -183,20 +189,6 @@ $(document).ready(function() {
     $('#stats-id').bind('click', switchStatsView);
     $('#kml-id').bind('click', switchKMLView);
     var gs = "http://"+window.location.host+"/geoserver/ows";
-    var dists = new OpenLayers.Layer.WMS(
-               "Districts",
-               gs,
-               { 
-                   layers: 'GADM:UGA_adm1',
-                   transparent: true,
-                   format: 'image/png'
-               },
-               {
-                   isBaseLayer: false
-               }
-    );
-    
-    dists.setOpacity(0.5);
     
     var countryLayer = new OpenLayers.Layer.WMS(
                 "Uganda",
@@ -207,25 +199,40 @@ $(document).ready(function() {
                    format: 'image/png'
                 },
                 {
-                   isBaseLayer: false,
+                   isBaseLayer: true,
                    visibility: true
                 }
     );
-    
     countryLayer.setOpacity(0.5);
-            
-     var county = new OpenLayers.Layer.WMS(
-           "County",
-           gs,
-           { 
-               layers: 'GADM:UGA_adm2',
-               transparent: true,
-               format: 'image/png'
-           },
-           {
-               isBaseLayer: false
-           }
-       );
+    
+    var dists = new OpenLayers.Layer.WMS(
+               "Districts",
+               gs,
+               { 
+                   layers: 'GADM:UGA_adm1',
+                   transparent: true,
+                   format: 'image/png'
+               },
+               {
+                   isBaseLayer: false,
+                   visibility: true
+               }
+    );
+    dists.setOpacity(0.5);
+    
+    var county = new OpenLayers.Layer.WMS(
+                "County",
+                gs,
+                { 
+                   layers: 'GADM:UGA_adm2',
+                   transparent: true,
+                   format: 'image/png'
+                },
+                {
+                   isBaseLayer: false,
+                   visibility: false
+                }
+    );
     
     county.setOpacity(0.5);
     
@@ -247,9 +254,9 @@ $(document).ready(function() {
             X: e.xy.x,
             Y: e.xy.y,
             INFO_FORMAT: 'text/plain',
-            QUERY_LAYERS: 'GADM:UGA_adm1',
+            QUERY_LAYERS: layerToQuery,
             FEATURE_COUNT: 50,
-            Layers: 'GADM:UGA_adm1',
+            Layers: layerToQuery,
             Styles: '',
             Srs: 'EPSG:4326',
             WIDTH: map.size.w,
@@ -262,7 +269,8 @@ $(document).ready(function() {
     }
         
     function switchKMLView(){
-        remove_all_layers();
+        remove_markers_and_admin_boundaries();
+        active_kml_layers = new Array();
         var layers;
         $.get("/kml_layers/", function(data){
             layers = eval(data);
@@ -275,13 +283,16 @@ $(document).ready(function() {
         });
         $('#stats-id').bind('click', switchStatsView);
         $('#proj-id').bind('click', projectview);
-        
     }
     
     function switchStatsView(){
+        map.events.unregister('moveend', map, mapEvent);
+        var bounds = new OpenLayers.Bounds(29.571,-1.479,35.0,4.234);
+        map.zoomToExtent(bounds);
         $("#filterable_criteria").hide();
         $("#layercontrols").show();
-        remove_all_layers();
+        remove_all_kml_layers();
+        remove_markers_and_admin_boundaries();
         map.addLayer(countryLayer);
         map.addLayer(dists);
         map.addLayer(county);
@@ -301,13 +312,14 @@ $(document).ready(function() {
         $('#stats-id').unbind('click', switchStatsView);
         $('#proj-id').bind('click', projectview);
         map.events.register('click', map, queryForRegionData);
-        map.events.unregister('moveend', map, mapEvent);
     }
 
     function projectview(){
+        map.zoomToScale(0);
         $("#filterable_criteria").show();
         $("#layercontrols").hide();
-        remove_all_layers();
+        remove_all_kml_layers();
+        remove_markers_and_admin_boundaries();
         map.addLayer(markers);
         $('#stats-id').bind('click', switchStatsView);
         $('#proj-id').unbind('click', projectview);
@@ -318,15 +330,21 @@ $(document).ready(function() {
     function switchLayer(event){
         var layerName = $(this).attr("value");
         var layersInMap = map.layers;
+        var shapeFileName = "";
         $.each(layersInMap, function(){
             if(!this.isBaseLayer){
                 if(this.name === layerName){
                     this.setVisibility(true);
+                    shapeFileName = this.params.LAYERS;
                 }else{
                     this.setVisibility(false);
                 }
             }
         });
+        var featureRequestUrl = "http://localhost/geoserver/wfs?request=GetFeature&version=1.1.0&typeName=" + shapeFileName;
+        var xml = $.get(featureRequestUrl, function (data) {
+            upperCorner = $(data).find("gml:lowerCorner");
+        }, "xml");
     }
         
     function add_kml_info(layers){
@@ -347,9 +365,11 @@ $(document).ready(function() {
     
     function show_hide_kml_layers(){
         if(this.checked == false){
+            active_kml_layers[this.id] = false;
             layer = map.getLayersByName(this.id)[0];
             map.removeLayer(layer);
         }else{
+            active_kml_layers[this.id] = true;
             kml_file = $("#file_" + this.id).html();
             map.addLayer(new OpenLayers.Layer.GML(this.id, kml_file, 
                {
@@ -363,13 +383,32 @@ $(document).ready(function() {
         }
     }
     
-    function remove_all_layers(){
-        var layersInMap = map.layers;
-        $.each(layersInMap, function(){
-            if(!this.isBaseLayer){
-                map.removeLayer(this);
+    function remove_all_kml_layers(){
+        for(layer_name in active_kml_layers){
+            if(active_kml_layers[layer_name]==true){
+                var layer = map.getLayersByName(layer_name)[0];
+                map.removeLayer(layer);
             }
-        });
+        }
+    }
+    
+    function remove_markers_and_admin_boundaries(){
+        var layer = map.getLayersByName("Markers");
+        if(layer.length >0){
+            map.removeLayer(layer[0]);
+        }
+        layer = map.getLayersByName("Uganda");
+        if(layer.length >0){
+            map.removeLayer(layer[0]);
+        }
+        layer = map.getLayersByName("Districts");
+        if(layer.length >0){
+            map.removeLayer(layer[0]);
+        }
+        layer = map.getLayersByName("County");
+        if(layer.length >0){
+            map.removeLayer(layer[0]);
+        }
     }
     
 });

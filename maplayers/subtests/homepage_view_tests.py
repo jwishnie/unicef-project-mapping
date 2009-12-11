@@ -44,10 +44,10 @@ class HomePage(TestCase):
     def test_admin_units(self):
         geoServer = MockGeoServer()
         request = Mock()
-        request.method = 'POST'
-        request.POST.get.return_value = geoServer.get_feature_info()
+        request.method = 'GET'
+        request.GET.get.return_value = geoServer.get_feature_info()
         httpResponse = search_admin_units(request)
-        self.assertTrue('Test on Gulu', httpResponse.content)
+        self.assertTrue('{"infrastructure": "", "name": "Gulu", "country": "Uganda", "governance": "", "dev_partners": "", "environment": "", "recent_reports": "", "health": "", "social_sector": "", "region_type": "District", "found": true, "agriculture": "", "id": 1, "resources": "", "economy": ""}', httpResponse.content)
 
 
 
