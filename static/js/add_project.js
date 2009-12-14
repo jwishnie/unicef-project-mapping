@@ -45,6 +45,9 @@ jQuery(document).ready(function(){
     
     map = new OpenLayers.Map('map');
     
+    var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", "http://labs.metacarta.com/wms/vmap0", {layers: 'basic'},{'displayInLayerSwitcher':false} );
+    
+    
     markers = new OpenLayers.Layer.Markers( "Markers" );
 	map.addLayer(markers);
 	var size = new OpenLayers.Size(10,17);
