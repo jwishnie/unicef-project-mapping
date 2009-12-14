@@ -112,6 +112,22 @@ class Resource(models.Model):
     project = models.ForeignKey(Project)
     filesize = models.IntegerField()
     
+    def file_size_in_kb(self):
+        return "%s KB" % str(self.filesize/1024)
+
+    def file_extension(self):
+        return self.filename.split(".")[-1]
+
+    def file_name_without_extension(self):
+        return "_".join(self.filename.split("_")[1:])
+
+    def is_audio_file(self):
+        supported_audio_formats = ["mp3", "ogg"]
+        file_type  =  self.filename.split(".")[-1]
+        if supported_audio_formats.__contains__(file_type):
+            return True
+        return False
+
     def __unicode__(self): 
         return self.title
 
