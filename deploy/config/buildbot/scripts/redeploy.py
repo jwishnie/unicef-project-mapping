@@ -38,6 +38,18 @@ if __name__ == '__main__':
 	os.chdir(DEPLOY_DIR)
 	issue_cmd(['chown', '-R', 'www-data:www-data', DEPLOY_DIR], 'Could not set permissions')
 
+    print "creating resources folders"
+    os.chdir(DEPLOY_DIR)
+    issue_cmd(['mkdir', '-p', '/static/resources'])
+    
+    os.chdir(DEPLOY_DIR)
+    issue_cmd(['mkdir','-p', '/static/project-photos'])  
+    
+    os.chdir(DEPLOY_DIR)
+    issue_cmd(['chmod', '+W', '/static/resources'])
+    
+    os.chdir(DEPLOY_DIR)
+    issue_cmd(['chmod', '+W', '/static/project-resources'])
 
 	print "Dumping existing db"
 	try:
