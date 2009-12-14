@@ -76,4 +76,3 @@ class ResourceTest(TestCase):
         resource = Resource()
         resource.filename = "default.current.aspx"
         self.assertEquals("aspx", resource.file_extension())
-
