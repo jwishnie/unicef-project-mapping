@@ -16,6 +16,8 @@
 	<script type="text/javascript">
 		var latitude = {{ project.latitude }};
 		var longitude = {{ project.longitude }};
+		var project_id = {{ project.id}};
+		var project_snippet = '{{project.snippet}}';
 		var imgurl = "{{ img_url }}";
 		var projects = new Array();
 		var left = {{left}};
@@ -23,7 +25,8 @@
 		var top = {{top}};
 		var bottom = {{bottom}};
 		{% for subproject in subprojects %}
-		projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproject.longitude}} });
+		projects.push({'latitude' : {{ subproject.latitude }}, 'longitude' : {{ subproject.longitude}}, 
+						'id' : {{subproject.id}}, 'snippet' : '{{subproject.snippet}}' });
 		{% endfor %}
 	</script>
 
@@ -31,6 +34,7 @@
 	<script src="{{ jquery }}" type="text/javascript"></script>
 	<script type="text/javascript" src="{{ jqueryui }}"></script>
 	<script src="{{ openlayers }}" type="text/javascript"></script>
+	<script src="/static/js/openlayers/Popup.js" type="text/javascript" ></script>
 	<script src="/static/js/jquery-lightbox/js/jquery.lightbox-0.5.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="/static/js/jquery-lightbox/css/jquery.lightbox-0.5.css" media="screen" />
 	<script src="{{ js_url }}/projectpage.js" type="text/javascript" ></script>
@@ -39,9 +43,11 @@
 {% block body_tag_exta %}onload='initialize()'{% endblock %}
 {% block page_content %}
 				{% flash_message request %}
-				{% edit_project_link project user %}
-				{% add_sub_project_link project user %}
-				{% admin_links project user %}
+				<div class="admin_links">
+					{% edit_project_link project user %}
+					{% add_sub_project_link project user %}
+					{% admin_links project user %}
+				</div>
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
 					<h2>{{project.name}}</h2>

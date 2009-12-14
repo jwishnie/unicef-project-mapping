@@ -5,16 +5,21 @@ from tinymce.widgets import TinyMCE
 from maplayers.countries import COUNTRIES
 from maplayers.models import Project
 from decimal import Decimal
+from maplayers.models import Sector, Implementor
 
-class ProjectForm(forms.Form): 
+class ProjectForm(forms.Form):
     name = forms.CharField(max_length=30) 
     description = forms.CharField(widget=TinyMCE(attrs={'cols' : 80, 'rows' : 20}))
     latitude = forms.DecimalField()
     longitude = forms.DecimalField()
     location = forms.CharField(max_length=50)
     website_url = forms.URLField()
-    project_sectors = forms.CharField(max_length = 500)
-    project_implementors = forms.CharField(max_length = 500)
+    sect = Sector.objects.all()
+    impl = Implementor.objects.all()
+    project_sectors = forms.MultipleChoiceField(required=True, choices=tuple(((sector.name,\
+                        sector.name) for sector in sect)))
+    project_implementors = forms.MultipleChoiceField(required=True, choices=tuple(((implementor.name,\
+                            implementor.name) for implementor in impl)))
     imageset_feedurl = forms.CharField(max_length=1000, required=False)
     tags = forms.CharField(max_length=500, required=False)
     
@@ -33,7 +38,6 @@ class ProjectForm(forms.Form):
             self._errors['longitude'] = ErrorList([u'Longitude should be between -180 to 180'])
         lon = lon.quantize(Decimal('.0000001'))
         return lon
-    
     
 class AdminUnitForm(forms.Form):
     name = forms.CharField(max_length=50, required=True)

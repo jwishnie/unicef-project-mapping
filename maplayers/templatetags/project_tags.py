@@ -29,23 +29,19 @@ def project_links(titles_and_urls):
 def edit_project_link(project, user):
     result = ""
     if project.is_editable_by(user):
-        if project.is_parent_project():
-            result = """<div id="edit_project">
+        result = """<span class='first'>
                             <a href='/edit_project/%s/'>Edit this project</a>
-                        </div>""" % project.id
-        else:
-            result = """<div id="edit_project">
-                            <a href='/edit_project/%s/'>Edit this project</a>
-                        </div>""" % project.id
+                        </span>""" % project.id
     return result
+    
     
 @register.simple_tag
 def add_sub_project_link(project, user):
     result = ""
     if project.is_editable_by(user) and project.is_parent_project():
-        result = """<div id="add_sub_project">
+        result = """<span>
                         <a href='/add_project?parent_id=%s'>Add SubProject</a>
-                    </div>""" % project.id
+                    </span>""" % project.id
     return result
 
 @register.simple_tag
@@ -189,7 +185,7 @@ def admin_links(project, user):
         input_field = '<input type="hidden" name="link" value="/projects/%s/%s/"/>' % (action, project.id)
         publish_span = '''<span class="publish_link" id="publish_%s">%s%s</span>''' % (str(project.id),  action.capitalize(), input_field)
         delete_span = '<span class="delete_link" id="delete_%s">Delete</span>' % (str(project.id))
-        result = '<div class="admin_actions">%s | %s</div>' % (publish_span, delete_span)
+        result = '%s %s' % (publish_span, delete_span)
     return result
     
 
@@ -204,9 +200,13 @@ def sign_up_link():
     return result   
 
 @register.simple_tag
-def add_admin_unit_link():
-    result = """<a href='/add_admin_unit' id="add_admin_unit">Add a new administrative unit</a>"""
-    return result
+def add_admin_unit_related_links(user):
+    if (set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()])):            
+        result = """<li><a href='/add_admin_unit' id='add_admin_unit'>Add a new administrative unit</a></li>
+        <li><a href='/admin_units' id='admin_units'>Admin Units</a></li>"""
+        return result
+    else:
+        return ''    
 
 @register.simple_tag
 def truncate_and_ellipsise(text):

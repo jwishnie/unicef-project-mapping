@@ -35,8 +35,8 @@
 								<li>{% my_projects_link user %}</li>							
 								{% projects_for_review_link user %}								
 								<li>{% add_project_link %}</li>
-								<li>{% add_admin_unit_link %}</li>
 					        {% endif %}
+							{% add_admin_unit_related_links user %}
 						</ul>
 						<div id="project_search" class="floatright">
 							<span>
@@ -63,7 +63,7 @@
 	        	{% block page_content %}{% endblock %}
 		        {% block page_footer %}
 		        <div id="footer">
-		        	Unicef 2009 : All rights reserved
+		        	UNICEF 2009 : All rights reserved
 		        </div>
 		        {% endblock %}
 	    	</div>
