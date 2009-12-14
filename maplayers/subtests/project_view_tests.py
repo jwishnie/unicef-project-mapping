@@ -49,10 +49,19 @@ class ProjectPage(TestCase):
         
     def test_should_return_list_of_projects_matching_search_term(self):
         request = Mock()
+        mock_user = Mock()
+        mock_admin_group = Mock()
+        mock_editor_group = Mock()
         project_manager = Mock()
+        filtered_projects = Mock()        
+        
+        mock_admin_group.name = 'admin'
+        mock_editor_group.name = 'editors_publishers'
+        mock_user.groups.all.return_value = [mock_admin_group, mock_editor_group]
+        
+        request.user = mock_user
         request.POST.get.return_value = "Congo"
         request.META = {"HTTP_REFERER" : "http://mapping"}
-        filtered_projects = Mock()
         project_manager.filter.return_value = filtered_projects
         filtered_projects.distinct.return_value = [MockProject(), MockProjectForSearch()]
         actual_response = projects_search(request, project_manager)
@@ -76,6 +85,14 @@ class ProjectPage(TestCase):
 
     def test_return_404_response_if_resource_is_not_found(self):
         request = Mock()
+        mock_user = Mock()
+        mock_admin_group = Mock()
+        mock_editor_group = Mock()
+        mock_admin_group.name = 'admin'
+        mock_editor_group.name = 'editors_publishers'
+        mock_user.groups.all.return_value = [mock_admin_group, mock_editor_group]
+        request.user = mock_user
+        
         request.META = {'HTTP_REFERER' : 'http://localhost:8000'}
         response = views.view_404(request)
         self.assertEquals(404, response.status_code)
@@ -83,6 +100,14 @@ class ProjectPage(TestCase):
 
     def test_return_500_response_if_server_throws_exception(self):
         request = Mock()
+        mock_user = Mock()
+        mock_admin_group = Mock()
+        mock_editor_group = Mock()
+        mock_admin_group.name = 'admin'
+        mock_editor_group.name = 'editors_publishers'
+        mock_user.groups.all.return_value = [mock_admin_group, mock_editor_group]
+        request.user = mock_user
+        
         request.META = {'HTTP_REFERER' : 'http://localhost:8000'}
         response = views.view_500(request)
         self.assertEquals(500, response.status_code)

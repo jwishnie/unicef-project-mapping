@@ -136,7 +136,8 @@ li a {
 #main_nav li.first,
 #project_list td span.first,
 #admin_unit_list td span.first,
-#my_project_list td span.first {
+#my_project_list td span.first,
+.admin_links span.first {
     border-left: none;
 }
 
@@ -335,7 +336,6 @@ li.implementor_drawer div {
     width: auto;
 }
 
-li.layers_drawer .expanded,
 li.sector_drawer .expanded,
 li.implementor_drawer .expanded {
     background: #007BD6 url('../img/expanded.png') no-repeat scroll 95% 50%;
@@ -355,7 +355,12 @@ table#projects td {
 .kml_file {
     display: none;
 }
-    
+
+.proj_img img {
+    height: 100px;
+    width: 100px;
+}   
+ 
 /*ERRORS*/
 .error {
     color: #FF0000;
@@ -404,6 +409,14 @@ ul.errorlist {
     float: right;
     padding: 5px;
     text-decoration: underline;
+}
+
+.admin_links {
+    padding: 5px;
+}
+
+.admin_links span a {
+    color: #000;
 }
 
 /*PROJECTS FOR REVIEW, MY PROJECTS*/
@@ -464,7 +477,8 @@ ul.errorlist {
 #project_list td span,
 #my_project_list td span,
 #admin_unit_list td span,
-#project_comments span.delete_comment {
+#project_comments span.delete_comment,
+.admin_links span {
     border-left: 1px solid;
     padding-left: 5px;
     text-decoration: underline;
