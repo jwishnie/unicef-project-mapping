@@ -41,10 +41,10 @@ class ProjectAdminViewsUnitTest(TestCase):
         
     def test_adding_existing_implementors_to_new_project(self):
         all_implementors = Implementor.objects.all()
-        implementor_names = ["Unicef"]
+        implementor_names = ["UNICEF"]
         _add_existing_implementors(self.p, all_implementors, implementor_names)
     
-        expected_implementors = Implementor.objects.filter(name__in=["Unicef"])
+        expected_implementors = Implementor.objects.filter(name__in=["UNICEF"])
         self.assertEquals(set(expected_implementors), set(self.p.implementor_set.all()))
     
     def test_adding_new_implementors_to_new_project(self):
