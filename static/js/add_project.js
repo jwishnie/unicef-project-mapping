@@ -54,10 +54,9 @@ jQuery(document).ready(function(){
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img/bright_red_marker.png',size,offset);
     
-    // var ol_wms = new OpenLayers.Layer.VirtualEarth("Hybrid", {
-    //     type: VEMapStyle.Hybrid
-    // });
-    map.addLayer(layer);
+    BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
+    ol_wms = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
+    map.addLayer(ol_wms);
     if (!map.getCenter()) map.zoomToMaxExtent();
     var click = new OpenLayers.Control.Click();
     map.addControl(click);

@@ -95,9 +95,9 @@ class ProjectTagsTest(TestCase):
 
     def test_should_add_header_when_adding_subproject(self):
         parent_project = Mock()
-        parent_project.name = "Unicef"
+        parent_project.name = "UNICEF"
         header = project_tags.sub_project_header(parent_project)
-        self.assertTrue(header.__contains__('Unicef'))
+        self.assertTrue(header.__contains__('UNICEF'))
 
     def test_should_add_hidden_input_with_parent_id_when_adding_subproject(self):
         parent_project = Mock()
