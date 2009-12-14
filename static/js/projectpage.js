@@ -14,9 +14,13 @@ $(document).ready(function() {
         maxScale: MAX_SCALE,
         minScale: MIN_SCALE
     });
-    var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
-        type: VEMapStyle.Hybrid
-    });
+    
+    var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
+    
+    // 
+    // var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
+    //     type: VEMapStyle.Hybrid
+    // });
     map.addLayer(layer);
     // map.setCenter(new OpenLayers.LonLat(longitude, latitude));
     var bounds = new OpenLayers.Bounds(left, bottom, right, top);
