@@ -16,26 +16,46 @@ $(document).ready(function() {
     });
     
     var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
-    
-    // 
-    // var layer = new OpenLayers.Layer.VirtualEarth("Hybrid", {
-    //     type: VEMapStyle.Hybrid
-    // });
     map.addLayer(layer);
-    // map.setCenter(new OpenLayers.LonLat(longitude, latitude));
+    
+    
+    var popup = null;
+    
+    function mousedn() {
+        if(popup !== null) {
+            popup.destroy();
+        }
+        popup = new OpenLayers.Popup("project",
+                               this.marker.lonlat,
+                               new OpenLayers.Size(200,70),
+                               this.text,
+                               true);
+        map.addPopup(popup);
+    }    
+    
     var bounds = new OpenLayers.Bounds(left, bottom, right, top);
     map.zoomToExtent(bounds);
 
     var markers = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(markers);
-
     var size = new OpenLayers.Size(WIDTH, HEIGHT);
     var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
     var icon = new OpenLayers.Icon(imgurl + '/red-marker.png', size, offset);
-    markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(longitude,
-                                            latitude), icon.clone()));
+    add_project_marker();
 
     addsubprojects(markers);
+    
+    function add_project_marker(){
+        var project_name = project_snippet.split(":")[0];
+        var project_description = project_snippet.split(":")[1];			    
+        var project_text = "<a href=\"/projects/id/" + project_id + "/" +"\">" + 
+                                    project_name + '</a><div class="proj_desc">' +  project_description + '</div>';
+        var marker_icon = icon.clone();
+        var marker = new OpenLayers.Marker(
+                            new OpenLayers.LonLat(longitude, latitude),marker_icon);
+        marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
+        markers.addMarker(marker);
+    }
 
     $("#published_comment").dialog({
         bgiframe: true,
@@ -168,12 +188,19 @@ $(document).ready(function() {
 	function addsubprojects(markers) {
         for (var i = 0; i < projects.length; i++) {
             subproject = projects[i];
+            
+            var subproject_name = subproject.snippet.split(":")[0];
+            var subproject_description = subproject.snippet.split(":")[1];			    
+            var subproject_text = "<a href=\"/projects/id/" + subproject.id + "/" +"\">" + 
+                                        subproject_name + '</a><div class="proj_desc">' +  subproject_description + '</div>';
+            
             var size = new OpenLayers.Size(WIDTH, HEIGHT);
             var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
             var icon = new OpenLayers.Icon(imgurl + '/bright_red_marker.png', size, offset);
-            markers.addMarker(new OpenLayers.Marker
-            (new OpenLayers.LonLat(subproject['longitude'],
-            subproject['latitude']), icon.clone()));
+            var marker = new OpenLayers.Marker(new OpenLayers.LonLat(subproject['longitude'],
+                                                subproject['latitude']), icon.clone())
+            marker.events.register("mousedown", {'marker' : marker, 'text' : subproject_text}, mousedn);
+            markers.addMarker(marker);
         }
     }
 
@@ -205,23 +232,19 @@ $(document).ready(function() {
 
 
     function addProjectsOnMap(projects) {
-        // var html = "<ul>";
         for(var i = 0;i<projects.length; i++){
             var project = projects[i];
-            // var project_name = project.snippet.split(":")[0];
-            //       var project_description = project.snippet.split(":")[1];               
-            //       var project_text = "<a href=\"/projects/id/" + project.id + "/" +"\">" + 
-            //                                   project_name + '</a><div class="proj_desc">' +  project_description;
-            //       html += "<li>" + project_text + "</li>";
+            var project_name = project.snippet.split(":")[0];
+            var project_description = project.snippet.split(":")[1];			    
+            var project_text = "<a href=\"/projects/id/" + project.id + "/" +"\">" + 
+                                        project_name + '</a><div class="proj_desc">' +  project_description + '</div>';
             var marker_icon = icon.clone();
-            marker = new OpenLayers.Marker(
+            var marker = new OpenLayers.Marker(
                                 new OpenLayers.LonLat(project.longitude, 
                                             project.latitude),marker_icon);
-            // marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
+            marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
             markers.addMarker(marker);
         }
-        // html += "</ul></div>";
-        // $("#proj").html(html);
     }
 
 });

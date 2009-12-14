@@ -173,12 +173,7 @@ $(document).ready(function() {
     
     var format = 'image/png';
     var map = new OpenLayers.Map( 'map_canvas' , options );
-    
-    // var layer = new OpenLayers.Layer.Google(
-    //     "Google Satellite",
-    //     {type: G_SATELLITE_MAP, numZoomLevels: 20}
-    // );
-    
+
     var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
     var markers = new OpenLayers.Layer.Markers( "Markers" );
     var bounds= new OpenLayers.Bounds(left, bottom, right, top);    
@@ -187,7 +182,6 @@ $(document).ready(function() {
     map.addLayer(layer);
     map.zoomToExtent(bounds);
 
-//	map.addLayer(markers);
 	
     $('.sectorbox').click(mapEvent);
 	$('.implementorbox').click(mapEvent);

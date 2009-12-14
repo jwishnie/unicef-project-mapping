@@ -33,5 +33,4 @@ def add_settings(request):
             'fancyuploader_swf' : settings.FANCY_UPLOADER_SWF,
             'tinymce_url': settings.TINYMCE_JS_URL,
             'project_photo_url': '%s%s' % (settings.STATIC_URL, '/project-photos/'),
-            'bing_js' : settings.BING
             }
