@@ -69,15 +69,15 @@ class ProjectAdminViewsUnitTest(TestCase):
                                   "latitude" : "-70", "longitude" : "-10", 
                                   "location" : "test location", "website_url" : "www.test.com",
                                   "project_image" : "www.image.com",
-                                  "project_sectors" : "Health, TestSector",
-                                  "project_implementors" : "TestImplementor, Red Cross Foundation",
+                                  "project_sectors" : ("Health"),
+                                  "project_implementors" : ("Red Cross Foundation"),
                                   "tags": "Health Medical"})
 
         project = Project.objects.get(name__exact="test_add")
         self.assertTrue(project)
         self.assertTrue(PROJECT_STATUS.DRAFT, project.status)
-        self.assertTrue(Sector.objects.filter(name="TestSector"))
-        self.assertTrue(Implementor.objects.filter(name="TestImplementor"))
+        self.assertTrue(Sector.objects.filter(name="Health"))
+        self.assertTrue(Implementor.objects.filter(name="Red Cross Foundation"))
 
 
     def test_editing_an_existing_project(self):
@@ -90,8 +90,8 @@ class ProjectAdminViewsUnitTest(TestCase):
                                   "name" : "Edited", "description" : "editied description", 
                                   "latitude" : "30", "longitude" : "45", 
                                   "location" : "edited location", "website_url" : "http://www.edited-test.com/",
-                                  "project_sectors" : "Education",
-                                  "project_implementors" : "WHO, Red Cross Foundation",
+                                  "project_sectors" : ("Education"),
+                                  "project_implementors" : ("Red Cross Foundation"),
                                   "link_title" : ["Link 1", "Link 2", "Link 3"],
                                   "publish_project" : "on",
                                   "link_url" : project_links})
