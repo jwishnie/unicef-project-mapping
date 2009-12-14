@@ -140,7 +140,7 @@ class ProjectTagsTest(TestCase):
 
     def test_should_return_truncated_and_ellipsised_text(self):
         text= "Red Cross Foundaiton"
-        self.assertEquals('Red Cross ...', project_tags.truncate_and_ellipsise(text))
+        self.assertEquals('Red Cross Found...', project_tags.truncate_and_ellipsise(text))
 
     def test_should_not_return_truncated_and_ellipsised_text(self):
         text= "Red Cross"

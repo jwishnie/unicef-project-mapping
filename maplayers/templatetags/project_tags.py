@@ -210,8 +210,8 @@ def add_admin_unit_related_links(user):
 
 @register.simple_tag
 def truncate_and_ellipsise(text):
-    if(len(text) > 10):
-        truncated_and_ellipsised_text = text[:10] + "..."
+    if(len(text) > 15):
+        truncated_and_ellipsised_text = text[:15] + "..."
     else:
         truncated_and_ellipsised_text = text    
     return truncated_and_ellipsised_text
