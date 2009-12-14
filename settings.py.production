@@ -116,13 +116,12 @@ MEDIA_URL = STATIC_URL+'/'
 
 JQUERY = 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'
 JQUERY_UI = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js'
-MOOTOOLS = 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js'
+MOOTOOLS = 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootool\s-yui-compressed.js'
 OPENLAYERS = STATIC_URL+'/js/openlayers/OpenLayers.js'
 JQUERY_PLUGINS = STATIC_URL+'/js/jqueryplugins'
 FANCY_UPLOADER = STATIC_URL + "/js/fancyuploader"
 FANCY_UPLOADER_SWF = FANCY_UPLOADER + "/Swiff.Uploader.swf"
 JQUERY_UI_CUSTOM = STATIC_URL + '/js/jquery-ui/jquery-ui-1.7.2.custom.min.js'
-BING = 'http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2&mkt=en-us'
 
 LOGIN_REDIRECT_URL = '/'
 
