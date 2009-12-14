@@ -335,7 +335,6 @@ li.implementor_drawer div {
     width: auto;
 }
 
-li.layers_drawer .expanded,
 li.sector_drawer .expanded,
 li.implementor_drawer .expanded {
     background: #007BD6 url('../img/expanded.png') no-repeat scroll 95% 50%;
@@ -355,7 +354,12 @@ table#projects td {
 .kml_file {
     display: none;
 }
-    
+
+.proj_img img {
+    height: 100px;
+    width: 100px;
+}   
+ 
 /*ERRORS*/
 .error {
     color: #FF0000;
