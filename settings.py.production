@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     'maplayers',
     'tagging',
     'tinymce',
+    'audioplayer',
 )
 
 #

@@ -77,7 +77,3 @@ class ResourceTest(TestCase):
         resource.filename = "default.current.aspx"
         self.assertEquals("aspx", resource.file_extension())
 
-    def test_should_give_file_name_without_extension_of_resource(self):
-        resource = Resource()
-        resource.filename = "default.current.aspx"
-        self.assertEquals("default.current", resource.file_extension())
