@@ -2,19 +2,6 @@ label {
     font-weight: bold;
 }
 
-#edit_project {
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    background-color: #007BD6;
-    float: right;
-    margin: 5px;
-    padding: 5px;
-}
-
-#edit_project a {
-    color: #000;
-}
-
 .publish_div,
 .review_div {
     margin: 5px;

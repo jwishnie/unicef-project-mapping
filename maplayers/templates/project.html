@@ -38,9 +38,11 @@
 {% block body_tag_exta %}onload='initialize()'{% endblock %}
 {% block page_content %}
 				{% flash_message request %}
-				{% edit_project_link project user %}
-				{% add_sub_project_link project user %}
-				{% admin_links project user %}
+				<div class="admin_links">
+					{% edit_project_link project user %}
+					{% add_sub_project_link project user %}
+					{% admin_links project user %}
+				</div>
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
 					<h2>{{project.name}}</h2>

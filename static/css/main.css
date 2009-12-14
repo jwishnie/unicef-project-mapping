@@ -136,7 +136,8 @@ li a {
 #main_nav li.first,
 #project_list td span.first,
 #admin_unit_list td span.first,
-#my_project_list td span.first {
+#my_project_list td span.first,
+.admin_links span.first {
     border-left: none;
 }
 
@@ -410,6 +411,14 @@ ul.errorlist {
     text-decoration: underline;
 }
 
+.admin_links {
+    padding: 5px;
+}
+
+.admin_links span a {
+    color: #000;
+}
+
 /*PROJECTS FOR REVIEW, MY PROJECTS*/
 #projects_for_review,
 #my_projects,
@@ -468,7 +477,8 @@ ul.errorlist {
 #project_list td span,
 #my_project_list td span,
 #admin_unit_list td span,
-#project_comments span.delete_comment {
+#project_comments span.delete_comment,
+.admin_links span {
     border-left: 1px solid;
     padding-left: 5px;
     text-decoration: underline;

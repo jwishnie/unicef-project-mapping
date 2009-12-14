@@ -30,6 +30,7 @@
 
 .file-size, .file-remove, .file-remove-edit, .photo-remove-edit {
     padding-left: 10px;
+    text-decoration: underline;
 }
 
 li.file {

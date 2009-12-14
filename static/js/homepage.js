@@ -283,7 +283,7 @@ $(document).ready(function() {
             if(layers.length >0){
                add_kml_info(layers);
             }else{
-                $('#kml').html('No KML layers to overlay');
+                $('#kml').html('<a href="/add_kml">Add KML Layer</a>No KML layers to overlay');
             }
             
         });
@@ -354,7 +354,7 @@ $(document).ready(function() {
     }
         
     function add_kml_info(layers){
-        var kml_html = "<ul>";
+        var kml_html = "<a href='/add_kml'>Add KML Layer</a><ul>";
         for(var i=0; i < layers.length; i++){
             var layer = layers[i];
             kml_html += "<li>";

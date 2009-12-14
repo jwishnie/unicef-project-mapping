@@ -43,6 +43,31 @@ class ProjectTagsTest(TestCase):
         self.assertFalse(project_tags.edit_project_link(project, mock_user).__contains__('/edit_project/3/'))
         self.assertEquals(project_tags.edit_project_link(project, mock_user), '')
 
+    def test_should_allow_authorized_users_to_add_admin_unit(self):
+        request = Mock()
+        mock_user = Mock()
+        mock_user.is_superuser = True
+                
+        mock_admin_group = Mock()
+        mock_editor_group = Mock()
+        mock_admin_group.name = 'admin'
+        mock_editor_group.name = 'editors_publishers'
+        mock_user.groups.all.return_value = [mock_admin_group, mock_editor_group]
+        
+        request.user = mock_user        
+        self.assertTrue(project_tags.add_admin_unit_related_links(mock_user).__contains__('/add_admin_unit'))
+
+    def test_should_not_allow_unauthorized_users_to_add_admin_units(self):
+        request = Mock()
+        mock_user = Mock()
+        mock_user.is_superuser = False
+                
+        mock_user.groups.all.return_value = []
+        
+        request.user = mock_user
+        self.assertFalse(project_tags.add_admin_unit_related_links(mock_user).__contains__('/add_admin_unit'))
+        self.assertEquals(project_tags.add_admin_unit_related_links(mock_user), '')
+
     def test_should_allow_authorized_user_to_add_project(self):
         project = Mock()
         project.is_parent_project.return_value = True
