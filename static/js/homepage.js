@@ -156,6 +156,12 @@ $(document).ready(function() {
 		var projects_url = "/projects/bbox/" + boundingBox.left + "/" + 
 							boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
 		var filters = {};
+		$(".sectors input[type=checkbox]:checked").each(function(){
+			filters[$(this).attr('name')] = true;
+		});
+		$(".implementors input[type=checkbox]:checked").each(function(){
+			filters[$(this).attr('name')] = true;
+		});
 		filters.tag = search_tag;
 
 		$.get(projects_url, filters, function(data) {
