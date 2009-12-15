@@ -7,6 +7,12 @@ from maplayers.models import Project
 from decimal import Decimal
 from maplayers.models import Sector, Implementor
 
+def _get_sectors():
+    return tuple([(sector.name, sector.name) for sector in Sector.objects.all()])
+    
+def _get_implementors():
+    return tuple([(implementor.name, implementor.name) for implementor in Implementor.objects.all()])
+    
 class ProjectForm(forms.Form):
     name = forms.CharField(max_length=30) 
     description = forms.CharField(widget=TinyMCE(attrs={'cols' : 80, 'rows' : 20}))
@@ -16,13 +22,18 @@ class ProjectForm(forms.Form):
     website_url = forms.URLField()
     sect = Sector.objects.all()
     impl_list = Implementor.objects.all()
-    print sect
     project_sectors = forms.MultipleChoiceField(required=True, choices=tuple(((sector.name,\
                         sector.name) for sector in sect)))
     project_implementors = forms.MultipleChoiceField(required=True, choices=tuple(((implementor.name,\
                             implementor.name) for implementor in impl_list)))
     imageset_feedurl = forms.CharField(max_length=1000, required=False)
     tags = forms.CharField(max_length=500, required=False)
+    
+    def __init__(self, *args, **kwargs):
+           self.base_fields['project_sectors'].choices = _get_sectors()
+           self.base_fields['project_implementors'].choices = _get_implementors()
+           super(ProjectForm, self).__init__(*args, **kwargs)
+           
     
     def clean_latitude(self):
         cleaned_data = self.cleaned_data
