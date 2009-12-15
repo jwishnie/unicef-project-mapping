@@ -223,10 +223,14 @@ $(document).ready(function() {
                 map.events.register('moveend', map, mapEvent);
                 markers.setVisibility(true);
                 mapEvent(null);
+                $('.sectorbox').bind('click', mapEvent);
+            	$('.implementorbox').unbind('click', mapEvent);
             }else{
                 active_kml_layers["Markers"] = false;
                 map.events.unregister('moveend', map, mapEvent);
                 markers.setVisibility(false);
+                $('.sectorbox').unbind('click');
+            	$('.implementorbox').unbind('click');
             }
         }else{
             kml_id = this.value;
@@ -275,8 +279,8 @@ $(document).ready(function() {
     map.zoomToExtent(bounds);
 
 	
-    $('.sectorbox').click(mapEvent);
-	$('.implementorbox').click(mapEvent);
+    $('.sectorbox').bind('click', mapEvent);
+	$('.implementorbox').bind('click', mapEvent);
 	
 	$('.overlaybox').click(handleOverlays);
 	
