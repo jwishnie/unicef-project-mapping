@@ -397,9 +397,8 @@ def _create_initial_data_from_project(project):
     form.fields['longitude'].initial = project.longitude
     form.fields['location'].initial = project.location
     form.fields['website_url'].initial = project.website_url
-    form.fields['project_sectors'].initial = ", ".join([sector.name for sector in project.sector_set.all()])
-    form.fields['project_implementors'].initial = ", ".join([implementor.name for implementor \
-                                                            in project.implementor_set.all()])
+    form.fields['project_sectors'].initial = tuple([str(sector.id) for sector in project.sector_set.all()])
+    form.fields['project_implementors'].initial = tuple([str(implementor.id) for implementor in project.implementor_set.all()])
     form.fields['imageset_feedurl'].initial = project.imageset_feedurl
     form.fields['tags'].initial = project.tags
     return form
