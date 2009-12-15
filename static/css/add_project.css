@@ -60,6 +60,12 @@ li.file {
     cursor: pointer;
 }
 
+#map_wrapper {
+    height: 20em;
+    overflow: hidden;
+    width: 47%;
+}
+
 .smallmap {
     width: 512px;
     height: 256px;
@@ -69,4 +75,8 @@ li.file {
 .help_text {
     padding: 5px;
     font-size: 9pt;    
+}
+
+.file-attach, #add_link {
+    padding-left: 10px;
 }

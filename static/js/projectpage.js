@@ -106,11 +106,11 @@ $(document).ready(function() {
     });
 
     $('#comment_link').click(function() {
+        styleDialogBox();
         $(".ui-dialog-titlebar-close").html("X");
         $(".ui-dialog-titlebar-close").css("color", "#000");
         $('#published_comment').dialog('open');
         $("#published_comment").css("height", "auto");
-        styleDialogBox();
     });
     
     function styleDialogBox(){
