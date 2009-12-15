@@ -1,3 +1,4 @@
+
 <html>
   <head>
     <!-- These are all of the necessary javascript and css files required to run your tests -->
@@ -12,20 +13,32 @@
     <link rel="stylesheet" href="lib/screw.css">
 
     <script type="text/javascript">
-      Screw.Unit(function() {
-        describe("when homepage is initialized", function() {
-          it("should hide filterable criteria", function() {
+	Screw.Unit(function() {
+	        describe("when homepage is initialized", function() {
+	          it("should hide filterable criteria", function() {
 			hideFilterableCriteria();
 			expect($("#filterable_criteria ul.sectors").is(":visible")).to(equal, false);
 			expect($("#filterable_criteria ul.implementors").is(":visible")).to(equal, false);
-          });
-
+	          });
 		  it("should expand sectors on click", function() {
 			expandSectors();
 			expect($("ul.sectors").is(":visible")).to(equal, true);
-			expect($("li.sector_drawer div").class).to(equal, 'expanded');
+			expect($("li.sector_drawer div").is('.expanded')).to(equal, true);
+			expect($('li.sector_drawer span').is('.open')).to(equal, true);
 		  });
-        });
+		  it("should expand implementors on click", function() {
+			expandImplementors();
+			expect($("ul.implementors").is(":visible")).to(equal, true);
+			expect($("li.implementor_drawer div").is('.expanded')).to(equal, true);
+			expect($('li.implementor_drawer span').is('.open')).to(equal, true);
+		  });
+		  it("should expand overlays on click", function() {
+			expandOverlays();
+			expect($("ul.overlays").is(":visible")).to(equal, true);
+			expect($("li.overlay_drawer div").is('.expanded')).to(equal, true);
+			expect($('li.overlay_drawer span').is('.open')).to(equal, true);
+		  });
+	        });
 	});
     </script>
   </head>
@@ -33,7 +46,23 @@
   	<div id="filterable_criteria">
 	<ul class="sectors">
 		<li class="sector_drawer">
-			<div></div>
+			<div>
+				<span></span>
+			</div>
+		</li>
+	</ul>
+	<ul class="implementors">
+		<li class="implementor_drawer">
+			<div>
+				<span></span>
+			</div>
+		</li>
+	</ul>
+	<ul class="overlays">
+		<li class="overlay_drawer">
+			<div>
+				<span></span>
+			</div>
 		</li>
 	</ul>
 	</div>
