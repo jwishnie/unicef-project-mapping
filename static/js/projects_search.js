@@ -10,7 +10,9 @@ $(document).ready(function() {
 
 	$("input[type=checkbox]").each(function()
 	{
-		this.checked = 'yes';
+	    if(!this.name.startsWith("kml_")){
+		    this.checked = 'yes';
+	    }
 	});
 
 	function bookmarkUrl(){
