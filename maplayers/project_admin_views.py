@@ -131,7 +131,7 @@ def file_upload(request):
     for chunk in uploaded_file.chunks(): 
         destination.write(chunk) 
         destination.close()
-    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
+    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IROTH) 
     project = Project.objects.get(id=project_id)
     project.resource_set.add(Resource(title = uploaded_file_name, filename=file_name, project=project, filesize=file_size))
     return HttpResponse("OK")
@@ -149,7 +149,7 @@ def photo_upload(request):
         for chunk in uploaded_file.chunks(): 
             destination.write(chunk) 
             destination.close()
-        os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
+        os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IROTH) 
         project_in_request = Project.objects.get(id=int(project_id))
         project_in_request.project_image = uploaded_file_name
         project_in_request.save()
