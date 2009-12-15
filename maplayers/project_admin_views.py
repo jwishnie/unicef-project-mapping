@@ -141,7 +141,8 @@ def photo_upload(request):
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
     app_dir = _get_app_dir(__file__)
-    destination_name = app_dir + "/static/project-photos/"+ str(uuid.uuid1()) + "_" + uploaded_file_name
+    project_photo_name = str(uuid.uuid1()) + "_" + uploaded_file_name
+    destination_name = app_dir + "/static/project-photos/"+ project_photo_name
     logging.debug("Destination path of photo: %s" % destination_name)
     try:
         _create_dir_if_not_exists(destination_name)
@@ -151,14 +152,14 @@ def photo_upload(request):
             destination.close()
         os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IROTH) 
         project_in_request = Project.objects.get(id=int(project_id))
-        project_in_request.project_image = uploaded_file_name
+        project_in_request.project_image = project_photo_name
         project_in_request.save()
         try:
            photo = ProjectPhoto.objects.get(project=project_in_request)
-           photo.filename = uploaded_file_name
+           photo.filename = project_photo_name
            photo.save()
         except Exception, ex:
-            project_in_request.projectphoto_set.add(ProjectPhoto(filename=uploaded_file_name, project=project_in_request, alt=uploaded_file_name))
+            project_in_request.projectphoto_set.add(ProjectPhoto(filename=project_photo_name, project=project_in_request, alt=uploaded_file_name))
             project_in_request.save()
         return HttpResponse("OK")
     except Exception, ex:
