@@ -60,9 +60,7 @@ def add_project(request):
                                     implementors, project, parent_project, video_urls, link_titles, 
                                     link_urls, project.resource_set.all(), title="Add Project")
     else:
-        print "Neww Form"
         form = ProjectForm()
-        # form.project_sectors.choices = [('s.name for s in Sector.objects.all()]
         project = _create_new_project(request)
         return _render_response(request, form, action, 
                                 sectors, implementors, project, parent_project, title="Add Project")
