@@ -33,9 +33,10 @@ def homepage(request):
     implementor_ids = [implementor.id for implementor in implementors]
     left, bottom, right, top = _get_bounding_box(request)
     projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    kml_layers = KMLFile.objects.all()
     context_data = {'projects' : projects, 'sectors' : sectors, 'tag': "",
                     'implementors' : implementors,'left': left, 'right' : right,
-                    'top': top, 'bottom' : bottom}
+                    'top': top, 'bottom' : bottom, 'kml_layers' : kml_layers} 
     return render_to_response(
                               'homepage.html', 
                               context_data,
