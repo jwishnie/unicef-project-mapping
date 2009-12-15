@@ -125,8 +125,8 @@ li a {
 #main_nav span.notification {
     padding: 0 3px;
     margin-left: 3px;
-    background-color: #FFF;
-    color: #000;
+    background-color: #CC0000;
+    color: #FFF;
     -moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
@@ -152,7 +152,6 @@ li a {
     background-color: #007BD6;
     display: block;
     padding: 5px;
-    width: 830px;
 }
 
 #main_content fieldset div,

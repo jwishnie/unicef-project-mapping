@@ -122,34 +122,34 @@ def file_upload(request):
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
     file_size = uploaded_file.size
-    file_path_name = __file__
-    directory_of_file = os.path.dirname(__file__)
-    last_slash_index = directory_of_file.rindex("/")
-    directory_of_index = directory_of_file[0:last_slash_index]
-    destination_name = directory_of_index + "/static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
-    logging.debug("Destination path : %s" % destination_name)
+    app_dir = _get_app_dir(__file__)
+    file_name = str(uuid.uuid1()) + "_" + uploaded_file_name
+    destination_name = app_dir + "/static/resources/" + file_name
+    logging.debug("Destination path of resource: %s" % destination_name)
     _create_dir_if_not_exists(destination_name)
     destination = open(destination_name, 'wb+')
     for chunk in uploaded_file.chunks(): 
         destination.write(chunk) 
         destination.close()
-    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
+    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IROTH) 
     project = Project.objects.get(id=project_id)
-    project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project, filesize=file_size))
+    project.resource_set.add(Resource(title = uploaded_file_name, filename=file_name, project=project, filesize=file_size))
     return HttpResponse("OK")
     
 def photo_upload(request):
     uploaded_file = request.FILES['Filedata']
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
-    destination_name = os.getcwd() + "/static/project-photos/"+uploaded_file_name
+    app_dir = _get_app_dir(__file__)
+    destination_name = app_dir + "/static/project-photos/"+uploaded_file_name
+    logging.debug("Destination path of photo: %s" % destination_name)
     try:
         _create_dir_if_not_exists(destination_name)
         destination = open(destination_name, 'wb+')
         for chunk in uploaded_file.chunks(): 
             destination.write(chunk) 
             destination.close()
-        os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
+        os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IROTH) 
         project_in_request = Project.objects.get(id=int(project_id))
         project_in_request.project_image = uploaded_file_name
         project_in_request.save()
@@ -165,6 +165,13 @@ def photo_upload(request):
         response = HttpResponse()
         response.write("Photo upload failed")
         return response
+
+def _get_app_dir(path_of_script):
+    file_path_name = path_of_script
+    directory_of_file = os.path.dirname(__file__)
+    last_slash_index = directory_of_file.rindex("/")
+    directory_of_index = directory_of_file[0:last_slash_index]
+    return directory_of_index
     
 @login_required
 def project_comments(request, project_id):
