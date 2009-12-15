@@ -40,7 +40,7 @@ $(document).ready(function() {
     map.addLayer(markers);
     var size = new OpenLayers.Size(WIDTH, HEIGHT);
     var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
-    var icon = new OpenLayers.Icon(imgurl + '/red-marker.png', size, offset);
+    var icon = new OpenLayers.Icon(imgurl + '/bright_red_marker.png', size, offset);
     add_project_marker();
 
     addsubprojects(markers);
@@ -196,7 +196,7 @@ $(document).ready(function() {
             
             var size = new OpenLayers.Size(WIDTH, HEIGHT);
             var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
-            var icon = new OpenLayers.Icon(imgurl + '/bright_red_marker.png', size, offset);
+            var icon = new OpenLayers.Icon(imgurl + '/red-marker.png', size, offset);
             var marker = new OpenLayers.Marker(new OpenLayers.LonLat(subproject['longitude'],
                                                 subproject['latitude']), icon.clone())
             marker.events.register("mousedown", {'marker' : marker, 'text' : subproject_text}, mousedn);

@@ -50,6 +50,11 @@ function expandOverlays(){
 }
 
 
+function hideFilterableCriteria(){
+    $('#filterable_criteria ul.sectors').hide();
+    $('#filterable_criteria ul.implementors').hide();    
+}
+
 function populateRegionStats(response){
 	$.get("/search_admin_unit/",{text:response.responseText},
 	    function(data){
@@ -75,9 +80,7 @@ $(document).ready(function() {
     // make OL compute scale according to WMS spec
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
     
-    $('#filterable_criteria ul.sectors').hide();
-    $('#filterable_criteria ul.implementors').hide();
-    // $('#filterable_criteria ul.overlays').hide();
+    hideFilterableCriteria();
     
     $('#filterable_criteria li.sector_drawer div').click(function() {
         if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
@@ -102,6 +105,7 @@ $(document).ready(function() {
             expandImplementors();
         }
     });
+    
     
     function constructQueryString(selected_filters){
     	var qstring = "";
@@ -320,23 +324,6 @@ $(document).ready(function() {
 
     }
         
-    // function switchKMLView(){
-    //     remove_markers_and_admin_boundaries();
-    //     active_kml_layers = new Array();
-    //     var layers;
-    //     $.get("/kml_layers/", function(data){
-    //         layers = eval(data);
-    //         if(layers.length >0){
-    //            add_kml_info(layers);
-    //         }else{
-    //             $('#kml').html('<a href="/add_kml">Add KML Layer</a>No KML layers to overlay');
-    //         }
-    //         
-    //     });
-    //     $('#stats-id').bind('click', switchStatsView);
-    //     $('#proj-id').bind('click', projectview);
-    // }
-    
     function switchStatsView(){
         map.events.unregister('moveend', map, mapEvent);
         var bounds = new OpenLayers.Bounds(29.571,-1.479,35.0,4.234);
@@ -411,7 +398,7 @@ $(document).ready(function() {
         var layersInMap = map.layers;
         $.each(layersInMap, function(){
             if(!this.isBaseLayer){
-                map.removeLayer(this);
+                this.destroy();
             }
         });
     }

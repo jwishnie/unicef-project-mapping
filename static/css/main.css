@@ -2,7 +2,7 @@ body {
     margin: 0 auto;
     padding: 0px;
     color: #000;
-    background-color: #0099FF;
+    background: #0099FF url("../img/bg_body.jpg") repeat-x 0 0;
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 10pt;
 }
@@ -11,15 +11,10 @@ img {
 	border: none;
 }
 
-.main_wrapper {
-    margin: auto;
-}
-
 #header,
 #logo,
 #explore_nav,
 #main_nav,
-#main_nav ul,
 #main_pane,
 #image_pane,
 #review_suggestions .suggestion {
@@ -28,24 +23,13 @@ img {
 
 #header {
     color: #FFF;
+    padding-bottom: 1em;
 }
 
-#logo,
 #main_nav,
-#main_content_shadow {
-    margin: auto;
-}
-
-#logo, 
-#main_nav {
-    width: 80%;
-}
-
-#unicef_tagline {
-    font-size: 14pt;
-    float: left;
-    padding: 5px 0 0 15px;
-    width: 5em;
+#header {
+    width: 93%;
+    margin: 0 auto;
 }
 
 ul.layers,
@@ -54,12 +38,6 @@ ul.implementors,
 ul.overlays
 {
     clear: both;
-    padding: 10px;
-    margin-bottom: 2px;
-}
-
-#main_nav_wrapper {
-    background-color: #007BD6;
 }
 
 #main_nav ul {
@@ -68,23 +46,11 @@ ul.overlays
     font-size: 9pt;
 }
 
-#explore_nav {
-    margin-bottom: 5px;
-}
-
-#explore_nav span {
-    padding: 12px 18px 0 5px;
-}
-
-#explore_nav span.drawer-handle {
-    padding: 5px 18px 0 5px;
-}
-
 #layercontrols, #filterable_criteria {
     font-size: 9pt;
     float: left;
     height: 378px;
-    width: 15%;
+    width: 13%;
     margin: 0 2px;
     overflow: auto;
 }
@@ -119,22 +85,32 @@ li a {
 }
 
 #main_nav ul li {
-    border-left: 1px solid #FFF;
     float: left;
-    margin: 5px;
-    padding-left: 10px;
-    height: 4.5em;
-    width: 7em;
+    margin-right: 4px;
 }
 
 #main_nav ul li a {
-    margin: 0;
-    padding: 0;
-    color: #FFF;
+    display:block;
+    background-color: #007bd6;
+    margin:0;
+    padding:5px 10px;
+    color:#C1DEFB;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;  
 }
 
-#main_nav #project_search li,
-#main_nav li.first,
+#main_nav ul li a:hover {
+    background-color: #FFF;
+    color: #003d79; 
+}
+
+#main_nav ul li a.current_li {
+    background-color: #FFF;
+    color: #000;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+}
+
 #project_list td span.first,
 #admin_unit_list td span.first,
 #my_project_list td span.first,
@@ -153,7 +129,10 @@ li a {
 
 #main_content {
     background-color: #FFF;
-    margin: 0 10px;
+    margin: 0 auto;
+    padding-top: 1em;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-right-radius: 10px;       
 }
 
 #main_content fieldset {
@@ -222,21 +201,20 @@ li a {
     width : auto;
 }
 
-#main_content_shadow {
-    background-color: #4DB8FF;
+#main_content {
     clear: both;
-    width: 80%;
+    width: 93%;
 }
 
 #map_canvas{
     float: left;
-    width: 51%;
+    width: 55%;
     height: 400px;
     margin-top: 5px;
 }
 
 #projects {
-    width: 32%;
+    width: 30%;
 }
 
 #projects_searched {
@@ -256,8 +234,9 @@ li a {
 }
 
 #proj {
-    height: 325px;
+    height: 305px;
     overflow: auto;
+    background: #FFF url("../img/bg_light_gradient.jpg") repeat-x 0 0;
 }
 
 #proj a {
@@ -290,11 +269,6 @@ li.drawer {
 li.drawer div {
     color: #FFF;
     padding: 5px;
-}
-
-#project_search {
-    padding: 5px;
-    width: 15em;
 }
 
 #project_search span a {
