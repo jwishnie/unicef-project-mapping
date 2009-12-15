@@ -4,8 +4,6 @@ from django.test import TestCase
 from django.test.client import Client
 import re
 
-from maplayers.project_admin_views import _add_existing_sectors, _create_and_add_new_sectors
-from maplayers.project_admin_views import _add_existing_implementors, _create_and_add_new_implementors
 from maplayers.models import Project, Sector, Implementor, ProjectComment
 from maplayers.utils import is_iter
 from django.db.models import Q
@@ -22,40 +20,6 @@ class ProjectAdminViewsUnitTest(TestCase):
         
     def teardown(self):
         self.p.delete()
-    
-    def test_adding_existing_sectors_to_new_project(self):
-        all_sectors = Sector.objects.all()
-        sector_names = ["Health", "Education"]
-        _add_existing_sectors(self.p, all_sectors, sector_names)
-        
-        expected_sectors = Sector.objects.filter(name__in=["Health", "Education"])
-        self.assertEquals(set(expected_sectors), set(self.p.sector_set.all()))
-        
-    def test_adding_new_sectors_to_new_project(self):
-        all_sectors = Sector.objects.all()
-        sector_names = ["Health", "Vaccination"]
-        _create_and_add_new_sectors(self.p, all_sectors, sector_names)
-        
-        expected_sectors = Sector.objects.filter(name__in=["Vaccination"])
-        self.assertEquals(set(expected_sectors), set(self.p.sector_set.all()))
-        
-    def test_adding_existing_implementors_to_new_project(self):
-        all_implementors = Implementor.objects.all()
-        implementor_names = ["UNICEF"]
-        _add_existing_implementors(self.p, all_implementors, implementor_names)
-    
-        expected_implementors = Implementor.objects.filter(name__in=["UNICEF"])
-        self.assertEquals(set(expected_implementors), set(self.p.implementor_set.all()))
-    
-    def test_adding_new_implementors_to_new_project(self):
-        all_implementors = Implementor.objects.all()
-        implementor_names = ["WHO"]
-        _create_and_add_new_implementors(self.p, all_implementors, implementor_names)
-    
-        expected_implementors = Implementor.objects.filter(name__in=["WHO"])
-        self.assertEquals(set(expected_implementors), set(self.p.implementor_set.all()))
-        
-        fixtures = ['test_project_data']
 
     def test_adding_a_new_project(self):
         web_client = Client()
@@ -69,8 +33,8 @@ class ProjectAdminViewsUnitTest(TestCase):
                                   "latitude" : "-70", "longitude" : "-10", 
                                   "location" : "test location", "website_url" : "www.test.com",
                                   "project_image" : "www.image.com",
-                                  "project_sectors" : ("Health"),
-                                  "project_implementors" : ("Red Cross Foundation"),
+                                  "project_sectors" : ("1"),
+                                  "project_implementors" : ("1"),
                                   "tags": "Health Medical"})
 
         project = Project.objects.get(name__exact="test_add")
@@ -90,8 +54,8 @@ class ProjectAdminViewsUnitTest(TestCase):
                                   "name" : "Edited", "description" : "editied description", 
                                   "latitude" : "30", "longitude" : "45", 
                                   "location" : "edited location", "website_url" : "http://www.edited-test.com/",
-                                  "project_sectors" : ("Education"),
-                                  "project_implementors" : ("Red Cross Foundation"),
+                                  "project_sectors" : ("2"),
+                                  "project_implementors" : ("1"),
                                   "link_title" : ["Link 1", "Link 2", "Link 3"],
                                   "publish_project" : "on",
                                   "link_url" : project_links})
