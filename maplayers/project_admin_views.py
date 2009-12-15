@@ -141,7 +141,7 @@ def photo_upload(request):
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
     app_dir = _get_app_dir(__file__)
-    destination_name = app_dir + "/static/project-photos/"+uploaded_file_name
+    destination_name = app_dir + "/static/project-photos/"+ str(uuid.uuid1()) + "_" + uploaded_file_name
     logging.debug("Destination path of photo: %s" % destination_name)
     try:
         _create_dir_if_not_exists(destination_name)
