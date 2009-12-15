@@ -120,7 +120,11 @@ class Resource(models.Model):
 
     def file_name_without_extension(self):
         return "_".join(self.filename.split("_")[1:])
-
+        
+    @property
+    def file_name_with_slash(self):
+        return  "/" + self.filename
+    @property
     def is_audio_file(self):
         supported_audio_formats = ["mp3", "ogg"]
         file_type  =  self.filename.split(".")[-1]

@@ -100,3 +100,7 @@ label {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
 }
+
+.post_a_comment_link {
+    clear: both;
+}

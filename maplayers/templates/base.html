@@ -36,8 +36,8 @@
         {% endblock %}
 		<div id="main_nav">
         	<ul class="floatleft">
-				<li id="home_li"><a href="/" class="current_li">Home</a></li>
-				{% if user.is_authenticated %}
+				{% if user.is_authenticated %}	
+					<li id="home_li"><a href="/" class="current_li">Home</a></li>
 					<li id="my_projs_li">{% my_projects_link user %}</li>							
 					{% projects_for_review_link user %}								
 					<li id="add_proj_li">{% add_project_link %}</li>

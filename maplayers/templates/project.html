@@ -123,7 +123,10 @@
 									{% for resource in resources %}
 									<div class="resource">
 									  	<div class="resource_icon" style="background:transparent url({% resource_icon resource %}) no-repeat scroll top left"></div>
-										<div class="sub_div"><a href="../../../static/resources/{{resource.filename}}">{{resource.title}}</a></div>
+										<div class="sub_div"><a href="{{resource.file_name_with_slash}}">{{resource.title}}</a></div>
+										{% if resource.is_audio_file %}
+										  {% audioplayer file=resource.file_name_with_slash,width=290,height=24 %}
+										{% endif %}
 									</div>	
 									{% endfor %}
 								</div>
@@ -149,7 +152,7 @@
 					{% project_video project %}
 					
 
-					<div>
+					<div class="post_a_comment_link">
 						<label id="comment_link">Post a comment</label>
 						<a class="back_to_top" href="#project_details">Back to top</a>						
 					</div>

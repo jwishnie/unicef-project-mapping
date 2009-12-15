@@ -278,6 +278,10 @@ li.drawer div {
     padding: 5px;
 }
 
+#project_search {
+    padding-bottom: 5px;
+}
+
 #project_search span a {
     font-size: 9pt;
     color: #FFF;
