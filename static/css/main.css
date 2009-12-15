@@ -298,7 +298,7 @@ li.drawer div {
     background: transparent url('../img/search.png') no-repeat scroll top left;
     width: 33px;
     height: 33px;
-    padding: 1px 0 3px;
+    padding: 8px 0 3px;
 }
 
 span.drawer-handle {
