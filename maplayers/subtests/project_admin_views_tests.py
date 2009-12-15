@@ -180,5 +180,5 @@ class ProjectAdminViewsUnitTest(TestCase):
         request.META = meta
         response = views.add_project(request)
         self.assertEquals(302, response.status_code)
-        self.assertEquals('/permission_denied/add_project/not_author', response.items()[1][1])
+        self.assertEquals('/permission_denied/add_project/not_author', response.items()[3][1])
 

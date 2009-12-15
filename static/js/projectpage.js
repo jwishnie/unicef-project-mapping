@@ -6,6 +6,8 @@ $(document).ready(function() {
     MAX_SCALE = 865124.6923828125
     MIN_SCALE = 110735960.625
     WIDTH = 10
+    MAIN_MARKER_WIDTH = 20
+    MAIN_MARKER_HEIGHT = 25
     HEIGHT = 17
 
     $('#photo_set a').lightBox({fixedNavigation:true});
@@ -39,8 +41,10 @@ $(document).ready(function() {
     var markers = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(markers);
     var size = new OpenLayers.Size(WIDTH, HEIGHT);
+    var main_marker_size = new OpenLayers.Size(MAIN_MARKER_WIDTH, MAIN_MARKER_HEIGHT);
     var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
     var icon = new OpenLayers.Icon(imgurl + '/bright_red_marker.png', size, offset);
+    var current_project_icon = new OpenLayers.Icon(imgurl + '/marker_yellow.png', main_marker_size, offset);
     add_project_marker();
 
     addsubprojects(markers);
@@ -50,7 +54,7 @@ $(document).ready(function() {
         var project_description = project_snippet.split(":")[1];			    
         var project_text = "<a href=\"/projects/id/" + project_id + "/" +"\">" + 
                                     project_name + '</a><div class="proj_desc">' +  project_description + '</div>';
-        var marker_icon = icon.clone();
+        var marker_icon = current_project_icon.clone();
         var marker = new OpenLayers.Marker(
                             new OpenLayers.LonLat(longitude, latitude),marker_icon);
         marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
@@ -216,6 +220,7 @@ $(document).ready(function() {
 
         	$.get(projects_url, function(data) {
                     var projects = JSON.parse(data);
+                    projects = projects.reject(function(p){ return p.id === project_id; });
                     addProjectsOnMap(projects);
             });
             
@@ -225,7 +230,7 @@ $(document).ready(function() {
             markers = new OpenLayers.Layer.Markers( "Markers" );
             map.addLayer(markers);
             markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(longitude,
-                                                    latitude), icon.clone()));
+                                                    latitude), current_project_icon.clone()));
             addsubprojects(markers);
         }
     }
