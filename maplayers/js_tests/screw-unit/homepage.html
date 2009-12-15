@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <!-- These are all of the necessary javascript and css files required to run your tests -->
+    <script src="lib/jquery-1.2.6.js"></script>
+    <script src="lib/jquery.fn.js"></script>
+    <script src="lib/jquery.print.js"></script>
+    <script src="lib/screw.builder.js"></script>
+    <script src="lib/screw.matchers.js"></script>
+    <script src="lib/screw.events.js"></script>
+    <script src="lib/screw.behaviors.js"></script>
+    <script src="../../../static/js/homepage.js"></script>
+    <link rel="stylesheet" href="lib/screw.css">
+
+    <script type="text/javascript">
+      Screw.Unit(function() {
+        describe("when homepage is initialized", function() {
+          it("should hide filterable criteria", function() {
+			hideFilterableCriteria();
+			expect($("#filterable_criteria ul.sectors").is(":visible")).to(equal, false);
+			expect($("#filterable_criteria ul.implementors").is(":visible")).to(equal, false);
+          });
+
+		  it("should expand sectors on click", function() {
+			expandSectors();
+			expect($("ul.sectors").is(":visible")).to(equal, true);
+			expect($("li.sector_drawer div").class).to(equal, 'expanded');
+		  });
+        });
+	});
+    </script>
+  </head>
+  <body>
+  	<div id="filterable_criteria">
+	<ul class="sectors">
+		<li class="sector_drawer">
+			<div></div>
+		</li>
+	</ul>
+	</div>
+  </body>
+</html>
