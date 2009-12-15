@@ -123,7 +123,8 @@ def file_upload(request):
     project_id = request.POST.get('project_id')
     file_size = uploaded_file.size
     app_dir = _get_app_dir(__file__)
-    destination_name = app_dir + "/static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
+    file_name = str(uuid.uuid1()) + "_" + uploaded_file_name
+    destination_name = app_dir + "/static/resources/" + file_name
     logging.debug("Destination path of resource: %s" % destination_name)
     _create_dir_if_not_exists(destination_name)
     destination = open(destination_name, 'wb+')
@@ -132,7 +133,7 @@ def file_upload(request):
         destination.close()
     os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) 
     project = Project.objects.get(id=project_id)
-    project.resource_set.add(Resource(title = uploaded_file_name, filename=destination_name, project=project, filesize=file_size))
+    project.resource_set.add(Resource(title = uploaded_file_name, filename=file_name, project=project, filesize=file_size))
     return HttpResponse("OK")
     
 def photo_upload(request):
