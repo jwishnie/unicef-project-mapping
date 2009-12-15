@@ -122,6 +122,7 @@ def file_upload(request):
     project_id = request.POST.get('project_id')
     file_size = uploaded_file.size
     destination_name = os.getcwd() + "/static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
+    logging.debug("Destination path : %s" % destination_name)
     _create_dir_if_not_exists(destination_name)
     destination = open(destination_name, 'wb+')
     for chunk in uploaded_file.chunks(): 
