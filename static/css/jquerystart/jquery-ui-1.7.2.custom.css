@@ -56,16 +56,16 @@
 
 /* Interaction states
 ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #77d5f7; background-color: #0099FF; font-weight: normal; color: #ffffff; outline: none; }
+.ui-state-default, .ui-widget-content .ui-state-default { background-color: #0099FF; font-weight: normal; color: #ffffff; outline: none; }
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #ffffff; text-decoration: none; outline: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #448dae; background-color: #007BD6; font-weight: normal; color: #026890; outline: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus {background-color: #007BD6; font-weight: normal; color: #026890; outline: none; }
 .ui-state-hover a, .ui-state-hover a:hover { color: #FFF; text-decoration: none; outline: none; }
 .ui-state-active, .ui-widget-content .ui-state-active { background-color: #007BD6; font-weight: normal; color: #ffffff; outline: none; }
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #ffffff; outline: none; text-decoration: none; }
 
 /* Interaction Cues
 ----------------------------------*/
-.ui-state-highlight, .ui-widget-content .ui-state-highlight {border: 1px solid #fcd113; background: #f8da4e url(images/ui-bg_glass_55_f8da4e_1x400.png) 50% 50% repeat-x; color: #915608; }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {background: #f8da4e url(images/ui-bg_glass_55_f8da4e_1x400.png) 50% 50% repeat-x; color: #915608; }
 .ui-state-highlight a, .ui-widget-content .ui-state-highlight a { color: #915608; }
 .ui-state-error, .ui-widget-content .ui-state-error {border: 1px solid #cd0a0a; background: #e14f1c url(images/ui-bg_gloss-wave_45_e14f1c_500x100.png) 50% top repeat-x; color: #ffffff; }
 .ui-state-error a, .ui-widget-content .ui-state-error a { color: #ffffff; }
@@ -272,7 +272,7 @@
 .ui-corner-bl { -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px; }
 .ui-corner-br { -moz-border-radius-bottomright: 5px; -webkit-border-bottom-right-radius: 5px; }
 .ui-corner-top { -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px; }
-.ui-corner-bottom { -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomright: 5px; -webkit-border-bottom-right-radius: 5px; }
+.ui-corner-bottom { -moz-border-radius-bottomleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomright: 10px; -webkit-border-bottom-right-radius: 10px; -moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px;}
 .ui-corner-right {  -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-bottomright: 5px; -webkit-border-bottom-right-radius: 5px; }
 .ui-corner-left { -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px; }
 
@@ -394,11 +394,11 @@
 .ui-slider-vertical .ui-slider-range-max { top: 0; }/* Tabs
 ----------------------------------*/
 .ui-tabs { padding: .2em; zoom: 1; }
-.ui-tabs .ui-tabs-nav { list-style: none; position: relative; padding: .2em .2em 0; }
+.ui-tabs .ui-tabs-nav { list-style: none; position: relative; }
 .ui-tabs .ui-tabs-nav li { position: relative; float: left; border-bottom-width: 0 !important; margin: 0 .2em -1px 0; padding: 0; width: 7em; }
 .ui-tabs .ui-tabs-nav li a { float: left; text-decoration: none; padding: .5em 1em; font-weight: bold; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected { padding-bottom: 1px; border-bottom-width: 0; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
-.ui-tabs .ui-tabs-panel { padding: 1em 1.4em; display: block; border-width: 0; background: none; border:1px solid #007BD6; }
+.ui-tabs .ui-tabs-panel { padding: 1em 1.4em; display: block; border-width: 0; background: none; border:2px solid #007BD6; }
 .ui-tabs .ui-tabs-hide { display: none !important; }

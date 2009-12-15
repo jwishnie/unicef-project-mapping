@@ -140,7 +140,7 @@ class ProjectTagsTest(TestCase):
 
     def test_should_return_truncated_and_ellipsised_text(self):
         text= "Red Cross Foundaiton"
-        self.assertEquals('Red Cross ...', project_tags.truncate_and_ellipsise(text))
+        self.assertEquals('Red Cross Found...', project_tags.truncate_and_ellipsise(text))
 
     def test_should_not_return_truncated_and_ellipsised_text(self):
         text= "Red Cross"
@@ -150,17 +150,17 @@ class ProjectTagsTest(TestCase):
     def test_my_projects_link_should_show_notifications(self):
         author = User.objects.get(id=2)
         html_snippet = project_tags.my_projects_link(author)
-        self.assertEquals('<a href="/my_projects/" id="my_projects">My Projects<span class="notification">3</span></a>', html_snippet)
+        self.assertEquals('<a href="/my_projects/" id="my_projects_link">My Projects<span class="notification">3</span></a>', html_snippet)
         
         map_super = User.objects.get(id=1)
         html_snippet = project_tags.my_projects_link(map_super)
-        self.assertEquals('<a href="/my_projects/" id="my_projects">My Projects</a>', html_snippet)
+        self.assertEquals('<a href="/my_projects/" id="my_projects_link">My Projects</a>', html_snippet)
         
 
     def test_projects_for_Review_link_should_show_notifications(self):
         editor = User.objects.get(id=5)
         html_snippet = project_tags.projects_for_review_link(editor)
-        self.assertEquals('<li><a href="/projects_for_review/">Projects for Review<span class="notification">3</span></a></li>', html_snippet)
+        self.assertEquals('<li id="projs_for_review_li"><a href="/projects_for_review/">Projects for Review<span class="notification">3</span></a></li>', html_snippet)
 
     def test_should_no_resource_list_if_no_resources_are_available(self):
         resources = []

@@ -15,11 +15,12 @@ class ProjectForm(forms.Form):
     location = forms.CharField(max_length=50)
     website_url = forms.URLField()
     sect = Sector.objects.all()
-    impl = Implementor.objects.all()
+    impl_list = Implementor.objects.all()
+    print sect
     project_sectors = forms.MultipleChoiceField(required=True, choices=tuple(((sector.name,\
                         sector.name) for sector in sect)))
     project_implementors = forms.MultipleChoiceField(required=True, choices=tuple(((implementor.name,\
-                            implementor.name) for implementor in impl)))
+                            implementor.name) for implementor in impl_list)))
     imageset_feedurl = forms.CharField(max_length=1000, required=False)
     tags = forms.CharField(max_length=500, required=False)
     

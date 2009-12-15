@@ -23,7 +23,7 @@ logging.basicConfig(
 # CACHE_BACKEND = 'file:///var/tmp/django_cache?timeout=2592000' 
 
 # for development, memory cache
-CACHE_BACKEND = 'locmem:///?timeout=2592000' 
+#CACHE_BACKEND = 'locmem:///?timeout=2592000' 
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

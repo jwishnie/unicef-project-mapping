@@ -18,6 +18,7 @@ from maplayers.video_url import VideoUrl
 import simplejson as json
 from admin_views import my_projects
 from maplayers.models import Sector
+from django.views.decorators.cache import never_cache
     
 # Authentication helpers
 def _is_project_author(user):
@@ -27,6 +28,7 @@ def _is_project_author(user):
     return False
     
 @login_required
+@never_cache
 def add_project(request): 
     parent_project = _get_parent(request.META['QUERY_STRING'])
     # check for authorness... Can't use 'user_passes_test' decorator
@@ -57,7 +59,8 @@ def add_project(request):
             return _render_response(request, form, action, sectors, 
                                     implementors, project, parent_project, video_urls, link_titles, 
                                     link_urls, project.resource_set.all(), title="Add Project")
-    else: 
+    else:
+        print "Neww Form"
         form = ProjectForm()
         # form.project_sectors.choices = [('s.name for s in Sector.objects.all()]
         project = _create_new_project(request)
