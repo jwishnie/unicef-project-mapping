@@ -39,7 +39,7 @@
 			<input type="hidden" name="project_id" value="{{project.id}}"></input>
 			<fieldset>
 				<legend><span>Project Information</span></legend>
-				<div>
+				<div class="first_div">
 					<label for="id_name">Name:</label> 
 					{{form.name}}
 					{{ form.name.errors }}
@@ -56,10 +56,10 @@
 			<div class="location_info">
 				<fieldset>
 					<legend><span>Project Location</span></legend>
-					<div>
+					<div class="first_div">
 						<label for="id_latitude">Latitude:</label> 
 						{{ form.latitude }}
-						<div>Click on the map to set latitude and longitude</div>						
+						<div class="help_text">Click on the map to set latitude and longitude</div>						
 						{{ form.latitude.errors }}					
 					</div>
 					<div>				
@@ -78,7 +78,7 @@
 			<fieldset>
 				<legend><span>Project Media</span></legend>				
 				<a class="back_to_top" href="#add_project">Back to top</a>								
-				<div>
+				<div class="first_div">
 					<label for="id_website_url">Website url:</label> 
 					{{ form.website_url }}
 					{{ form.website_url.errors}}					
@@ -109,7 +109,7 @@
 				<legend><span>Project Sector, Implementor and Tags</span></legend>	
 				<a class="back_to_top" href="#add_project">Back to top</a>											
 				<div class="floatleft">
-				<div>
+				<div class="first_div">
 					<label for="id_project_sectors">Sectors: </label> 
 					{{ form.project_sectors }} 
 					{{ form.project_sectors.errors}}					
@@ -123,16 +123,16 @@
 				<div id="project-tags">
 					<label for="id_project_tags">Project tags: </label> 
 					{{ form.tags }}
-					<div>separate tags with a space</div>
+					<div class="help_text">separate tags with a space</div>
 				</div>
 				</div>
-				<div class="floatright" id="help_text" style="width:170px">
+				<div id="help_text" class="help_text">
 				</div>
 			</fieldset>
 			<fieldset>
 				<legend><span>Additional Information</span></legend>				
 				<a class="back_to_top" href="#add_project">Back to top</a>								
-				<div id="file">
+				<div id="file" class="first_div">
 					{% file_list resources %}
 					<a href="#" class="file-attach" name="file-attach">Attach a file</a>
 					<ul id="file-list"></ul><a href="#" class="file-attach-2" style="display: none;" name="file-attach-2">Attach another file</a>

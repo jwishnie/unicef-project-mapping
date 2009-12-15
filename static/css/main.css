@@ -2,7 +2,7 @@ body {
     margin: 0 auto;
     padding: 0px;
     color: #000;
-    background: #0099FF url("../img/bg_body.jpg") repeat-x 0 0;
+    background: #006EBD url("../img/bg_body.jpg") repeat-x 0 0;
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 10pt;
 }
@@ -162,6 +162,10 @@ li a {
 #add_kml_file p {
     overflow: hidden;
     padding-bottom: 10px;
+}
+
+#main_content fieldset div.first_div {
+    padding-top: 5px; /*mainly for IE*/
 }
 
 #main_content fieldset label,
