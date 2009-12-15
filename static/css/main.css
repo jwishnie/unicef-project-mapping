@@ -34,8 +34,9 @@ img {
 
 ul.layers,
 ul.sectors,
-ul.implementors {
-    color: #FFF;
+ul.implementors,
+ul.overlays
+{
     clear: both;
 }
 
@@ -309,11 +310,14 @@ span.drawer-handle {
 
 li.layers_drawer div,
 li.sector_drawer div,
-li.implementor_drawer div {
+li.implementor_drawer div,
+li.overlay_drawer div 
+{
     background: #007BD6 url('../img/collapsed.png') no-repeat scroll 95% 50%;
     width: auto;
 }
 
+li.overlay_drawer .expanded,
 li.sector_drawer .expanded,
 li.implementor_drawer .expanded {
     background: #007BD6 url('../img/expanded.png') no-repeat scroll 95% 50%;
