@@ -519,7 +519,7 @@
     "pk": 3,
     "model": "maplayers.implementor",
     "fields": {
-        "name": "Unicef",
+        "name": "UNICEF",
         "projects": [1, 4, 6, 8, 10]
     }
 },

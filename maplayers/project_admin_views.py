@@ -323,14 +323,14 @@ def _add_project_details(form, project, request, parent_project=None):
     project.longitude = form.cleaned_data['longitude']
     project.location = form.cleaned_data['location']
     project.website_url = form.cleaned_data['website_url']
-    sector_names = form.cleaned_data['project_sectors']
-    implementor_names = form.cleaned_data['project_implementors']
+    sector_ids = form.cleaned_data['project_sectors']
+    implementor_ids = form.cleaned_data['project_implementors']
     project.imageset_feedurl = form.cleaned_data['imageset_feedurl']
     project.tags = form.cleaned_data['tags']
     if parent_project:
         project.parent_project = parent_project
     project.save()
-    _add_sectors_and_implementors(project, sector_names, implementor_names)
+    _add_sectors_and_implementors(project, sector_ids, implementor_ids)
     _add_project_videos(project, request)
 
 
@@ -339,14 +339,13 @@ def _create_links(request, project_id, link_titles, link_urls):
         link = Link(project_id=project_id, title=link_titles[i], url=link_urls[i])
         link.save()
 
-def _add_sectors_and_implementors(p, sectors_names,implementor_names):
-    all_sectors = Sector.objects.all()
-    all_implementors = Implementor.objects.all()
-    _add_existing_sectors(p, all_sectors, sectors_names)
-    _add_existing_implementors(p, all_implementors, implementor_names)
-
-    _create_and_add_new_sectors(p, all_sectors, sectors_names)
-    _create_and_add_new_implementors(p, all_implementors, implementor_names)
+def _add_sectors_and_implementors(project, sectors_ids,implementor_ids):
+    sectors = Sector.objects.filter(id__in=sectors_ids)
+    implementors = Implementor.objects.filter(id__in=implementor_ids)
+    for sector in sectors:
+        project.sector_set.add(sector)
+    for implementor in implementors:
+        project.implementor_set.add(implementor)
 
 
 def _add_project_videos(project, request):
@@ -363,31 +362,6 @@ def _add_project_videos(project, request):
         provider = video_url.provider
         video = Video(provider=provider, project=project, video_id = video_id, default=set_default, url=video_url.url)
         video.save()
-
-def _add_existing_sectors(p, all_sectors, sectors_names):
-    existing_sectors = [sector for sector in all_sectors \
-                        if sector.name in sectors_names]
-    for sector in existing_sectors:
-        p.sector_set.add(sector)
-
-
-def _add_existing_implementors(p, all_implementors, implementor_names):
-    existing_implementors = [implementor for implementor in all_implementors \
-                            if implementor.name in implementor_names]
-    for implementor in existing_implementors:
-        p.implementor_set.add(implementor)
-
-def _create_and_add_new_sectors(p, all_sectors, sector_names):
-    all_sector_names = [sector.name for sector in all_sectors]
-    new_sectors = set(sector_names) - set(all_sector_names)
-    for sector_name in new_sectors:
-        p.sector_set.create(name=sector_name)
-
-def _create_and_add_new_implementors(p, all_implementors, implementor_names):
-    all_implementor_names = [implementor.name for implementor in all_implementors]
-    new_implementors = set(implementor_names) - set(all_implementor_names)
-    for implementor_name in new_implementors:
-        p.implementor_set.create(name=implementor_name)
 
 def _create_initial_data_from_project(project):
     form = ProjectForm()
