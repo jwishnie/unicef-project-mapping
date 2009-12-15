@@ -4,7 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>{% block title %}UNICEF Maps{% block title_extra %}{% endblock %}{% endblock %}</title>
 <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{{ css_url }}/main.css{% endblock %}" />
+<script src="{{ jquery }}" type="text/javascript"></script>
 <script src="{{ js_url }}/json2.js" type="text/javascript" ></script>
+<script src="{{ js_url }}/main_nav.js" type="text/javascript" ></script>
 {% block extrastyle %}{% endblock %}
 {% block extrahead %}{% endblock %}
 </head>
@@ -17,48 +19,44 @@
         <div id="header">
 	        <div class="header_innertube">
 				<div id="logo">
-					<div id="unicef_tagline" class="floatleft">
-						<span id="tagline_top">unite for</span>
-						<span id="tagline_bottom">children</span>
-					</div>	
-		            <div id="unicef_logo" class="floatright">
+		            <div id="unicef_logo" class="floatleft">
 		            	<a href="/">
-		            		<img src="{{ img_url }}/unicef_logo.gif" />
+		            		<img src="{{ img_url }}/unicef_logo.png" />
 		            	</a>
 		            </div>
-				</div>
-	            <div id="main_nav_wrapper">
-					<div id="main_nav">
-		            	<ul class="floatleft">
-							<li class="first"><a href="/">Home</a></li>
-							{% if user.is_authenticated %}
-								<li>{% my_projects_link user %}</li>							
-								{% projects_for_review_link user %}								
-								<li>{% add_project_link %}</li>
-					        {% endif %}
-							{% add_admin_unit_related_links user %}
-						</ul>
-						<div id="project_search" class="floatright">
-							<span>
-							{% if user.is_authenticated %}								
-								Welcome, {{user}}!
-								<a href='{% url django.contrib.auth.views.logout %}'>Logout</a>
-							{% else %}	
-								<a href='{% url django.contrib.auth.views.login %}'>Login</a>
-								{% sign_up_link %}
-							{% endif %}
-							</span>
-							<form action="/projects/search/" method="post">
-								<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
-								<input type="submit" value="" name="Search" class="search_text">
-							</form>
-						</div>
+					<div id="project_search" class="floatright">		
+						<form action="/projects/search/" method="post">
+							<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
+							<input type="submit" value="" name="Search" class="search_text">
+						</form>		
 					</div>
-	            </div>
+				</div>
 	        </div>    
         </div>
         {% endblock %}
-		<div id="main_content_shadow">
+		<div id="main_nav">
+        	<ul class="floatleft">
+				<li id="home_li"><a href="/" class="current_li">Home</a></li>
+				{% if user.is_authenticated %}
+					<li id="my_projs_li">{% my_projects_link user %}</li>							
+					{% projects_for_review_link user %}								
+					<li id="add_proj_li">{% add_project_link %}</li>
+		        {% endif %}
+				{% add_admin_unit_related_links user %}
+			</ul>
+			<div id="project_search" class="floatright">
+				<span>
+				{% if user.is_authenticated %}								
+					Welcome, {{user}}!
+					<a href='{% url django.contrib.auth.views.logout %}'>Logout</a>
+				{% else %}	
+					<a href='{% url django.contrib.auth.views.login %}'>Login</a>
+					{% sign_up_link %}
+				{% endif %}
+			</span>
+			</div>
+		</div>				
+
 			<div id="main_content">
 	        	{% block page_content %}{% endblock %}
 		        {% block page_footer %}
@@ -67,7 +65,5 @@
 		        </div>
 		        {% endblock %}
 	    	</div>
-		</div>
-
 </body>
 </html>
