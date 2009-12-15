@@ -122,7 +122,11 @@ def file_upload(request):
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
     file_size = uploaded_file.size
-    destination_name = os.getcwd() + "/static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
+    file_path_name = __file__
+    directory_of_file = os.path.dirname(__file__)
+    last_slash_index = directory_of_file.rindex("/")
+    directory_of_index = directory_of_file[0:last_slash_index]
+    destination_name = directory_of_index + "/static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
     logging.debug("Destination path : %s" % destination_name)
     _create_dir_if_not_exists(destination_name)
     destination = open(destination_name, 'wb+')
