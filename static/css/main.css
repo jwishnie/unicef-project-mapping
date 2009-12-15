@@ -283,16 +283,14 @@ li.drawer div {
 
 #project_search input {
     border-style: none;
-    padding: 4px;
-    margin-top: 7px;
+    padding: 6px;
 }
 
 #project_search .search_text {
-    padding: 3px;
-    font-size: 1em;
     color: #fff;
-    background: #0099ff url('../img/search.gif') no-repeat scroll top left;
-    width: 22px;
+    background: transparent url('../img/search.png') no-repeat scroll top left;
+    width: 33px;
+    height: 33px;
     padding: 1px 0 3px;
 }
 

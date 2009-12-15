@@ -35,7 +35,7 @@ function expandImplementors(){
 }
 
 function collapseOverlays(){
-    $('ul.sectors').hide();
+    $('ul.overlays').hide();
     $('li.overlay_drawer div').removeClass('expanded');
     $('li.overlay_drawer div').css("background-color", "#007BD6");
     $('li.overlay_drawer span').removeClass('open');   
@@ -53,6 +53,7 @@ function expandOverlays(){
 function hideFilterableCriteria(){
     $('#filterable_criteria ul.sectors').hide();
     $('#filterable_criteria ul.implementors').hide();    
+    $('#filterable_criteria ul.overlays').hide();    
 }
 
 function populateRegionStats(response){
@@ -86,6 +87,9 @@ $(document).ready(function() {
         if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
             collapseImplementors();
         }
+        if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
+            collapseOverlays();
+        }
         if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
         }
@@ -98,11 +102,29 @@ $(document).ready(function() {
         if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
         }
+        if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
+            collapseOverlays();
+        }
         if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
             collapseImplementors();
         }         
         else {
             expandImplementors();
+        }
+    });
+    
+    $('#filterable_criteria li.overlay_drawer div').click(function() {
+        if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
+            collapseSectors();
+        }
+        if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
+            collapseImplementors();
+        }
+        if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
+            collapseOverlays();
+        }         
+        else {
+            expandOverlays();
         }
     });
     
