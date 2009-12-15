@@ -118,7 +118,20 @@ def user_registration(request):
         form = UserForm()
         return _user_registration_response(request, form)     
         
-
+def check_username(request):
+    if request.method == 'POST':
+        name = request.POST.get('username')
+        print name
+        responseText = "Sorry, the user Name is not available"
+        try:
+            user = User.objects.get(username=name)
+        except Exception, ex:
+            print ex
+            responseText = "Available"
+        response = HttpResponse()
+        response.write(responseText)
+        return response
+        
 @login_required
 def change_password(request):
     if request.method == 'POST':
