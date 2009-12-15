@@ -69,7 +69,7 @@ class ProjectPage(TestCase):
         self.assertTrue(str(actual_response).__contains__("Search results for"))
             
     def test_should_give_collection_of_projects_in_json(self):
-        expected_result = '''[{"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 3, "sectors" : ["Disaster Aid"], "implementors" : ["Unicef"]}, {"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 4, "sectors" : ["Disaster Aid"], "implementors" : ["Unicef"]}]'''
+        expected_result = '''[{"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 3, "sectors" : ["Disaster Aid"], "implementors" : ["UNICEF"]}, {"latitude" : 23.50, "longitude" : 45.20, "snippet" : "This is test", "id" : 4, "sectors" : ["Disaster Aid"], "implementors" : ["UNICEF"]}]'''
         project1 = MockProject()
         project1.id = 3
         project1.latitude = 23.50
@@ -164,7 +164,7 @@ class MockProject:
     def sectors_in_json(self):
         return '["Disaster Aid"]'
     def implementors_in_json(self):
-        return '["Unicef"]'
+        return '["UNICEF"]'
 
 class MockProjectForSearch:
     def __init__(self):
@@ -176,7 +176,7 @@ class MockProjectForSearch:
     def sectors_in_json(self):
         return '["Disaster Aid"]'
     def implementors_in_json(self):
-        return '["Unicef"]'
+        return '["UNICEF"]'
                 
 class MockProjectForBoundingBox(object):
     def __init__(self, init_hash):

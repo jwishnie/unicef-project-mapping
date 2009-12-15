@@ -17,6 +17,7 @@ from maplayers.utils import html_escape
 from maplayers.video_url import VideoUrl
 import simplejson as json
 from admin_views import my_projects
+from maplayers.models import Sector
     
 # Authentication helpers
 def _is_project_author(user):
@@ -47,17 +48,18 @@ def add_project(request):
         video_urls = [request.POST.get(video_id) for video_id in request.POST.keys() if video_id.startswith("video_url")]
         project = Project.objects.get(id=int(project_id))
 
-        if form.is_valid(): 
+        if form.is_valid():
             _create_links(request, project_id, link_titles, link_urls)
             _set_project_status(project, request)
             _add_project_details(form, project, request, parent_project)
             return _add_edit_success_page(project, request, "add")
-        else: 
+        else:
             return _render_response(request, form, action, sectors, 
                                     implementors, project, parent_project, video_urls, link_titles, 
                                     link_urls, project.resource_set.all(), title="Add Project")
     else: 
         form = ProjectForm()
+        # form.project_sectors.choices = [('s.name for s in Sector.objects.all()]
         project = _create_new_project(request)
         return _render_response(request, form, action, 
                                 sectors, implementors, project, parent_project, title="Add Project")
@@ -121,7 +123,6 @@ def file_upload(request):
     destination_name = "static/resources/" + str(uuid.uuid1()) + "_" + uploaded_file_name
     _create_dir_if_not_exists(destination_name)
     destination = open(destination_name, 'wb+')
-    print destination_name
     for chunk in uploaded_file.chunks(): 
         destination.write(chunk) 
         destination.close()
@@ -150,7 +151,6 @@ def photo_upload(request):
            photo.filename = uploaded_file_name
            photo.save()
         except Exception, ex:
-            print ex
             project_in_request.projectphoto_set.add(ProjectPhoto(filename=uploaded_file_name, project=project_in_request, alt=uploaded_file_name))
             project_in_request.save()
         return HttpResponse("OK")
@@ -339,15 +339,12 @@ def _create_links(request, project_id, link_titles, link_urls):
         link.save()
 
 def _add_sectors_and_implementors(p, sectors_names,implementor_names):
-    sector_names = [name.strip() for name in sectors_names.split(",") if name.strip()]
-    implementor_names = [name.strip() for name in implementor_names.split(",") if name.strip()]
-
     all_sectors = Sector.objects.all()
     all_implementors = Implementor.objects.all()
-    _add_existing_sectors(p, all_sectors, sector_names)
+    _add_existing_sectors(p, all_sectors, sectors_names)
     _add_existing_implementors(p, all_implementors, implementor_names)
 
-    _create_and_add_new_sectors(p, all_sectors, sector_names)
+    _create_and_add_new_sectors(p, all_sectors, sectors_names)
     _create_and_add_new_implementors(p, all_implementors, implementor_names)
 
 

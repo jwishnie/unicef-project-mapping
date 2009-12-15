@@ -1,7 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
 from django.test import TestCase
-from maplayers.models import Project, Video
+from maplayers.models import Project, Video, Resource
 from django.contrib.auth.models import User, Group
 
 class ProjectModelTest(TestCase):
@@ -55,4 +55,24 @@ class ProjectModelTest(TestCase):
         project.video_set.add(video3)
         self.assertEquals(video3, project.default_video())
         
-        
+class ResourceTest(TestCase):
+    def test_is_resource_audio_file(self):
+        resource = Resource()
+        resource.filename = "default.aspx"
+        self.assertFalse(resource.is_audio_file())
+
+        resource.filename = "fear_of_the_dark.mp3"
+        self.assertTrue(resource.is_audio_file())
+
+        resource.filename = "bark_at_the_moon.ogg"
+        self.assertTrue(resource.is_audio_file())
+
+    def test_should_give_filesize_in_kilobytes(self):
+        resource = Resource()
+        resource.filesize = 1024
+        self.assertEquals(resource.file_size_in_kb(), "1 KB")
+
+    def test_should_give_file_extension_of_resource(self):
+        resource = Resource()
+        resource.filename = "default.current.aspx"
+        self.assertEquals("aspx", resource.file_extension())

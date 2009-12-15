@@ -95,9 +95,9 @@ class ProjectTagsTest(TestCase):
 
     def test_should_add_header_when_adding_subproject(self):
         parent_project = Mock()
-        parent_project.name = "Unicef"
+        parent_project.name = "UNICEF"
         header = project_tags.sub_project_header(parent_project)
-        self.assertTrue(header.__contains__('Unicef'))
+        self.assertTrue(header.__contains__('UNICEF'))
 
     def test_should_add_hidden_input_with_parent_id_when_adding_subproject(self):
         parent_project = Mock()
@@ -161,3 +161,9 @@ class ProjectTagsTest(TestCase):
         editor = User.objects.get(id=5)
         html_snippet = project_tags.projects_for_review_link(editor)
         self.assertEquals('<li><a href="/projects_for_review/">Projects for Review<span class="notification">3</span></a></li>', html_snippet)
+
+    def test_should_no_resource_list_if_no_resources_are_available(self):
+        resources = []
+        html = project_tags.resource_list(resources)
+        self.assertEquals("", html)
+

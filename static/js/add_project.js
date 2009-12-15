@@ -1,4 +1,10 @@
 jQuery(document).ready(function(){
+    var isMac = navigator.appVersion.indexOf("Mac");
+    if(isMac != -1){
+        jQuery("#help_text").html("Press the 'command' button and click to select multiple items.");
+    }else{
+        jQuery("#help_text").html("Press the 'ctrl' button and click to select multiple items.");
+    }
     var map;
     var markers;
     
@@ -45,42 +51,25 @@ jQuery(document).ready(function(){
     
     map = new OpenLayers.Map('map');
     
+    var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", "http://labs.metacarta.com/wms/vmap0", {layers: 'basic'},{'displayInLayerSwitcher':false} );
+    
+    
     markers = new OpenLayers.Layer.Markers( "Markers" );
 	map.addLayer(markers);
 	var size = new OpenLayers.Size(10,17);
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img/bright_red_marker.png',size,offset);
     
-    var ol_wms = new OpenLayers.Layer.VirtualEarth("Hybrid", {
-        type: VEMapStyle.Hybrid
-    });
+    BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
+    ol_wms = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
     map.addLayer(ol_wms);
     if (!map.getCenter()) map.zoomToMaxExtent();
     var click = new OpenLayers.Control.Click();
     map.addControl(click);
     click.activate();
-    
     plot_project();
     
     
-
-	var sector_names = sectors.split(", ");
-	jQuery("#id_project_sectors").autocomplete(sector_names, {
-		multiple: true,
-		autoFill: true
-	});
-	
-	var implementor_names = implementors.split(", ");
-	jQuery("#id_project_implementors").autocomplete(implementor_names, {
-		multiple: true, 
-		autoFill: true
-	});
-	
-	var sector_list = sectors.split(", ").splice(0,5).join(", ");
-	var implementor_list = implementors.split(", ").splice(0,5).join(", ");
-	jQuery("#sector_examples").html(sector_list);
-	jQuery("#implementor_examples").html(implementor_list);
-
     function add_video(){
         var video_url_count = jQuery(".add_video_url").length;
     	if(video_url_count==1){
