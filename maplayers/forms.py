@@ -16,7 +16,6 @@ class ProjectForm(forms.Form):
     website_url = forms.URLField()
     sect = Sector.objects.all()
     impl_list = Implementor.objects.all()
-    print sect
     project_sectors = forms.MultipleChoiceField(required=True, choices=tuple(((sector.name,\
                         sector.name) for sector in sect)))
     project_implementors = forms.MultipleChoiceField(required=True, choices=tuple(((implementor.name,\
