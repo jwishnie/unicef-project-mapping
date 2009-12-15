@@ -16,6 +16,7 @@ urlpatterns += patterns('', (r'^admin/(.*)', admin.site.root))
 
 urlpatterns += patterns('maplayers',
                         (r'^user_registration/$', 'views.user_registration'),
+                        (r'^check_username/$','views.check_username'),
                         (r'^change_password/$', 'views.change_password'),
                         (r'^projects/bbox/(?P<left>.+)/(?P<bottom>.+)/(?P<right>.+)/(?P<top>.+)/$',
                          'views.projects_in_map'),

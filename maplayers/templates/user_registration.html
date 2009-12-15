@@ -5,6 +5,21 @@
 {% block title_extra %} User Registration {% endblock %}
 
 {% block extrahead %}
+<script type="text/javascript" src="{{ jquery }}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#submit_button").attr("disabled", "true");
+	$("#id_username").blur(function(){
+		uname = $(this).val();
+		$.post("/check_username/",{username : uname}, function(data){
+			if(data === "Available"){
+				$("#submit_button").removeAttr("disabled");
+			}
+			$("#username_alert").html(data);
+		});
+	});
+});
+</script>
 {% endblock %}
 
 {% block page_content %}
@@ -15,6 +30,7 @@
 			<label for="id_username">Username:</label> 
 			{{form.username}}
 			{{ form.username.errors }}			
+			<span id="username_alert"></span>
 		</div>
 		<div>
 			<label for="id_email">Email:</label> 
@@ -32,7 +48,7 @@
 			{{ form.confirm_password.errors }}			
 		</div>
 		<div class="main_action">
-			<input type="submit" value="Submit" />
+			<input id="submit_button" type="submit" value="Submit" disabled="disabled"/>
 		</div>	
 	</form>
 </div>	
