@@ -2,6 +2,7 @@
 
 import uuid
 import os, stat, re
+import logging
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
