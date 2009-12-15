@@ -88,9 +88,9 @@ def projects_for_review_link(user):
     if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
         projects_for_review_count = Project.objects.filter(status=PROJECT_STATUS.REVIEW).count()
         if projects_for_review_count:
-            return '<li><a href="/projects_for_review/">Projects for Review<span class="notification">%s</span></a></li>' % str(projects_for_review_count)
+            return '<li id="projs_for_review_li"><a href="/projects_for_review/">Projects for Review<span class="notification">%s</span></a></li>' % str(projects_for_review_count)
         else:
-            return '<li><a href="/projects_for_review/">Projects for Review</a></li>'
+            return '<li id="projs_for_review_li"><a href="/projects_for_review/">Projects for Review</a></li>'
     return ''
     
     
@@ -172,9 +172,9 @@ def my_projects_link(user):
     change_requested_count = len([project for project in projects if project.status == PROJECT_STATUS.REQUEST_CHANGES])
     my_project_notifications = project_comments_count + change_requested_count
     if my_project_notifications:
-        return '<a href="/my_projects/" id="my_projects">My Projects<span class="notification">%s</span></a>' % str(my_project_notifications)
+        return '<a href="/my_projects/" id="my_projects_link">My Projects<span class="notification">%s</span></a>' % str(my_project_notifications)
     else:
-        return '<a href="/my_projects/" id="my_projects">My Projects</a>'
+        return '<a href="/my_projects/" id="my_projects_link">My Projects</a>'
 
     
 @register.simple_tag
@@ -191,7 +191,7 @@ def admin_links(project, user):
 
 @register.simple_tag
 def add_project_link():
-    result = """<a href='/add_project?parent_id=' id="add_project">Add a new project</a>"""
+    result = """<a href='/add_project?parent_id=' id="add_project_link">Add a new project</a>"""
     return result    
     
 @register.simple_tag
@@ -202,16 +202,16 @@ def sign_up_link():
 @register.simple_tag
 def add_admin_unit_related_links(user):
     if (set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()])):            
-        result = """<li><a href='/add_admin_unit' id='add_admin_unit'>Add a new administrative unit</a></li>
-        <li><a href='/admin_units' id='admin_units'>Admin Units</a></li>"""
+        result = """<li id='add_admin_unit_li'><a href='/add_admin_unit' id='add_admin_unit_lnk'>Add a new administrative unit</a></li>
+        <li id='admin_units_li'><a href='/admin_units' id='admin_units_links'>Admin Units</a></li>"""
         return result
     else:
         return ''    
 
 @register.simple_tag
 def truncate_and_ellipsise(text):
-    if(len(text) > 10):
-        truncated_and_ellipsised_text = text[:10] + "..."
+    if(len(text) > 15):
+        truncated_and_ellipsised_text = text[:15] + "..."
     else:
         truncated_and_ellipsised_text = text    
     return truncated_and_ellipsised_text

@@ -1,4 +1,10 @@
 jQuery(document).ready(function(){
+    var isMac = navigator.appVersion.indexOf("Mac");
+    if(isMac != -1){
+        jQuery("#help_text").html("Press the 'command' button and click to select multiple items.");
+    }else{
+        jQuery("#help_text").html("Press the 'ctrl' button and click to select multiple items.");
+    }
     var map;
     var markers;
     
