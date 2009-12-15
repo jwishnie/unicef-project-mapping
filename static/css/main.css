@@ -95,7 +95,9 @@ li a {
     padding:5px 10px;
     color:#C1DEFB;
     -moz-border-radius-topleft: 4px;
-    -moz-border-radius-topright: 4px;  
+    -moz-border-radius-topright: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;    
 }
 
 #main_nav ul li a:hover {
@@ -108,6 +110,8 @@ li a {
     color: #000;
     -moz-border-radius-topleft: 4px;
     -moz-border-radius-topright: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
 }
 
 #project_list td span.first,
@@ -217,7 +221,7 @@ li a {
 }
 
 #projects_searched {
-    width: 48%;
+    width: 44%;
 }
 
 #projects,
