@@ -13,7 +13,7 @@ label {
 }
 
 #project_details {
-    padding: 15px;
+    padding: 0 15px;
 }
 
 #left_pane {
@@ -89,16 +89,6 @@ label {
 #back_to_main_map {
     margin: 5px 0;
     padding: 5px 0;
-}
-
-#back_to_main_map a,
-#nearby_projects{
-    padding: 5px;
-    margin: 5px 0;
-    background-color: #007BD6;
-    text-decoration: none;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
 }
 
 .post_a_comment_link {
