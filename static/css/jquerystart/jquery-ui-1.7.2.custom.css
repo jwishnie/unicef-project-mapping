@@ -49,9 +49,9 @@
 /* Component containers
 ----------------------------------*/
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Verdana,Arial,sans-serif; font-size: 1em; }
-.ui-widget-content { background: #fcfdfd url(images/ui-bg_inset-hard_100_fcfdfd_1x100.png) 50% bottom repeat-x; }
+.ui-widget-content { background: #fcfdfd url(images/ui-bg_inset-hard_100_fcfdfd_1x100.png) 50% bottom repeat-x; border: none;}
 .ui-widget-content a { color: #222222; }
-.ui-widget-header { color: #eaf5f7; font-weight: bold; }
+.ui-widget-header { color: #eaf5f7; font-weight: bold; background-color: #FFF;}
 .ui-widget-header a { color: #eaf5f7; }
 
 /* Interaction states

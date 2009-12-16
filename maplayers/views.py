@@ -82,6 +82,7 @@ def project(request, project_id, project_manager=Project.objects):
     subprojects = project.project_set.filter(status=PROJECT_STATUS.PUBLISHED)
     bbox = _get_bounding_box_for_project(project, subprojects)
     implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
+    sectors = ", ".join([sector.name for sector in project.sector_set.all()])
     tags = project.tags.split(" ")
     resources = project.resource_set.all()
     context = {'project': project, 
@@ -89,6 +90,7 @@ def project(request, project_id, project_manager=Project.objects):
                'rss_img_feed_url': project.imageset_feedurl, 
                'subprojects' : subprojects, 
                'implementors' : implementors, 
+               'sectors' : sectors, 
                'tags' : tags,
                'resources' : resources}
     context.update(bbox)          
@@ -118,7 +120,20 @@ def user_registration(request):
         form = UserForm()
         return _user_registration_response(request, form)     
         
-
+def check_username(request):
+    if request.method == 'POST':
+        name = request.POST.get('username')
+        print name
+        responseText = "Sorry, the user Name is not available"
+        try:
+            user = User.objects.get(username=name)
+        except Exception, ex:
+            print ex
+            responseText = "Available"
+        response = HttpResponse()
+        response.write(responseText)
+        return response
+        
 @login_required
 def change_password(request):
     if request.method == 'POST':
@@ -329,7 +344,7 @@ def _change_password_response(request, form):
 
 
 def _create_user(form):
-    username = form.cleaned_data['username']
+    username = form.cleaned_data['username'].lower()
     email = form.cleaned_data['email']
     password = form.cleaned_data['password']
     user = User.objects.create_user(username, email, password)

@@ -59,13 +59,13 @@ class ResourceTest(TestCase):
     def test_is_resource_audio_file(self):
         resource = Resource()
         resource.filename = "default.aspx"
-        self.assertFalse(resource.is_audio_file())
+        self.assertFalse(resource.is_audio_file)
 
         resource.filename = "fear_of_the_dark.mp3"
-        self.assertTrue(resource.is_audio_file())
+        self.assertTrue(resource.is_audio_file)
 
         resource.filename = "bark_at_the_moon.ogg"
-        self.assertTrue(resource.is_audio_file())
+        self.assertTrue(resource.is_audio_file)
 
     def test_should_give_filesize_in_kilobytes(self):
         resource = Resource()

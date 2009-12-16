@@ -29,9 +29,9 @@ def project_links(titles_and_urls):
 def edit_project_link(project, user):
     result = ""
     if project.is_editable_by(user):
-        result = """<span class='first'>
+        result = """<li class='first'>
                             <a href='/edit_project/%s/'>Edit this project</a>
-                        </span>""" % project.id
+                        </li>""" % project.id
     return result
     
     
@@ -39,9 +39,9 @@ def edit_project_link(project, user):
 def add_sub_project_link(project, user):
     result = ""
     if project.is_editable_by(user) and project.is_parent_project():
-        result = """<span>
+        result = """<li>
                         <a href='/add_project?parent_id=%s'>Add SubProject</a>
-                    </span>""" % project.id
+                    </li>""" % project.id
     return result
 
 @register.simple_tag
@@ -183,8 +183,8 @@ def admin_links(project, user):
     if project.is_publishable_by(user):
         action = ("unpublish" if project.is_published() else "publish")
         input_field = '<input type="hidden" name="link" value="/projects/%s/%s/"/>' % (action, project.id)
-        publish_span = '''<span class="publish_link" id="publish_%s">%s%s</span>''' % (str(project.id),  action.capitalize(), input_field)
-        delete_span = '<span class="delete_link" id="delete_%s">Delete</span>' % (str(project.id))
+        publish_span = '''<li><span class="publish_link" id="publish_%s">%s%s</span></li>''' % (str(project.id),  action.capitalize(), input_field)
+        delete_span = '<li><span class="delete_link" id="delete_%s">Delete</span></li>' % (str(project.id))
         result = '%s %s' % (publish_span, delete_span)
     return result
     
@@ -196,7 +196,7 @@ def add_project_link():
     
 @register.simple_tag
 def sign_up_link():
-    result = """<a href='/user_registration' id="sign_up">Sign up</a>"""
+    result = """<li class="last"><a href='/user_registration' id="sign_up">Sign up</a></li>"""
     return result   
 
 @register.simple_tag
@@ -219,10 +219,8 @@ def truncate_and_ellipsise(text):
 @register.simple_tag
 def project_image(project):
     result = []
-    images = project.projectphoto_set.all()
-    if len(images) == 1 :
-        project_image = images[0]
-        filename = project_image.filename
+    filename = project.project_image
+    if filename :
         result.append('<img alt="%s" src="../../static/project-photos/%s" />' % (filename, filename))
         result.append('<a class="photo-remove-edit" href="#">remove</a>')
         result.append('<a href="#" style="display:none" id="photo-attach" class="photo-attach" name="photo-attach">Attach a file</a>')

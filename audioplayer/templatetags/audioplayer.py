@@ -49,7 +49,7 @@ class AudioPlayerNode(template.Node):
         # Instead of using entity &amp; use unicode &#38;        
         player_flash_params = mark_safe(urlencode(self.params).replace('&', '&#38;'))
                
-        t = template.loader.get_template('audioplayer/audioplayer.html')
+        t = template.loader.get_template('../templates/audioplayer/audioplayer.html')
         # Create a new context and pass the current autocontext value to it.
         code_context = template.Context(
                             {"player_url": self.player_url,

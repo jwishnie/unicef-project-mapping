@@ -146,8 +146,7 @@ jQuery(document).ready(function(){
 	});
 	
 	jQuery('.photo-remove-edit').click(function(){
-		var filename = jQuery(this).prev().html();
-		jQuery.get("/remove_photo/", {'project_id' : project_id, 'file-name' : filename});
+		jQuery.get("/remove_photo/", {'project_id' : project_id});
 		jQuery(this).prev().remove();
 		jQuery(this).remove();
 		jQuery("#photo-attach").show();

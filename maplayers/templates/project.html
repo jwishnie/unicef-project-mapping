@@ -43,12 +43,14 @@
 
 {% block body_tag_exta %}onload='initialize()'{% endblock %}
 {% block page_content %}
-				{% flash_message request %}
 				<div class="admin_links">
+					<ul>
 					{% edit_project_link project user %}
 					{% add_sub_project_link project user %}
 					{% admin_links project user %}
+					</ul>
 				</div>
+				{% flash_message request %}				
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
 					<h2>{{project.name}}</h2>
@@ -59,6 +61,12 @@
 						</div>
 													
 						<div id="left_pane">
+							<div id="project_sectors">
+								{% if project.sector_set %}
+									<label>Project Sectors : </label>
+									<div class="sub_div">{{sectors}}</div>
+								{% endif %}
+							</div>
 		                    <div id="project_implementors">
 								{% if project.implementor_set %}
 									<label>Project Implementors : </label>
@@ -124,11 +132,10 @@
 									<div class="resource">
 
 									  	<div class="resource_icon" style="background:transparent url({% resource_icon resource %}) no-repeat scroll top left"></div>
-										<div class="sub_div"><a href="../../../static/resources/{{resource.filename}}">{{resource.title}}</a></div>
-
-                                                                                   <div class="sub_div">{{resource.title}}</div>
-                                                                                   {% audioplayer file="/static/resources/{{resource.filename}}"%}
-
+										<div class="sub_div"><a href="{{resources_url}}{{resource.filename}}">{{resource.title}}</a></div>
+										{% if resource.is_audio_file %}
+										  {% audioplayer file=resource.file_name_with_slash,width=290,height=24 %}
+										{% endif %}
 									</div>	
 									{% endfor %}
 								</div>
@@ -154,7 +161,7 @@
 					{% project_video project %}
 					
 
-					<div>
+					<div class="post_a_comment_link">
 						<label id="comment_link">Post a comment</label>
 						<a class="back_to_top" href="#project_details">Back to top</a>						
 					</div>

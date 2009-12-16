@@ -120,7 +120,11 @@ class Resource(models.Model):
 
     def original_file_name(self):
         return "_".join(self.filename.split("_")[1:])
-
+        
+    @property
+    def file_name_with_slash(self):
+        return  "/" + self.filename
+    @property
     def is_audio_file(self):
         supported_audio_formats = ["mp3", "ogg"]
         file_type  =  self.filename.split(".")[-1]
@@ -132,17 +136,6 @@ class Resource(models.Model):
         return self.title
 
     class Admin: 
-        pass
-
-class ProjectPhoto(models.Model):
-    filename = models.CharField(max_length=250)
-    project = models.ForeignKey(Project)
-    alt = models.CharField(max_length=200)
-    
-    def __unicode__(self):
-        return self.filename
-        
-    class Admin:
         pass
         
 class Sector(models.Model):

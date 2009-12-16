@@ -25,6 +25,19 @@
 		            	</a>
 		            </div>
 					<div id="project_search" class="floatright">		
+						<div id="authentication" class="floatright">
+							<span>
+								<ul>
+									{% if user.is_authenticated %}								
+									<li class="welcome_msg">Welcome, {{user}}!</li>
+									<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>
+									{% else %}	
+									<li><a href='{% url django.contrib.auth.views.login %}'>Login</a></li>
+									{% sign_up_link %}
+							{% endif %}
+							</ul>
+						</span>
+						</div>
 						<form action="/projects/search/" method="post">
 							<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
 							<input type="submit" value="" name="Search" class="search_text">
@@ -36,25 +49,14 @@
         {% endblock %}
 		<div id="main_nav">
         	<ul class="floatleft">
-				<li id="home_li"><a href="/" class="current_li">Home</a></li>
-				{% if user.is_authenticated %}
+				{% if user.is_authenticated %}	
+					<li id="home_li"><a href="/" class="current_li">Home</a></li>
 					<li id="my_projs_li">{% my_projects_link user %}</li>							
 					{% projects_for_review_link user %}								
 					<li id="add_proj_li">{% add_project_link %}</li>
 		        {% endif %}
 				{% add_admin_unit_related_links user %}
 			</ul>
-			<div id="project_search" class="floatright">
-				<span>
-				{% if user.is_authenticated %}								
-					Welcome, {{user}}!
-					<a href='{% url django.contrib.auth.views.logout %}'>Logout</a>
-				{% else %}	
-					<a href='{% url django.contrib.auth.views.login %}'>Login</a>
-					{% sign_up_link %}
-				{% endif %}
-			</span>
-			</div>
 		</div>				
 
 			<div id="main_content">

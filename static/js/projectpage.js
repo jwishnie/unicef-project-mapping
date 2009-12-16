@@ -119,7 +119,7 @@ $(document).ready(function() {
         var top = doc_height - ui_dialog_height - 100;
         
         $(".ui-dialog").css("top", top+"px");
-        $(".ui-dialog").css("width", "450px");
+        $(".ui-dialog").css("width", "400px");
         $(".ui-widget-overlay").css("z-index", "1005");
         $(".ui-dialog").css("z-index", "1006");    
     }
