@@ -38,10 +38,12 @@
 							</ul>
 						</span>
 						</div>
-						<form action="/projects/search/" method="post">
-							<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
-							<input type="submit" value="" name="Search" class="search_text">
-						</form>		
+						<div class="search_box floatright">
+							<form action="/projects/search/" method="post">
+								<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
+								<input type="submit" value="" name="Search" class="search_text">
+							</form>
+						</div>
 					</div>
 				</div>
 	        </div>    

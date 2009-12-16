@@ -179,6 +179,15 @@ li a {
     padding: 5px;
 }
 
+#add_admin_unit fieldset div.details_div,
+.clearleft {
+	clear: left;
+}
+
+#add_admin_unit fieldset div.details_div label {
+	width: 127px;
+}
+
 #main_content fieldset div,
 #change_password div,
 #login div,
@@ -330,6 +339,10 @@ li.drawer div {
 #authentication ul li.last {
     border-left: 1px solid #C1DEFB;
     padding-right: 0;
+}
+
+#project_search .search_box {
+    clear: both;
 }
 
 #project_search input {
@@ -603,4 +616,47 @@ ul.errorlist {
 #kml_list .delete_link {
     cursor: pointer;
     text-decoration: underline;
+}
+
+/*TRUNCATION OF TEXT*/
+
+ul.sectors li label,
+ul.implementors li label,
+ul.layers li label,
+ul.overlays li label {
+    float: left;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 75%;
+	display: block;
+}
+
+ul.sectors li input,
+ul.implementors li input,
+ul.layers li input,
+ul.overlays li input {
+    float: left;
+}
+
+ul.sectors li,
+ul.implementors li,
+ul.layers li,
+ul.overlays li {
+    clear: left;
+    overflow: hidden;
+}
+
+html>body ul.implementors li {
+    clear: both;
+}
+
+html>body ul.implementors li label {
+    content: "...";
+}
+
+html>body ul.implementors li label {
+    max-width: 75%;
+    width: auto !important;
+    float: left;
 }
