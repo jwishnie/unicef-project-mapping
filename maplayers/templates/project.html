@@ -131,7 +131,7 @@
 									{% for resource in resources %}
 									<div class="resource">
 									  	<div class="resource_icon" style="background:transparent url({% resource_icon resource %}) no-repeat scroll top left"></div>
-										<div class="sub_div"><a href="{{resource.file_name_with_slash}}">{{resource.title}}</a></div>
+										<div class="sub_div"><a href="{{resources_url}}{{resource.filename}}">{{resource.title}}</a></div>
 										{% if resource.is_audio_file %}
 										  {% audioplayer file=resource.file_name_with_slash,width=290,height=24 %}
 										{% endif %}

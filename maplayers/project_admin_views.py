@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
 
 from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS, VIMEO_REGEX, YOUTUBE_REGEX, VIDEO_PROVIDER
-from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video, ProjectPhoto
+from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video
 from maplayers.forms import ProjectForm, AdminUnitForm
 from maplayers.utils import html_escape
 from maplayers.video_url import VideoUrl
@@ -141,7 +141,8 @@ def photo_upload(request):
     uploaded_file_name = request.POST.get('Filename', '')
     project_id = request.POST.get('project_id')
     app_dir = _get_app_dir(__file__)
-    destination_name = app_dir + "/static/project-photos/"+uploaded_file_name
+    project_photo_name = str(uuid.uuid1()) + "_" + uploaded_file_name
+    destination_name = app_dir + "/static/project-photos/"+ project_photo_name
     logging.debug("Destination path of photo: %s" % destination_name)
     try:
         _create_dir_if_not_exists(destination_name)
@@ -151,15 +152,8 @@ def photo_upload(request):
             destination.close()
         os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IROTH) 
         project_in_request = Project.objects.get(id=int(project_id))
-        project_in_request.project_image = uploaded_file_name
+        project_in_request.project_image = project_photo_name
         project_in_request.save()
-        try:
-           photo = ProjectPhoto.objects.get(project=project_in_request)
-           photo.filename = uploaded_file_name
-           photo.save()
-        except Exception, ex:
-            project_in_request.projectphoto_set.add(ProjectPhoto(filename=uploaded_file_name, project=project_in_request, alt=uploaded_file_name))
-            project_in_request.save()
         return HttpResponse("OK")
     except Exception, ex:
         response = HttpResponse()
@@ -211,14 +205,12 @@ def remove_attachment(request):
 @login_required
 def remove_photo(request):
     project_id = request.GET.get('project_id')
-    filename = request.GET.get('file-name')
+    app_dir = _get_app_dir(__file__)
     project_in_request = Project.objects.get(id=int(project_id))
+    destination_filename = app_dir + "/static/project-photos/" + project_in_request.project_image
+    os.remove(destination_filename)
     project_in_request.project_image = ""
     project_in_request.save()
-    photo = ProjectPhoto.objects.get(project=project_in_request)
-    destination_filename = "static/project-photos/"+photo.filename
-    os.remove(destination_filename)
-    photo.delete()
     return HttpResponse("OK")
 
 @login_required                     

@@ -219,10 +219,8 @@ def truncate_and_ellipsise(text):
 @register.simple_tag
 def project_image(project):
     result = []
-    images = project.projectphoto_set.all()
-    if len(images) == 1 :
-        project_image = images[0]
-        filename = project_image.filename
+    filename = project.project_image
+    if filename :
         result.append('<img alt="%s" src="../../static/project-photos/%s" />' % (filename, filename))
         result.append('<a class="photo-remove-edit" href="#">remove</a>')
         result.append('<a href="#" style="display:none" id="photo-attach" class="photo-attach" name="photo-attach">Attach a file</a>')

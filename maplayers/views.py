@@ -344,7 +344,7 @@ def _change_password_response(request, form):
 
 
 def _create_user(form):
-    username = form.cleaned_data['username']
+    username = form.cleaned_data['username'].lower()
     email = form.cleaned_data['email']
     password = form.cleaned_data['password']
     user = User.objects.create_user(username, email, password)
