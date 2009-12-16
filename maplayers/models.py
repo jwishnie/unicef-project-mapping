@@ -137,17 +137,6 @@ class Resource(models.Model):
 
     class Admin: 
         pass
-
-class ProjectPhoto(models.Model):
-    filename = models.CharField(max_length=250)
-    project = models.ForeignKey(Project)
-    alt = models.CharField(max_length=200)
-    
-    def __unicode__(self):
-        return self.filename
-        
-    class Admin:
-        pass
         
 class Sector(models.Model):
     name = models.CharField(max_length=50)
