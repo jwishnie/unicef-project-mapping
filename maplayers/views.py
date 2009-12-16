@@ -83,9 +83,7 @@ def project(request, project_id, project_manager=Project.objects):
     bbox = _get_bounding_box_for_project(project, subprojects)
     implementors = ", ".join([implementor.name for implementor in project.implementor_set.all()])
     sectors = ", ".join([sector.name for sector in project.sector_set.all()])
-    tags = []
-    if len(project.tags.strip()) > 0:
-        tags = project.tags.split(" ")
+    tags = project.tags.split(" ") if len(project.tags.strip()) > 0 else []
     resources = project.resource_set.all()
     context = {'project': project, 
                'links' : project.link_set.all(), 
