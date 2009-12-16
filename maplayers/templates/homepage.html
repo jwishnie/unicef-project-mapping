@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load project_tags %}
 
 {% block title_extra %} &mdash; Home{% endblock %}
 	
@@ -39,7 +38,7 @@
 				{% for sector in sectors %}
 				<li>
 					<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
-					<label title="{{sector.name}}">{% truncate_and_ellipsise sector.name %}</label>
+					<label title="{{sector.name}}">{{sector.name}}</label>
 				</li>
 				{% endfor %}
 			</ul>
@@ -52,7 +51,7 @@
 				{% for implementor in implementors %}
 				<li>
 					<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
-					<label title="{{implementor.name}}">{% truncate_and_ellipsise implementor.name %}</label>
+					<label title="{{implementor.name}}">{{implementor.name}}</label>
 				</li>
 				{% endfor %}
 			</ul>
@@ -69,7 +68,7 @@
 				{% for kml_layer in kml_layers %}
 					<li>
 						<input type="checkbox" name="kml_{{kml_layer.id}}" value="{{kml_layer.id}}" class="overlaybox" />
-						<label title="{{kml_layer.name}}">{% truncate_and_ellipsise kml_layer.name %}</label>
+						<label title="{{kml_layer.name}}">{{kml_layer.name}}</label>
 						<span id='kml_{{kml_layer.id}}' class="kml_file">{{kml_layer.filename}}</span>
 					</li>
 				{% endfor %}

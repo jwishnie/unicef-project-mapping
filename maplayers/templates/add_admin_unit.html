@@ -32,79 +32,88 @@ $(document).ready(function(){
 	<fieldset>
     	<legend><span>Administrative Details</span></legend>				
 			<div>
-				{{ form.name.errors }}
 				<label for="id_name">Region Name:</label> 
 				{{form.name}}
+				{{ form.name.errors }}
 			</div>
 			<div>
-				{{ form.country.errors }}
 				<label for="id_country">Country:</label> 
-                                {{ form.country }}
+                {{ form.country }}
+				{{ form.country.errors }}
 			</div>
 			<div>
-				{{ form.region_type.errors }}
 				<label for="id_region_type">Region type:</label> 
 				{{ form.region_type }}
+				{{ form.region_type.errors }}
 			</div>
-			<div>
+			<div class="details_div">
 				<a class="togglefield" id="id-health" show="hide">[+]</a>							
 				<label for="id_health">Health:</label>
 				<div id="health" style="display:none">{{ form.health}}</div>
 				{{ form.health.errors}}				
 			</div>
-			<a class="togglefield" id="id-economy" show="hide">[+]</a>			
-			<div>
-				{{ form.economy.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-economy" show="hide">[+]</a>			
 				<label for="id_economy">Economy:</label>
-			<div id="economy" style="display:none">{{ form.economy}}</div>
+				<div id="economy" style="display:none">{{ form.economy}}</div>
+				{{ form.economy.errors}}
 			</div>
-			<a class="togglefield" id="id-environment" show="hide">[+]</a>			
-			<div>
-				{{ form.environment.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-environment" show="hide">[+]</a>			
 				<label for="id_environment">Environment:</label>
 				<div id="environment" style="display:none">{{ form.environment}}</div>
+				{{ form.environment.errors}}
 			</div>
-			<a class="togglefield" id="id-governance" show="hide">[+]</a>			
-			<div>
-				{{ form.governance.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-governance" show="hide">[+]</a>			
 				<label for="id_governance">Governance:</label>
 				<div id="governance" style="display:none">{{ form.governance}}</div>
+				{{ form.governance.errors}}
 			</div>
-			<a class="togglefield" id="id-infrastructure" show="hide">[+]</a>			
-			<div>
-				{{ form.infrastructure.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-infrastructure" show="hide">[+]</a>			
 				<label for="id_infrastructure">Infrastructure:</label>
 				<div id="infrastructure" style="display:none">{{ form.infrastructure}}</div>
+				{{ form.infrastructure.errors}}
 			</div>
-			<a class="togglefield" id="id-social_sector" show="hide">[+]</a>			
-			<div>
-				{{ form.social_sector.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-social_sector" show="hide">[+]</a>			
 				<label for="id_social_sector">Social Sector:</label>
 				<div id="social_sector" style="display:none">{{ form.social_sector}}</div>
+				{{ form.social_sector.errors}}
 			</div>
-			<a class="togglefield" id="id-agriculture" show="hide">[+]</a>			
-			<div>
-				{{ form.agriculture.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-agriculture" show="hide">[+]</a>			
 				<label for="id_agriculture">Agriculture:</label>
 				<div id="agriculture" style="display:none">{{ form.agriculture}}</div>
+				{{ form.agriculture.errors}}
 			</div>
-			<a class="togglefield" id="id-dev_partners" show="hide">[+]</a>			
-			<div>
-				{{ form.dev_partners.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-dev_partners" show="hide">[+]</a>			
 				<label for="id_dev_partners">Dev Partners:</label>
 				<div id="dev_partners" style="display:none">{{ form.dev_partners}}</div>
+				{{ form.dev_partners.errors}}
 			</div>
-			<a class="togglefield" id="id-recent_reports" show="hide">[+]</a>			
-			<div>
-				{{ form.recent_reports.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-recent_reports" show="hide">[+]</a>			
 				<label for="id_recent_reports">Recent Reports:</label>
 				<div id="recent_reports" style="display:none">{{ form.recent_reports}}</div>
+				{{ form.recent_reports.errors}}
 			</div>
-			<a class="togglefield" id="id-resources" show="hide">[+]</a>			
-			<div>
-				{{ form.resources.errors}}
+			
+			<div class="details_div">
+				<a class="togglefield" id="id-resources" show="hide">[+]</a>			
 				<label for="id_resources">Resources:</label>
 				<div id="resources" style="display:none">{{ form.resources}}</div>
+				{{ form.resources.errors}}
 			</div>
 		</fieldset>
         <div class="main_action">
