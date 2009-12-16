@@ -179,7 +179,8 @@ li a {
     padding: 5px;
 }
 
-#add_admin_unit fieldset div.details_div {
+#add_admin_unit fieldset div.details_div,
+.clearleft {
 	clear: left;
 }
 
