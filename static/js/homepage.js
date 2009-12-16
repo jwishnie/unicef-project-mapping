@@ -245,7 +245,7 @@ $(document).ready(function() {
             active_kml_layers[layer_name] = false;
             var remove_layer = map.getLayersByName(layer_name)[0];
             if (remove_layer != null) {
-                remove_layer.setVisibility(false)
+                remove_layer.setVisibility(false);
             }
         }
     }
