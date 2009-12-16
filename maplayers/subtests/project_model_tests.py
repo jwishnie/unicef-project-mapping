@@ -76,3 +76,8 @@ class ResourceTest(TestCase):
         resource = Resource()
         resource.filename = "default.current.aspx"
         self.assertEquals("aspx", resource.file_extension())
+
+    def test_should_give_file_name_without_guid(self):
+        resource = Resource()
+        resource.filename = "123456_default_current.aspx"
+        self.assertEquals("default_current.aspx", resource.original_file_name())

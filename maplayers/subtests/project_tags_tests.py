@@ -3,7 +3,7 @@
 from django.test import TestCase
 from mock import Mock
 from maplayers.templatetags import project_tags
-from maplayers.models import Project
+from maplayers.models import Project, Resource
 from django.contrib.auth.models import User, Group
 
 class ProjectTagsTest(TestCase):
@@ -162,8 +162,15 @@ class ProjectTagsTest(TestCase):
         html_snippet = project_tags.projects_for_review_link(editor)
         self.assertEquals('<li id="projs_for_review_li"><a href="/projects_for_review/">Projects for Review<span class="notification">3</span></a></li>', html_snippet)
 
-    def test_should_no_resource_list_if_no_resources_are_available(self):
+    def test_should_return_no_resource_list_if_no_resources_are_available(self):
         resources = []
         html = project_tags.resource_list(resources)
         self.assertEquals("", html)
 
+    def test_should_create_html_resource_list_if_resources_are_available(self):
+        field_report = Resource()
+        field_report.filename = "12345_report.pdf"
+        field_report.title = "2009 Uganda Visit Report"
+        resources = [field_report]
+        html = project_tags.resource_list(resources)
+        self.assertTrue(html.__contains__("/static/resources/report.pdf"))

@@ -118,7 +118,7 @@ class Resource(models.Model):
     def file_extension(self):
         return self.filename.split(".")[-1]
 
-    def file_name_without_extension(self):
+    def original_file_name(self):
         return "_".join(self.filename.split("_")[1:])
 
     def is_audio_file(self):

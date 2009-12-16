@@ -49,7 +49,7 @@ if __name__ == '__main__':
     issue_cmd(['chmod', '+w', '/static/resources'])
     
     os.chdir(DEPLOY_DIR)
-    issue_cmd(['chmod', '+w', '/static/project-resources'])
+    issue_cmd(['chmod', '+w', '/static/project-photos'])
 
 	print "Dumping existing db"
 	try:
