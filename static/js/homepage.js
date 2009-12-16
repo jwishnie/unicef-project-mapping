@@ -13,25 +13,11 @@ function expandSectors(){
     $('li.sector_drawer span').addClass('open');   
 }
 
-function collapseImplementors(){
-    $('ul.implementors').hide();
-    $('li.implementor_drawer div').removeClass('expanded');
-    $('li.implementor_drawer div').css("background-color", "#007BD6");
-    $('li.implementor_drawer span').removeClass('open');   
-}
 
 function adjustStylesAfterExpand(){
     $('#left_pane').css("width", "170px");
     $('#map_canvas').css("width", "800px");
     $('.expandable_content').show();
-}
-
-function expandImplementors(){
-    $('ul.implementors').show();
-    $('li.implementor_drawer div').addClass('expanded');
-    $('ul.implementors').css("background-color", "#FFF");
-    $('ul.implementors').css("color", "#000");
-    $('li.implementor_drawer span').addClass('open');   
 }
 
 function collapseOverlays(){
@@ -51,8 +37,6 @@ function expandOverlays(){
 
 
 function hideFilterableCriteria(){
-    $('#filterable_criteria ul.sectors').hide();
-    $('#filterable_criteria ul.implementors').hide();    
     $('#filterable_criteria ul.overlays').hide();    
 }
 
@@ -85,50 +69,60 @@ $(document).ready(function() {
     hideFilterableCriteria();
     
     $('#filterable_criteria li.sector_drawer div').click(function() {
-        if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
-            collapseImplementors();
-        }
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
             collapseOverlays();
+            showMarkers();
+        }else{
+            expandOverlays();
+            hideMarkers();
         }
         if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
+            hideMarkers();
         }
         else {
             expandSectors();
-        }
-    });
-    
-    $('#filterable_criteria li.implementor_drawer div').click(function() {
-        if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
-            collapseSectors();
-        }
-        if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
-            collapseOverlays();
-        }
-        if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
-            collapseImplementors();
-        }         
-        else {
-            expandImplementors();
+            showMarkers();
         }
     });
     
     $('#filterable_criteria li.overlay_drawer div').click(function() {
         if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
-        }
-        if ($('#filterable_criteria li.implementor_drawer span.open').size() !== 0) {
-            collapseImplementors();
+            hideMarkers();
+        }else{
+            expandSectors();
+            showMarkers();
         }
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
             collapseOverlays();
+            showMarkers();
         }         
         else {
             expandOverlays();
+            hideMarkers();
         }
     });
     
+    function hideMarkers(){
+        var markerLayer = map.getLayersByName("Markers");
+        if(markerLayer.length >0){
+            $.each(markerLayer, function(){
+               this.setVisibility(false);
+            });
+        }
+        $("#proj").html("Click on the KML layers to see them on the map.");
+    }
+    
+    function showMarkers(){
+        var markerLayer = map.getLayersByName("Markers");
+        if(markerLayer.length >0){
+            $.each(markerLayer, function(){
+               this.setVisibility(true);
+            });
+        }
+        mapEvent(null);
+    }
     
     function constructQueryString(selected_filters){
     	var qstring = "";
@@ -217,47 +211,30 @@ $(document).ready(function() {
     }
     
     function handleOverlays(){
-        if(this.value=="Projects"){
-            if(this.checked){
-                active_kml_layers["Markers"] = true;
-                map.events.register('moveend', map, mapEvent);
-                markers.setVisibility(true);
-                mapEvent(null);
-                $('.sectorbox').bind('click', mapEvent);
-            	$('.implementorbox').unbind('click', mapEvent);
+        kml_id = this.value;
+        layer_name = "kml_" + kml_id; 
+        if(this.checked){
+            kml_filename = $("#" + layer_name).html();
+            if(layer_name in active_kml_layers){
+                var visible_layer = map.getLayersByName(layer_name)[0];
+                visible_layer.setVisibility(true);
             }else{
-                active_kml_layers["Markers"] = false;
-                map.events.unregister('moveend', map, mapEvent);
-                markers.setVisibility(false);
-                $('.sectorbox').unbind('click');
-            	$('.implementorbox').unbind('click');
+                map.addLayer(new OpenLayers.Layer.GML(layer_name, kml_filename, 
+                   {
+                    format: OpenLayers.Format.KML, 
+                    formatOptions: {
+                      extractStyles: true, 
+                      extractAttributes: true,
+                      maxDepth: 2
+                    }
+                   }));
             }
+            active_kml_layers[layer_name] = true;
         }else{
-            kml_id = this.value;
-            layer_name = "kml_" + kml_id; 
-            if(this.checked){
-                kml_filename = $("#" + layer_name).html();
-                if(layer_name in active_kml_layers){
-                    var visible_layer = map.getLayersByName(layer_name)[0];
-                    visible_layer.setVisibility(true);
-                }else{
-                    map.addLayer(new OpenLayers.Layer.GML(layer_name, kml_filename, 
-                       {
-                        format: OpenLayers.Format.KML, 
-                        formatOptions: {
-                          extractStyles: true, 
-                          extractAttributes: true,
-                          maxDepth: 2
-                        }
-                       }));
-                }
-                active_kml_layers[layer_name] = true;
-            }else{
-                active_kml_layers[layer_name] = false;
-                var remove_layer = map.getLayersByName(layer_name)[0];
-                if(remove_layer != null){
-                    remove_layer.setVisibility(false)
-                }
+            active_kml_layers[layer_name] = false;
+            var remove_layer = map.getLayersByName(layer_name)[0];
+            if(remove_layer != null){
+                remove_layer.setVisibility(false)
             }
         }
     }
