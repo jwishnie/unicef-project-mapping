@@ -25,6 +25,19 @@
 		            	</a>
 		            </div>
 					<div id="project_search" class="floatright">		
+						<div id="authentication" class="floatright">
+							<span>
+								<ul>
+									{% if user.is_authenticated %}								
+									<li class="welcome_msg">Welcome, {{user}}!</li>
+									<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>
+									{% else %}	
+									<li><a href='{% url django.contrib.auth.views.login %}'>Login</a></li>
+									{% sign_up_link %}
+							{% endif %}
+							</ul>
+						</span>
+						</div>
 						<form action="/projects/search/" method="post">
 							<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
 							<input type="submit" value="" name="Search" class="search_text">
@@ -44,17 +57,6 @@
 		        {% endif %}
 				{% add_admin_unit_related_links user %}
 			</ul>
-			<div id="project_search" class="floatright">
-				<span>
-				{% if user.is_authenticated %}								
-					Welcome, {{user}}!
-					<a href='{% url django.contrib.auth.views.logout %}'>Logout</a>
-				{% else %}	
-					<a href='{% url django.contrib.auth.views.login %}'>Login</a>
-					{% sign_up_link %}
-				{% endif %}
-			</span>
-			</div>
 		</div>				
 
 			<div id="main_content">

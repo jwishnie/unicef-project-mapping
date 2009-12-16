@@ -43,12 +43,14 @@
 
 {% block body_tag_exta %}onload='initialize()'{% endblock %}
 {% block page_content %}
-				{% flash_message request %}
 				<div class="admin_links">
+					<ul>
 					{% edit_project_link project user %}
 					{% add_sub_project_link project user %}
 					{% admin_links project user %}
+					</ul>
 				</div>
+				{% flash_message request %}				
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
 					<h2>{{project.name}}</h2>
@@ -59,6 +61,12 @@
 						</div>
 													
 						<div id="left_pane">
+							<div id="project_sectors">
+								{% if project.sector_set %}
+									<label>Project Sectors : </label>
+									<div class="sub_div">{{sectors}}</div>
+								{% endif %}
+							</div>
 		                    <div id="project_implementors">
 								{% if project.implementor_set %}
 									<label>Project Implementors : </label>
