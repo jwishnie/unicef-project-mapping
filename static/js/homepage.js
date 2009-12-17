@@ -69,6 +69,16 @@ $(document).ready(function() {
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 
     hideFilterableCriteria();
+    
+    $('#ajax-spinner').hide();
+    
+    $('#ajax-spinner').ajaxStart(function(){
+        $('#ajax-spinner').show();
+    });
+    
+    $('#ajax-spinner').ajaxSuccess(function(){
+        $('#ajax-spinner').hide();
+    });
 
     $('#filterable_criteria li.sector_drawer div').click(function() {
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
@@ -230,6 +240,7 @@ $(document).ready(function() {
                 var visible_layer = map.getLayersByName(layer_name)[0];
                 visible_layer.setVisibility(true);
             } else {
+                $('#ajax-spinner').show();
                 map.addLayer(new OpenLayers.Layer.GML(layer_name, kml_filename,
                 {
                     format: OpenLayers.Format.KML,
@@ -239,6 +250,7 @@ $(document).ready(function() {
                         maxDepth: 2
                     }
                 }));
+                $('#ajax-spinner').hide();
             }
             active_kml_layers[layer_name] = true;
         } else {

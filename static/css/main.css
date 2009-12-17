@@ -671,3 +671,20 @@ ul.overlays li {
     clear: left;
     overflow: hidden;
 }
+
+#ajax-spinner {
+	width:100px;
+	height: 100px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	background:url(/static/img/ajax-loader.gif) no-repeat center #fff;
+	text-align:center;
+	padding:10px;
+	font:normal 16px Tahoma, Geneva, sans-serif;
+	border:1px solid #666;
+	margin-left: -50px;
+	margin-top: -50px;
+	z-index:999;
+	overflow: auto;
+}
