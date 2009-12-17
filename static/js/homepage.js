@@ -69,7 +69,17 @@ $(document).ready(function() {
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 
     hideFilterableCriteria();
-
+    
+    $('#ajax-spinner').hide();
+    
+    function toggleSpinner(){
+        if($("#ajax-spinner").is(":visible")){
+            $("#ajax-spinner").hide();
+        }else{
+            $("#ajax-spinner").show();
+        }
+    }
+    
     $('#filterable_criteria li.sector_drawer div').click(function() {
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
             collapseOverlays();
@@ -220,7 +230,10 @@ $(document).ready(function() {
 
         bookmarkUrl();
     }
-
+    function say_hello(){
+        alert("hello");
+    }
+    
     function handleOverlays() {
         kml_id = this.value;
         layer_name = "kml_" + kml_id;
@@ -230,15 +243,18 @@ $(document).ready(function() {
                 var visible_layer = map.getLayersByName(layer_name)[0];
                 visible_layer.setVisibility(true);
             } else {
-                map.addLayer(new OpenLayers.Layer.GML(layer_name, kml_filename,
-                {
-                    format: OpenLayers.Format.KML,
-                    formatOptions: {
-                        extractStyles: true,
-                        extractAttributes: true,
-                        maxDepth: 2
-                    }
-                }));
+                toggleSpinner();
+                var layer_kml = new OpenLayers.Layer.GML(layer_name, kml_filename,
+                    {
+                        format: OpenLayers.Format.KML,
+                        formatOptions: {
+                            extractStyles: true,
+                            extractAttributes: true,
+                            maxDepth: 2
+                        }
+                    });
+                map.addLayer(layer_kml);
+                layer_kml.events.register("loadend", layer, toggleSpinner);
             }
             active_kml_layers[layer_name] = true;
         } else {

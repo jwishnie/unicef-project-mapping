@@ -14,6 +14,7 @@
 {% load project_tags %}
 
 <body class="{% block bodyclass %}{% endblock %}{% block body_tag_extra %}{% endblock %}">
+		<div id="ajax-spinner"></div>
 
         {% block page_header %}
         <div id="header">
@@ -61,13 +62,13 @@
 			</ul>
 		</div>				
 
-			<div id="main_content">
-	        	{% block page_content %}{% endblock %}
-		        {% block page_footer %}
-		        <div id="footer">
-		        	UNICEF 2009 : All rights reserved
-		        </div>
-		        {% endblock %}
-	    	</div>
+		<div id="main_content">
+	    	{% block page_content %}{% endblock %}
+		    {% block page_footer %}
+		    <div id="footer">
+		    	UNICEF 2009 : All rights reserved
+		    </div>
+		    {% endblock %}
+	    </div>
 </body>
 </html>

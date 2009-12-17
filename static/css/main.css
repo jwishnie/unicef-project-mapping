@@ -691,3 +691,14 @@ ul.overlays li {
     clear: left;
     overflow: hidden;
 }
+
+#ajax-spinner {
+	width:100px;
+	height: 100px;
+	position: fixed;
+	top: 35%;
+	left: 40%;
+	opacity: 0.5;
+	background: #666 url('/static/img/ajax-loader.gif') no-repeat scroll 50% 50%;
+	z-index: 999;
+}
