@@ -6,7 +6,6 @@
     overflow: hidden;
     padding: 8px 12px;
     font-size: 11px;
-    border-bottom: 1px solid #eee;
 }
 
 .form-row img, .form-row input {
@@ -28,7 +27,7 @@ form h4 {
 
 label {
     font-weight: normal !important;
-    color: #666;
+    color: #000;
     font-size: 12px;
 }
 

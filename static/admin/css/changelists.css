@@ -51,6 +51,8 @@
 #changelist table thead th {
     white-space: nowrap;
     vertical-align: middle;
+    background: #007BD6;
+    color: #FFF;
 }
 
 #changelist table thead th:first-child {
@@ -103,7 +105,7 @@
     z-index: 1000;
     width: 160px;
     border-left: 1px solid #ddd;
-    background: #efefef;
+    background: #FFF;
     margin: 0;
 }
 
@@ -111,6 +113,7 @@
     font-size: 11px;
     padding: 2px 5px;
     border-bottom: 1px solid #ddd;
+    color: #000;
 }
 
 #changelist-filter h3 {

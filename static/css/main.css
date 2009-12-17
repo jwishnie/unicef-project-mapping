@@ -44,6 +44,15 @@ a:hover {
     width: 93%;
     margin: 0 auto;
 }
+#container #main_nav, 
+#container #header {
+    width: 100%;
+}
+
+#container #header {
+    padding-bottom: 0;
+    background-color: #0099FF;
+}
 
 ul.layers,
 ul.sectors,
@@ -339,6 +348,7 @@ li.drawer div {
 
 #authentication ul {
     line-height: 1em;
+    overflow: hidden;
 }
 
 #authentication ul li {
@@ -502,14 +512,18 @@ ul.errorlist {
 #my_project_list th,
 #admin_unit_list th,
 #kml_list th,
-#project_list th {
+#project_list th,
+.module caption,
+#content-related .module h2 {
     background-color: #007BD6;    
 }
 
 #my_project_list td,
 #admin_unit_list td,
 #kml_list td,
-#project_list td {
+#project_list td,
+#content-main td, 
+#content-main th  {
     background-color: #E2EBF4;    
 }
 
@@ -524,6 +538,12 @@ ul.errorlist {
     padding: 5px;   
     border: 2px solid #FFF;
     text-align: center;
+}
+#content-main td, 
+#content-main th,
+.module caption {
+    padding: 5px;
+    text-align: left;
 }
 
 #project_list td a,

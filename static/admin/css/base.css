@@ -48,9 +48,7 @@ h1,h2,h3,h4,h5 {
 
 h1 {
     font-size: 18px;
-    color: #666;
     padding: 0 6px 0 0;
-    margin: 0 0 .2em 0;
 }
 
 h2 {
@@ -87,6 +85,15 @@ h5 {
 ul li {
     list-style-type: square;
     padding: 1px 0;
+}
+
+#authentication ul li,
+#main_nav ul li {
+    list-style-type: none;
+}
+
+#main_nav ul li {
+    padding: 0;
 }
 
 ul.plainlist {
@@ -234,15 +241,11 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 
 /* TABLES */
 
-table {
-    border-collapse: collapse;
-    border-color: #ccc;
-}
 
 td, th {
     font-size: 11px;
     line-height: 13px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #FFF;
     vertical-align: top;
     padding: 5px;
     font-family: "Lucida Grande", Verdana, Arial, sans-serif;
@@ -306,7 +309,7 @@ tr.alt {
 /* SORTABLE TABLES */
 
 thead th a:link, thead th a:visited {
-    color: #666;
+    color: #FFF;
     display: block;
 }
 
@@ -357,10 +360,6 @@ textarea {
     vertical-align: top !important;
 }
 
-input[type=text], input[type=password], textarea, select, .vTextField {
-    border: 1px solid #ccc;
-}
-
 /* FORM BUTTONS */
 
 .button, input[type=submit], input[type=button], .submit-row input {
@@ -392,9 +391,9 @@ input[type=text], input[type=password], textarea, select, .vTextField {
 /* MODULES */
 
 .module {
-    border: 1px solid #ccc;
     margin-bottom: 5px;
     background: white;
+    border: none;
 }
 
 .module p, .module ul, .module h3, .module h4, .module dl, .module pre {
@@ -420,12 +419,7 @@ input[type=text], input[type=password], textarea, select, .vTextField {
     font-size: 11px;
     text-align: left;
     font-weight: bold;
-    background: #7CA0C7 url(../img/admin/default-bg.gif) top left repeat-x;
     color: white;
-}
-
-.module table {
-    border-collapse: collapse;
 }
 
 /* MESSAGES & ERRORS */
@@ -622,13 +616,12 @@ table#change-history tbody th {
 
 #container {
     position: relative;
-    width: 100%;
+    width: 93%;
     min-width: 760px;
     padding: 0;
-}
-
-#content {
-    margin: 10px 15px;
+    margin: 0 auto;
+    background-color: #FFF;
+    color: #000;
 }
 
 #header {
@@ -682,14 +675,9 @@ table#change-history tbody th {
     margin-right: 15px;
 }
 
-.dashboard #content {
-    width: 500px;
-}
-
 /* HEADER */
 
 #header {
-    background: #417690;
     color: #ffc;
     overflow: hidden;
 }
@@ -738,9 +726,3 @@ table#change-history tbody th {
 #content-related h4 {
     font-size: 11px;
 }
-
-#content-related .module h2 {
-    background: #eee url(../img/admin/nav-bg.gif) bottom left repeat-x;
-    color: #666;
-}
-
