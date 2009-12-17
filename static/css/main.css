@@ -552,10 +552,15 @@ ul.errorlist {
 }
 
 /*REVIEW SUGGESTION*/
+#review_suggestions {
+    background-color: #E2EBF4;    
+    border: 1px solid #E2EBF4;
+}
+
 #review_suggestions .suggestion {
-    background-color: #E2EBF4;
     padding: 5px;
     margin: 5px 5px 10px;
+    border-bottom:5px solid #FFF;
 }
 
 #review_suggestions .suggestion .comment_by {
@@ -580,7 +585,7 @@ ul.errorlist {
 #comments div {
     overflow: hidden;
     background-color: #E2EBF4;
-    margin-bottom: 5px;
+    border-bottom: 5px solid #FFF;
 }
 
 #comments div input {
@@ -634,10 +639,12 @@ ul.layers li label,
 ul.overlays li label {
     float: left;
 	white-space: nowrap;
-	text-overflow: ellipsis;
+	text-overflow: ellipsis;/*For IE, Safari, Chrome*/
+    -o-text-overflow: ellipsis;	/*For Opera*/
 	overflow: hidden;
 	width: 75%;
 	display: block;
+    -moz-binding: url('../assets/ellipsis.xml#ellipsis'); /*For Firefox*/
 }
 
 ul.sectors li input,
@@ -653,18 +660,4 @@ ul.layers li,
 ul.overlays li {
     clear: left;
     overflow: hidden;
-}
-
-html>body ul.implementors li {
-    clear: both;
-}
-
-html>body ul.implementors li label {
-    content: "...";
-}
-
-html>body ul.implementors li label {
-    max-width: 75%;
-    width: auto !important;
-    float: left;
 }
