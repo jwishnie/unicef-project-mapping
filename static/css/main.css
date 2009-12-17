@@ -697,6 +697,6 @@ ul.overlays li {
 	top: 35%;
 	left: 40%;
 	opacity: 0.5;
-	background: #666 url('/static/img/ajax-loader.gif') no-repeat scroll 50% 50%;
+	background: #666 url('/static/img/ajax-loader.gif') no-repeat scroll 35% 40%;
 	z-index: 999;
 }
