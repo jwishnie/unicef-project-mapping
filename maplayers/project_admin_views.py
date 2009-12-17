@@ -382,7 +382,6 @@ def _create_initial_data_from_project(project):
     form.fields['tags'].initial = project.tags
     return form
     
-
 def _create_new_project(request):
     project = Project()
     project.status = PROJECT_STATUS.DRAFT
