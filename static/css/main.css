@@ -202,9 +202,7 @@ li a {
 }
 
 #user_registration #username_alert {
-    color: #FFF;
-    padding: 3px;
-    margin-left: 10px;
+    font-size: 9pt;
 }
 
 #main_content fieldset div,
