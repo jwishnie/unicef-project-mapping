@@ -1,14 +1,40 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 
-{% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
-
+{% block title %}Unicef site administration{% endblock %}
 {% block extrastyle %}
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+	<link rel="stylesheet" href="{{css_url}}/main.css" type="text/css" />
 {% endblock %}
 
 {% block branding %}
-<h1 id="site-name">{% trans 'Django administration' %}</h1>
+<div id="header">
+    <div class="header_innertube">
+		<div id="logo">
+            <div id="unicef_logo" class="floatleft">
+            	<a href="/">
+            		<img src="{{ img_url }}/unicef_logo.png" />
+            	</a>
+            </div>
+			<div id="project_search" class="floatright">
+				<div id="authentication" class="floatright">
+					<span>
+						<ul>
+							<li class="welcome_msg">Welcome, {{user}}!</li>
+							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>
+						</ul>
+					</span>
+				</div>		
+				<div class="search_box floatright">
+					<form action="/projects/search/" method="post">
+						<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
+						<input type="submit" value="" name="Search" class="search_text">
+					</form>
+				</div>
+			</div>
+		</div>
+    </div>    
+</div>
+
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
