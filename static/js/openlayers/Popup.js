@@ -915,7 +915,7 @@ OpenLayers.Popup = OpenLayers.Class({
         //  padd the close div
         var contentDivPadding = this.getContentDivPadding();
         var close_right = contentDivPadding.right - 235;
-        var close_top = contentDivPadding.top + 15;
+        var close_top = contentDivPadding.top + 20;
          
         this.closeDiv.style.right = close_right + "px";
         this.closeDiv.style.top = close_top + "px";

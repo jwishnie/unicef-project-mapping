@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load project_tags %}
 
 {% block title_extra %} &mdash; Home{% endblock %}
 	
@@ -31,45 +30,37 @@
 	<div id="filterable_criteria">
 		<ul class="drawers">
 		    <li class="drawer sector_drawer">
-	             <div class="round_corner">
-					<span class="drawer-handle" id="sector">Sectors</span>
+	             <div class="round_corner expanded">
+					<span class="drawer-handle open" id="sector">Projects</span>
 				</div>
 			</li>
 			<ul class="sectors round_corner">
+				<li>Sectors</li>
 				{% for sector in sectors %}
 				<li>
 					<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
-					<label title="{{sector.name}}">{% truncate_and_ellipsise sector.name %}</label>
+					<label title="{{sector.name}}">{{sector.name}}</label>
 				</li>
 				{% endfor %}
-			</ul>
-	        <li class="drawer implementor_drawer">
-	        	<div class="round_corner">
-	            	<span class="drawer-handle" id="implementor">Implementors</span>
-				</div>
-			</li>
-			<ul class="implementors round_corner">
+				<li>Implementors</li>
 				{% for implementor in implementors %}
 				<li>
 					<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
-					<label title="{{implementor.name}}">{% truncate_and_ellipsise implementor.name %}</label>
+					<label title="{{implementor.name}}">{{implementor.name}}</label>
 				</li>
 				{% endfor %}
 			</ul>
+	        
 			<li class="drawer overlay_drawer">
 	        	<div class="round_corner">
 	            	<span class="drawer-handle" id="overlay">Overlays</span>
 				</div>
 			</li>
 			<ul class="overlays round_corner">
-				<li>
-					<input type="checkbox" name="Projects" value="Projects" class="overlaybox" />
-					<label title="overlays_markers">Projects</label>
-				</li>
 				{% for kml_layer in kml_layers %}
 					<li>
 						<input type="checkbox" name="kml_{{kml_layer.id}}" value="{{kml_layer.id}}" class="overlaybox" />
-						<label title="{{kml_layer.name}}">{% truncate_and_ellipsise kml_layer.name %}</label>
+						<label title="{{kml_layer.name}}">{{kml_layer.name}}</label>
 						<span id='kml_{{kml_layer.id}}' class="kml_file">{{kml_layer.filename}}</span>
 					</li>
 				{% endfor %}
