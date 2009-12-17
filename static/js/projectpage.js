@@ -3,12 +3,12 @@ $(document).ready(function() {
     var map;
 
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
-    MAX_SCALE = 865124.6923828125
-    MIN_SCALE = 110735960.625
-    WIDTH = 10
-    MAIN_MARKER_WIDTH = 20
-    MAIN_MARKER_HEIGHT = 25
-    HEIGHT = 17
+    MAX_SCALE = 865124.6923828125;
+    MIN_SCALE = 110735960.625;
+    WIDTH = 10;
+    MAIN_MARKER_WIDTH = 20;
+    MAIN_MARKER_HEIGHT = 25;
+    HEIGHT = 17;
 
     $('#photo_set a').lightBox({fixedNavigation:true});
     
@@ -83,8 +83,7 @@ $(document).ready(function() {
                 var url = "/projects/" + project_id + "/comment/";
                 var dialog_box = this;
 
-                $.post(url, data,
-                function(result) {
+                $.post(url, data, function(result) {
                     var result = JSON.parse(result);
                     if (result.message != null) {
                         $('#comment_message').html(result.message);
@@ -202,7 +201,7 @@ $(document).ready(function() {
             var offset = new OpenLayers.Pixel( - (size.w / 2), -size.h);
             var icon = new OpenLayers.Icon(imgurl + '/red-marker.png', size, offset);
             var marker = new OpenLayers.Marker(new OpenLayers.LonLat(subproject['longitude'],
-                                                subproject['latitude']), icon.clone())
+                                                subproject['latitude']), icon.clone());
             marker.events.register("mousedown", {'marker' : marker, 'text' : subproject_text}, mousedn);
             markers.addMarker(marker);
         }
