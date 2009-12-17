@@ -260,7 +260,7 @@ def resource_list(resources):
         for index, resource in enumerate(resources):
             filename = resource.original_file_name()
             resource_icon = ResourceIcon().icon(resource.file_extension)
-            if resource.is_audio_file():
+            if resource.is_audio_file:
                 pass
             else:
                 result.append('<div>')

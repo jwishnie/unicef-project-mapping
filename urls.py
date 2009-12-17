@@ -33,6 +33,7 @@ urlpatterns += patterns('maplayers',
                          (r'^projects/(?P<project_id>\d+)/comment/$','views.project_comment'),
                          (r'^search_admin_unit/$', 'views.search_admin_units'),
                          (r'^kml_layers/$', 'views.kml_layers'),
+                         (r'^country_details/$', 'views.country_details'),
                          )
                          
 urlpatterns += patterns('maplayers.project_admin_views',
