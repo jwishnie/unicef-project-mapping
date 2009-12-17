@@ -192,6 +192,12 @@ li a {
     margin-bottom: 10px;
 }
 
+#user_registration #username_alert {
+    color: #FFF;
+    padding: 3px;
+    margin-left: 10px;
+}
+
 #main_content fieldset div,
 #change_password div,
 #login div,

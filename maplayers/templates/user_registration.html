@@ -8,6 +8,12 @@
 <script type="text/javascript" src="{{ jquery }}"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	function setAvailableStyles(){
+		$("#username_alert").css("background-color", "#006633");
+	}
+	function setNotAvailableStyles(){
+		$("#username_alert").css("background-color", "#FF0000");
+	}
 	$("#submit_button").attr("disabled", "true");
 	$("#id_username").blur(function(){
 		uname = $(this).val();
@@ -16,6 +22,12 @@ $(document).ready(function(){
 				$("#submit_button").removeAttr("disabled");
 			}
 			$("#username_alert").html(data);
+			if(data == "Sorry, the user Name is not available"){
+				setNotAvailableStyles();
+			}
+			else{
+				setAvailableStyles();
+			}
 		});
 	});
 });
