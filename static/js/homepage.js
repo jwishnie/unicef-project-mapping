@@ -70,8 +70,6 @@ $(document).ready(function() {
 
     hideFilterableCriteria();
     
-    $('#ajax-spinner').hide();
-    
     function toggleSpinner(){
         if($("#ajax-spinner").is(":visible")){
             $("#ajax-spinner").hide();
@@ -230,9 +228,7 @@ $(document).ready(function() {
 
         bookmarkUrl();
     }
-    function say_hello(){
-        alert("hello");
-    }
+
     
     function handleOverlays() {
         kml_id = this.value;

@@ -77,8 +77,8 @@ class UserForm(forms.Form):
         if user:
             self._errors["username"] = ErrorList([u'Sorry, the user Name is not available'])
         return username
-        
-    
+
+
     def clean(self):
         cleaned_data = self.cleaned_data
         password = cleaned_data.get("password")
