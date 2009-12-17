@@ -272,6 +272,10 @@ li a {
     width: 44%;
 }
 
+#projects_searched h4 {
+    margin: 0 0 5px 0;
+}
+
 #projects,
 #projects_searched {
     height: 400px;

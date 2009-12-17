@@ -30,19 +30,12 @@
 		
 {% block page_content %}
 <div id="main_pane">
-	<h3>Search results for <span class="search_term">{{search_term}} :</span></h3>
+	<h3>Search results for <span class="search_term">"{{search_term}}"</span>:</h3>
 	<div id="map_canvas"></div>
 	{% autoescape off %}
 		<div id="projects_searched" class="floatright">
-			<div id="tabs">
-				<ul>
-					<li><a id="proj-id" href="#proj">List of Projects</a></li>
-					<li><a id="stats-id" href="#stats">Region Statistics</a></li>
-					<li><a id="kml-id" href="#kml">KML overlays</a></li>					
-				</ul>
-				<div id="proj"></div>
-				<div id="stats"></div>
-				<div id="kml"></div>				
+			<h4>List of Projects</h4>
+			<div id="proj"></div>
 			</div>
 		</div>
     {% endautoescape %}
