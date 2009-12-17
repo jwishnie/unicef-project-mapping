@@ -188,6 +188,10 @@ li a {
 	width: 127px;
 }
 
+#add_admin_unit fieldset div {
+    margin-bottom: 10px;
+}
+
 #main_content fieldset div,
 #change_password div,
 #login div,
@@ -562,6 +566,10 @@ ul.errorlist {
 
 #review_suggestions .unread_suggestion {
     background-color: #ECE5B6;
+}
+
+#project_GroupDiv {
+	z-index: 1000;
 }
 
 /*PROJECT COMMENTS*/
