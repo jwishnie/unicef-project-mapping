@@ -196,7 +196,7 @@ def admin_links(project, user):
     return result
     
 @register.simple_tag
-def project_links(links):
+def show_project_links(links):
     result = ''
     for link in links:
         link_url = link.url if link.url.startswith("http") else "http://" + link.url
