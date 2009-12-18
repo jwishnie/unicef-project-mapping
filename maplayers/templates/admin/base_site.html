@@ -1,14 +1,50 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
+{% load project_tags %}
 
-{% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
-
+{% block title %}Unicef site administration{% endblock %}
 {% block extrastyle %}
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+	<link rel="stylesheet" href="{{css_url}}/main.css" type="text/css" />
 {% endblock %}
 
 {% block branding %}
-<h1 id="site-name">{% trans 'Django administration' %}</h1>
-{% endblock %}
+<div id="header">
+    <div class="header_innertube">
+		<div id="logo">
+            <div id="unicef_logo" class="floatleft">
+            	<a href="/">
+            		<img src="{{ img_url }}/unicef_logo.png" />
+            	</a>
+            </div>
+			<div id="project_search" class="floatright">
+				<div id="authentication" class="floatright">
+					<span>
+						<ul>
+							<li class="welcome_msg">Welcome, {{user}}!</li>
+							<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>
+						</ul>
+					</span>
+				</div>		
+				<div class="search_box floatright">
+					<form action="/projects/search/" method="post">
+						<input type="text" name="q" value="{{ query|escape }}" class="box" id="search">
+						<input type="submit" value="" name="Search" class="search_text">
+					</form>
+				</div>
+			</div>
+		</div>
+    </div>    
+</div>
+<div id="main_nav">
+	<ul class="floatleft">
+		<li id="home_li"><a class="" href="/">Home</a></li>
+		<li id="my_projs_li"><a id="my_projects_link" href="/my_projects/">My Projects</a></li>							
+		{% projects_for_review_link user %}								
+		<li id="add_proj_li"><a id="add_project_link" href="/add_project">Add a new project</a></li>
+		<li id="add_admin_unit_li"><a id="add_admin_unit_lnk" href="/add_admin_unit">Add a new administrative unit</a></li>
+	    <li id="admin_units_li"><a id="admin_units_links" href="/admin_units">Admin Units</a></li>
+	</ul>
+</div>
 
+{% endblock %}
 {% block nav-global %}{% endblock %}

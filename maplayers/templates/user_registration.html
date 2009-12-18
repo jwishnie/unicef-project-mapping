@@ -8,14 +8,25 @@
 <script type="text/javascript" src="{{ jquery }}"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#submit_button").attr("disabled", "true");
+	function setAvailableStyles(){
+		$("#username_alert").css("color", "#006633");
+	}
+	function setNotAvailableStyles(){
+		$("#username_alert").css("color", "#FF0000");
+	}
 	$("#id_username").blur(function(){
 		uname = $(this).val();
 		$.post("/check_username/",{username : uname}, function(data){
-			if(data === "Available"){
-				$("#submit_button").removeAttr("disabled");
+			if($("#username_div ul.errorlist")) {
+				$("#username_div ul.errorlist").hide();
 			}
 			$("#username_alert").html(data);
+			if(data == "Sorry, the user Name is not available"){
+				setNotAvailableStyles();
+			}
+			else{
+				setAvailableStyles();
+			}
 		});
 	});
 });
@@ -26,7 +37,7 @@ $(document).ready(function(){
 <div id="user_registration">
 	<h2>User Registration</h2>
 	<form action="/user_registration/" method="post">
-		<div>
+		<div id="username_div">
 			<label for="id_username">Username:</label> 
 			{{form.username}}
 			{{ form.username.errors }}			
@@ -48,7 +59,7 @@ $(document).ready(function(){
 			{{ form.confirm_password.errors }}			
 		</div>
 		<div class="main_action">
-			<input id="submit_button" type="submit" value="Submit" disabled="disabled"/>
+			<input id="submit_button" type="submit" value="Submit" />
 		</div>	
 	</form>
 </div>	

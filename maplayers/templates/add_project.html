@@ -45,7 +45,7 @@
 
                                 {% sub_project_header parent_project %}					
 				
-				<div>
+				<div class="clearleft">
 					<label for="id_description">Description:</label> 
 					{{form.description}}
 					{{ form.description.errors }}					
@@ -60,12 +60,12 @@
 						<div class="help_text">Click on the map to set latitude and longitude</div>						
 						{{ form.latitude.errors }}					
 					</div>
-					<div>				
+					<div class="clearleft">				
 						<label for="id_longitude">Longitude:</label> 
 						{{ form.longitude }}
 						{{ form.longitude.errors }}					
 					</div>
-					<div>				
+					<div class="clearleft">				
 						<label for="id_location">Location:</label> 
 						{{ form.location }}
 						{{ form.location.errors}}					
@@ -83,7 +83,7 @@
 					{{ form.website_url }}
 					{{ form.website_url.errors}}					
 				</div>	
-				<div class="proj_img">
+				<div class="proj_img clearleft">
 					<label for="id_project_image">Project image:</label> 
 					
 					{% project_image project %}
@@ -92,14 +92,14 @@
 					
 				</div>
 				{% video_url_tag video_urls %}
-				<div id="add_video_link"><span id="add_video">Add another video</span></div>
+				<div id="add_video_link" class="clearleft"><span id="add_video">Add another video</span></div>
 				
 				<!-- <div>
 					<label for="id_youtube_playlist_id">Youtube playlist: </label> 
 					{{ form.youtube_playlist_id }}
 					{{ form.youtube_playlist_id.errors }}					
 				</div>	 -->
-				<div>
+				<div class="clearleft">
 					<label for="id_imageset_feedurl">Image set feed url: </label> 
 					{{ form.imageset_feedurl }}
 					{{ form.imageset_feedurl.errors }}					
@@ -114,13 +114,13 @@
 					{{ form.project_sectors }} 
 					{{ form.project_sectors.errors}}					
 				</div>
-				<div>
+				<div class="clearleft">
 					<label for="id_project_implementors">Implementors: </label> 
 					{{ form.project_implementors }}
 					<div id="implementor_examples"></div>
 					{{ form.project_implementors.errors}}					
 				</div>
-				<div id="project-tags">
+				<div id="project-tags" class="clearleft">
 					<label for="id_project_tags">Project tags: </label> 
 					{{ form.tags }}
 					<div class="help_text">separate tags with a space</div>
@@ -134,11 +134,11 @@
 				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div id="file" class="first_div">
 					{% file_list resources %}
-					<a href="#" class="file-attach" name="file-attach">Attach a file</a>
+					<a href="#file" class="file-attach" name="file-attach">Attach a file</a>
 					<ul id="file-list"></ul><a href="#" class="file-attach-2" style="display: none;" name="file-attach-2">Attach another file</a>
 				</div>
 				<div id="project-links"></div>
-				<a href="#" id="add_link">Add another link</a>
+				<a href="#add_link" id="add_link">Add another link</a>
 			</fieldset>
 			
 			{% if publishable %}

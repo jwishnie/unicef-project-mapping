@@ -75,6 +75,30 @@ class ProjectTagsTest(TestCase):
         mock_user = object()
         project.is_editable_by.return_value = True
         self.assertTrue(project_tags.add_sub_project_link(project, mock_user).__contains__('/add_project?parent_id='))
+        
+    def test_should_allow_authorized_user_to_access_site_admin(self):
+        request = Mock()
+        mock_user = Mock()
+        mock_user.is_superuser = True
+
+        mock_editor_group = Mock()
+        mock_editor_group.name = 'editors_publishers'
+        mock_user.groups.all.return_value = [mock_editor_group]
+        
+        request.user = mock_user        
+        self.assertTrue(project_tags.site_admin_link(mock_user).__contains__('/admin'))
+    
+    def test_should_not_allow_unauthorized_users_to_access_site_admin(self):
+        request = Mock()
+        mock_user = Mock()
+        mock_user.is_superuser = False
+
+        mock_user.groups.all.return_value = []
+
+        request.user = mock_user
+        self.assertFalse(project_tags.site_admin_link(mock_user).__contains__('/admin'))
+        self.assertEquals(project_tags.site_admin_link(mock_user), '')
+    
 
     def test_should_not_allow_unauthorized_users_to_add_project(self):
         project = Mock()

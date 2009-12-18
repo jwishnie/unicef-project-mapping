@@ -24,4 +24,5 @@ function indicateCurrentLi(){
 
 jQuery(document).ready(function() {
     indicateCurrentLi();
+    jQuery('#ajax-spinner').hide();
 });

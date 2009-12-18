@@ -150,12 +150,10 @@ def user_registration(request):
 def check_username(request):
     if request.method == 'POST':
         name = request.POST.get('username')
-        print name
-        responseText = "Sorry, the user Name is not available"
+        responseText = "Sorry, the username is not available"
         try:
             user = User.objects.get(username=name)
         except Exception, ex:
-            print ex
             responseText = "Available"
         response = HttpResponse()
         response.write(responseText)

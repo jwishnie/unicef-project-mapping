@@ -6,6 +6,7 @@ from maplayers.countries import COUNTRIES
 from maplayers.models import Project
 from decimal import Decimal
 from maplayers.models import Sector, Implementor
+from django.contrib.auth.models import User
 
 def _get_sectors():
     return tuple([(sector.id, sector.name) for sector in Sector.objects.all()])
@@ -69,6 +70,15 @@ class UserForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
     
+    def clean_username(self):
+        cleaned_data = self.cleaned_data
+        username = cleaned_data.get('username')
+        user = User.objects.filter(username=username)
+        if user:
+            self._errors["username"] = ErrorList([u'Sorry, the user Name is not available'])
+        return username
+
+
     def clean(self):
         cleaned_data = self.cleaned_data
         password = cleaned_data.get("password")

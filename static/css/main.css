@@ -44,6 +44,15 @@ a:hover {
     width: 93%;
     margin: 0 auto;
 }
+#container #main_nav, 
+#container #header {
+    width: 100%;
+}
+
+#container #header {
+    padding-bottom: 0;
+    background-color: #0099FF;
+}
 
 ul.layers,
 ul.sectors,
@@ -192,6 +201,10 @@ li a {
     margin-bottom: 10px;
 }
 
+#user_registration #username_alert {
+    font-size: 9pt;
+}
+
 #main_content fieldset div,
 #change_password div,
 #login div,
@@ -266,6 +279,10 @@ li a {
     width: 44%;
 }
 
+#projects_searched h4 {
+    margin: 0 0 5px 0;
+}
+
 #projects,
 #projects_searched {
     height: 400px;
@@ -329,6 +346,7 @@ li.drawer div {
 
 #authentication ul {
     line-height: 1em;
+    overflow: hidden;
 }
 
 #authentication ul li {
@@ -338,6 +356,11 @@ li.drawer div {
 
 #authentication ul li.welcome_msg {
     color: #C1DEFB;
+}
+
+#authentication ul li#site_admin_li,
+#authentication ul li#change_password_li {
+    border-right: 1px solid #C1DEFB;    
 }
 
 #authentication ul li.last {
@@ -492,14 +515,18 @@ ul.errorlist {
 #my_project_list th,
 #admin_unit_list th,
 #kml_list th,
-#project_list th {
+#project_list th,
+.module caption,
+#content-related .module h2 {
     background-color: #007BD6;    
 }
 
 #my_project_list td,
 #admin_unit_list td,
 #kml_list td,
-#project_list td {
+#project_list td,
+#content-main td, 
+#content-main th  {
     background-color: #E2EBF4;    
 }
 
@@ -514,6 +541,12 @@ ul.errorlist {
     padding: 5px;   
     border: 2px solid #FFF;
     text-align: center;
+}
+#content-main td, 
+#content-main th,
+.module caption {
+    padding: 5px;
+    text-align: left;
 }
 
 #project_list td a,
@@ -660,4 +693,15 @@ ul.layers li,
 ul.overlays li {
     clear: left;
     overflow: hidden;
+}
+
+#ajax-spinner {
+	width:100px;
+	height: 100px;
+	position: fixed;
+	top: 35%;
+	left: 40%;
+	opacity: 0.5;
+	background: #666 url('/static/img/ajax-loader.gif') no-repeat scroll 35% 40%;
+	z-index: 999;
 }

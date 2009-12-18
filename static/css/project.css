@@ -57,7 +57,6 @@ label {
 
 
 #comment_link {
-    padding-top: 20px;
     text-decoration: underline;    
 }
 
@@ -93,4 +92,5 @@ label {
 
 .post_a_comment_link {
     clear: both;
+    margin-top: 20px;    
 }

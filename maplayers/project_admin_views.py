@@ -254,6 +254,11 @@ def delete_project(request, project_id):
     project = Project.objects.get(id=int(project_id))
     if not project.is_editable_by(request.user):
         return HttpResponse("{'authorized' : false}")
+    if project.project_image:
+        os.remove(project.project_image)
+    for resource in project.resource_set.all():
+        os.remove(resource.filename)
+        resource.delete()
     project.delete()
     return HttpResponse("Deleted")
 
@@ -382,7 +387,6 @@ def _create_initial_data_from_project(project):
     form.fields['tags'].initial = project.tags
     return form
     
-
 def _create_new_project(request):
     project = Project()
     project.status = PROJECT_STATUS.DRAFT

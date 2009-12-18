@@ -92,6 +92,13 @@ def projects_for_review_link(user):
         else:
             return '<li id="projs_for_review_li"><a href="/projects_for_review/">Projects for Review</a></li>'
     return ''
+
+@register.simple_tag
+def site_admin_link(user):
+    if (set([GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS]) & set([g.name for g in user.groups.all()])):
+        return '<li id="site_admin_li"><a href="/admin/">Site admin</a></li>'
+    else:    
+        return ''
     
     
 @register.simple_tag
@@ -188,6 +195,14 @@ def admin_links(project, user):
         result = '%s %s' % (publish_span, delete_span)
     return result
     
+@register.simple_tag
+def show_project_links(links):
+    result = ''
+    for link in links:
+        link_url = link.url if link.url.startswith("http") else "http://" + link.url
+        result += '<div class="sub_div"><a href="%s" target="_new">%s</a></div>' % (link_url, link.title)
+    return result
+
 
 @register.simple_tag
 def add_project_link():
