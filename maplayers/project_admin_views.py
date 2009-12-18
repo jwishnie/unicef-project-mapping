@@ -328,6 +328,7 @@ def _add_project_details(form, project, request, parent_project=None):
     description = form.cleaned_data['description']
     description = description.replace('<p>&nbsp;</p>', '')
     description = description.replace('\n', '')
+    description = description.replace('\r', '')
     project.name = form.cleaned_data['name']
     project.description = description
     project.latitude = form.cleaned_data['latitude']
