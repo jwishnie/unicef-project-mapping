@@ -358,6 +358,11 @@ li.drawer div {
     color: #C1DEFB;
 }
 
+#authentication ul li#site_admin_li,
+#authentication ul li#change_password_li {
+    border-right: 1px solid #C1DEFB;    
+}
+
 #authentication ul li.last {
     border-left: 1px solid #C1DEFB;
     padding-right: 0;

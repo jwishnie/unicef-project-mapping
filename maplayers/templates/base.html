@@ -31,6 +31,8 @@
 								<ul>
 									{% if user.is_authenticated %}								
 									<li class="welcome_msg">Welcome, {{user}}!</li>
+									{% site_admin_link user %}									
+									<li id="change_password_li"><a href="/change_password">Change password</a></li>
 									<li><a href='{% url django.contrib.auth.views.logout %}'>Logout</a></li>
 									{% else %}	
 									<li><a href='{% url django.contrib.auth.views.login %}'>Login</a></li>
