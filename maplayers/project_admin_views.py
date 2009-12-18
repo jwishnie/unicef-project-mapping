@@ -198,7 +198,8 @@ def remove_attachment(request):
     filename = request.GET.get('file-name')
     project = Project.objects.get(id=int(project_id))
     resource = Resource.objects.filter(filename__contains=filename, project=project)[0]
-    os.remove(resource.filename)
+    file_to_remove = _get_app_dir(__file__) + "/static/resources/" + resource.filename
+    os.remove(file_to_remove)
     resource.delete()
     return HttpResponse("OK")
 
@@ -327,6 +328,7 @@ def _add_project_details(form, project, request, parent_project=None):
     description = form.cleaned_data['description']
     description = description.replace('<p>&nbsp;</p>', '')
     description = description.replace('\n', '')
+    description = description.replace('\r', '')
     project.name = form.cleaned_data['name']
     project.description = description
     project.latitude = form.cleaned_data['latitude']
