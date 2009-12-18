@@ -2,6 +2,11 @@
 
 import decimal
 import logging
+import simplejson as json
+from StringIO import StringIO
+from datetime import datetime
+from eventlet.green import urllib2
+
 from django.shortcuts import render_to_response
 from django.http import Http404
 from django.template import RequestContext, loader
@@ -9,21 +14,17 @@ from django.http import HttpResponseRedirect, HttpResponse,\
                         HttpResponseNotFound, HttpResponseServerError
 from django.db.models import Q
 from django.contrib.auth import logout
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
+from tagging.models import TaggedItem, Tag
 
 from maplayers.utils import is_empty
 from maplayers.models import Project, Sector, Implementor, ProjectComment
-import decimal
-from tagging.models import TaggedItem, Tag
-from django.contrib.auth import logout
 from maplayers.forms import UserForm, ChangePasswordForm
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.decorators import login_required
 from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GROUPS
 from maplayers.utils import html_escape
-from datetime import datetime
-import simplejson as json
 from maplayers.models import AdministrativeUnit, KMLFile
-from admin_request_parser import convert_text_to_dicts
+from maplayers.admin_request_parser import convert_text_to_dicts
 
 
 def homepage(request):
@@ -55,7 +56,33 @@ def search_admin_units(request, admin_manager=AdministrativeUnit.objects):
         response.write(admin_unit_json)
         return response
         
-        
+
+class GeoNames(object):
+    def __init__(self):
+        self.url = "http://ws.geonames.org/countryInfoJSON?country="
+    def query_for_country(self,country_code):
+        request_url = self.url + str(country_code)
+        data = urllib2.urlopen(str(request_url)).read()
+        return data
+
+def country_details(request, geonames=GeoNames()):
+    if request.method == 'GET':        
+        try:
+            text = request.GET.get('text')
+            bbox = {}
+            country_code = convert_text_to_dicts(text)['ISO2']
+            callback = geonames.query_for_country(country_code)
+            response = json.loads(callback)
+            region_data = response['geonames'][0] 
+            bbox['west'] = float(region_data['bBoxWest'])
+            bbox['south'] = float(region_data['bBoxSouth'])
+            bbox['east'] = float(region_data['bBoxEast'])
+            bbox['north'] = float(region_data['bBoxNorth'])
+            response = HttpResponse()
+            response.write(json.dumps(bbox))
+            return response
+        except Exception, ex:
+            print ex
         
 def projects_in_map(request, left, bottom, right, top):
     sector_ids =  _filter_ids(request, "sector") or \

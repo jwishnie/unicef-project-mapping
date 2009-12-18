@@ -290,36 +290,50 @@ $(document).ready(function() {
     $('.overlaybox').click(handleOverlays);
 
     $('#stats-id').bind('click', switchStatsView);
-    // $('#kml-id').bind('click', switchKMLView);
-    var gs = "http://" + window.location.host + "/geoserver/ows";
-
+    var gs = "http://"+window.location.host+"/geoserver/ows";
+    
+    var worldLayer = new OpenLayers.Layer.WMS(
+                "World",
+                gs,
+                { 
+                   layers: 'GADM:gadm1_lev0',
+                   transparent: true,
+                   format: 'image/png'
+                },
+                {
+                   isBaseLayer: false,
+                   visibility: true
+                }
+    );
+    worldLayer.setOpacity(0.5);
+    
     var countryLayer = new OpenLayers.Layer.WMS(
-    "Uganda",
-    gs,
-    {
-        layers: 'GADM:UGA_adm0',
-        transparent: true,
-        format: 'image/png'
-    },
-    {
-        isBaseLayer: true,
-        visibility: true
-    }
+                "Uganda",
+                gs,
+                { 
+                   layers: 'GADM:UGA_adm0',
+                   transparent: true,
+                   format: 'image/png'
+                },
+                {
+                   isBaseLayer: false,
+                   visibility: false
+                }
     );
     countryLayer.setOpacity(0.5);
 
     var dists = new OpenLayers.Layer.WMS(
-    "Districts",
-    gs,
-    {
-        layers: 'GADM:UGA_adm1',
-        transparent: true,
-        format: 'image/png'
-    },
-    {
-        isBaseLayer: false,
-        visibility: true
-    }
+               "Districts",
+               gs,
+               { 
+                   layers: 'GADM:UGA_adm1',
+                   transparent: true,
+                   format: 'image/png'
+               },
+               {
+                   isBaseLayer: false,
+                   visibility: false
+               }
     );
     dists.setOpacity(0.5);
 
@@ -369,19 +383,19 @@ $(document).ready(function() {
         };
         OpenLayers.loadURL("http://" + window.location.host + "/geoserver/wms", params, this, populateRegionStats, populateRegionStats);
         OpenLayers.Event.stop(e);
-
     }
 
     function switchStatsView() {
         map.events.unregister('moveend', map, mapEvent);
-        var bounds = new OpenLayers.Bounds(29.571, -1.479, 35.0, 4.234);
+        var bounds = new OpenLayers.Bounds(-180, -90, 180, 90);
         map.zoomToExtent(bounds);
         $("#filterable_criteria").hide();
         $("#layercontrols").show();
         hide_all_kml_layers();
-        map.addLayer(countryLayer);
-        map.addLayer(dists);
-        map.addLayer(county);
+        map.addLayer(worldLayer);
+        //map.addLayer(countryLayer);
+        //map.addLayer(dists);
+        //map.addLayer(county);
         var layersInMap = map.layers;
         $("#layerholder").html("");
         $.each(layersInMap,
@@ -400,7 +414,48 @@ $(document).ready(function() {
         });
         $('#stats-id').unbind('click', switchStatsView);
         $('#proj-id').bind('click', projectview);
-        map.events.register('click', map, queryForRegionData);
+        map.events.register('click', map, queryCountryClickedOn);
+    }
+
+    function queryCountryClickedOn(e) {
+        var layersInMap = map.layers;
+            var layerToQuery = "";
+            $.each(layersInMap, function(){
+                if(! this.isBaseLayer){
+                    if(this.visibility){
+                        layerToQuery = this.params.LAYERS;
+                    }
+                }
+            });
+
+        $("#stats").html("Loading. Please wait...");
+        var params = {
+            REQUEST: "GetFeatureInfo",
+            EXCEPTIONS: "application/vnd.ogc.se_xml",
+            BBOX: map.getExtent().toBBOX(),
+            X: e.xy.x,
+            Y: e.xy.y,
+            INFO_FORMAT: 'text/plain',
+            QUERY_LAYERS: layerToQuery,
+            FEATURE_COUNT: 50,
+            Layers: layerToQuery,
+            Styles: '',
+            Srs: 'EPSG:4326',
+            WIDTH: map.size.w,
+            HEIGHT: map.size.h,
+            format: format
+            };
+        OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, findCountryDetails, findCountryDetails);
+        OpenLayers.Event.stop(e);
+    }
+
+    function findCountryDetails(response) {
+	$.get("/country_details/",{text:response.responseText},
+	    function(data){
+	        var bbox = JSON.parse(data);
+                var bounds= new OpenLayers.Bounds(bbox.west, bbox.south, bbox.east, bbox.north);    
+                map.zoomToExtent(bounds);
+	    });
     }
 
     function projectview() {
@@ -456,5 +511,4 @@ $(document).ready(function() {
 
         }
     }
-
 });

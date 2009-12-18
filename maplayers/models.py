@@ -8,8 +8,9 @@ import simplejson as json
 from tagging.fields import TagField
 from tagging.models import Tag
 from tinymce import models as tinymce_models
-from maplayers.countries import CountryField, COUNTRIES 
 
+import settings
+from maplayers.countries import CountryField, COUNTRIES 
 from maplayers.utils import is_empty
 from maplayers.constants import GROUPS, PROJECT_STATUS
 
@@ -118,12 +119,12 @@ class Resource(models.Model):
     def file_extension(self):
         return self.filename.split(".")[-1]
 
-    def file_name_without_extension(self):
+    def original_file_name(self):
         return "_".join(self.filename.split("_")[1:])
         
     @property
     def file_name_with_slash(self):
-        return  "/" + self.filename
+        return  settings.PROJECT_RESOURCE_URL + "/" + self.filename
     @property
     def is_audio_file(self):
         supported_audio_formats = ["mp3", "ogg"]

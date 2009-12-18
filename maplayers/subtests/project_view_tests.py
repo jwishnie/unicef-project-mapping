@@ -3,11 +3,12 @@
 from django.test import TestCase
 from django.test.client import Client
 from maplayers.models import Project
-from maplayers.views import convert_to_json, _get_bounding_box_for_project, projects_search
+from maplayers.views import convert_to_json, _get_bounding_box_for_project, projects_search 
 from maplayers.constants import PROJECT_STATUS
 from  mock import Mock
 from maplayers import views
 from django.http import Http404
+from maplayers.admin_request_parser import convert_text_to_dicts
 
 class ProjectPage(TestCase):
     fixtures = ['test_project_data']
@@ -139,7 +140,10 @@ class ProjectPage(TestCase):
         bbox = _get_bounding_box_for_project(project, [subproject1, subproject2, subproject3, subproject4])
         expected_bbox = {'top': 6, 'right': 7, 'bottom': -6, 'left': -7}
         self.assertEquals(expected_bbox, bbox)
-        
+
+    def test_extract_country_code(self):
+        self.assertEquals('IN', convert_text_to_dicts(MockGeoserver().response())["ISO2"])
+
         
 def to_json(projects):
     result = []
@@ -183,4 +187,82 @@ class MockProjectForBoundingBox(object):
         self.latitude = init_hash['latitude']
         self.longitude = init_hash['longitude']
         
-        
+class MockGeoserver(object):
+    def response(self):
+        return '''
+Results for FeatureType 'gadm1_lev0':
+--------------------------------------------
+the_geom = [GEOMETRY (MultiPolygon) with 450007 points]
+OBJECTID = 101
+GADMID = 105
+ISO = IND
+NAME_ENGLI = India
+NAME_ISO = INDIA
+NAME_FAO = India
+NAME_LOCAL = Bharat
+NAME_OBSOL = 
+NAME_VARIA = Bharat|Damão and Diu|Goa|Hindustan
+NAME_NONLA = 
+NAME_FRENC = Inde
+NAME_SPANI = India
+NAME_RUSSI = ?????
+NAME_ARABI = ?????
+NAME_CHINE = ??
+WASPARTOF = 
+CONTAINS = 
+SOVEREIGN = India
+ISO2 = IN
+WWW = 
+FIPS = IN
+ISON = 356.0
+VALIDFR = Unknown
+VALIDTO = Present
+AndyID = 113.0
+POP2000 = 1.008937356E9
+SQKM = 3089282.0
+POPSQKM = 326.592831603
+UNREGION1 = Southern Asia
+UNREGION2 = Asia
+DEVELOPING = 1.0
+CIS = 0.0
+Transition = 0.0
+OECD = 0.0
+WBREGION = South Asia
+WBINCOME = Low income
+WBDEBT = Less indebted
+WBOTHER = 
+CEEAC = 0.0
+CEMAC = 0.0
+CEPLG = 0.0
+COMESA = 0.0
+EAC = 0.0
+ECOWAS = 0.0
+IGAD = 0.0
+IOC = 0.0
+MRU = 0.0
+SACU = 0.0
+UEMOA = 0.0
+UMA = 0.0
+PALOP = 0.0
+PARTA = 0.0
+CACM = 0.0
+EurAsEC = 0.0
+Agadir = 0.0
+SAARC = 1.0
+ASEAN = 0.0
+NAFTA = 0.0
+GCC = 0.0
+CSN = 0.0
+CARICOM = 0.0
+EU = 0.0
+CAN = 0.0
+ACP = 0.0
+Landlocked = 0.0
+AOSIS = 0.0
+SIDS = 0.0
+Islands = 0.0
+LDC = 0.0
+Shape_Leng = 335.902226422
+Shape_Area = 278.699431993
+--------------------------------------------
+        '''
