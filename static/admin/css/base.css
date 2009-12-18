@@ -109,8 +109,7 @@ li ul {
 }
 
 li, dt, dd {
-    font-size: 11px;
-    line-height: 14px;
+    line-height: 1.3em;
 }
 
 dt {
@@ -243,7 +242,6 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 
 
 td, th {
-    font-size: 11px;
     line-height: 13px;
     border-bottom: 1px solid #FFF;
     vertical-align: top;
@@ -253,7 +251,6 @@ td, th {
 
 th {
     text-align: left;
-    font-size: 12px;
     font-weight: bold;
 }
 
@@ -261,7 +258,6 @@ thead th,
 tfoot td {
     color: #666;
     padding: 2px 5px;
-    font-size: 11px;
     background: #e1e1e1 url(../img/admin/nav-bg.gif) top left repeat-x;
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
@@ -416,7 +412,6 @@ textarea {
 .module h2, .module caption, .inline-group h2 {
     margin: 0;
     padding: 2px 5px 3px 5px;
-    font-size: 11px;
     text-align: left;
     font-weight: bold;
     color: white;
@@ -505,7 +500,6 @@ div.system-message p.system-message-title {
 div.breadcrumbs {
     background: white url(../img/admin/nav-bg-reverse.gif) 0 -10px repeat-x;
     padding: 2px 8px 3px 8px;
-    font-size: 11px;
     color: #999;
     border-top: 1px solid white;
     border-bottom: 1px solid #ccc;

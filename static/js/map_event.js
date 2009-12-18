@@ -99,7 +99,6 @@ $(document).ready(function() {
         minScale: MIN_SCALE
     };
     
-    var format = 'image/png';
     var map = new OpenLayers.Map( 'map_canvas' , options );
     
     var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS", BASE_LAYER, {layers: 'basic'},{'displayInLayerSwitcher':false} );
