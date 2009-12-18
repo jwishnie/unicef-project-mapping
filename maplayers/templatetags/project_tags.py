@@ -195,6 +195,14 @@ def admin_links(project, user):
         result = '%s %s' % (publish_span, delete_span)
     return result
     
+@register.simple_tag
+def project_links(links):
+    result = ''
+    for link in links:
+        link_url = link.url if link.url.startswith("http") else "http://" + link.url
+        result += '<div class="sub_div"><a href="%s" target="_new">%s</a></div>' % (link_url, link.title)
+    return result
+
 
 @register.simple_tag
 def add_project_link():
