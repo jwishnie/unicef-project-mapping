@@ -195,6 +195,14 @@ def admin_links(project, user):
         result = '%s %s' % (publish_span, delete_span)
     return result
     
+@register.simple_tag
+def show_project_links(links):
+    result = ''
+    for link in links:
+        link_url = link.url if link.url.startswith("http") else "http://" + link.url
+        result += '<div class="sub_div"><a href="%s" target="_new">%s</a></div>' % (link_url, link.title)
+    return result
+
 
 @register.simple_tag
 def add_project_link():
@@ -254,28 +262,22 @@ def file_list(resources):
 @register.simple_tag
 def resource_list(resources):
     result = []
+    html = ""
     if resources:
-        pass
-    else:
-        return ""
-    for index, resource in enumerate(resources):
-        filename = "_".join(resource.filename.split("_")[1:])
-        resource_icon = ResourceIcon().icon(resource.file_extension)
-        filesize = resource.file_size_in_kb()
-        result.append('<li id="file-%s" class="file" style="background-color: transparent;">' % str(index+1))
-        result.append('<span class="resource_icon" style="background:transparent url(%s) no-repeat scroll top left"></span>' % resource_icon)
-        result.append('<div>')
-        result.append('<span class="file-title">%s</span>' % filename)
-        result.append('<span class="file-size">%s</span>' % str(filesize))
-        result.append('<a class="file-remove-edit" href="#">remove</a>')
-        result.append('</div>')
-        result.append('</li>')
-        
-    result = "".join(result)
-    if result:
-        result = '<ul id="file-list">' + result + '</ul>'
-    return result
-
+        for index, resource in enumerate(resources):
+            filename = resource.original_file_name()
+            resource_icon = ResourceIcon().icon(resource.file_extension)
+            if resource.is_audio_file:
+                pass
+            else:
+                result.append('<div>')
+                result.append('<span class="resource_icon" style="background:transparent url(%s) no-repeat scroll top left"></span>' % resource_icon)
+                result.append('<div>')
+                result.append('<div class="sub_div"><a href="/static/resources/%s">%s</a></div>' %(filename, resource.title))
+                result.append('</div>')
+            
+        html = "".join(result)
+    return html
 
 @register.simple_tag
 def resource_icon(resource):

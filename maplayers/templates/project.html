@@ -132,9 +132,7 @@
 							{% if links %}
 								<div id="project links">
 									<label>Links : </label>
-									{% for link in links %}
-										<div class="sub_div"><a href="{{link.url}}" target="_new">{{link.title}}</a></div>
-									{% endfor %}
+									{% show_project_links links %}
 								</div>	
 							{% endif %}
 							
@@ -152,6 +150,7 @@
 									<label>Resources : </label>
 									{% for resource in resources %}
 									<div class="resource">
+
 									  	<div class="resource_icon" style="background:transparent url({% resource_icon resource %}) no-repeat scroll top left"></div>
 										<div class="sub_div"><a href="{{resources_url}}{{resource.filename}}">{{resource.title}}</a></div>
 										{% if resource.is_audio_file %}
