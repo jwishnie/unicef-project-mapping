@@ -2,6 +2,12 @@ label {
     font-weight: bold;
 }
 
+#map_canvas {
+    width: 350px;
+    height: 275px;
+    margin: 0 25px !important;    
+}
+
 .publish_div,
 .review_div {
     margin: 5px;
@@ -9,7 +15,7 @@ label {
 }
 
 .sub_div {
-    padding: 10px 0 10px 20px;
+    padding: 10px 0 10px 10px;
 }
 
 #project_details {
@@ -23,18 +29,19 @@ label {
 
 #right_pane {
     float: right;
-    width: 43%;
-    padding: 15px 0 10px 25px; 
+    margin: 0 0 5px 15px; 
+    padding: 5px;
+    border: 1px solid #CCC;
+    width: 31%;
 }
 
 #image_pane {
-    padding: 30px 0;
-    clear: right;
+    padding: 10px 0;
+    margin: 0 25px;
+    clear: both;
 }
 
 #project_image {
-    float: left;
-    width: 50%;
     height: 275px;
 }
 
@@ -42,7 +49,7 @@ label {
     float: left;
     height: 275px;
     overflow: auto;
-    width: 46%;
+    width: 350px;
 }
 
 #photo_set .photo {
@@ -51,17 +58,36 @@ label {
 }
 
 #project_image span img {
-    width: 400px;
+    width: 350px;
     height: 250px;
 }
 
 
 #comment_link {
     text-decoration: underline;    
+    cursor: pointer;
 }
 
-#resources .resource {
+#resources .resource,
+.proj_filterable_criteria,
+.one_line_info {
     overflow: hidden;
+}
+
+.proj_filterable_criteria dl {
+    width: 20em;
+    height: 12em;
+    overflow: auto;
+    border: 1px solid #CCC;
+    padding: 5px;
+    margin: 0 10px 5px 0;
+    font-size: 9pt;
+}
+
+.proj_filterable_criteria dt {
+    background-color: #007BD6;
+    padding: 0.2em 0.2em 0.2em 3em;
+    color: #FFF;
 }
 
 .resource_icon {
@@ -76,17 +102,21 @@ label {
     padding: 8px 0 0 8px;    
 }
 
-#project_location {
-    margin: 10px 0;
+#project_location,
+#project_website,
+#parent_project {
+    width: 18em;
 }
 
-#project_location #nearby_projects {
-    margin-left: 50px;
+#back_to_main_map #nearby_projects {
     cursor: pointer;
+    padding-left: 3em;    
+    text-decoration: underline;
 }
 
 #back_to_main_map {
-    margin: 5px 0;
+    font-size: 8pt;
+    margin: 0 25px;
     padding: 5px 0;
 }
 
