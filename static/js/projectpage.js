@@ -49,6 +49,8 @@ $(document).ready(function() {
 
     addsubprojects(markers);
     
+    map.events.register('moveend', map, mapEvent);
+    
     function add_project_marker(){
         var project_name = project_snippet.split(":")[0];
         var project_description = project_snippet.split(":")[1];			    
@@ -218,9 +220,7 @@ $(document).ready(function() {
         						boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
 
         	$.get(projects_url, function(data) {
-                    var projects = JSON.parse(data);
-                    projects = projects.reject(function(p){ return p.id === project_id; });
-                    addProjectsOnMap(projects);
+        	     plotProjects(data);
             });
             
         }else{
@@ -233,7 +233,12 @@ $(document).ready(function() {
             addsubprojects(markers);
         }
     }
-
+    
+    function plotProjects(data){
+        var projects = JSON.parse(data);
+        projects = projects.reject(function(p){ return p.id === project_id; });
+        addProjectsOnMap(projects);
+    }
 
     function addProjectsOnMap(projects) {
         for(var i = 0;i<projects.length; i++){
@@ -249,6 +254,21 @@ $(document).ready(function() {
             marker.events.register("mousedown", {'marker' : marker, 'text' : project_text}, mousedn);
             markers.addMarker(marker);
         }
+    }
+    
+    function mapEvent(event) {
+        if(showOtherProjects()){
+            var boundingBox = map.getExtent();
+            var projects_url = "/projects/bbox/" + boundingBox.left + "/" +
+            boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
+            $.get(projects_url, function(data) {
+                plotProjects(data);
+            });
+        }
+    }
+    
+    function showOtherProjects(){
+        return $('#nearby_projects').html() == "Hide projects around this location";
     }
 
 });
