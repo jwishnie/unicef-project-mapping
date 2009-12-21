@@ -437,6 +437,7 @@ def _publish_or_delete_comments(request, action):
         ProjectComment.objects.filter(id__in=comment_ids).delete()
     else:
         ProjectComment.objects.filter(id__in=comment_ids).update(status=COMMENT_STATUS.PUBLISHED)
+    
         
 
 def _create_dir_if_not_exists(filename):
