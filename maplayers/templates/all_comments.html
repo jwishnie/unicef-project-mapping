@@ -4,15 +4,15 @@
 
 {% block title_extra %} {{ project.name }} {% endblock %}
 
+{% block extrahead %}
+        <script type="text/javascript" src="{{ js_url }}/all_project_comments.js"></script>
+        <script type="text/javascript">
+			project_id = "{{project.id}}"; 
+		</script>
+{% endblock %}
 
 {% block page_content %}
-
 	<div id="comments">
 		{% project_comments project mode '-1' %}
 	</div>
-
-	<div id="delete_dialog" title="Delete Project !">
-		<p>Are you Sure you want to delete this project ?</p>
-	</div>
-
 {% endblock %}
