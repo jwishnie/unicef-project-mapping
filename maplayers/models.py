@@ -124,7 +124,7 @@ class Resource(models.Model):
         
     @property
     def file_name_with_slash(self):
-        return  settings.PROJECT_RESOURCE_URL + "/" + self.filename
+        return  settings.PROJECT_RESOURCES_URL + "/" + self.filename
     @property
     def is_audio_file(self):
         supported_audio_formats = ["mp3", "ogg"]
