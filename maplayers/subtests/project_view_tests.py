@@ -3,12 +3,13 @@
 from django.test import TestCase
 from django.test.client import Client
 from maplayers.models import Project
-from maplayers.views import convert_to_json, _get_bounding_box_for_project, projects_search 
+from maplayers.views import convert_to_json, _get_bounding_box_for_project, projects_search, GeoServer 
 from maplayers.constants import PROJECT_STATUS
 from  mock import Mock
 from maplayers import views
 from django.http import Http404
 from maplayers.admin_request_parser import convert_text_to_dicts
+import json
 
 class ProjectPage(TestCase):
     fixtures = ['test_project_data']
@@ -144,7 +145,54 @@ class ProjectPage(TestCase):
     def test_extract_country_code(self):
         self.assertEquals('IN', convert_text_to_dicts(MockGeoserver().response())["ISO2"])
 
-        
+    def test_get_bounding_box_of_country(self):
+        request = Mock()
+        request.method = 'GET'
+        request.GET.get.return_value = MockGeoserver().response()
+        geonames_service = Mock()
+        geoserver = Mock()
+        geoserver.get_admin_units_for_country.return_value = '["Districts", "County"]'
+        geonames_service.query_for_country.return_value = '''
+                                                          {"geonames"
+                                                          :[{"countryName":"India",
+                                                             "bBoxWest":68.1866760253906,
+                                                             "currencyCode":"INR",
+                                                             "fipsCode":"IN",
+                                                             "countryCode":"IN",
+                                                             "isoNumeric":"356",
+                                                             "capital":"New Delhi",
+                                                             "areaInSqKm":"3287590.0",
+                                                             "languages":"en-IN,hi,bn,te,mr,ta,ur,gu,ml,kn,or,pa,as,ks,sd,sa,ur-IN",
+                                                             "bBoxEast":97.4033126831055,
+                                                             "isoAlpha3":"IND",
+                                                             "continent":"AS",
+                                                             "bBoxNorth":35.5042304992676,
+                                                             "geonameId":1269750,
+                                                             "bBoxSouth":6.74713850021362,
+                                                             "population":"1147995000"}]}'''
+        response = views.country_details(request, geonames_service, geoserver)
+        self.assertEquals('{"north": 35.504230499267599, "west": 68.186676025390597, "admin_units": "[\\"Districts\\", \\"County\\"]", "country": "India", "east": 97.403312683105497, "adm1": "GADM:IND_adm1", "south": 6.7471385002136204}', response.content)
+
+    def test_should_return_list_of_countries(self):
+        geoserver = GeoServer()
+        response = '''
+                      {"workspaces":
+                                    {"workspace":
+                                                 [{"name":"Uganda","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/Uganda.json"},
+                                                  {"name":"Afghanistan","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/Afghanistan.json"},
+                                                  {"name":"GADM","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/GADM.json"}]}}'''
+        self.assertEquals(["Uganda", "Afghanistan"], geoserver.extract_countries(json.loads(response)))
+
+    def test_should_return_list_of_admin_units_for_country(self):
+        geoserver = GeoServer()
+        response = '''
+                      {"workspaces":
+                                    {"workspace":
+                                                 [{"name":"Uganda","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/Uganda.json"},
+                                                  {"name":"Afghanistan","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/Afghanistan.json"},
+                                                  {"name":"GADM","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/GADM.json"}]}}'''
+        self.assertEquals(["Uganda", "Afghanistan"], geoserver.extract_countries(json.loads(response)))
+
 def to_json(projects):
     result = []
     for project in projects:

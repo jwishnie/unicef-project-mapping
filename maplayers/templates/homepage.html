@@ -64,6 +64,14 @@
 						<span id='kml_{{kml_layer.id}}' class="kml_file">{{kml_layer.filename}}</span>
 					</li>
 				{% endfor %}
+                        </ul>
+
+			<li class="drawer regiondata_drawer">
+                            <div class="round_corner">
+                                <span class="drawer-handle" id="regiondata"><a href="#stats">Region Data</a></span>
+                            </div>
+			</li>
+			<ul class="regiondata round_corner">
 			</ul>
 		</ul>
 	</div>
@@ -83,11 +91,9 @@
 		<div id="projects" class="floatright">
 			<div id="tabs">
 				<ul>
-					<li><a id="proj-id" href="#proj">List of Projects</a></li>
-					<li><a id="stats-id" href="#stats">Region Statistics</a></li>
+                                    <li><a id="proj-id" href="#proj">List of Projects</a></li>
 				</ul>
 				<div id="proj"></div>
-				<div id="stats">Click on the map to know about the administrative boundary details about the region.</div>
 			</div>
 		</div>
     {% endautoescape %}
