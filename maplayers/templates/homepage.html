@@ -29,26 +29,30 @@
 <div id="main_pane">
 	<div id="filterable_criteria">
 		<ul class="drawers">
-		    <li class="drawer sector_drawer">
+		    <li class="drawer projects_drawer">
 	             <div class="round_corner expanded">
 					<span class="drawer-handle open" id="sector">Projects</span>
 				</div>
 			</li>
-			<ul class="sectors round_corner">
-				<li>Sectors</li>
-				{% for sector in sectors %}
-				<li>
-					<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
-					<label title="{{sector.name}}">{{sector.name}}</label>
-				</li>
-				{% endfor %}
-				<li>Implementors</li>
-				{% for implementor in implementors %}
-				<li>
-					<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
-					<label title="{{implementor.name}}">{{implementor.name}}</label>
-				</li>
-				{% endfor %}
+			<ul class="sectors_and_implementors round_corner">
+				<li class="sectors_li sub_categories expanded">Sectors</li>
+					<ul class="sector_drawer">
+						{% for sector in sectors %}
+						<li>
+							<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
+							<label title="{{sector.name}}">{{sector.name}}</label>
+						</li>
+						{% endfor %}
+					</ul>
+				<li class="implementors_li sub_categories expanded">Implementors</li>
+					<ul class="implementor_drawer">
+						{% for implementor in implementors %}
+						<li>
+							<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
+							<label title="{{implementor.name}}">{{implementor.name}}</label>
+						</li>
+						{% endfor %}
+					</ul>
 			</ul>
 	        
 			<li class="drawer overlay_drawer">
@@ -68,35 +72,22 @@
 
 			<li class="drawer regiondata_drawer">
                             <div class="round_corner">
-                                <span class="drawer-handle" id="regiondata"><a href="#stats">Region Data</a></span>
+                                <span class="drawer-handle" id="regiondata">Region Data</span>
                             </div>
 			</li>
 			<ul class="regiondata round_corner">
 			</ul>
 		</ul>
 	</div>
-	<div id="layercontrols" style="display:none">
-		<ul class="drawers">
-			<li class="drawer sector_drawer">
-				<div class="round_corner">
-					<span class="drawer-handle" id="layers">Layers</span>
-				</div>
-			</li>
-			<ul class"layers round_corner" id="layerholder">
-			</ul>
-		</ul>
-	</div>
-	<div id="map_canvas"></div>
-	{% autoescape off %}
-		<div id="projects" class="floatright">
-			<div id="tabs">
-				<ul>
-                                    <li><a id="proj-id" href="#proj">List of Projects</a></li>
-				</ul>
+
+	<div class="right_pane_wrapper">
+		<div id="map_canvas"></div>
+		{% autoescape off %}
+			<div id="projects">
 				<div id="proj"></div>
 			</div>
-		</div>
-    {% endautoescape %}
+	    {% endautoescape %}
+	</div>
     <div id="bookmark">
     </div>
 </div>

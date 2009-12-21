@@ -1,8 +1,4 @@
 $(document).ready(function() {
-    $(function() {
-    		$("#tabs").tabs();
-	});
-	
     var is_chrome = (/chrome/).test(navigator.userAgent.toLowerCase());
     if(is_chrome) {
         OpenLayers.DOTS_PER_INCH = 1;
