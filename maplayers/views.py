@@ -56,28 +56,66 @@ def search_admin_units(request, admin_manager=AdministrativeUnit.objects):
         response.write(admin_unit_json)
         return response
         
+class GeoServer(object):
+    def __init__(self):
+        self.url = ""
+    def get_list_of_countries_with_shapefiles(self):
+        request_url = ""
+        response = urllib2.urlopen("http://localhost:8080/geoserver/rest/workspaces.json")
+        data = json.loads(response.read())
+        return self.extract_countries(data)
+
+    def extract_countries(self, data):
+        workspaces = data['workspaces']['workspace']
+        regions = [region['name'] for region in  workspaces]
+        regions_without_world_layer = filter(lambda x: not x.__contains__('GADM'), regions)
+        return regions_without_world_layer
+
+    def get_admin_units_for_country(self, country):
+        try:
+            request_url = "http://localhost:8080/geoserver/rest/workspaces/%s/datastores/%s/featuretypes.json" % (country, country)
+            response = urllib2.urlopen(request_url)
+            data = json.loads(response.read())
+            return self.extract_admin_units(data)
+        except urllib2.HTTPError, ex:
+            return "Unable to find region data for the country"
+
+    def extract_admin_units(self, data):
+        if(isinstance(data, dict)):
+            featuretypes = data['featureTypes']['featureType']
+            admin_units = [admin_unit['name'] for admin_unit in featuretypes]
+            return admin_units
+        else:
+            return data
 
 class GeoNames(object):
     def __init__(self):
         self.url = "http://ws.geonames.org/countryInfoJSON?country="
     def query_for_country(self,country_code):
-        request_url = self.url + str(country_code)
-        data = urllib2.urlopen(str(request_url)).read()
-        return data
+        try:
+            request_url = self.url + str(country_code)
+            data = urllib2.urlopen(str(request_url)).read()
+            return data
+        except urllib2.HTTPError, ex:
+            return ""
 
-def country_details(request, geonames=GeoNames()):
+def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
     if request.method == 'GET':        
         try:
             text = request.GET.get('text')
             bbox = {}
-            country_code = convert_text_to_dicts(text)['ISO2']
+            country_details = convert_text_to_dicts(text)
+            country_code = country_details['ISO2']
             callback = geonames.query_for_country(country_code)
             response = json.loads(callback)
             region_data = response['geonames'][0] 
+            bbox['admin_units'] = geoserver.get_admin_units_for_country(region_data['countryName'])
             bbox['west'] = float(region_data['bBoxWest'])
             bbox['south'] = float(region_data['bBoxSouth'])
             bbox['east'] = float(region_data['bBoxEast'])
             bbox['north'] = float(region_data['bBoxNorth'])
+            bbox['country'] = region_data['countryName'] 
+            bbox['adm1'] =  "GADM:%s_adm1" % convert_text_to_dicts(text)['ISO']
             response = HttpResponse()
             response.write(json.dumps(bbox))
             return response

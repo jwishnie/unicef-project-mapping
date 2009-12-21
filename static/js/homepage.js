@@ -35,6 +35,20 @@ function expandOverlays() {
     $('li.overlay_drawer span').addClass('open');
 }
 
+function collapseRegionData() {
+    $('ul.regiondata').hide();
+    $('li.regiondata_drawer div').removeClass('expanded');
+    $('li.regiondata_drawer div').css("background-color", "#007BD6");
+    $('li.regiondata_drawer span').removeClass('open');
+}
+
+function expandRegionData() {
+    $('ul.regiondata').show();
+    $('li.regiondata_drawer div').addClass('expanded');
+    $('ul.regiondata').css("background-color", "#FFF");
+    $('ul.regiondata').css("color", "#000");
+    $('li.regiondata_drawer span').addClass('open');
+}
 
 function hideFilterableCriteria() {
     $('#filterable_criteria ul.overlays').hide();
@@ -81,36 +95,69 @@ $(document).ready(function() {
     $('#filterable_criteria li.sector_drawer div').click(function() {
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
             collapseOverlays();
+            collapseRegionData();
             showMarkers();
         } else {
-            expandOverlays();
+            collapseOverlays();
+            collapseRegionData();
             hideMarkers();
         }
         if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
+            collapseRegionData();
             hideMarkers();
         }
         else {
             expandSectors();
+            collapseRegionData();
             showMarkers();
+        }
+        if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
+            collapseOverlays();
+            collapseRegionData();
+            showMarkers();
+        } else {
+            collapseOverlays();
+            collapseRegionData();
+            hideMarkers();
         }
     });
 
     $('#filterable_criteria li.overlay_drawer div').click(function() {
         if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
             collapseSectors();
+            collapseRegionData();
             hideMarkers();
         } else {
             expandSectors();
+            collapseRegionData();
             showMarkers();
         }
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
             collapseOverlays();
+            collapseRegionData();
             showMarkers();
         }
         else {
             expandOverlays();
+            collapseRegionData();
             hideMarkers();
+        }
+    });
+
+    $('#filterable_criteria li.regiondata_drawer div').click(function() {
+        if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
+            collapseRegionData(); 
+            collapseOverlays();
+            collapseSectors();
+            hideMarkers();
+        }
+        else {
+            expandRegionData(); 
+            collapseOverlays();
+            collapseSectors();
+            hideMarkers();
+            switchStatsView();
         }
     });
 
@@ -289,7 +336,7 @@ $(document).ready(function() {
 
     $('.overlaybox').click(handleOverlays);
 
-    $('#stats-id').bind('click', switchStatsView);
+    $('ul.regiondata').bind('click', switchStatsView);
     var gs = "http://"+window.location.host+"/geoserver/ows";
     
     var worldLayer = new OpenLayers.Layer.WMS(
@@ -306,52 +353,6 @@ $(document).ready(function() {
                 }
     );
     worldLayer.setOpacity(0.5);
-    
-    var countryLayer = new OpenLayers.Layer.WMS(
-                "Uganda",
-                gs,
-                { 
-                   layers: 'GADM:UGA_adm0',
-                   transparent: true,
-                   format: 'image/png'
-                },
-                {
-                   isBaseLayer: false,
-                   visibility: false
-                }
-    );
-    countryLayer.setOpacity(0.5);
-
-    var dists = new OpenLayers.Layer.WMS(
-               "Districts",
-               gs,
-               { 
-                   layers: 'GADM:UGA_adm1',
-                   transparent: true,
-                   format: 'image/png'
-               },
-               {
-                   isBaseLayer: false,
-                   visibility: false
-               }
-    );
-    dists.setOpacity(0.5);
-
-    var county = new OpenLayers.Layer.WMS(
-    "County",
-    gs,
-    {
-        layers: 'GADM:UGA_adm2',
-        transparent: true,
-        format: 'image/png'
-    },
-    {
-        isBaseLayer: false,
-        visibility: false
-    }
-    );
-
-    county.setOpacity(0.5);
 
     function queryForRegionData(e) {
         var layersInMap = map.layers;
@@ -389,15 +390,13 @@ $(document).ready(function() {
         map.events.unregister('moveend', map, mapEvent);
         var bounds = new OpenLayers.Bounds(-180, -90, 180, 90);
         map.zoomToExtent(bounds);
-        $("#filterable_criteria").hide();
-        $("#layercontrols").show();
         hide_all_kml_layers();
+        toggleSpinner();
         map.addLayer(worldLayer);
-        //map.addLayer(countryLayer);
-        //map.addLayer(dists);
-        //map.addLayer(county);
+        toggleSpinner();
         var layersInMap = map.layers;
-        $("#layerholder").html("");
+        $(".regiondata").html("");
+        $("#proj").html("Click on any country to zoom into administrative unit");
         $.each(layersInMap,
         function() {
             if (!this.isBaseLayer) {
@@ -407,17 +406,16 @@ $(document).ready(function() {
                         isChecked = 'checked="checked"';
                     }
                     var htmlLayer = '<li><input type="radio" name="layergroup" value="' + this.name + '" class="radiolayer"' + isChecked + '" /><label>' + this.name + '</label></li><p/>';
-                    $("#layerholder").append(htmlLayer);
+                    $(".regiondata").append(htmlLayer);
                     $(".radiolayer").bind('click', switchLayer);
                 }
             }
         });
-        $('#stats-id').unbind('click', switchStatsView);
-        $('#proj-id').bind('click', projectview);
         map.events.register('click', map, queryCountryClickedOn);
     }
 
     function queryCountryClickedOn(e) {
+        toggleSpinner();
         var layersInMap = map.layers;
             var layerToQuery = "";
             $.each(layersInMap, function(){
@@ -455,6 +453,18 @@ $(document).ready(function() {
 	        var bbox = JSON.parse(data);
                 var bounds= new OpenLayers.Bounds(bbox.west, bbox.south, bbox.east, bbox.north);    
                 map.zoomToExtent(bounds);
+                $("#proj").html("Country Name - " + bbox.country);
+                alert(bbox.admin_units instanceof Array);
+                if(bbox.admin_units instanceof Array) {
+                $.each(bbox.admin_units, function() {
+                    var htmlLayer = '<li><input type="radio" name="layergroup" value="' + this + '" class="radiolayer"/><label>' + this + '</label></li><p/>';
+                    $(".regiondata").append(htmlLayer);
+                    $(".radiolayer").bind('click', switchLayer);
+                });
+                } else {
+                    $("#proj").append("<p>Unfortunately no region data is available for this country</p>");
+                }
+                toggleSpinner();
 	    });
     }
 
@@ -464,7 +474,7 @@ $(document).ready(function() {
         $("#layercontrols").hide();
         show_all_kml_layers();
         map.addLayer(markers);
-        $('#stats-id').bind('click', switchStatsView);
+        $('#regiondata').bind('click', switchStatsView);
         $('#proj-id').unbind('click', projectview);
         map.events.register('moveend', map, mapEvent);
         map.events.unregister('click', map, queryForRegionData);
