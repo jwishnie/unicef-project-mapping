@@ -53,9 +53,7 @@ a:hover {
     background-color: #0099FF;
 }
 
-ul.layers,
-ul.sectors,
-ul.implementors,
+ul.sectors_and_implementors,
 ul.overlays,
 ul.regiondata
 {
@@ -72,8 +70,8 @@ ul.regiondata
 #layercontrols, #filterable_criteria {
     font-size: 9pt;
     float: left;
-    height: 378px;
-    width: 13%;
+    height: 450px;
+    width: 25%;
     margin: 0 2px;
     overflow: auto;
 }
@@ -264,19 +262,16 @@ li a {
     width: 93%;
 }
 
-#map_canvas{
+#main_pane .right_pane_wrapper {
     float: left;
-    width: 55%;
-    height: 400px;
+    width: 73%;
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+}
+
+#map_canvas{
+    height: 450px;
     margin-top: 5px;
-}
-
-#projects {
-    width: 30%;
-}
-
-#projects_searched {
-    width: 44%;
 }
 
 #projects_searched h4 {
@@ -285,20 +280,10 @@ li a {
 
 #projects,
 #projects_searched {
-    height: 400px;
-    margin: 0 5px 0 0;
+    height: auto;
+    margin: 5px;
     font-size: 9pt;
-}
-
-#projects #tabs,
-#projects_searched #tabs {
-    height: 371px;
-}
-
-#proj {
-    height: 305px;
-    overflow: auto;
-    background: #FFF url("../img/bg_light_gradient.jpg") repeat-x 0 0;
+    clear: both;
 }
 
 #proj a {
@@ -397,9 +382,7 @@ span.drawer-handle {
     text-align: center;
 }
 
-li.layers_drawer div,
-li.sector_drawer div,
-li.implementor_drawer div,
+li.projects_drawer div,
 li.regiondata_drawer div,
 li.overlay_drawer div 
 {
@@ -409,8 +392,7 @@ li.overlay_drawer div
 
 li.overlay_drawer .expanded,
 li.regiondata_drawer .expanded,
-li.sector_drawer .expanded,
-li.implementor_drawer .expanded {
+li.projects_drawer .expanded {
     background: #007BD6 url('../img/expanded.png') no-repeat scroll 95% 50%;
     width: auto;
 }
@@ -687,9 +669,8 @@ ul.errorlist {
 
 /*TRUNCATION OF TEXT*/
 
-ul.sectors li label,
+ul.sectors_and_implementors li label,
 ul.regiondata li label,
-ul.implementors li label,
 ul.layers li label,
 ul.overlays li label {
     float: left;
@@ -702,30 +683,39 @@ ul.overlays li label {
     -moz-binding: url('../assets/ellipsis.xml#ellipsis'); /*For Firefox*/
 }
 
-ul.sectors li input,
+ul.sectors_and_implementors li input,
 ul.regiondata li input,
-ul.implementors li input,
 ul.layers li input,
 ul.overlays li input {
     float: left;
 }
 
-ul.sectors li,
+ul.sectors_and_implementors li,
 ul.regiondata li,
-ul.implementors li,
 ul.layers li,
 ul.overlays li {
     clear: left;
     overflow: hidden;
+    padding: 1px 0 1px 10px;
+}
+
+#filterable_criteria .sectors_and_implementors .sub_categories{
+    font-weight: bold;
+    padding-left: 5px;
+    background: #FFF url('../img/sub_category_collapsed.png') no-repeat 39% 50%;
+}
+
+#filterable_criteria .sectors_and_implementors .expanded {
+    background: #FFF url('../img/sub_category_expanded.png') no-repeat 39% 50%;
 }
 
 #ajax-spinner {
-	width:100px;
-	height: 100px;
+	width: 69%;
+	height: 450px;
 	position: fixed;
-	top: 35%;
-	left: 40%;
+	top: 20%;
+	left: 27%;
 	opacity: 0.5;
-	background: #666 url('/static/img/ajax-loader.gif') no-repeat scroll 35% 40%;
+	background: #666 url('/static/img/ajax-loader.gif') no-repeat scroll 50% 50%;
 	z-index: 999;
 }

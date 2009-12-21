@@ -116,7 +116,6 @@ label {
 
 #back_to_main_map #nearby_projects {
     cursor: pointer;
-    padding-left: 3em;    
     text-decoration: underline;
 }
 
@@ -124,6 +123,10 @@ label {
     font-size: 8pt;
     margin: 0 25px;
     padding: 5px 0;
+}
+
+#back_to_main_map #back_to_main_map_link {
+    float: right;
 }
 
 .post_a_comment_link {
