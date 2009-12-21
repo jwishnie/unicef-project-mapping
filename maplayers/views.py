@@ -213,7 +213,11 @@ def change_password(request):
         form = ChangePasswordForm()
         return _change_password_response(request, form)
                          
-
+def all_comments(request, project_id, mode):
+    project = Project.objects.get(id=int(project_id))
+    return render_to_response('all_comments.html', {'project' : project, 'mode' : mode}, 
+                              context_instance=RequestContext(request))
+                              
                               
 def project_comment(request, project_id):
     project = Project.objects.get(id=int(project_id))

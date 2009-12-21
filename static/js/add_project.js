@@ -159,6 +159,7 @@ jQuery(document).ready(function(){
         var comment_id = span_id.replace("delete_", "");
         data = {};
         data[comment_id] = true;
+        data['project_id'] = project_id;
         jQuery.post(url, data, function(result){
             jQuery("#" + comment_id).remove();
             if(jQuery(".comment_metainfo").size() === 0){
