@@ -585,6 +585,22 @@ ul.errorlist {
     color: #000;
 }
 
+#project_all_comments {
+    margin: 15px;
+}
+
+#project_all_comments div {
+    clear: right;
+}
+
+#project_all_comments div.head_nav {
+    background-color: #FFF;
+}
+
+#project_all_comments h4 {
+    margin-top: 0;
+}
+
 /*REVIEW SUGGESTION*/
 #review_suggestions {
     background-color: #E2EBF4;    
@@ -616,19 +632,22 @@ ul.errorlist {
     padding: 20px 20px 20px 0;
 }
 
-#comments div {
+#comments div,
+#project_all_comments div {
     overflow: hidden;
     background-color: #E2EBF4;
     border-bottom: 5px solid #FFF;
 }
 
-#comments div input {
+#comments div input,
+#project_all_comments div input {
     float: left;
     width: 2em;
 }
 
 #project_details #comments div span.comment_text,
-#add_project #comments div span.comment_text {
+#add_project #comments div span.comment_text,
+#project_all_comments div span.comment_text {
     padding: 1em 0 0 2em;
 }
 
@@ -637,7 +656,8 @@ ul.errorlist {
     width: 60em;
 }
 
-#comments .comment_metainfo {
+#comments .comment_metainfo,
+#project_all_comments .comment_metainfo {
     color: #0000FF;
     font-size: 9pt;
     clear: left;
