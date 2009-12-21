@@ -10,6 +10,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
+from datetime import datetime
 
 from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS, VIMEO_REGEX, YOUTUBE_REGEX, VIDEO_PROVIDER
 from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video
@@ -245,6 +246,7 @@ def request_changes(request, project_id):
         review_changes.feedback = feedback
         review_changes.project = project
         review_changes.reviewed_by = request.user
+        review_changes.date = datetime.today()
         review_changes.save()
         project.save()
     return HttpResponse(json.dumps(response_json))
