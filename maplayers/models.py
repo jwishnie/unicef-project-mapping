@@ -186,7 +186,7 @@ class ReviewFeedback(models.Model):
     date = models.DateTimeField()
     
     class Meta:
-        ordering = ('-date', 'headline')
+        ordering = ('-date', 'viewed')
     
     
     class Admin:
