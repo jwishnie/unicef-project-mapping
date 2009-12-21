@@ -74,12 +74,15 @@ def project_video(project):
     else:
         video_url = "http://vimeo.com/moogaloop.swf?clip_id=" + video.video_id
         
-    result = '''<object width="400" height="385">
+    result = '''<div id="video_pane">
+                    <h4>Related Videos :</h4>    
+                    <object width="400" height="385">
                     <param name="allowfullscreen" value="true">
                     <param name="allowscriptaccess" value="always"> 
                     <param name="movie" value="%s">
                     <embed src="%s" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="385">
-               </object> ''' % (video_url, video_url)
+                    </object> 
+               </div>''' % (video_url, video_url)
     return result
                
 

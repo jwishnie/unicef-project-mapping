@@ -183,6 +183,11 @@ class ReviewFeedback(models.Model):
     project = models.ForeignKey(Project)
     reviewed_by = models.ForeignKey(User)
     viewed = models.BooleanField(default=False)
+    date = models.DateTimeField()
+    
+    class Meta:
+        ordering = ('-date', 'viewed')
+    
     
     class Admin:
         pass
