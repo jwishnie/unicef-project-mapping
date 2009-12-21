@@ -62,6 +62,9 @@ label {
     height: 250px;
 }
 
+#video_pane {
+    padding-top: 15px;
+}
 
 #comment_link {
     text-decoration: underline;    
@@ -75,19 +78,22 @@ label {
 }
 
 .proj_filterable_criteria dl {
-    width: 20em;
+    width: 30em;
     height: 12em;
     overflow: auto;
     border: 1px solid #CCC;
-    padding: 5px;
+    padding: 1px;
     margin: 0 10px 5px 0;
-    font-size: 9pt;
 }
 
 .proj_filterable_criteria dt {
     background-color: #007BD6;
-    padding: 0.2em 0.2em 0.2em 3em;
+    padding: 0.2em 0.2em 0.2em 1em;
     color: #FFF;
+}
+
+.proj_filterable_criteria dt dd {
+    margin: 0.3em 0 0 1em;
 }
 
 .resource_icon {

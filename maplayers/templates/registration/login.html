@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{{ css_url }}/login.css" />
+{% endblock %}
 
 {% block page_content %}
 
@@ -6,7 +9,7 @@
 <div class="error">Your username and password didn't match. Please try again.</div>
 {% endif %}
 <div id="login">
-	<h2>Login</h2>
+	<h3>Login</h3>
 	<form method="post" action="{% url django.contrib.auth.views.login %}">
 	<div>
 	    {{ form.username.label_tag }}
