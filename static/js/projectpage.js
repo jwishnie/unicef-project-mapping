@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
-    MIN_SCALE = 110735960.625;
+    MIN_SCALE = 210735960.625;
     WIDTH = 10;
     MAIN_MARKER_WIDTH = 20;
     MAIN_MARKER_HEIGHT = 25;

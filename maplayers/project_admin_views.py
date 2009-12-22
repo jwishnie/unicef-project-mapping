@@ -265,7 +265,6 @@ def delete_project(request, project_id):
         os.remove(resource.filename)
         resource.delete()
     project.delete()
-    print "project deleted"
     return HttpResponse("Deleted")
 
 @login_required
