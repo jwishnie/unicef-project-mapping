@@ -35,11 +35,21 @@
 			expect($("li.overlay_drawer div").is('.expanded')).to(equal, true);
 			expect($('li.overlay_drawer span').is('.open')).to(equal, true);
 		  });
-	        });
+		  it("should toggle spinner", function() {
+			toggleSpinner();
+			expect($('#ajax-spinner').is(":visible")).to(equal, false);
+		  });	
+		  it("should construct query string", function() {
+			selected_filters = [{"name":"filter1"},{"name":"filter2"}];
+			qstring = constructQueryString(selected_filters);
+			expect(qstring).to(equal, "&filter1=true&filter2=true")
+		  });	
+	    });
 	});
     </script>
   </head>
   <body>
+	<div id="ajax-spinner"></div>
   	<div id="filterable_criteria">
 	<ul class="sectors">
 		<li class="projects_drawer">

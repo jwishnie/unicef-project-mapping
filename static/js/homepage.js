@@ -1,7 +1,6 @@
 function collapseProjects() {
     $('ul.sectors_and_implementors').hide();
     $('li.projects_drawer div').removeClass('expanded');
-    $('li.projects_drawer div').css("background-color", "#007BD6");
     $('li.projects_drawer span').removeClass('open');
 }
 
@@ -16,7 +15,6 @@ function expandProjects() {
 function collapseOverlays() {
     $('ul.overlays').hide();
     $('li.overlay_drawer div').removeClass('expanded');
-    $('li.overlay_drawer div').css("background-color", "#007BD6");
     $('li.overlay_drawer span').removeClass('open');
 }
 
@@ -29,7 +27,6 @@ function expandOverlays() {
 function collapseRegionData() {
     $('ul.regiondata').hide();
     $('li.regiondata_drawer div').removeClass('expanded');
-    $('li.regiondata_drawer div').css("background-color", "#007BD6");
     $('li.regiondata_drawer span').removeClass('open');
 }
 
@@ -63,6 +60,22 @@ function hideFilterableCriteria() {
     $('#filterable_criteria ul.overlays').hide();
 }
 
+function toggleSpinner(){
+    if($("#ajax-spinner").is(":visible")){
+        $("#ajax-spinner").hide();
+    }else{
+        $("#ajax-spinner").show();
+    }
+}
+
+function constructQueryString(selected_filters) {
+    var qstring = "";
+    for (var i = 0; i < selected_filters.length; i++) {
+        qstring += "&" + selected_filters[i].name + "=true";
+    }
+    return qstring;
+}
+
 function populateRegionStats(response) {
     $.get("/search_admin_unit/", {
         text: response.responseText
@@ -92,14 +105,6 @@ $(document).ready(function() {
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 
     hideFilterableCriteria();
-    
-    function toggleSpinner(){
-        if($("#ajax-spinner").is(":visible")){
-            $("#ajax-spinner").hide();
-        }else{
-            $("#ajax-spinner").show();
-        }
-    }
     
     $('#filterable_criteria li.sectors_li').click(function() {
         if($('ul.sector_drawer').is(":visible")) {
@@ -184,14 +189,6 @@ $(document).ready(function() {
             });
         }
         mapEvent(null);
-    }
-
-    function constructQueryString(selected_filters) {
-        var qstring = "";
-        for (var i = 0; i < selected_filters.length; i++) {
-            qstring += "&" + selected_filters[i].name + "=true";
-        }
-        return qstring;
     }
 
     function bookmarkUrl() {

@@ -1,7 +1,7 @@
 $(document).ready(function() {
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
-    MIN_SCALE = 200000000;
+    MIN_SCALE = 100000000;
 
     // pink tile avoidance
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
@@ -14,21 +14,6 @@ $(document).ready(function() {
     	return qstring;
     }
     
-    function bookmarkUrl(){
-		var queryString = "";
-		queryString += constructQueryString($(".sectors input[type=checkbox]:checked"));
-		queryString += constructQueryString($(".implementors input[type=checkbox]:checked"));
-		var boundingBox = map.getExtent();
-		var url = document.location.protocol + "//" + document.location.host + 
-				  "/?left=" + boundingBox.left + "&bottom=" + 
-				  boundingBox.bottom + "&right=" + boundingBox.right + 
-				  "&top=" + boundingBox.top +
-                                  "&tag=" + search_tag +
-                                  "&search_term=" + $("#search").val();
-		url += queryString;
-		$('#bookmark').html(url);
-	}
-
 	var size = new OpenLayers.Size(10,17);
 	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 	var icon = new OpenLayers.Icon('/static/img//bright_red_marker.png',size,offset);
@@ -90,8 +75,6 @@ $(document).ready(function() {
 		$.get(projects_url, filters, function(data) {
             addProjectsOnMap(projects);
 		});
-        
-        bookmarkUrl();
     }
     
     var options = {

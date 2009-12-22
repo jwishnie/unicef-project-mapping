@@ -161,7 +161,7 @@ def project_comments(project, mode="display", number='3'):
             result += '<span class="delete_comment" id="delete_comment_%s">Remove</span>' % comment.id
         result += '</div>'
     if number != -1 and len(comments) > 3:
-        result += '<span><a href="/project/comments/%s/all/%s/">See all comments</a></span>' % (str(project.id), mode)
+        result += '<span><a href="/project/comments/%s/all/%s/">See all comments >></a></span>' % (str(project.id), mode)
     return result
     
     
