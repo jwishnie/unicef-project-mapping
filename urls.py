@@ -35,6 +35,7 @@ urlpatterns += patterns('maplayers',
                          (r'^search_admin_unit/$', 'views.search_admin_units'),
                          (r'^kml_layers/$', 'views.kml_layers'),
                          (r'^country_details/$', 'views.country_details'),
+                         (r'^projects/video/(?P<video_id>\d+)/$', 'views.project_video')
                          )
                          
 urlpatterns += patterns('maplayers.project_admin_views',

@@ -19,9 +19,9 @@ from django.contrib.auth.decorators import login_required
 from tagging.models import TaggedItem, Tag
 
 from maplayers.utils import is_empty
-from maplayers.models import Project, Sector, Implementor, ProjectComment
+from maplayers.models import Project, Sector, Implementor, ProjectComment, Video
 from maplayers.forms import UserForm, ChangePasswordForm
-from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GROUPS
+from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GROUPS, VIDEO_PROVIDER
 from maplayers.utils import html_escape
 from maplayers.models import AdministrativeUnit, KMLFile
 from maplayers.admin_request_parser import convert_text_to_dicts
@@ -163,7 +163,17 @@ def project(request, project_id, project_manager=Project.objects):
     return render_to_response('project.html', context,
                                context_instance=RequestContext(request)
                               )
-
+                              
+                              
+def project_video(request, video_id):
+    video=Video.objects.get(id=video_id)
+    if(video.provider == VIDEO_PROVIDER.YOUTUBE):
+        video_url = "http://www.youtube.com/v/%s&autoplay=1" % video.video_id
+    else:
+        video_url = "http://vimeo.com/moogaloop.swf?clip_id=%s&autoplay=1" % video.video_id
+    return render_to_response("video.html", {'video_url' : video_url},
+                             context_instance= RequestContext(request))
+    
 
 def kml_layers(request):
     kml_files = KMLFile.objects.all()

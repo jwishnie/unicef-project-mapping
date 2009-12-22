@@ -75,16 +75,36 @@ def project_video(project):
         video_url = "http://vimeo.com/moogaloop.swf?clip_id=" + video.video_id
         
     result = '''<div id="video_pane">
-                    <h4>Related Videos :</h4>    
-                    <object width="400" height="385">
-                    <param name="allowfullscreen" value="true">
-                    <param name="allowscriptaccess" value="always"> 
-                    <param name="movie" value="%s">
-                    <embed src="%s" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="385">
-                    </object> 
+                    <h4>Related Videos :</h4>
+                    <div id="current_video">    
+                        <object width="400" height="385">
+                        <param name="allowfullscreen" value="true">
+                        <param name="allowscriptaccess" value="always"> 
+                        <param name="movie" value="%s">
+                        <embed src="%s" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="385">
+                        </object> 
+                    </div>
                </div>''' % (video_url, video_url)
     return result
                
+
+@register.simple_tag
+def video_playlist(project):
+    thumbnail_urls = []
+    videos = project.video_set.all()
+    if len(videos) < 2: return ""
+    result = "<div id='video_playlist'><ul>"
+    
+    for video in videos:
+        if(video.provider == VIDEO_PROVIDER.YOUTUBE):
+            thumbnail_url = "http://img.youtube.com/vi/%s/default.jpg" % video.video_id
+            result += "<li><img src='%s' id='video_%s' class='video_thumbnail'></li>"  % (thumbnail_url, video.id)
+        else:
+            pass
+            
+    result += "</ul></div>"
+    return result
+    
 
 @register.simple_tag
 def projects_for_review_link(user):
