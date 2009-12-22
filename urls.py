@@ -35,6 +35,7 @@ urlpatterns += patterns('maplayers',
                          (r'^search_admin_unit/$', 'views.search_admin_units'),
                          (r'^kml_layers/$', 'views.kml_layers'),
                          (r'^country_details/$', 'views.country_details'),
+                         (r'^example/$', direct_to_template, {'template' : 'youtube-multiple.html'}),
                          )
                          
 urlpatterns += patterns('maplayers.project_admin_views',
