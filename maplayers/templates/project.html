@@ -64,7 +64,7 @@
 							<div id="image_pane">
 			                    {% if project.project_image %}
 									<div id="project_image">
-				                        <div>Project Image</div>
+				                        <h4>Project Image</h4>
 				                        <span><img alt={{project.name}} src="{{project_photo_url}}{{project.project_image}}"/></span>
 				                    </div>
 								{%endif%}
@@ -74,10 +74,20 @@
 						</div>
 													
 						<div id="left_pane">
+							<div class="toc">
+								<h4>Table of Contents</h4>
+								<ul>
+									{% if project.sector_set or project.implementor_set %}
+									<li><a href="#project_sectors">Sectors and Implementors</a></li>
+									{% endif %}
+									<li><a href="#project_description">Description</a></li>
+									<li><a href="#project_location">References</a></li>
+								</ul>
+							</div>
 							<div class="proj_filterable_criteria">
 								<dl id="project_sectors" class="floatleft">
 									{% if project.sector_set %}
-										<dt>Project Sectors</dt>
+										<dt>Sectors</dt>
 										{% for sector in sectors %}
 											<dd>{{sector}}</dd>
 										{% endfor %}
@@ -86,7 +96,7 @@
 								</dl>
 			                    <dl id="project_implementors" class="floatleft">
 									{% if project.implementor_set %}
-										<dt>Project Implementors</dt>
+										<dt>Implementors</dt>
 										{% for implementor in implementors %}									
 										<dd>{{implementor}}</dd>
 										{% endfor %}
@@ -95,25 +105,25 @@
 								</dl>
 							</div>
 							<div id="project_description">
-								<label>Description: </label>
+								<h4>Description: </h4>
 								{% autoescape off %} 
 	                            <div class="sub_div">{{project.description}}</div>
 	                            {% endautoescape %} 
 							</div>
 							<div class="one_line_info">
 								<div id="project_location" class="floatleft">
-									<label>Location: </label>
+									<h4>Location: </h4>
 									<div class="sub_div"><span>{{project.location}}</span></div>
 		                        </div>
 
 		                        <div id="project_website" class="floatleft">
-		                            <label>Project WebSite: </label>
+		                            <h4>Project WebSite: </h4>
 		                            <div class="sub_div"><span><a href="{{project.website_url}}" target="_new">{{project.name}} home page</a></span></div>
 		                        </div>
                        
 		                        <div id="parent_project" class="floatleft">
 		                          {% if project.parent_project %}
-		                            <label>Main Project : </label>
+		                            <h4>Main Project : </h4>
 		                            <div class="sub_div">
 										<span><a href="/projects/id/{{project.parent_project.id}}/">{{project.parent_project.name}}</a></span>
 									</div>
@@ -122,7 +132,7 @@
                        		</div>
 	                        <div id="subprojects">
 	                          {% if subprojects %}
-	                            <label>Sub Projects : </label>
+	                            <h4>Sub Projects : </h4>
 	                            {% for subproject in subprojects %}
 	                              <div class="sub_div"><a href="/projects/id/{{subproject.id}}/">{{subproject.name}}</a></div>
 	                            {% endfor %}
@@ -131,14 +141,14 @@
 							
 							{% if links %}
 								<div id="project links">
-									<label>Links : </label>
+									<h4>Links : </h4>
 									{% show_project_links links %}
 								</div>	
 							{% endif %}
 							
 							{% if tags %}
 								<div id="tags">
-									<label>Tags : </label>
+									<h4>Tags : </h4>
 									{% for tag in tags %}
 									  <div class="sub_div"><a href="/projects/tag/{{tag}}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></div>
 									{% endfor %}
@@ -147,7 +157,7 @@
 							
 							{% if resources %}
 								<div id="resources">
-									<label>Resources : </label>
+									<h4>Resources : </h4>
 									{% for resource in resources %}
 									<div class="resource">
 
@@ -165,7 +175,7 @@
 					</div>
 
 					<div class="post_a_comment_link">
-						<label id="comment_link">Post a comment</label>
+						<h4 id="comment_link">Post a comment</h4>
 					</div>
 					<div class="flash_message_box"><div id="comment_message"></div></div>
 

@@ -1,5 +1,26 @@
-label {
-    font-weight: bold;
+h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.toc ul {
+    list-style-type: disc;
+    overflow: hidden;
+    padding-left: 5em;
+    background-color: #E2EBF4;
+    border: 1px solid #CCC;
+    margin-bottom: 10px;
+    font-size: 9pt;
+}
+
+.toc ul li {
+    float: left;
+    width: 19em;
+}
+
+.toc ul li a {
+    color: #0000FF;
+    text-decoration: underline;
 }
 
 #map_canvas {
@@ -24,7 +45,6 @@ label {
 
 #left_pane {
     line-height: 1.5em;
-    text-align: justify;
 }
 
 #right_pane {
@@ -87,9 +107,9 @@ label {
 }
 
 .proj_filterable_criteria dt {
-    background-color: #007BD6;
     padding: 0.2em 0.2em 0.2em 1em;
-    color: #FFF;
+    border-bottom: 1px solid #CCC;
+    font-weight: bold;
 }
 
 .proj_filterable_criteria dt dd {
