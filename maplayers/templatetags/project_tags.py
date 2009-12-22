@@ -145,7 +145,7 @@ def project_comments(project, mode="display", number='3'):
     comments = [comment for comment in project.projectcomment_set.all() if comment.status == COMMENT_STATUS.PUBLISHED]
     number = int(number)
     comments_list = comments if number == -1 else comments[0:number]
-    if comments:
+    if comments and number!= -1:
         if(mode=="display"):
             result += '<span>So far there\'s been %d comments </span>' % len(comments)
         else:

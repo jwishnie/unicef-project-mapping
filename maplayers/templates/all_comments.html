@@ -12,7 +12,11 @@
 {% endblock %}
 
 {% block page_content %}
-	<div id="comments">
+	<div id="project_all_comments">
+			<div class="head_nav">
+				<h4 class="floatleft">{{project.name}} comments</h4>
+				<a class="floatright" href="/projects/id/{{project.id}}/"> << Back to project</a>
+			</div>
 		{% project_comments project mode '-1' %}
 	</div>
 {% endblock %}
