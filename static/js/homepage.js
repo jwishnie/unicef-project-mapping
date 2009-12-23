@@ -360,7 +360,7 @@ $(document).ready(function() {
     map.events.register('moveend', map, mapEvent);
     map.addLayer(layer);
     map.zoomToExtent(bounds);
-
+    
 
     $('.sectorbox').bind('click', mapEvent);
     $('.implementorbox').bind('click', mapEvent);

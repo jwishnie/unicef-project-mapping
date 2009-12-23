@@ -30,13 +30,16 @@ from maplayers.admin_request_parser import convert_text_to_dicts
 def homepage(request):
     sectors = _get_sectors(request)
     sector_ids = [sector.id for sector in sectors]
+    all_sectors = Sector.objects.all()
     implementors  = _get_implementors(request)
     implementor_ids = [implementor.id for implementor in implementors]
+    all_implementors = Implementor.objects.all()
     left, bottom, right, top = _get_bounding_box(request)
     projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     kml_layers = KMLFile.objects.all()
     context_data = {'projects' : projects, 'sectors' : sectors, 'tag': "",
                     'implementors' : implementors,'left': left, 'right' : right,
+                    'all_sectors' : all_sectors, 'all_implementors' : all_implementors,
                     'top': top, 'bottom' : bottom, 'kml_layers' : kml_layers} 
     return render_to_response(
                               'homepage.html', 

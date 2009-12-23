@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load project_tags %}
 
 {% block title_extra %} &mdash; Home{% endblock %}
 	
@@ -37,18 +38,18 @@
 			<ul class="sectors_and_implementors round_corner">
 				<li class="sectors_li sub_categories expanded">Sectors</li>
 					<ul class="sector_drawer">
-						{% for sector in sectors %}
+						{% for sector in all_sectors %}
 						<li>
-							<input type="checkbox" name="sector_{{sector.id}}" value="{{sector.name}}" class="sectorbox" />
+							{% sector_checkbox sector sectors %}
 							<label title="{{sector.name}}">{{sector.name}}</label>
 						</li>
 						{% endfor %}
 					</ul>
 				<li class="implementors_li sub_categories expanded">Implementors</li>
 					<ul class="implementor_drawer">
-						{% for implementor in implementors %}
+						{% for implementor in all_implementors %}
 						<li>
-							<input type="checkbox" name="implementor_{{implementor.id}}" value="{{implementor.name}}" class="implementorbox" />
+							{% implementor_checkbox implementor implementors %}
 							<label title="{{implementor.name}}">{{implementor.name}}</label>
 						</li>
 						{% endfor %}
