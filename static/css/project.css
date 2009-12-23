@@ -84,6 +84,15 @@ h4 {
 
 #video_pane {
     padding-top: 15px;
+    overflow: hidden;
+}
+
+#video_pane #video_playlist {
+    height: 385px;
+    width: 145px;
+    overflow-y: scroll;
+    border: 1px solid #999999;
+    padding-left: 5px;
 }
 
 #comment_link {

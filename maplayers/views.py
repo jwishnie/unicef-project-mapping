@@ -108,12 +108,10 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             text = request.GET.get('text')
             bbox = {}
             country_details = convert_text_to_dicts(text)
-            print country_details
             country_code = country_details['ISO2']
             callback = geonames.query_for_country(country_code)
             response = json.loads(callback)
             region_data = response['geonames'][0] 
-            print geoserver.get_admin_units_for_country(region_data['countryName'])
             admin_units = geoserver.get_admin_units_for_country(region_data['countryName'])
             bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
             bbox['west'] = float(region_data['bBoxWest'])
@@ -126,7 +124,6 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             response.write(json.dumps(bbox))
             return response
         except Exception, ex:
-            print ex
             response = HttpResponse()
             region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : []}
             response.write(json.dumps(region_data))
