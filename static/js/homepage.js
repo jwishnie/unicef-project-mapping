@@ -99,75 +99,109 @@ $(document).ready(function() {
 
     var active_kml_layers = new Object();
     active_kml_layers["Markers"] = true;
+    var regional_data_layers = {};
     // pink tile avoidance
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
     // make OL compute scale according to WMS spec
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 
     hideFilterableCriteria();
-    
+
     $('#filterable_criteria li.sectors_li').click(function() {
         if($('ul.sector_drawer').is(":visible")) {
+            clearRegionalDataLayers();
             collapseSectors();
         }else {
+            clearRegionalDataLayers();
             expandSectors();
         }
     });
     
     $('#filterable_criteria li.implementors_li').click(function() {
         if($('ul.implementor_drawer').is(":visible")) {
+            clearRegionalDataLayers();
             collapseImplementors();
         }else {
+            clearRegionalDataLayers();
             expandImplementors();
         }
     });
     
     $('#filterable_criteria li.projects_drawer div').click(function() {
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseOverlays();
         }
         if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseRegionData();
-        } 
+        }
         if ($('#filterable_criteria li.projects_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseProjects();
             hideMarkers();
         }else {
+            clearRegionalDataLayers();
             expandProjects();
             showMarkers();
         }
     });
-
+ 
     $('#filterable_criteria li.overlay_drawer div').click(function() {
         if ($('#filterable_criteria li.projects_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseProjects();
             hideMarkers();
         }
         if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseRegionData();
         }
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseOverlays();
         }else {
+            clearRegionalDataLayers();
             expandOverlays();
         }
     });
-
+ 
     $('#filterable_criteria li.regiondata_drawer div').click(function() {
         if ($('#filterable_criteria li.projects_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseProjects();
             hideMarkers();
         }
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseOverlays();
         }
         if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseRegionData();
         }else {
+            clearRegionalDataLayers();
             expandRegionData();
             switchStatsView();
         }
-    });
+    });   
+
+    function clearRegionalDataLayers() {
+        var layers = map.layers;
+        $.each(layers, function() {
+            if (regional_data_layers[this.name]) {
+                map.removeLayer(this);
+            }
+        });
+        var world = map.getLayersByName("World");
+        $.each(world, function() {
+            map.removeLayer(this);
+        });
+        regional_data_layers = {};
+        map.events.unregister('moveend', map, mapEvent);
+
+        map.zoomToScale(0);
+    }
 
     function hideMarkers() {
         var markerLayer = map.getLayersByName("Markers");
@@ -326,7 +360,7 @@ $(document).ready(function() {
     map.events.register('moveend', map, mapEvent);
     map.addLayer(layer);
     map.zoomToExtent(bounds);
-
+    
 
     $('.sectorbox').bind('click', mapEvent);
     $('.implementorbox').bind('click', mapEvent);
@@ -339,7 +373,7 @@ $(document).ready(function() {
                 "World",
                 gs,
                 { 
-                   layers: 'GADM:gadm1_lev0',
+                   layers: 'GADM:World',
                    transparent: true,
                    format: 'image/png'
                 },
@@ -382,7 +416,15 @@ $(document).ready(function() {
         OpenLayers.Event.stop(e);
     }
 
+    function getLayerName(layername) {
+        if (layername.search(":") >= 0) {
+            return layername.split(":")[1]
+        }
+        return layername;
+    }
+
     function switchStatsView() {
+        $('ul.regiondata').unbind('click', switchStatsView);
         map.events.unregister('moveend', map, mapEvent);
         var bounds = new OpenLayers.Bounds(-180, -90, 180, 90);
         map.zoomToExtent(bounds);
@@ -395,31 +437,31 @@ $(document).ready(function() {
         $.each(layersInMap,
         function() {
             if (!this.isBaseLayer) {
-                if (! (this.name in active_kml_layers)) {
+                if (! (this.name in active_kml_layers) && ! (this.name in regional_data_layers)) {
                     var isChecked = "";
                     if (this.visibility) {
                         isChecked = 'checked="checked"';
                     }
-                    var htmlLayer = '<li><input type="radio" name="layergroup" value="' + this.name + '" class="radiolayer"' + isChecked + '" /><label>' + this.name + '</label></li><p/>';
+                    var htmlLayer = '<li><input type="radio" name="layergroup" value="' + this.name + '" class="radiolayer"' + isChecked + '" /><label>' + getLayerName(this.name) + ' (Choose to clear all layers)</label></li><p/>';
                     $(".regiondata").append(htmlLayer);
                     $(".radiolayer").bind('click', switchLayer);
                 }
             }
         });
+        $("input[name=World]:radio").attr("checked", "checked");
         map.events.register('click', map, queryCountryClickedOn);
     }
 
     function queryCountryClickedOn(e) {
         toggleSpinner();
         var layersInMap = map.layers;
-            var layerToQuery = "";
-            $.each(layersInMap, function(){
-                if(! this.isBaseLayer){
-                    if(this.visibility){
-                        layerToQuery = this.params.LAYERS;
-                    }
+        $.each(layersInMap, function(){
+            if(! this.isBaseLayer){
+                if(this.visibility) {
+                    layerToQuery = this.params.LAYERS;
                 }
-            });
+            }
+        });
 
         $("#proj").html("Loading. Please wait...");
         var params = {
@@ -443,18 +485,21 @@ $(document).ready(function() {
     }
 
     function findCountryDetails(response) {
-	$.get("/country_details/",{text:response.responseText},
+        request = response.responseText.split("--------------------------------------------")[1];
+	$.get("/country_details/",{text:request},
 	    function(data){
 	        var bbox = JSON.parse(data);
                 var bounds= new OpenLayers.Bounds(bbox.west, bbox.south, bbox.east, bbox.north);    
                 map.zoomToExtent(bounds);
-                $("#proj").html("Country Name - " + bbox.country);
-                alert(bbox.admin_units instanceof Array);
+                $("#proj").html(bbox.country);
                 if(bbox.admin_units instanceof Array) {
                 $.each(bbox.admin_units, function() {
-                    var htmlLayer = '<li><input type="radio" name="layergroup" value="' + this + '" class="radiolayer"/><label>' + this + '</label></li><p/>';
-                    $(".regiondata").append(htmlLayer);
-                    $(".radiolayer").bind('click', switchLayer);
+                    if (! regional_data_layers[this]) {
+                        regional_data_layers[this] = true;
+                        var htmlLayer = '<li><input type="radio" name="layergroup" value="' + this + '" class="radiolayer"/><label>' + this.split(":")[1] + '</label></li><p/>';
+                        $(".regiondata").append(htmlLayer);
+                        $(".radiolayer").bind('click', switchLayer);
+                    }
                 });
                 } else {
                     $("#proj").append("<p>Unfortunately no region data is available for this country</p>");
@@ -463,26 +508,72 @@ $(document).ready(function() {
 	    });
     }
 
-    function switchLayer(event) {
-        var layerName = $(this).attr("value");
-        var layersInMap = map.layers;
-        var shapeFileName = "";
-        $.each(layersInMap,
-        function() {
-            if (!this.isBaseLayer) {
+    function projectview() {
+        map.zoomToScale(0);
+        $("#filterable_criteria").show();
+        $("#layercontrols").hide();
+        show_all_kml_layers();
+        map.addLayer(markers);
+        $('#regiondata').bind('click', switchStatsView);
+        $('#proj-id').unbind('click', projectview);
+        map.events.register('moveend', map, mapEvent);
+        map.events.unregister('click', map, queryForRegionData);
+    }
+
+    function is_layer_available_in_map(layername) {
+        var layers = map.layers;
+        var result = false;
+        $.each(layers, function() {
+            if (this.name == layername) {
+                result = true;
+            }
+        });
+        return result;
+    }
+
+    function addToMapIfLayerNotAvailable(layername) {
+        if(! is_layer_available_in_map(layername)) {
+            var layers = map.layers;
+            $.each(layers, function () {
+               if (! this.isBaseLayer) {
+                   this.setVisibility(false); 
+               }
+            });
+            
+            var layer = new OpenLayers.Layer.WMS(
+                        layername,
+                        gs,
+                        { 
+                           layers: layername,
+                           transparent: true,
+                           format: 'image/png'
+                        },
+                        {
+                           isBaseLayer: false,
+                           visibility: true
+                        }
+            );
+            layer.setOpacity(0.5);
+            map.addLayer(layer);
+        }
+    }
+
+    function enableLayerIfAvailable(layerName) {
+        var layers = map.layers;
+        $.each(layers, function () {
+            if (! this.isBaseLayer) {
+                this.setVisibility(false);
                 if (this.name === layerName) {
                     this.setVisibility(true);
-                    shapeFileName = this.params.LAYERS;
-                } else {
-                    this.setVisibility(false);
                 }
             }
         });
-        var featureRequestUrl = "http://localhost/geoserver/wfs?request=GetFeature&version=1.1.0&typeName=" + shapeFileName;
-        var xml = $.get(featureRequestUrl,
-        function(data) {
-            upperCorner = $(data).find("gml:lowerCorner");
-        },
-        "xml");
+    }
+
+    function switchLayer(event) {
+        var layerName = $(this).attr("value");
+        var layersInMap = map.layers;
+        enableLayerIfAvailable(layerName);
+        addToMapIfLayerNotAvailable(layerName);
     }
 });

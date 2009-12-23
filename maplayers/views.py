@@ -30,13 +30,16 @@ from maplayers.admin_request_parser import convert_text_to_dicts
 def homepage(request):
     sectors = _get_sectors(request)
     sector_ids = [sector.id for sector in sectors]
+    all_sectors = Sector.objects.all()
     implementors  = _get_implementors(request)
     implementor_ids = [implementor.id for implementor in implementors]
+    all_implementors = Implementor.objects.all()
     left, bottom, right, top = _get_bounding_box(request)
     projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
     kml_layers = KMLFile.objects.all()
     context_data = {'projects' : projects, 'sectors' : sectors, 'tag': "",
                     'implementors' : implementors,'left': left, 'right' : right,
+                    'all_sectors' : all_sectors, 'all_implementors' : all_implementors,
                     'top': top, 'bottom' : bottom, 'kml_layers' : kml_layers} 
     return render_to_response(
                               'homepage.html', 
@@ -105,22 +108,29 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             text = request.GET.get('text')
             bbox = {}
             country_details = convert_text_to_dicts(text)
+            print country_details
             country_code = country_details['ISO2']
             callback = geonames.query_for_country(country_code)
             response = json.loads(callback)
             region_data = response['geonames'][0] 
-            bbox['admin_units'] = geoserver.get_admin_units_for_country(region_data['countryName'])
+            print geoserver.get_admin_units_for_country(region_data['countryName'])
+            admin_units = geoserver.get_admin_units_for_country(region_data['countryName'])
+            bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
             bbox['west'] = float(region_data['bBoxWest'])
             bbox['south'] = float(region_data['bBoxSouth'])
             bbox['east'] = float(region_data['bBoxEast'])
             bbox['north'] = float(region_data['bBoxNorth'])
-            bbox['country'] = region_data['countryName'] 
-            bbox['adm1'] =  "GADM:%s_adm1" % convert_text_to_dicts(text)['ISO']
+            bbox['country'] = "You have clicked on %s" % region_data['countryName'] 
+            bbox['adm1'] =  "%s:%s" % (region_data['countryName'], bbox['admin_units'][0])
             response = HttpResponse()
             response.write(json.dumps(bbox))
             return response
         except Exception, ex:
             print ex
+            response = HttpResponse()
+            region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : []}
+            response.write(json.dumps(region_data))
+            return response
         
 def projects_in_map(request, left, bottom, right, top):
     sector_ids =  _filter_ids(request, "sector") or \

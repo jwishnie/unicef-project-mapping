@@ -15,6 +15,23 @@ from maplayers.resource_icons import ResourceIcon
 register = template.Library()  
 
 @register.simple_tag
+def sector_checkbox(sector, sectors):
+    result = '<input type="checkbox" name="sector_%s" value="%s" class="sectorbox" ' % (sector.id, sector.name)
+    if sector in sectors:
+        result += 'checked="checked"'
+    result += '/>'
+    return result
+  
+@register.simple_tag
+def implementor_checkbox(implementor, implementors):
+    result = '<input type="checkbox" name="implementor_%s" value="%s" class="implementorbox" ' % (implementor.id, implementor.name)
+    if implementor in implementors:
+        result += 'checked="checked"'
+    result += '/>'
+    return result
+    
+
+@register.simple_tag
 def project_links(titles_and_urls):
     link_id = 0
     link_tag = []
