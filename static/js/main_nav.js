@@ -19,6 +19,8 @@ function indicateCurrentLi(){
          jQuery("#main_nav ul li#add_admin_unit_li a").addClass("current_li");
     }else if(jQuery("#admin_units").size() !== 0) {
         jQuery("#main_nav ul li#admin_units_li a").addClass("current_li");
+    }else if(jQuery("#add_kml_file").size() !== 0) {
+        jQuery("#main_nav ul li#add_kml_li a").addClass("current_li");
     }
 }
 
