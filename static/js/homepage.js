@@ -481,6 +481,10 @@ $(document).ready(function() {
             format: format
             };
         OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, findCountryDetails, findCountryDetails);
+        $.each(regional_data_layers, function(key,val) {
+            $("#" + key.replace(":", "_")).remove();
+            delete regional_data_layers[key];
+        });
         OpenLayers.Event.stop(e);
     }
 
@@ -496,7 +500,7 @@ $(document).ready(function() {
                 $.each(bbox.admin_units, function() {
                     if (! regional_data_layers[this]) {
                         regional_data_layers[this] = true;
-                        var htmlLayer = '<li><input type="radio" name="layergroup" value="' + this + '" class="radiolayer"/><label>' + this.split(":")[1] + '</label></li><p/>';
+                        var htmlLayer = '<div id=' + this.replace(":", "_") + '><li><input type="radio" name="layergroup" value="' + this + '" class="radiolayer"/><label>' + this.split(":")[1] + '</label></li><p/></div>';
                         $(".regiondata").append(htmlLayer);
                         $(".radiolayer").bind('click', switchLayer);
                     }
