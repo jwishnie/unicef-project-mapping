@@ -105,22 +105,29 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             text = request.GET.get('text')
             bbox = {}
             country_details = convert_text_to_dicts(text)
+            print country_details
             country_code = country_details['ISO2']
             callback = geonames.query_for_country(country_code)
             response = json.loads(callback)
             region_data = response['geonames'][0] 
-            bbox['admin_units'] = geoserver.get_admin_units_for_country(region_data['countryName'])
+            print geoserver.get_admin_units_for_country(region_data['countryName'])
+            admin_units = geoserver.get_admin_units_for_country(region_data['countryName'])
+            bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
             bbox['west'] = float(region_data['bBoxWest'])
             bbox['south'] = float(region_data['bBoxSouth'])
             bbox['east'] = float(region_data['bBoxEast'])
             bbox['north'] = float(region_data['bBoxNorth'])
-            bbox['country'] = region_data['countryName'] 
-            bbox['adm1'] =  "GADM:%s_adm1" % convert_text_to_dicts(text)['ISO']
+            bbox['country'] = "You have clicked on %s" % region_data['countryName'] 
+            bbox['adm1'] =  "%s:%s" % (region_data['countryName'], bbox['admin_units'][0])
             response = HttpResponse()
             response.write(json.dumps(bbox))
             return response
         except Exception, ex:
             print ex
+            response = HttpResponse()
+            region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : []}
+            response.write(json.dumps(region_data))
+            return response
         
 def projects_in_map(request, left, bottom, right, top):
     sector_ids =  _filter_ids(request, "sector") or \
