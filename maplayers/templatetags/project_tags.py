@@ -75,16 +75,36 @@ def project_video(project):
         video_url = "http://vimeo.com/moogaloop.swf?clip_id=" + video.video_id
         
     result = '''<div id="video_pane">
-                    <h4>Related Videos :</h4>    
-                    <object width="400" height="385">
-                    <param name="allowfullscreen" value="true">
-                    <param name="allowscriptaccess" value="always"> 
-                    <param name="movie" value="%s">
-                    <embed src="%s" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="385">
-                    </object> 
+                    <h4>Related Videos :</h4>
+                    <div id="current_video">    
+                        <object width="400" height="385">
+                        <param name="allowfullscreen" value="true">
+                        <param name="allowscriptaccess" value="always"> 
+                        <param name="movie" value="%s">
+                        <embed src="%s" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="385">
+                        </object> 
+                    </div>
                </div>''' % (video_url, video_url)
     return result
                
+
+@register.simple_tag
+def video_playlist(project):
+    thumbnail_urls = []
+    videos = project.video_set.all()
+    if len(videos) < 2: return ""
+    result = "<div id='video_playlist'><ul>"
+    
+    for video in videos:
+        if(video.provider == VIDEO_PROVIDER.YOUTUBE):
+            thumbnail_url = "http://img.youtube.com/vi/%s/default.jpg" % video.video_id
+            result += "<li><img src='%s' id='video_%s' class='video_thumbnail'></li>"  % (thumbnail_url, video.id)
+        else:
+            pass
+            
+    result += "</ul></div>"
+    return result
+    
 
 @register.simple_tag
 def projects_for_review_link(user):
@@ -140,15 +160,17 @@ def flash_message(request):
     return message
     
 @register.simple_tag
-def project_comments(project, mode="display"):
+def project_comments(project, mode="display", number='3'):
     result = ""
     comments = [comment for comment in project.projectcomment_set.all() if comment.status == COMMENT_STATUS.PUBLISHED]
-    if comments:
+    number = int(number)
+    comments_list = comments if number == -1 else comments[0:number]
+    if comments and number!= -1:
         if(mode=="display"):
             result += '<span>So far there\'s been %d comments </span>' % len(comments)
         else:
             result += '<span class="comments_header">Comments:</span>'    
-    for comment in comments:
+    for comment in comments_list:
         result += '<div id="comment_%s">' % comment.id
         result += '<span class="comment_text">%s</span>' % comment.text
         result += '<p class="comment_metainfo">'
@@ -158,6 +180,8 @@ def project_comments(project, mode="display"):
         if(mode=="edit"):
             result += '<span class="delete_comment" id="delete_comment_%s">Remove</span>' % comment.id
         result += '</div>'
+    if number != -1 and len(comments) > 3:
+        result += '<span><a href="/project/comments/%s/all/%s/">See all comments >></a></span>' % (str(project.id), mode)
     return result
     
     

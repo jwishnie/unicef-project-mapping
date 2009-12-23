@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load project_tags %}
+
+{% block title_extra %} {{ project.name }} {% endblock %}
+
+{% block extrahead %}
+        <script type="text/javascript" src="{{ js_url }}/all_project_comments.js"></script>
+        <script type="text/javascript">
+			project_id = "{{project.id}}"; 
+		</script>
+{% endblock %}
+
+{% block page_content %}
+	<div id="project_all_comments">
+			<div class="head_nav">
+				<h4 class="floatleft">{{project.name}} comments</h4>
+				<a class="floatright" href="/projects/id/{{project.id}}/"> << Back to project</a>
+			</div>
+		{% project_comments project mode '-1' %}
+	</div>
+{% endblock %}

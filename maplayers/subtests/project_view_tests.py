@@ -9,7 +9,7 @@ from  mock import Mock
 from maplayers import views
 from django.http import Http404
 from maplayers.admin_request_parser import convert_text_to_dicts
-import json
+import simplejson
 
 class ProjectPage(TestCase):
     fixtures = ['test_project_data']
@@ -181,7 +181,7 @@ class ProjectPage(TestCase):
                                                  [{"name":"Uganda","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/Uganda.json"},
                                                   {"name":"Afghanistan","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/Afghanistan.json"},
                                                   {"name":"GADM","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/GADM.json"}]}}'''
-        self.assertEquals(["Uganda", "Afghanistan"], geoserver.extract_countries(json.loads(response)))
+        self.assertEquals(["Uganda", "Afghanistan"], geoserver.extract_countries(simplejson.loads(response)))
 
     def test_should_return_list_of_admin_units_for_country(self):
         geoserver = GeoServer()
@@ -191,7 +191,7 @@ class ProjectPage(TestCase):
                                                  [{"name":"Uganda","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/Uganda.json"},
                                                   {"name":"Afghanistan","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/Afghanistan.json"},
                                                   {"name":"GADM","href":"http:\/\/localhost:8080\/geoserver\/rest\/workspaces\/GADM.json"}]}}'''
-        self.assertEquals(["Uganda", "Afghanistan"], geoserver.extract_countries(json.loads(response)))
+        self.assertEquals(["Uganda", "Afghanistan"], geoserver.extract_countries(simplejson.loads(response)))
 
 def to_json(projects):
     result = []

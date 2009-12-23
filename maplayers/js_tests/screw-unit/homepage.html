@@ -14,23 +14,20 @@
 
     <script type="text/javascript">
 	Screw.Unit(function() {
-	        describe("when homepage is initialized", function() {
-	          it("should hide filterable criteria", function() {
+		describe("when homepage is initialized", function() {
+		  it("should hide filterable criteria", function() {
 			hideFilterableCriteria();
-			expect($("#filterable_criteria ul.sectors").is(":visible")).to(equal, false);
-			expect($("#filterable_criteria ul.implementors").is(":visible")).to(equal, false);
-	          });
+			expect($("#filterable_criteria ul.overlays").is(":visible")).to(equal, false);
+	      });
 		  it("should expand sectors on click", function() {
 			expandSectors();
-			expect($("ul.sectors").is(":visible")).to(equal, true);
-			expect($("li.sector_drawer div").is('.expanded')).to(equal, true);
-			expect($('li.sector_drawer span').is('.open')).to(equal, true);
+			expect($("ul.sector_drawer").is(":visible")).to(equal, true);
+			expect($("ul.sectors_and_implementors li.sectors_li").is('.expanded')).to(equal, true);
 		  });
 		  it("should expand implementors on click", function() {
 			expandImplementors();
-			expect($("ul.implementors").is(":visible")).to(equal, true);
-			expect($("li.implementor_drawer div").is('.expanded')).to(equal, true);
-			expect($('li.implementor_drawer span').is('.open')).to(equal, true);
+			expect($("ul.implementor_drawer").is(":visible")).to(equal, true);
+			expect($("ul.sectors_and_implementors li.implementors_li").is('.expanded')).to(equal, true);
 		  });
 		  it("should expand overlays on click", function() {
 			expandOverlays();
@@ -38,25 +35,36 @@
 			expect($("li.overlay_drawer div").is('.expanded')).to(equal, true);
 			expect($('li.overlay_drawer span').is('.open')).to(equal, true);
 		  });
-	        });
+		  it("should toggle spinner", function() {
+			toggleSpinner();
+			expect($('#ajax-spinner').is(":visible")).to(equal, false);
+		  });	
+		  it("should construct query string", function() {
+			selected_filters = [{"name":"filter1"},{"name":"filter2"}];
+			qstring = constructQueryString(selected_filters);
+			expect(qstring).to(equal, "&filter1=true&filter2=true")
+		  });	
+	    });
 	});
     </script>
   </head>
   <body>
+	<div id="ajax-spinner"></div>
   	<div id="filterable_criteria">
 	<ul class="sectors">
-		<li class="sector_drawer">
+		<li class="projects_drawer">
 			<div>
 				<span></span>
 			</div>
 		</li>
 	</ul>
-	<ul class="implementors">
-		<li class="implementor_drawer">
-			<div>
-				<span></span>
-			</div>
-		</li>
+	<ul class="sectors_and_implementors">
+		<li class="sectors_li">
+		<ul class="sector_drawer">
+		</ul>
+		<li class="implementors_li">
+		<ul class="implementor_drawer">
+		</ul>
 	</ul>
 	<ul class="overlays">
 		<li class="overlay_drawer">

@@ -1,7 +1,7 @@
 {% load project_tags %}
   {% if rss_img_feed.images %}
 	<div id="photo_set">
-	<div>Related Images</div>
+	<h4>Related Images</h4>
   	{% for img in rss_img_feed.images %}
     	<div class="photo">
 			<a href={% get_img img.img_url %}><img src={% get_thumbnail_img img.img_url %} /></a>

@@ -10,6 +10,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
+from datetime import datetime
 
 from maplayers.constants import GROUPS, PROJECT_STATUS, COMMENT_STATUS, VIMEO_REGEX, YOUTUBE_REGEX, VIDEO_PROVIDER
 from maplayers.models import Project, Sector, Implementor, Resource, Link, AdministrativeUnit, ReviewFeedback, ProjectComment, Video
@@ -131,7 +132,7 @@ def file_upload(request):
     for chunk in uploaded_file.chunks(): 
         destination.write(chunk) 
         destination.close()
-    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IROTH) 
+    os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IRWXG | stat.S_IROTH | stat.S_IWOTH) 
     project = Project.objects.get(id=project_id)
     project.resource_set.add(Resource(title = uploaded_file_name, filename=file_name, project=project, filesize=file_size))
     return HttpResponse("OK")
@@ -150,7 +151,7 @@ def photo_upload(request):
         for chunk in uploaded_file.chunks(): 
             destination.write(chunk) 
             destination.close()
-        os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IROTH) 
+        os.chmod(destination_name, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IRWXG | stat.S_IROTH | stat.S_IWOTH) 
         project_in_request = Project.objects.get(id=int(project_id))
         project_in_request.project_image = project_photo_name
         project_in_request.save()
@@ -245,6 +246,7 @@ def request_changes(request, project_id):
         review_changes.feedback = feedback
         review_changes.project = project
         review_changes.reviewed_by = request.user
+        review_changes.date = datetime.today()
         review_changes.save()
         project.save()
     return HttpResponse(json.dumps(response_json))
@@ -255,9 +257,11 @@ def delete_project(request, project_id):
     project = Project.objects.get(id=int(project_id))
     if not project.is_editable_by(request.user):
         return HttpResponse("{'authorized' : false}")
+    print project.project_image
     if project.project_image:
         os.remove(project.project_image)
     for resource in project.resource_set.all():
+        print resource.filename
         os.remove(resource.filename)
         resource.delete()
     project.delete()
@@ -435,6 +439,7 @@ def _publish_or_delete_comments(request, action):
         ProjectComment.objects.filter(id__in=comment_ids).delete()
     else:
         ProjectComment.objects.filter(id__in=comment_ids).update(status=COMMENT_STATUS.PUBLISHED)
+    
         
 
 def _create_dir_if_not_exists(filename):

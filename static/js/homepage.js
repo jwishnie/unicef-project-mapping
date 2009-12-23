@@ -1,57 +1,79 @@
-function collapseSectors() {
-    $('ul.sectors').hide();
-    $('li.sector_drawer div').removeClass('expanded');
-    $('li.sector_drawer div').css("background-color", "#007BD6");
-    $('li.sector_drawer span').removeClass('open');
+function collapseProjects() {
+    $('ul.sectors_and_implementors').hide();
+    $('li.projects_drawer div').removeClass('expanded');
+    $('li.projects_drawer span').removeClass('open');
 }
 
-function expandSectors() {
-    $('ul.sectors').show();
-    $('li.sector_drawer div').addClass('expanded');
-    $('ul.sectors').css("background-color", "#FFF");
-    $('ul.sectors').css("color", "#000");
-    $('li.sector_drawer span').addClass('open');
-}
-
-
-function adjustStylesAfterExpand() {
-    $('#left_pane').css("width", "170px");
-    $('#map_canvas').css("width", "800px");
-    $('.expandable_content').show();
+function expandProjects() {
+    expandSectors();
+    expandImplementors();
+    $('ul.sectors_and_implementors').show();
+    $('li.projects_drawer div').addClass('expanded');
+    $('li.projects_drawer span').addClass('open');
 }
 
 function collapseOverlays() {
     $('ul.overlays').hide();
     $('li.overlay_drawer div').removeClass('expanded');
-    $('li.overlay_drawer div').css("background-color", "#007BD6");
     $('li.overlay_drawer span').removeClass('open');
 }
 
 function expandOverlays() {
     $('ul.overlays').show();
     $('li.overlay_drawer div').addClass('expanded');
-    $('ul.overlays').css("background-color", "#FFF");
-    $('ul.overlays').css("color", "#000");
     $('li.overlay_drawer span').addClass('open');
 }
 
 function collapseRegionData() {
     $('ul.regiondata').hide();
     $('li.regiondata_drawer div').removeClass('expanded');
-    $('li.regiondata_drawer div').css("background-color", "#007BD6");
     $('li.regiondata_drawer span').removeClass('open');
 }
 
 function expandRegionData() {
     $('ul.regiondata').show();
     $('li.regiondata_drawer div').addClass('expanded');
-    $('ul.regiondata').css("background-color", "#FFF");
-    $('ul.regiondata').css("color", "#000");
     $('li.regiondata_drawer span').addClass('open');
+}
+
+function collapseSectors() {
+    $('ul.sector_drawer').hide();
+    $('ul.sectors_and_implementors li.sectors_li').removeClass('expanded');
+}
+
+function expandSectors() {
+    $('ul.sector_drawer').show();
+    $('ul.sectors_and_implementors li.sectors_li').addClass('expanded');
+}
+
+function collapseImplementors() {
+    $('ul.implementor_drawer').hide();
+    $('ul.sectors_and_implementors li.implementors_li').removeClass('expanded');
+}
+
+function expandImplementors() {
+    $('ul.implementor_drawer').show();
+    $('ul.sectors_and_implementors li.implementors_li').addClass('expanded');
 }
 
 function hideFilterableCriteria() {
     $('#filterable_criteria ul.overlays').hide();
+}
+
+function toggleSpinner(){
+    if($("#ajax-spinner").is(":visible")){
+        $("#ajax-spinner").hide();
+    }else{
+        $("#ajax-spinner").show();
+    }
+}
+
+function constructQueryString(selected_filters) {
+    var qstring = "";
+    for (var i = 0; i < selected_filters.length; i++) {
+        qstring += "&" + selected_filters[i].name + "=true";
+    }
+    return qstring;
 }
 
 function populateRegionStats(response) {
@@ -73,7 +95,7 @@ function populateRegionStats(response) {
 $(document).ready(function() {
     BASE_LAYER = "http://labs.metacarta.com/wms/vmap0";
     MAX_SCALE = 865124.6923828125;
-    MIN_SCALE = 200000000;
+    MIN_SCALE = 130000000;
 
     var active_kml_layers = new Object();
     active_kml_layers["Markers"] = true;
@@ -84,97 +106,87 @@ $(document).ready(function() {
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 
     hideFilterableCriteria();
-    
-    function toggleSpinner(){
-        if($("#ajax-spinner").is(":visible")){
-            $("#ajax-spinner").hide();
-        }else{
-            $("#ajax-spinner").show();
-        }
-    }
-    
-    $('#filterable_criteria li.sector_drawer div').click(function() {
-        if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
-            clearRegionDataLayers();
-            collapseOverlays();
-            collapseRegionData();
-            showMarkers();
-        } else {
-            clearRegionDataLayers();
-            collapseOverlays();
-            collapseRegionData();
-            hideMarkers();
-        }
-        if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
-            clearRegionDataLayers();
+
+    $('#filterable_criteria li.sectors_li').click(function() {
+        if($('ul.sector_drawer').is(":visible")) {
+            clearRegionalDataLayers();
             collapseSectors();
-            collapseRegionData();
-            hideMarkers();
-        }
-        else {
-            clearRegionDataLayers();
+        }else {
+            clearRegionalDataLayers();
             expandSectors();
-            collapseRegionData();
-            showMarkers();
-        }
-        if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
-            clearRegionDataLayers();
-            collapseOverlays();
-            collapseRegionData();
-            showMarkers();
-        } else {
-            clearRegionDataLayers();
-            collapseOverlays();
-            collapseRegionData();
-            hideMarkers();
         }
     });
-
+    
+    $('#filterable_criteria li.implementors_li').click(function() {
+        if($('ul.implementor_drawer').is(":visible")) {
+            clearRegionalDataLayers();
+            collapseImplementors();
+        }else {
+            clearRegionalDataLayers();
+            expandImplementors();
+        }
+    });
+    
+    $('#filterable_criteria li.projects_drawer div').click(function() {
+        if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
+            collapseOverlays();
+        }
+        if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
+            collapseRegionData();
+        }
+        if ($('#filterable_criteria li.projects_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
+            collapseProjects();
+            hideMarkers();
+        }else {
+            clearRegionalDataLayers();
+            expandProjects();
+            showMarkers();
+        }
+    });
+ 
     $('#filterable_criteria li.overlay_drawer div').click(function() {
-        if ($('#filterable_criteria li.sector_drawer span.open').size() !== 0) {
-            clearRegionDataLayers();
-            collapseSectors();
-            collapseRegionData();
+        if ($('#filterable_criteria li.projects_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
+            collapseProjects();
             hideMarkers();
-        } else {
-            clearRegionDataLayers();
-            expandSectors();
+        }
+        if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseRegionData();
-            showMarkers();
         }
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
-            clearRegionDataLayers();
+            clearRegionalDataLayers();
             collapseOverlays();
-            collapseRegionData();
-            showMarkers();
-        }
-        else {
-            clearRegionDataLayers();
+        }else {
+            clearRegionalDataLayers();
             expandOverlays();
-            collapseRegionData();
-            hideMarkers();
         }
     });
-
+ 
     $('#filterable_criteria li.regiondata_drawer div').click(function() {
-        if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
-            clearRegionDataLayers();
-            collapseRegionData(); 
-            collapseOverlays();
-            collapseSectors();
+        if ($('#filterable_criteria li.projects_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
+            collapseProjects();
             hideMarkers();
         }
-        else {
-            clearRegionDataLayers();
-            expandRegionData(); 
+        if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
             collapseOverlays();
-            collapseSectors();
-            hideMarkers();
+        }
+        if ($('#filterable_criteria li.regiondata_drawer span.open').size() !== 0) {
+            clearRegionalDataLayers();
+            collapseRegionData();
+        }else {
+            clearRegionalDataLayers();
+            expandRegionData();
             switchStatsView();
         }
-    });
+    });   
 
-    function clearRegionDataLayers() {
+    function clearRegionalDataLayers() {
         var layers = map.layers;
         $.each(layers, function() {
             if (regional_data_layers[this.name]) {
@@ -186,7 +198,9 @@ $(document).ready(function() {
             map.removeLayer(this);
         });
         regional_data_layers = {};
-        //map.zoomToExtent(-180, -90, 180, 90);
+        map.events.unregister('moveend', map, mapEvent);
+
+        map.zoomToScale(0);
     }
 
     function hideMarkers() {
@@ -211,18 +225,9 @@ $(document).ready(function() {
         mapEvent(null);
     }
 
-    function constructQueryString(selected_filters) {
-        var qstring = "";
-        for (var i = 0; i < selected_filters.length; i++) {
-            qstring += "&" + selected_filters[i].name + "=true";
-        }
-        return qstring;
-    }
-
     function bookmarkUrl() {
         var queryString = "";
-        queryString += constructQueryString($(".sectors input[type=checkbox]:checked"));
-        queryString += constructQueryString($(".implementors input[type=checkbox]:checked"));
+        queryString += constructQueryString($(".sectors_and_implementors input[type=checkbox]:checked"));
         var boundingBox = map.getExtent();
         var url = document.location.protocol + "//" + document.location.host +
         "/?left=" + boundingBox.left + "&bottom=" +
@@ -287,12 +292,10 @@ $(document).ready(function() {
         var projects_url = "/projects/bbox/" + boundingBox.left + "/" +
         boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
         var filters = {};
-        $(".sectors input[type=checkbox]:checked").each(function() {
+        $(".sectors_and_implementors input[type=checkbox]:checked").each(function() {
             filters[$(this).attr('name')] = true;
         });
-        $(".implementors input[type=checkbox]:checked").each(function() {
-            filters[$(this).attr('name')] = true;
-        });
+
         filters.tag = search_tag;
 
         $.get(projects_url, filters,
@@ -364,7 +367,6 @@ $(document).ready(function() {
 
     $('.overlaybox').click(handleOverlays);
 
-    $('ul.regiondata').bind('click', switchStatsView);
     var gs = "http://"+window.location.host+"/geoserver/ows";
     
     var worldLayer = new OpenLayers.Layer.WMS(
@@ -426,7 +428,6 @@ $(document).ready(function() {
         map.events.unregister('moveend', map, mapEvent);
         var bounds = new OpenLayers.Bounds(-180, -90, 180, 90);
         map.zoomToExtent(bounds);
-        hide_all_kml_layers();
         toggleSpinner();
         map.addLayer(worldLayer);
         toggleSpinner();
@@ -574,24 +575,5 @@ $(document).ready(function() {
         var layersInMap = map.layers;
         enableLayerIfAvailable(layerName);
         addToMapIfLayerNotAvailable(layerName);
-    }
-
-    function hide_all_kml_layers() {
-        for (layer in active_kml_layers) {
-            if (active_kml_layers[layer]) {
-                var kml_layer = map.getLayersByName(layer)[0];
-                kml_layer.setVisibility(false);
-            }
-        }
-    }
-
-    function show_all_kml_layers() {
-        for (layer in active_kml_layers) {
-            if (active_kml_layers[layer]) {
-                var kml_layer = map.getLayersByName(layer)[0];
-                kml_layer.setVisibility(true);
-            }
-
-        }
     }
 });
