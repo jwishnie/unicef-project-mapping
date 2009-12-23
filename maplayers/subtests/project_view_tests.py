@@ -171,7 +171,7 @@ class ProjectPage(TestCase):
                                                              "bBoxSouth":6.74713850021362,
                                                              "population":"1147995000"}]}'''
         response = views.country_details(request, geonames_service, geoserver)
-        self.assertEquals('{"north": 35.504230499267599, "west": 68.186676025390597, "admin_units": "[\\"Districts\\", \\"County\\"]", "country": "India", "east": 97.403312683105497, "adm1": "GADM:IND_adm1", "south": 6.7471385002136204}', response.content)
+        self.assertEquals('{"north": 35.504230499267599, "west": 68.186676025390597, "admin_units": ["India:[", "India:\\"", "India:D", "India:i", "India:s", "India:t", "India:r", "India:i", "India:c", "India:t", "India:s", "India:\\"", "India:,", "India: ", "India:\\"", "India:C", "India:o", "India:u", "India:n", "India:t", "India:y", "India:\\"", "India:]"], "country": "You have clicked on India", "east": 97.403312683105497, "adm1": "India:India:[", "south": 6.7471385002136204}', response.content)
 
     def test_should_return_list_of_countries(self):
         geoserver = GeoServer()
