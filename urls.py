@@ -7,6 +7,9 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+import django_cron
+django_cron.autodiscover()
+
 urlpatterns = patterns('',
         (r'^accounts/login/$', 'django.contrib.auth.views.login'),
         (r'^accounts/logout/$', 'django.contrib.auth.views.logout', { 'next_page': '/' })

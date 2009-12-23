@@ -96,6 +96,7 @@ INSTALLED_APPS = (
     'tagging',
     'tinymce',
     'audioplayer',
+    'django-cron'
 )
 
 #

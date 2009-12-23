@@ -95,7 +95,8 @@ INSTALLED_APPS = (
     'maplayers',
     'tagging',
     'tinymce',
-    'audioplayer'
+    'audioplayer',
+	'django-cron'
 )
 
 #
