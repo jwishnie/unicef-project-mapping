@@ -31,4 +31,8 @@ Python Expect              python-pexpect
 Buildbot (build servers)   buildbot
 ========================   ========================
 
+Need to setup a cron job on the server to delete draft projects
+
+59 23 * * * python <deploy_dir>/cron.py
+
 
