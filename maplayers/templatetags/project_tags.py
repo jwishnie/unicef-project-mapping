@@ -248,7 +248,7 @@ def show_project_links(links):
 
 @register.simple_tag
 def add_project_link():
-    result = """<a href='/add_project?parent_id=' id="add_project_link">Add a new project</a>"""
+    result = """<a href='/add_project?parent_id=' id="add_project_link">Add project</a>"""
     return result    
     
 @register.simple_tag
@@ -259,8 +259,9 @@ def sign_up_link():
 @register.simple_tag
 def add_admin_unit_related_links(user):
     if (set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()])):            
-        result = """<li id='add_admin_unit_li'><a href='/add_admin_unit' id='add_admin_unit_lnk'>Add a new administrative unit</a></li>
-        <li id='admin_units_li'><a href='/admin_units' id='admin_units_links'>Admin Units</a></li>"""
+        result = """<li id='add_admin_unit_li'><a href='/add_admin_unit' id='add_admin_unit_lnk'>Add admin unit</a></li>
+        <li id='admin_units_li'><a href='/admin_units' id='admin_units_links'>Admin Units</a></li>
+        <li id="add_kml_li"><a href="/add_kml" id="add_kml_link">Add kml layer</a></li>"""
         return result
     else:
         return ''    
