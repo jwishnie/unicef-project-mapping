@@ -108,19 +108,21 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             text = request.GET.get('text')
             bbox = {}
             country_details = convert_text_to_dicts(text)
-            print country_details
             country_code = country_details['ISO2']
             callback = geonames.query_for_country(country_code)
             response = json.loads(callback)
             region_data = response['geonames'][0] 
-            print geoserver.get_admin_units_for_country(region_data['countryName'])
             admin_units = geoserver.get_admin_units_for_country(region_data['countryName'])
-            bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
+            if isinstance(admin_units, list):
+                bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
+                bbox['country'] = "You have clicked on %s" % region_data['countryName'] 
+            else:
+                bbox['admin_units'] = ''
+                bbox['country'] = "You have clicked on %s.\n Unfortunately no region data available" % region_data['countryName'] 
             bbox['west'] = float(region_data['bBoxWest'])
             bbox['south'] = float(region_data['bBoxSouth'])
             bbox['east'] = float(region_data['bBoxEast'])
             bbox['north'] = float(region_data['bBoxNorth'])
-            bbox['country'] = "You have clicked on %s" % region_data['countryName'] 
             bbox['adm1'] =  "%s:%s" % (region_data['countryName'], bbox['admin_units'][0])
             response = HttpResponse()
             response.write(json.dumps(bbox))
@@ -128,7 +130,7 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
         except Exception, ex:
             print ex
             response = HttpResponse()
-            region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : []}
+            region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : [], 'admin_units' : ''}
             response.write(json.dumps(region_data))
             return response
         
