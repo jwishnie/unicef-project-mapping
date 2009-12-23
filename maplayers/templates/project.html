@@ -170,8 +170,10 @@
 									{% endfor %}
 								</div>
 							{% endif %}
-							{% project_video project %}
-							{% video_playlist project %}
+							<div id="video_pane">
+								{% project_video project %}
+								{% video_playlist project %}
+							</div>
 						</div>
 					</div>
 

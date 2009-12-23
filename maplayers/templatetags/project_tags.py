@@ -74,17 +74,15 @@ def project_video(project):
     else:
         video_url = "http://vimeo.com/moogaloop.swf?clip_id=" + video.video_id
         
-    result = '''<div id="video_pane">
-                    <h4>Related Videos :</h4>
-                    <div id="current_video">    
+    result = '''<h4>Related Videos :</h4>
+                    <div id="current_video" class="floatleft">    
                         <object width="400" height="385">
                         <param name="allowfullscreen" value="true">
                         <param name="allowscriptaccess" value="always"> 
                         <param name="movie" value="%s">
                         <embed src="%s" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="385">
                         </object> 
-                    </div>
-               </div>''' % (video_url, video_url)
+                    </div>''' % (video_url, video_url)
     return result
                
 
@@ -93,7 +91,7 @@ def video_playlist(project):
     thumbnail_urls = []
     videos = project.video_set.all()
     if len(videos) < 2: return ""
-    result = "<div id='video_playlist'><ul>"
+    result = "<div id='video_playlist' class='floatleft'><ul>"
     
     for video in videos:
         if(video.provider == VIDEO_PROVIDER.YOUTUBE):
