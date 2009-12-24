@@ -3,6 +3,7 @@ import re
 
 class VideoUrl(object):
     def __new__(cls, url):
+        url = url.strip()
         if re.compile(YOUTUBE_REGEX).match(url):
             return Youtube(url)
         elif re.compile(VIMEO_REGEX).match(url):
