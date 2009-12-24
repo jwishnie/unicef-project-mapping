@@ -36,9 +36,9 @@
 		<form action="/{{action}}" method="post">
 			<input type="hidden" name="project_id" value="{{project.id}}"></input>
 			<fieldset>
-				<legend><span>Project Information</span></legend>
+				<legend><span>Description</span></legend>
 				<div class="first_div">
-					<label for="id_name">Name:</label> 
+					<label for="id_name">Name</label> 
 					{{form.name}}
 					{{ form.name.errors }}
 				</div>
@@ -46,27 +46,27 @@
                                 {% sub_project_header parent_project %}					
 				
 				<div class="clearleft">
-					<label for="id_description">Description:</label> 
+					<label for="id_description">Description</label> 
 					{{form.description}}
 					{{ form.description.errors }}					
 				</div>
 			</fieldset>
 			<div class="location_info">
 				<fieldset>
-					<legend><span>Project Location</span></legend>
+					<legend><span>Location</span></legend>
 					<div class="first_div">
-						<label for="id_latitude">Latitude:</label> 
+						<label for="id_latitude">Latitude</label> 
 						{{ form.latitude }}
 						<div class="help_text">Click on the map to set latitude and longitude</div>						
 						{{ form.latitude.errors }}					
 					</div>
 					<div class="clearleft">				
-						<label for="id_longitude">Longitude:</label> 
+						<label for="id_longitude">Longitude</label> 
 						{{ form.longitude }}
 						{{ form.longitude.errors }}					
 					</div>
 					<div class="clearleft">				
-						<label for="id_location">Location:</label> 
+						<label for="id_location">Location</label> 
 						{{ form.location }}
 						<div class="help_text">(eg., Ekami, Congo)</div>
 						{{ form.location.errors}}					
@@ -77,15 +77,15 @@
 				</div>
 			</div>
 			<fieldset>
-				<legend><span>Project Media</span></legend>				
+				<legend><span>Media</span></legend>				
 				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div class="first_div">
-					<label for="id_website_url">Website url:</label> 
+					<label for="id_website_url">Project Website</label> 
 					{{ form.website_url }}
 					{{ form.website_url.errors}}					
 				</div>	
 				<div class="proj_img clearleft">
-					<label for="id_project_image">Project image:</label> 
+					<label for="id_project_image">Project image</label> 
 					
 					{% project_image project %}
 				<!--	<a href="#" id="photo-attach" class="photo-attach" name="photo-attach">Attach a file</a> -->
@@ -95,28 +95,28 @@
 				{% video_url_tag video_urls %}
 				<div id="add_video_link" class="clearleft"><span id="add_video">Add another video</span></div>
 				<div class="clearleft">
-					<label for="id_imageset_feedurl">Image set feed url: </label> 
+					<label for="id_imageset_feedurl">Photo feed URL</label> 
 					{{ form.imageset_feedurl }}
 					{{ form.imageset_feedurl.errors }}					
 				</div>
 			</fieldset>	
 			<fieldset>
-				<legend><span>Project Sector, Implementor and Tags</span></legend>	
+				<legend><span>Sector, Implementor and Tags</span></legend>	
 				<a class="back_to_top" href="#add_project">Back to top</a>											
 				<div class="floatleft">
 				<div class="first_div">
-					<label for="id_project_sectors">Sectors: </label> 
+					<label for="id_project_sectors">Sectors</label> 
 					{{ form.project_sectors }} 
 					{{ form.project_sectors.errors}}					
 				</div>
 				<div class="clearleft">
-					<label for="id_project_implementors">Implementors: </label> 
+					<label for="id_project_implementors">Implementors</label> 
 					{{ form.project_implementors }}
 					<div id="implementor_examples"></div>
 					{{ form.project_implementors.errors}}					
 				</div>
 				<div id="project-tags" class="clearleft">
-					<label for="id_project_tags">Project tags: </label> 
+					<label for="id_project_tags">Tags</label> 
 					{{ form.tags }}
 					<div class="help_text">separate tags with a space</div>
 				</div>
@@ -125,7 +125,7 @@
 				</div>
 			</fieldset>
 			<fieldset>
-				<legend><span>Additional Information</span></legend>				
+				<legend><span>Resources</span></legend>				
 				<a class="back_to_top" href="#add_project">Back to top</a>								
 				<div id="file" class="first_div">
 					{% file_list resources %}

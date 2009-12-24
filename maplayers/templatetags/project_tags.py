@@ -414,7 +414,7 @@ def video_url_tag(video_urls):
         video_url = video_urls[0] if video_urls else ""
         return '''<div id="video_urls">
         			<div id="video_url_1" class="add_video_url">
-        				<label>Video URL : </label>
+        				<label>Video URL</label>
         				<input type="text" name="video_url_1" value="%s"></input>
         			</div>	
         		</div>''' % video_url

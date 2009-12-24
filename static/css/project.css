@@ -11,6 +11,7 @@ h4 {
     border: 1px solid #CCC;
     margin-bottom: 10px;
     font-size: 9pt;
+    width: 62.5em;
 }
 
 .toc ul li {
@@ -53,6 +54,10 @@ h4 {
     padding: 5px;
     border: 1px solid #CCC;
     width: 31%;
+}
+
+#project_description .sub_div p {
+    margin-top: 0;
 }
 
 #image_pane {

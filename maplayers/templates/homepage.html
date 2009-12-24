@@ -3,7 +3,9 @@
 {% load project_tags %}
 
 {% block title_extra %} &mdash; Home{% endblock %}
-	
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{{ css_url }}/homepage.css" />	
+{% endblock %}
 {% block extrahead %}
 <script type="text/javascript">
 	var left = {{left}};
@@ -89,7 +91,5 @@
 			</div>
 	    {% endautoescape %}
 	</div>
-    <div id="bookmark">
-    </div>
 </div>
 {% endblock %}

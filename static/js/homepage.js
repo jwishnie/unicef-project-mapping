@@ -106,7 +106,22 @@ $(document).ready(function() {
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 
     hideFilterableCriteria();
-
+    
+    $("li#share_li a").click(function() {
+        bookmarkUrl();
+        $('#bookmark').show();
+        $('#main_content').css('opacity','0.5');
+        $('#header').css('opacity','0.5');
+        $('#main_nav').css('opacity','0.5');
+    });
+    
+    $("#bookmark_close").click(function() {
+        $('#bookmark').hide();
+        $('#main_content').css('opacity','1');
+        $('#header').css('opacity','1');
+        $('#main_nav').css('opacity','1');        
+    });
+    
     $('#filterable_criteria li.sectors_li').click(function() {
         if($('ul.sector_drawer').is(":visible")) {
             clearRegionalDataLayers();
@@ -236,7 +251,7 @@ $(document).ready(function() {
         "&tag=" + search_tag +
         "&search_term=" + $("#search").val();
         url += queryString;
-        $('#bookmark').html(url);
+        $('#bookmark').html("<div id='bookmark_close'></div>" + url);
     }
 
     function getProjects(data) {
