@@ -84,9 +84,9 @@ function populateRegionStats(response) {
         var statistics = JSON.parse(data);
         var statsHtml = " ";
         if (statistics.found) {
-            statsHtml = '<ul><li> Health :' + statistics.health + '</li><li>Economy :' + statistics.economy + '</li><li>Environment :' + statistics.environment + '</li></ul>';
+            statsHtml = '<ul><li>' + statistics.unit_in_focus + '</li><li> Health :' + statistics.health + '</li><li>Economy :' + statistics.economy + '</li><li>Environment :' + statistics.environment + '</li></ul>';
         } else {
-            statsHtml = 'Sorry the data is not found.';
+            statsHtml = statistics.unit_in_focus + '<p/>Sorry the data is not found.';
         }
         $("#proj").html(statsHtml);
     });
@@ -188,6 +188,10 @@ $(document).ready(function() {
 
     function clearRegionalDataLayers() {
         var layers = map.layers;
+        $.each(active_kml_layers, function(layer_name, val) {
+            var visible_layer = map.getLayersByName(layer_name)[0];
+            visible_layer.setVisibility(false);
+        });
         $.each(layers, function() {
             if (regional_data_layers[this.name]) {
                 map.removeLayer(this);

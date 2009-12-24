@@ -101,6 +101,7 @@ class GeoNames(object):
             data = urllib2.urlopen(str(request_url)).read()
             return data
         except urllib2.HTTPError, ex:
+            
             return ""
 
 def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
@@ -387,9 +388,16 @@ def _get_admin_model(admin_manager, details):
         admin_units.sort()
         adminModel = admin_manager.get(name=details[admin_units[-1]],country=country_code)
         adminModel.found = True
-    except Exception, ex:
-        print ex
+        adminModel.unit_in_focus = "Region Details for %s in %s" %(details[admin_units[-1]], details['NAME_0'])
+    except AdministrativeUnit.DoesNotExist, ex:
+        logging.exception("Unable to find admin unit %s" % str(ex))
         adminModel = AdministrativeUnit()
+        adminModel.unit_in_focus = "Region Details for %s in %s" %(details[admin_units[-1]], details['NAME_0'])
+        adminModel.found = False
+    except Exception, ex:
+        logging.exception("Exception thrown in admin unit search %s" % str(ex))
+        adminModel = AdministrativeUnit()
+        adminModel.unit_in_focus = ""
         adminModel.found = False
     
     return adminModel
