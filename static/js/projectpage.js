@@ -216,7 +216,7 @@ $(document).ready(function() {
         if(action == "Show"){
             $('#nearby_projects').html("Hide projects around this location");
             var boundingBox = map.getExtent();
-        	var projects_url = "/projects/bbox/" + boundingBox.left + "/" + 
+        	var projects_url = "/projects/nearby/" + boundingBox.left + "/" + 
         						boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
 
         	$.get(projects_url, function(data) {
@@ -259,7 +259,7 @@ $(document).ready(function() {
     function mapEvent(event) {
         if(showOtherProjects()){
             var boundingBox = map.getExtent();
-            var projects_url = "/projects/bbox/" + boundingBox.left + "/" +
+            var projects_url = "/projects/nearby/" + boundingBox.left + "/" +
             boundingBox.bottom + "/" + boundingBox.right + "/" + boundingBox.top + "/";
             $.get(projects_url, function(data) {
                 plotProjects(data);

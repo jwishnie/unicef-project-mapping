@@ -14,12 +14,16 @@
 {% block page_content %}
 	<div id="my_projects">
 		<h2>My Projects: </h2>
-		<table id="my_project_list">
-		{% my_projects_header user %}
-		{% for project in projects %}
-			{% my_project project user %}
-		{% endfor %}
-		</table>
+		{% if projects %}
+			<table id="my_project_list">
+			{% my_projects_header user %}
+			{% for project in projects %}
+				{% my_project project user %}
+			{% endfor %}
+			</table>
+		{% else %}
+			<p>No projects</p>
+		{% end %}
 	</div>
 	
 	
