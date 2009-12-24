@@ -22,27 +22,30 @@
 {% block page_content %}
 	<div id="projects_for_review">
 	<h2>Projects for Review: </h2>
-	<table id="project_list">
-	<tr>
-		<th>Project title</th>
-		<th>Created by</th>
-		<th>Action</th>
-	</tr>
-	{% for project in projects %}
-		<tr id="project_{{project.id}}">
-			<td><a href="/projects/id/{{project.id}}/">{{project.name}}</a></td>
-			<td>{{project.created_by}}</td>
-			<td>
-				<span class="first"><a href="/edit_project/{{project.id}}/">Edit</a></span>
-				<span class="review_suggestions" id="review_{{project.id}}">Provide Feedback</span>
-				<span class="publish_link" id="publish_{{project.id}}">Publish</span>
-				<span class="reject_link" id="reject_{{project.id}}">Reject</span>
-				<span class="delete_link" id="delete_{{project.id}}">Delete</span>
-			</td>
+	{% if projects %}
+		<table id="project_list">
+		<tr>
+			<th>Project title</th>
+			<th>Created by</th>
+			<th>Action</th>
 		</tr>
-	{% endfor %}
-	</table>
-	
+		{% for project in projects %}
+			<tr id="project_{{project.id}}">
+				<td><a href="/projects/id/{{project.id}}/">{{project.name}}</a></td>
+				<td>{{project.created_by}}</td>
+				<td>
+					<span class="first"><a href="/edit_project/{{project.id}}/">Edit</a></span>
+					<span class="review_suggestions" id="review_{{project.id}}">Provide Feedback</span>
+					<span class="publish_link" id="publish_{{project.id}}">Publish</span>
+					<span class="reject_link" id="reject_{{project.id}}">Reject</span>
+					<span class="delete_link" id="delete_{{project.id}}">Delete</span>
+				</td>
+			</tr>
+		{% endfor %}
+		</table>
+	{% else %}
+		<div>No projects to review</div>
+	{% endif %}
 	<div id="dialog" title="Review Suggestions">
 		<form id="project_feedback">
 			<textarea rows="8" cols="35" name="feedback" id="feedback"></textarea>

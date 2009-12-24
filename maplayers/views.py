@@ -104,7 +104,13 @@ def projects_in_map(request, left, bottom, right, top):
         projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
 
     return write_project_list_to_response(projects)   
+    
 
+def nearby_projects(request, left, bottom, right, top):
+    sector_ids =  [sector.id for sector in Sector.objects.all()]
+    implementor_ids =  [implementor.id for implementor in Implementor.objects.all()]
+    projects = _get_projects(left, bottom, right, top, sector_ids, implementor_ids)
+    return write_project_list_to_response(projects)
 
 def project(request, project_id, project_manager=Project.objects):
     logging.debug("View project details [project_id] : %s" % project_id)
