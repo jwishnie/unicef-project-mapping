@@ -410,6 +410,10 @@ table#projects td {
     width: 100px;
 }   
 
+.proj_img img.file-progress {
+    height: 15px;
+}   
+
 #project_search #share_li {
     display: none;
 }
