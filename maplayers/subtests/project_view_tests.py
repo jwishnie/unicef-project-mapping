@@ -22,18 +22,26 @@ class ProjectPage(TestCase):
         
     def test_should_return_list_of_projects_in_bounding_box(self):
         webclient = Client()
-        content = webclient.get('/projects/bbox/0/0/40/10/', {'tag' : '', 'search_term' : ''}).content
+        content = webclient.get('/projects/bbox/0/0/40/10/', 
+                                {'tag' : '', 'search_term' : '',
+                                'sector_1' : 'true', 'implementor_3' : 'true'}).content
         self.assertEquals(to_json([Project.objects.get(id=1)]), content)
         
     def test_should_return_list_of_projects_in_selected_sectors(self):
         webclient = Client()
-        content = webclient.get('/projects/bbox/-180/-90/180/90/', {'sector_1':'true', 'sector_2':'true', 'tag' : '', 'search_term' : ''}).content
+        content = webclient.get('/projects/bbox/-180/-90/180/90/', 
+                              {'sector_1':'true', 'sector_2':'true', 
+                              'implementor_1':'true', 'implementor_2':'true', 'implementor_3':'true',
+                              'tag' : '', 'search_term' : ''}).content
         projects = to_json(Project.objects.filter(id__in=[1, 3, 2]))
         self.assertEquals(projects, content)
    
     def test_should_return_list_of_projects_by_selected_implementors(self):
         webclient = Client()
-        content = webclient.get('/projects/bbox/-180/-90/180/90/', {'implementor_1':'true', 'tag' : '', 'search_term' : ''}).content
+        content = webclient.get('/projects/bbox/-180/-90/180/90/', 
+                                {'implementor_1':'true', 'tag' : '', 'search_term' : '',
+                                'sector_1':'true', 'sector_2':'true', 'sector_3' : 'true', 
+                                'sector_4' : 'true'}).content
         projects =  Project.objects.filter(longitude__gte=-180, 
                                           longitude__lte=180,  
                                           latitude__gte=-90, 

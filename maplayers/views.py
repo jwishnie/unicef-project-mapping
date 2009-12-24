@@ -136,10 +136,8 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             return response
         
 def projects_in_map(request, left, bottom, right, top):
-    sector_ids =  _filter_ids(request, "sector") or \
-                [sector.id for sector in Sector.objects.all()]
-    implementor_ids =  _filter_ids(request, "implementor") or \
-                [implementor.id for implementor in Implementor.objects.all()]
+    sector_ids =  _filter_ids(request, "sector")
+    implementor_ids =  _filter_ids(request, "implementor")
     search_term = request.POST.get("q", "")
     if request.GET.get('tag', ''):
         projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
@@ -300,30 +298,24 @@ def view_500(request):
     return response
     
 def _filter_ids(request, filter_name):
-    """
-    returns a list of selected filter_id from the request
-    """
     return [int(filter_id.split("_")[1]) for filter_id in \
             request.GET.keys() if filter_id.find(filter_name +"_") >=0]
     
 def _get_sectors(request):
-    """
-    returns a list of selected sectors present in the request OR all sectors as default
-    """
-    ids = _filter_ids(request, "sector")
-    return Sector.objects.filter(id__in=ids) if ids else Sector.objects.all()
+    if(request.GET.keys()):
+        ids = _filter_ids(request, "sector")
+        return Sector.objects.filter(id__in=ids)
+    else:
+        return Sector.objects.all()
     
 def _get_implementors(request):
-    """
-    returns a list of selected implementors present in the request OR all implementors as default
-    """
-    ids = _filter_ids(request, "implementor")
-    return Implementor.objects.filter(id__in=ids) if ids else Implementor.objects.all()
+    if(request.GET.keys()):
+        ids = _filter_ids(request, "implementor")
+        return Implementor.objects.filter(id__in=ids)
+    else:
+        return Implementor.objects.all()
     
 def _get_projects(left, bottom, right, top, sector_ids, implementor_ids):
-    """
-    returns a list of projects that match the filter criteria and are within the bounding box
-    """
     left, bottom, right, top = \
         [decimal.Decimal(p) for p in (left, bottom, right, top)]
     
