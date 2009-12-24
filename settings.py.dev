@@ -3,7 +3,6 @@
 import os.path
 import logging
 
-
 logging.basicConfig(
     level = logging.DEBUG,
     format = '%(asctime)s %(levelname)s %(message)s',
@@ -95,7 +94,7 @@ INSTALLED_APPS = (
     'maplayers',
     'tagging',
     'tinymce',
-    'audioplayer'
+    'audioplayer',
 )
 
 #

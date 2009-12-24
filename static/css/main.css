@@ -246,15 +246,7 @@ li a {
 #change_password .main_action input,
 #login .main_action input,
 #user_registration .main_action input {
-    background-color: #0099FF;
-    color: #FFF;
-    padding: 5px;
     font-size: 10pt;
-    border-style:solid;
-    border-width:1px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    width : auto;
 }
 
 #main_content {
@@ -264,7 +256,7 @@ li a {
 
 #main_pane .right_pane_wrapper {
     float: left;
-    width: 73%;
+    width: 72%;
     border: 2px solid #007BD6;
     padding: 5px;
 }
@@ -315,7 +307,7 @@ li.drawer {
 
 li.drawer div {
     color: #FFF;
-    padding: 5px;
+    padding: 5px 5px 5px 25px;
 }
 
 #authentication {
@@ -386,14 +378,15 @@ li.projects_drawer div,
 li.regiondata_drawer div,
 li.overlay_drawer div 
 {
-    background: #007BD6 url('../img/collapsed.png') no-repeat scroll 95% 50%;
+    background: #007BD6 url('../img/collapsed.png') no-repeat scroll 3% 50%;
     width: auto;
+    cursor: pointer;
 }
 
 li.overlay_drawer .expanded,
 li.regiondata_drawer .expanded,
 li.projects_drawer .expanded {
-    background: #007BD6 url('../img/expanded.png') no-repeat scroll 95% 50%;
+    background: #007BD6 url('../img/expanded.png') no-repeat scroll 3% 50%;
     width: auto;
 }
 
@@ -701,12 +694,13 @@ ul.overlays li {
 
 #filterable_criteria .sectors_and_implementors .sub_categories{
     font-weight: bold;
-    padding-left: 5px;
-    background: #FFF url('../img/sub_category_collapsed.png') no-repeat 39% 50%;
+    padding-left: 15px;
+    background: #FFF url('../img/sub_category_collapsed.png') no-repeat 0% 50%;
+    cursor: pointer;
 }
 
 #filterable_criteria .sectors_and_implementors .expanded {
-    background: #FFF url('../img/sub_category_expanded.png') no-repeat 39% 50%;
+    background: #FFF url('../img/sub_category_expanded.png') no-repeat 0% 50%;
 }
 
 #ajax-spinner {

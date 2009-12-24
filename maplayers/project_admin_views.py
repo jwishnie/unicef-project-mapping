@@ -257,11 +257,9 @@ def delete_project(request, project_id):
     project = Project.objects.get(id=int(project_id))
     if not project.is_editable_by(request.user):
         return HttpResponse("{'authorized' : false}")
-    print project.project_image
     if project.project_image:
         os.remove(project.project_image)
     for resource in project.resource_set.all():
-        print resource.filename
         os.remove(resource.filename)
         resource.delete()
     project.delete()
@@ -372,7 +370,6 @@ def _add_project_videos(project, request):
         video_url = VideoUrl(request.POST.get(video_url_id, ''))
         if not (video_url.is_valid): continue
         video_input_id = video_url_id.split("_")[2]
-        print video_input_id
         set_default = True if default_video == video_input_id else False
         video_id = video_url.video_id()
         provider = video_url.provider

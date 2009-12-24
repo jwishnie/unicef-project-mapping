@@ -91,17 +91,15 @@ def project_video(project):
     else:
         video_url = "http://vimeo.com/moogaloop.swf?clip_id=" + video.video_id
         
-    result = '''<div id="video_pane">
-                    <h4>Related Videos :</h4>
-                    <div id="current_video">    
+    result = '''<h4>Related Videos :</h4>
+                    <div id="current_video" class="floatleft">    
                         <object width="400" height="385">
                         <param name="allowfullscreen" value="true">
                         <param name="allowscriptaccess" value="always"> 
                         <param name="movie" value="%s">
                         <embed src="%s" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="385">
                         </object> 
-                    </div>
-               </div>''' % (video_url, video_url)
+                    </div>''' % (video_url, video_url)
     return result
                
 
@@ -110,7 +108,7 @@ def video_playlist(project):
     thumbnail_urls = []
     videos = project.video_set.all()
     if len(videos) < 2: return ""
-    result = "<div id='video_playlist'><ul>"
+    result = "<div id='video_playlist' class='floatleft'><ul>"
     
     for video in videos:
         if(video.provider == VIDEO_PROVIDER.YOUTUBE):
@@ -250,7 +248,7 @@ def show_project_links(links):
 
 @register.simple_tag
 def add_project_link():
-    result = """<a href='/add_project?parent_id=' id="add_project_link">Add a new project</a>"""
+    result = """<a href='/add_project?parent_id=' id="add_project_link">Add project</a>"""
     return result    
     
 @register.simple_tag
@@ -261,8 +259,9 @@ def sign_up_link():
 @register.simple_tag
 def add_admin_unit_related_links(user):
     if (set((GROUPS.ADMINS, GROUPS.EDITORS_PUBLISHERS)) & set([g.name for g in user.groups.all()])):            
-        result = """<li id='add_admin_unit_li'><a href='/add_admin_unit' id='add_admin_unit_lnk'>Add a new administrative unit</a></li>
-        <li id='admin_units_li'><a href='/admin_units' id='admin_units_links'>Admin Units</a></li>"""
+        result = """<li id='add_admin_unit_li'><a href='/add_admin_unit' id='add_admin_unit_lnk'>Add admin unit</a></li>
+        <li id='admin_units_li'><a href='/admin_units' id='admin_units_links'>Admin Units</a></li>
+        <li id="add_kml_li"><a href="/add_kml" id="add_kml_link">Add kml layer</a></li>"""
         return result
     else:
         return ''    

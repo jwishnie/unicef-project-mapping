@@ -15,12 +15,12 @@ class HomePage(TestCase):
         
     def test_should_not_contain_add_project_link_if_not_authenticated(self):
         response = self.web_client.get("/", {})
-        self.assertNotContains(response, "Add a new project")
+        self.assertNotContains(response, "Add project")
         
     def test_should_contain_add_project_link_if_authenticated(self):
         self.assertTrue(self.web_client.login(username='author', password='author'))
         response = self.web_client.get("/", {})
-        self.assertContains(response, "Add a new project")
+        self.assertContains(response, "Add project")
         
     def test_should_not_contain_my_projects_link_if_not_authenticated(self):
         response = self.web_client.get("/", {})
