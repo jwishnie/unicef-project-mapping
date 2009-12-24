@@ -106,6 +106,7 @@ $(document).ready(function() {
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 
     hideFilterableCriteria();
+
     
     $("li#share_li").click(function() {
         bookmarkUrl();
@@ -233,8 +234,6 @@ $(document).ready(function() {
             }
         });
 
-        $("#admin_units").remove();
-
         regional_data_layers = {};
         map.events.unregister('moveend', map, mapEvent);
 
@@ -276,7 +275,11 @@ $(document).ready(function() {
         "&tag=" + search_tag +
         "&search_term=" + $("#search").val();
         url += queryString;
+<<<<<<< HEAD:static/js/homepage.js
+        $('#bookmark').html(url);
+=======
         $('#bookmark').append(url);
+>>>>>>> d109b5636b69000435e11d937a1dc67addbdcb33:static/js/homepage.js
     }
 
     function getProjects(data) {
@@ -462,13 +465,14 @@ $(document).ready(function() {
     }
 
     function switchStatsView() {
-        toggleSpinner();
         $('ul.regiondata').unbind('click', switchStatsView);
         $("input[value=World]:radio").attr("checked", "checked");
         map.events.unregister('moveend', map, mapEvent);
         var bounds = new OpenLayers.Bounds(-180, -90, 180, 90);
         map.zoomToExtent(bounds);
+        toggleSpinner();
         map.addLayer(worldLayer);
+        toggleSpinner();
         var layersInMap = map.layers;
         $(".regiondata").html("");
         $("#proj").html("Click on any country to zoom into administrative unit");
@@ -487,7 +491,6 @@ $(document).ready(function() {
             }
         });
         map.events.register('click', map, handleRegionDataClick);
-        toggleSpinner();
     }
 
     function layerClickedOn() {
@@ -546,7 +549,6 @@ $(document).ready(function() {
             $("#" + key.replace(":", "_")).remove();
             delete regional_data_layers[key];
         });
-        $("#admin_units").remove();
         OpenLayers.Event.stop(e);
     }
 
@@ -558,8 +560,6 @@ $(document).ready(function() {
                 var bounds= new OpenLayers.Bounds(bbox.west, bbox.south, bbox.east, bbox.north);    
                 map.zoomToExtent(bounds);
                 $("#proj").html(bbox.country);
-                var region = '<div id="admin_units"><li><label>Administrative Units available : </label></div>';
-                $(".regiondata").append(region);
                 if(bbox.admin_units instanceof Array) {
                 $.each(bbox.admin_units, function() {
                     if (! regional_data_layers[this]) {
@@ -639,12 +639,9 @@ $(document).ready(function() {
     }
 
     function switchLayer(event) {
-        toggleSpinner();
-        $("#proj").html("Click on a region to query data");
         var layerName = $(this).attr("value");
         var layersInMap = map.layers;
         enableLayerIfAvailable(layerName);
         addToMapIfLayerNotAvailable(layerName);
-        toggleSpinner();
     }
 });
