@@ -275,11 +275,7 @@ $(document).ready(function() {
         "&tag=" + search_tag +
         "&search_term=" + $("#search").val();
         url += queryString;
-<<<<<<< HEAD:static/js/homepage.js
-        $('#bookmark').html(url);
-=======
         $('#bookmark').append(url);
->>>>>>> d109b5636b69000435e11d937a1dc67addbdcb33:static/js/homepage.js
     }
 
     function getProjects(data) {
