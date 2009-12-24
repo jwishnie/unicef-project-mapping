@@ -146,3 +146,10 @@ class ProjectAdminViewsUnitTest(TestCase):
         self.assertEquals(302, response.status_code)
         self.assertEquals('/permission_denied/add_project/not_author', response.items()[3][1])
 
+    def test_allow_project_author_to_add_subproject(self):
+        user = Mock()
+        user.username = u'admin'
+        self.assertTrue(views._is_author_of_parent_project(user, user))
+        other_user = Mock()
+        user.username = u'test'
+        self.assertFalse(views._is_author_of_parent_project(user, other_user))
