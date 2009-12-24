@@ -1,5 +1,6 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
+import re
 import decimal
 import logging
 import simplejson as json
@@ -100,6 +101,7 @@ class GeoNames(object):
             data = urllib2.urlopen(str(request_url)).read()
             return data
         except urllib2.HTTPError, ex:
+            
             return ""
 
 def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
@@ -113,27 +115,29 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             response = json.loads(callback)
             region_data = response['geonames'][0] 
             admin_units = geoserver.get_admin_units_for_country(region_data['countryName'])
-            bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
+            if isinstance(admin_units, list):
+                bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
+                bbox['country'] = "You have clicked on %s" % region_data['countryName'] 
+            else:
+                bbox['admin_units'] = ''
+                bbox['country'] = "You have clicked on %s.\n Unfortunately no region data available" % region_data['countryName'] 
             bbox['west'] = float(region_data['bBoxWest'])
             bbox['south'] = float(region_data['bBoxSouth'])
             bbox['east'] = float(region_data['bBoxEast'])
             bbox['north'] = float(region_data['bBoxNorth'])
-            bbox['country'] = "You have clicked on %s" % region_data['countryName'] 
             bbox['adm1'] =  "%s:%s" % (region_data['countryName'], bbox['admin_units'][0])
             response = HttpResponse()
             response.write(json.dumps(bbox))
             return response
         except Exception, ex:
             response = HttpResponse()
-            region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : []}
+            region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : [], 'admin_units' : ''}
             response.write(json.dumps(region_data))
             return response
         
 def projects_in_map(request, left, bottom, right, top):
-    sector_ids =  _filter_ids(request, "sector") or \
-                [sector.id for sector in Sector.objects.all()]
-    implementor_ids =  _filter_ids(request, "implementor") or \
-                [implementor.id for implementor in Implementor.objects.all()]
+    sector_ids =  _filter_ids(request, "sector")
+    implementor_ids =  _filter_ids(request, "implementor")
     search_term = request.POST.get("q", "")
     if request.GET.get('tag', ''):
         projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
@@ -294,30 +298,24 @@ def view_500(request):
     return response
     
 def _filter_ids(request, filter_name):
-    """
-    returns a list of selected filter_id from the request
-    """
     return [int(filter_id.split("_")[1]) for filter_id in \
             request.GET.keys() if filter_id.find(filter_name +"_") >=0]
     
 def _get_sectors(request):
-    """
-    returns a list of selected sectors present in the request OR all sectors as default
-    """
-    ids = _filter_ids(request, "sector")
-    return Sector.objects.filter(id__in=ids) if ids else Sector.objects.all()
+    if(request.GET.keys()):
+        ids = _filter_ids(request, "sector")
+        return Sector.objects.filter(id__in=ids)
+    else:
+        return Sector.objects.all()
     
 def _get_implementors(request):
-    """
-    returns a list of selected implementors present in the request OR all implementors as default
-    """
-    ids = _filter_ids(request, "implementor")
-    return Implementor.objects.filter(id__in=ids) if ids else Implementor.objects.all()
+    if(request.GET.keys()):
+        ids = _filter_ids(request, "implementor")
+        return Implementor.objects.filter(id__in=ids)
+    else:
+        return Implementor.objects.all()
     
 def _get_projects(left, bottom, right, top, sector_ids, implementor_ids):
-    """
-    returns a list of projects that match the filter criteria and are within the bounding box
-    """
     left, bottom, right, top = \
         [decimal.Decimal(p) for p in (left, bottom, right, top)]
     
@@ -373,10 +371,25 @@ def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_
                                   
 def _get_admin_model(admin_manager, details):
     try:
-        adminModel = admin_manager.get(name=details['NAME_1'])
+        country_regex = re.compile('^HASC')
+        country_match = filter(country_regex.search, details.keys())
+        country_match.sort()
+        country_code = details[country_match[-1]].split(".")[0]
+        unit_regex = re.compile('^NAME')
+        admin_units = filter(unit_regex.search, details.keys())
+        admin_units.sort()
+        adminModel = admin_manager.get(name=details[admin_units[-1]],country=country_code)
         adminModel.found = True
-    except:
+        adminModel.unit_in_focus = "Region Details for %s in %s" %(details[admin_units[-1]], details['NAME_0'])
+    except AdministrativeUnit.DoesNotExist, ex:
+        logging.exception("Unable to find admin unit %s" % str(ex))
         adminModel = AdministrativeUnit()
+        adminModel.unit_in_focus = "Region Details for %s in %s" %(details[admin_units[-1]], details['NAME_0'])
+        adminModel.found = False
+    except Exception, ex:
+        logging.exception("Exception thrown in admin unit search %s" % str(ex))
+        adminModel = AdministrativeUnit()
+        adminModel.unit_in_focus = ""
         adminModel.found = False
     
     return adminModel

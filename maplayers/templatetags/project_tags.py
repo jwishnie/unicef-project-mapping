@@ -12,6 +12,8 @@ from maplayers.constants import PROJECT_STATUS, GROUPS, COMMENT_STATUS, VIDEO_PR
 from maplayers.models import Project, ProjectComment, ReviewFeedback
 from maplayers.resource_icons import ResourceIcon
 
+import urllib2
+
 register = template.Library()  
 
 @register.simple_tag
@@ -116,6 +118,9 @@ def video_playlist(project):
             result += "<li><img src='%s' id='video_%s' class='video_thumbnail'></li>"  % (thumbnail_url, video.id)
         else:
             pass
+            # video_json_url = "http://vimeo.com/api/v2/video/%s.json" % video.video_id
+            # data = urllib2.urlopen(video_json_url).read()
+            
             
     result += "</ul></div>"
     return result

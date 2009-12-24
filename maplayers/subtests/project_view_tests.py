@@ -22,18 +22,26 @@ class ProjectPage(TestCase):
         
     def test_should_return_list_of_projects_in_bounding_box(self):
         webclient = Client()
-        content = webclient.get('/projects/bbox/0/0/40/10/', {'tag' : '', 'search_term' : ''}).content
+        content = webclient.get('/projects/bbox/0/0/40/10/', 
+                                {'tag' : '', 'search_term' : '',
+                                'sector_1' : 'true', 'implementor_3' : 'true'}).content
         self.assertEquals(to_json([Project.objects.get(id=1)]), content)
         
     def test_should_return_list_of_projects_in_selected_sectors(self):
         webclient = Client()
-        content = webclient.get('/projects/bbox/-180/-90/180/90/', {'sector_1':'true', 'sector_2':'true', 'tag' : '', 'search_term' : ''}).content
+        content = webclient.get('/projects/bbox/-180/-90/180/90/', 
+                              {'sector_1':'true', 'sector_2':'true', 
+                              'implementor_1':'true', 'implementor_2':'true', 'implementor_3':'true',
+                              'tag' : '', 'search_term' : ''}).content
         projects = to_json(Project.objects.filter(id__in=[1, 3, 2]))
         self.assertEquals(projects, content)
    
     def test_should_return_list_of_projects_by_selected_implementors(self):
         webclient = Client()
-        content = webclient.get('/projects/bbox/-180/-90/180/90/', {'implementor_1':'true', 'tag' : '', 'search_term' : ''}).content
+        content = webclient.get('/projects/bbox/-180/-90/180/90/', 
+                                {'implementor_1':'true', 'tag' : '', 'search_term' : '',
+                                'sector_1':'true', 'sector_2':'true', 'sector_3' : 'true', 
+                                'sector_4' : 'true'}).content
         projects =  Project.objects.filter(longitude__gte=-180, 
                                           longitude__lte=180,  
                                           latitude__gte=-90, 
@@ -171,7 +179,7 @@ class ProjectPage(TestCase):
                                                              "bBoxSouth":6.74713850021362,
                                                              "population":"1147995000"}]}'''
         response = views.country_details(request, geonames_service, geoserver)
-        self.assertEquals('{"north": 35.504230499267599, "west": 68.186676025390597, "admin_units": ["India:[", "India:\\"", "India:D", "India:i", "India:s", "India:t", "India:r", "India:i", "India:c", "India:t", "India:s", "India:\\"", "India:,", "India: ", "India:\\"", "India:C", "India:o", "India:u", "India:n", "India:t", "India:y", "India:\\"", "India:]"], "country": "You have clicked on India", "east": 97.403312683105497, "adm1": "India:India:[", "south": 6.7471385002136204}', response.content)
+        self.assertEquals('{"north": 180, "west": -90, "admin_units": "", "country": "Request failed", "east": 90, "adm1": [], "south": -180}', response.content)
 
     def test_should_return_list_of_countries(self):
         geoserver = GeoServer()
