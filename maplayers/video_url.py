@@ -23,7 +23,10 @@ class Youtube(object):
     def _try_find_video_id_in_url(self):
         pattern = re.compile(YOUTUBE_REGEX)
         match = pattern.match(self.url)
-        return match.group(1)
+        return match.group(2)
+        
+    def __unicode__(self):
+        return "Youtube : " + self.video_id()
 
 
 class Vimeo(object):
@@ -38,7 +41,10 @@ class Vimeo(object):
     def _try_find_video_id_in_url(self):
         pattern = re.compile(VIMEO_REGEX)
         match = pattern.match(self.url)
-        return match.group(1)
+        return match.group(2)
+    
+    def __unicode__(self):    
+        return "Vimeo : " + self.video_id()
 
 class NoVideo(object):
     def __init__(self, url):

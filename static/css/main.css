@@ -29,6 +29,7 @@ a:hover {
 #main_nav,
 .admin_links,
 #main_pane,
+#search_page,
 #review_suggestions .suggestion {
 	overflow: hidden;
 }
@@ -408,7 +409,11 @@ table#projects td {
     height: 100px;
     width: 100px;
 }   
- 
+
+#project_search #share_li {
+    display: none;
+}
+
 /*ERRORS*/
 .error {
     color: #FF0000;
@@ -457,6 +462,7 @@ ul.errorlist {
     float: right;
     padding: 5px;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .admin_links {
@@ -576,6 +582,13 @@ ul.errorlist {
     margin-top: 0;
 }
 
+li#share_li a {
+    display: block;
+    background: transparent url('../img/share.png') no-repeat top left;
+    height: 15px;
+    width: 55px;
+}
+
 /*REVIEW SUGGESTION*/
 #review_suggestions {
     background-color: #E2EBF4;    
@@ -640,11 +653,11 @@ ul.errorlist {
 }
 
 /*SEARCH RESULTS*/
-#main_pane h3 {
+#search_page h3 {
     padding-left: 10px;
 }
 
-#main_pane span.search_term {
+#search_page span.search_term {
     color: #007BD6;
 }
 

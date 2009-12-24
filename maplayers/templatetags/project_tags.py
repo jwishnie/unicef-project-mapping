@@ -8,11 +8,12 @@ Template tags used to display project content
 from django import template
 from maplayers.tag_utils import parse_img_feed
 from maplayers.utils import is_empty
-from maplayers.constants import PROJECT_STATUS, GROUPS, COMMENT_STATUS, VIDEO_PROVIDER
+from maplayers.constants import PROJECT_STATUS, GROUPS, COMMENT_STATUS, VIDEO_PROVIDER, USER_AGENT
 from maplayers.models import Project, ProjectComment, ReviewFeedback
 from maplayers.resource_icons import ResourceIcon
 
 import urllib2
+import simplejson as json
 
 register = template.Library()  
 
@@ -117,11 +118,12 @@ def video_playlist(project):
             thumbnail_url = "http://img.youtube.com/vi/%s/default.jpg" % video.video_id
             result += "<li><img src='%s' id='video_%s' class='video_thumbnail'></li>"  % (thumbnail_url, video.id)
         else:
-            pass
-            # video_json_url = "http://vimeo.com/api/v2/video/%s.json" % video.video_id
-            # data = urllib2.urlopen(video_json_url).read()
-            
-            
+            video_json_url = "http://vimeo.com/api/v2/video/%s.json" % video.video_id
+            req = urllib2.Request(video_json_url, None, { 'User-Agent' : USER_AGENT})
+            data = urllib2.urlopen(req).read()
+            json_data = json.loads(data)
+            thumbnail_url = json_data[0]['thumbnail_small']
+            result += "<li><img src='%s' id='video_%s' class='video_thumbnail'></li>"  % (thumbnail_url, video.id)
     result += "</ul></div>"
     return result
     
@@ -419,7 +421,7 @@ def video_url_tag(video_urls):
         video_url = video_urls[0] if video_urls else ""
         return '''<div id="video_urls">
         			<div id="video_url_1" class="add_video_url">
-        				<label>Video URL : </label>
+        				<label>Video URL</label>
         				<input type="text" name="video_url_1" value="%s"></input>
         			</div>	
         		</div>''' % video_url
