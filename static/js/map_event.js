@@ -42,7 +42,7 @@ $(document).ready(function() {
             $("#projects").hide();
             $("#projects_searched").hide();
 
-            var html_text = "<h3>Sorry. No results found for <span class='search_term'>\"" + search_term + "\"</span>:</h3>";
+            var html_text = "<h3>Sorry. No results found for <span class='search_term'>\"" + search_term + "\"</span></h3>";
             $("#search_page").html(html_text);
         }
         
