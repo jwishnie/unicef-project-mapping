@@ -6,7 +6,6 @@ import logging
 import simplejson as json
 from StringIO import StringIO
 from datetime import datetime
-from eventlet.green import urllib2
 
 from django.shortcuts import render_to_response
 from django.http import Http404
@@ -26,7 +25,8 @@ from maplayers.constants import PROJECT_STATUS, EMAIL_REGEX, COMMENT_STATUS, GRO
 from maplayers.utils import html_escape
 from maplayers.models import AdministrativeUnit, KMLFile
 from maplayers.admin_request_parser import convert_text_to_dicts
-
+from maplayers.geoserver import GeoServer
+from maplayers.geonames import GeoNames
 
 def homepage(request):
     sectors = _get_sectors(request)
@@ -60,50 +60,6 @@ def search_admin_units(request, admin_manager=AdministrativeUnit.objects):
         response.write(admin_unit_json)
         return response
         
-class GeoServer(object):
-    def __init__(self):
-        self.url = ""
-    def get_list_of_countries_with_shapefiles(self):
-        request_url = ""
-        response = urllib2.urlopen("http://localhost:8080/geoserver/rest/workspaces.json")
-        data = json.loads(response.read())
-        return self.extract_countries(data)
-
-    def extract_countries(self, data):
-        workspaces = data['workspaces']['workspace']
-        regions = [region['name'] for region in  workspaces]
-        regions_without_world_layer = filter(lambda x: not x.__contains__('GADM'), regions)
-        return regions_without_world_layer
-
-    def get_admin_units_for_country(self, country):
-        try:
-            request_url = "http://localhost:8080/geoserver/rest/workspaces/%s/datastores/%s/featuretypes.json" % (country, country)
-            response = urllib2.urlopen(request_url)
-            data = json.loads(response.read())
-            return self.extract_admin_units(data)
-        except urllib2.HTTPError, ex:
-            return "Unable to find region data for the country"
-
-    def extract_admin_units(self, data):
-        if(isinstance(data, dict)):
-            featuretypes = data['featureTypes']['featureType']
-            admin_units = [admin_unit['name'] for admin_unit in featuretypes]
-            return admin_units
-        else:
-            return data
-
-class GeoNames(object):
-    def __init__(self):
-        self.url = "http://ws.geonames.org/countryInfoJSON?country="
-    def query_for_country(self,country_code):
-        try:
-            request_url = self.url + str(country_code)
-            data = urllib2.urlopen(str(request_url)).read()
-            return data
-        except urllib2.HTTPError, ex:
-            
-            return ""
-
 def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
     if request.method == 'GET':        
         try:
@@ -414,7 +370,7 @@ def convert_to_json(projects):
     result = []
     for project in projects:
         project_json = '''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d, "sectors" : %s, "implementors" : %s}''' %(project.latitude, project.longitude,
-                html_escape(project.snippet()), project.id, project.sectors_in_json(), project.implementors_in_json())
+                project.snippet(), project.id, project.sectors_in_json(), project.implementors_in_json())
         result.append(project_json)
     return "[" + ", ".join(result) + "]"
     
