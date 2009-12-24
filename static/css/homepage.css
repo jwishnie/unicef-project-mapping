@@ -3,18 +3,19 @@
 }
 
 #bookmark {
-    background-color: #FFFFFF;
+    background-color: #DDD;
     border: 1px solid #999999;
-    left: 30%;
+    left: 15%;
     padding: 7px;
     position: absolute;
     top: 40%;
-    width: 40%;
+    width: 70%;
     z-index: 9999;
+    font-size: 9pt;
 } 
 
 #bookmark #bookmark_close {
-    background: #FFF url("../js/openlayers/img/close.gif") no-repeat top right;
+    background: #DDD url("../js/openlayers/img/close.gif") no-repeat top right;
     display: block;
     height: 15px;
 }

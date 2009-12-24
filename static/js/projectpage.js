@@ -275,7 +275,6 @@ $(document).ready(function() {
         var video_id = this.id.split("_")[1];
         var video_url = '/projects/video/' + video_id + "/";
         $.get(video_url, function(data){
-            alert(data);
             $("#current_video").html(data);
         });
         

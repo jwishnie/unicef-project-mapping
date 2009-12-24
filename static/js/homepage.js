@@ -107,6 +107,26 @@ $(document).ready(function() {
 
     hideFilterableCriteria();
 
+    
+    $("li#share_li").click(function() {
+        bookmarkUrl();
+        $('#bookmark').show();
+        $('#main_content').css('opacity','0.5');
+        $('#header').css('opacity','0.5');
+        $('#main_nav').css('opacity','0.5');
+    });
+    
+    $("#bookmark_close").click(bookmarkClose);
+    
+    function bookmarkClose(){
+        $('#bookmark').hide();
+        $('#main_content').css('opacity','1');
+        $('#header').css('opacity','1');
+        $('#main_nav').css('opacity','1');        
+        $('#bookmark').html("<div id='bookmark_close'></div>");
+        $("#bookmark_close").click(bookmarkClose);
+    }
+    
     $('#filterable_criteria li.sectors_li').click(function() {
         if($('ul.sector_drawer').is(":visible")) {
             clearRegionalDataLayers();
@@ -255,7 +275,11 @@ $(document).ready(function() {
         "&tag=" + search_tag +
         "&search_term=" + $("#search").val();
         url += queryString;
+<<<<<<< HEAD:static/js/homepage.js
         $('#bookmark').html(url);
+=======
+        $('#bookmark').append(url);
+>>>>>>> d109b5636b69000435e11d937a1dc67addbdcb33:static/js/homepage.js
     }
 
     function getProjects(data) {
@@ -322,8 +346,6 @@ $(document).ready(function() {
             var projects = getProjects(data);
             addProjectsOnMap(projects);
         });
-
-        bookmarkUrl();
     }
 
     

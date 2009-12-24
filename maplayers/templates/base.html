@@ -38,7 +38,7 @@
 									<li><a href='{% url django.contrib.auth.views.login %}'>Login</a></li>
 									{% sign_up_link %}
 									{% endif %}
-									<li id="share_li"><a href="" title="Share this url with others" alt="Share this url with others"></a></li>
+									<li id="share_li"></li>
 								</ul>
 							</span>
 						</div>
@@ -73,7 +73,8 @@
 		    </div>
 		    {% endblock %}
 	    </div>
-		<div id="bookmark">
+		<div id="bookmark" class="round_corner">
+			<div id='bookmark_close'></div>
 		</div>
 	
 </body>
