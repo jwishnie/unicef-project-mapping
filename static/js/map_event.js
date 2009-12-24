@@ -37,13 +37,13 @@ $(document).ready(function() {
         map.addLayer(markers);
         var html = "<ul>";
         if(projects.length == 0) {
-            $("#main_pane h3").hide();
+            $("#search_page h3").hide();
             $("#map_canvas").hide();
             $("#projects").hide();
             $("#projects_searched").hide();
-            
+
             var html_text = "<h3>Sorry. No results found for <span class='search_term'>\"" + search_term + "\"</span>:</h3>";
-            $("#main_pane").html(html_text);
+            $("#search_page").html(html_text);
         }
         
         for(var i = 0;i<projects.length; i++){
