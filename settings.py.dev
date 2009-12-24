@@ -143,4 +143,5 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 TINYMCE_SPELLCHECKER = False
 
+GEONAMES_URL = "http://ws.geonames.org/countryInfoJSON?country="
 GEOSERVER_URL = "http://localhost/geoserver"
