@@ -379,7 +379,6 @@ $(document).ready(function() {
 
     $('.sectorbox').bind('click', mapEvent);
     $('.implementorbox').bind('click', mapEvent);
-
     $('.overlaybox').click(handleOverlays);
 
     var gs = "http://"+window.location.host+"/geoserver/ows";

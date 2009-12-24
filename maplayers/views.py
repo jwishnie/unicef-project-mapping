@@ -135,10 +135,8 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             return response
         
 def projects_in_map(request, left, bottom, right, top):
-    sector_ids =  _filter_ids(request, "sector") or \
-                [sector.id for sector in Sector.objects.all()]
-    implementor_ids =  _filter_ids(request, "implementor") or \
-                [implementor.id for implementor in Implementor.objects.all()]
+    sector_ids =  _filter_ids(request, "sector")
+    implementor_ids =  _filter_ids(request, "implementor")
     search_term = request.POST.get("q", "")
     if request.GET.get('tag', ''):
         projects = _get_projects_with_tag(left, bottom, right, top, sector_ids, implementor_ids, request.GET['tag'])
@@ -303,12 +301,18 @@ def _filter_ids(request, filter_name):
             request.GET.keys() if filter_id.find(filter_name +"_") >=0]
     
 def _get_sectors(request):
-    ids = _filter_ids(request, "sector")
-    return Sector.objects.filter(id__in=ids)
+    if(request.GET.keys()):
+        ids = _filter_ids(request, "sector")
+        return Sector.objects.filter(id__in=ids)
+    else:
+        return Sector.objects.all()
     
 def _get_implementors(request):
-    ids = _filter_ids(request, "implementor")
-    return Implementor.objects.filter(id__in=ids)
+    if(request.GET.keys()):
+        ids = _filter_ids(request, "implementor")
+        return Implementor.objects.filter(id__in=ids)
+    else:
+        return Implementor.objects.all()
     
 def _get_projects(left, bottom, right, top, sector_ids, implementor_ids):
     left, bottom, right, top = \
