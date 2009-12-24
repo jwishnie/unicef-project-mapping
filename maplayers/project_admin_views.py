@@ -38,6 +38,10 @@ def add_project(request):
     if not _is_project_author(request.user):
         return HttpResponseRedirect('/permission_denied/add_project/not_author')
 
+    if parent_project:
+        if not _is_author_of_parent_project(request.user, parent_project.created_by):
+            return HttpResponseRedirect('/permission_denied/add_project/not_parent_project_author')
+
     sectors = ", ".join([sector.name for sector in Sector.objects.all()])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()])
     action = 'add_project?parent_id='
@@ -73,6 +77,10 @@ def edit_project(request, project_id):
     parent_project = project.parent_project
     if not project.is_editable_by(request.user):
         return HttpResponseRedirect('/permission_denied/edit_project/not_author')
+
+    if parent_project:
+        if not _is_author_of_parent_project(request.user, parent_project.created_by):
+            return HttpResponseRedirect('/permission_denied/add_project/not_parent_project_author')
 
     sectors = ", ".join([sector.name for sector in Sector.objects.all()])
     implementors = ", ".join([implementor.name for implementor in Implementor.objects.all()])
@@ -443,3 +451,8 @@ def _create_dir_if_not_exists(filename):
     dir_name = os.path.dirname(filename)
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
+
+def _is_author_of_parent_project(request_user, parent_author):
+    if request_user.username == parent_author.username:
+        return True
+    return False

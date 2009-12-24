@@ -637,10 +637,12 @@ $(document).ready(function() {
     }
 
     function switchLayer(event) {
+        toggleSpinner();
         $("#proj").html("Click on a region to query data");
         var layerName = $(this).attr("value");
         var layersInMap = map.layers;
         enableLayerIfAvailable(layerName);
         addToMapIfLayerNotAvailable(layerName);
+        toggleSpinner();
     }
 });

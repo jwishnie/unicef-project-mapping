@@ -7,6 +7,7 @@ from maplayers.models import Project
 from decimal import Decimal
 from maplayers.models import Sector, Implementor
 from django.contrib.auth.models import User
+from maplayers.geoserver import GeoServer
 
 def _get_sectors():
     return tuple([(sector.id, sector.name) for sector in Sector.objects.all()])
