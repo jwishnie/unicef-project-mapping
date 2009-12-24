@@ -53,7 +53,7 @@
 				{% flash_message request %}				
 				<div class="flash_message_box"><div id="publish_message"></div></div>
 				<div id="project_details">
-					<h2>{{project.name}}</h2>
+                                    <h2>{% autoescape off %}{{project.name}}{% endautoescape %}</h2>
 					<div id="main_pane">
 						<div id="right_pane" class="round_corner">
 							<div id="back_to_main_map">
@@ -115,17 +115,18 @@
 									<h4>Location: </h4>
 									<div class="sub_div"><span>{{project.location}}</span></div>
 		                        </div>
-
+                                        
+                                        
 		                        <div id="project_website" class="floatleft">
 		                            <h4>Project WebSite: </h4>
-		                            <div class="sub_div"><span><a href="{{project.website_url}}" target="_new">{{project.name}} home page</a></span></div>
+                                            <div class="sub_div"><span><a href="{{project.website_url}}" target="_new">{% autoescape off %}{{project.name}} home page{% endautoescape %}</a></span></div>
 		                        </div>
                        
 		                        <div id="parent_project" class="floatleft">
 		                          {% if project.parent_project %}
 		                            <h4>Main Project : </h4>
 		                            <div class="sub_div">
-										<span><a href="/projects/id/{{project.parent_project.id}}/">{{project.parent_project.name}}</a></span>
+                                                <span><a href="/projects/id/{{project.parent_project.id}}/">{% autoescape off %}{{project.parent_project.name}}{% endautoescape %}</a></span>
 									</div>
 		                          {% endif %}
 		                        </div>
@@ -134,7 +135,7 @@
 	                          {% if subprojects %}
 	                            <h4>Sub Projects : </h4>
 	                            {% for subproject in subprojects %}
-	                              <div class="sub_div"><a href="/projects/id/{{subproject.id}}/">{{subproject.name}}</a></div>
+                                    <div class="sub_div"><a href="/projects/id/{{subproject.id}}/">{% autoescape off %}{{subproject.name}}{% endautoescape %}</a></div>
 	                            {% endfor %}
 	                          {% endif %}
 	                        </div>
