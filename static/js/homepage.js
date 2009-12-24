@@ -107,7 +107,7 @@ $(document).ready(function() {
 
     hideFilterableCriteria();
     
-    $("li#share_li a").click(function() {
+    $("li#share_li").click(function() {
         bookmarkUrl();
         $('#bookmark').show();
         $('#main_content').css('opacity','0.5');
@@ -115,12 +115,16 @@ $(document).ready(function() {
         $('#main_nav').css('opacity','0.5');
     });
     
-    $("#bookmark_close").click(function() {
+    $("#bookmark_close").click(bookmarkClose);
+    
+    function bookmarkClose(){
         $('#bookmark').hide();
         $('#main_content').css('opacity','1');
         $('#header').css('opacity','1');
         $('#main_nav').css('opacity','1');        
-    });
+        $('#bookmark').html("<div id='bookmark_close'></div>");
+        $("#bookmark_close").click(bookmarkClose);
+    }
     
     $('#filterable_criteria li.sectors_li').click(function() {
         if($('ul.sector_drawer').is(":visible")) {
@@ -272,7 +276,7 @@ $(document).ready(function() {
         "&tag=" + search_tag +
         "&search_term=" + $("#search").val();
         url += queryString;
-        $('#bookmark').html("<div id='bookmark_close'></div>" + url);
+        $('#bookmark').append(url);
     }
 
     function getProjects(data) {
@@ -339,8 +343,6 @@ $(document).ready(function() {
             var projects = getProjects(data);
             addProjectsOnMap(projects);
         });
-
-        bookmarkUrl();
     }
 
     
