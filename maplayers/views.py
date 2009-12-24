@@ -370,7 +370,7 @@ def convert_to_json(projects):
     result = []
     for project in projects:
         project_json = '''{"latitude" : %.2f, "longitude" : %.2f, "snippet" : "%s", "id" : %d, "sectors" : %s, "implementors" : %s}''' %(project.latitude, project.longitude,
-                html_escape(project.snippet()), project.id, project.sectors_in_json(), project.implementors_in_json())
+                project.snippet(), project.id, project.sectors_in_json(), project.implementors_in_json())
         result.append(project_json)
     return "[" + ", ".join(result) + "]"
     
