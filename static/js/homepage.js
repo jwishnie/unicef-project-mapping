@@ -88,7 +88,7 @@ function populateRegionStats(response) {
         } else {
             statsHtml = 'Sorry the data is not found.';
         }
-        $("#stats").html(statsHtml);
+        $("#proj").html(statsHtml);
     });
 }
 
@@ -193,14 +193,29 @@ $(document).ready(function() {
                 map.removeLayer(this);
             }
         });
+        $.each(layers, function() {
+            if (this.name.contains(":")) {
+                map.removeLayer(this);
+            }
+        });
         var world = map.getLayersByName("World");
         $.each(world, function() {
             map.removeLayer(this);
         });
+
+        $(layers, function() {
+            if (this.name.contains(":")) {
+                $("#" + this.replace(":", "_")).remove();
+                delete regional_data_layers[this];
+            }
+        });
+
         regional_data_layers = {};
         map.events.unregister('moveend', map, mapEvent);
 
         map.zoomToScale(0);
+        $("#proj").html("");
+        $("input[value=World]:radio").attr("checked", "checked");
     }
 
     function hideMarkers() {
@@ -425,6 +440,7 @@ $(document).ready(function() {
 
     function switchStatsView() {
         $('ul.regiondata').unbind('click', switchStatsView);
+        $("input[value=World]:radio").attr("checked", "checked");
         map.events.unregister('moveend', map, mapEvent);
         var bounds = new OpenLayers.Bounds(-180, -90, 180, 90);
         map.zoomToExtent(bounds);
@@ -448,11 +464,33 @@ $(document).ready(function() {
                 }
             }
         });
-        $("input[name=World]:radio").attr("checked", "checked");
-        map.events.register('click', map, queryCountryClickedOn);
+        map.events.register('click', map, handleRegionDataClick);
+    }
+
+    function layerClickedOn() {
+        layersInMap = map.layers;
+        $.each(layersInMap,
+        function() {
+            if (!this.isBaseLayer) {
+                if (this.visibility) {
+                    layerToQuery = this.params.LAYERS;
+                }
+            }
+        });
+        return layerToQuery;
+    }
+
+    function handleRegionDataClick(event) {
+        if (layerClickedOn() === 'GADM:World') {
+            queryCountryClickedOn(event);
+        }
+        else {
+            queryForRegionData(event);
+        }
     }
 
     function queryCountryClickedOn(e) {
+        layerClickedOn();
         toggleSpinner();
         var layersInMap = map.layers;
         $.each(layersInMap, function(){
@@ -481,6 +519,10 @@ $(document).ready(function() {
             format: format
             };
         OpenLayers.loadURL("http://"+window.location.host+"/geoserver/wms", params, this, findCountryDetails, findCountryDetails);
+        $.each(regional_data_layers, function(key,val) {
+            $("#" + key.replace(":", "_")).remove();
+            delete regional_data_layers[key];
+        });
         OpenLayers.Event.stop(e);
     }
 
@@ -496,7 +538,7 @@ $(document).ready(function() {
                 $.each(bbox.admin_units, function() {
                     if (! regional_data_layers[this]) {
                         regional_data_layers[this] = true;
-                        var htmlLayer = '<li><input type="radio" name="layergroup" value="' + this + '" class="radiolayer"/><label>' + this.split(":")[1] + '</label></li><p/>';
+                        var htmlLayer = '<div id=' + this.replace(":", "_") + '><li><input type="radio" name="layergroup" value="' + this + '" class="radiolayer"/><label>' + this.split(":")[1] + '</label></li><p/></div>';
                         $(".regiondata").append(htmlLayer);
                         $(".radiolayer").bind('click', switchLayer);
                     }

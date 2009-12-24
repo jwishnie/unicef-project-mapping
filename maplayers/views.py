@@ -1,5 +1,6 @@
 # vim: ai ts=4 sts=4 et sw=4 encoding=utf-8
 
+import re
 import decimal
 import logging
 import simplejson as json
@@ -113,19 +114,23 @@ def country_details(request, geonames=GeoNames(), geoserver=GeoServer()):
             response = json.loads(callback)
             region_data = response['geonames'][0] 
             admin_units = geoserver.get_admin_units_for_country(region_data['countryName'])
-            bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
+            if isinstance(admin_units, list):
+                bbox['admin_units'] = [region_data['countryName'] + ":" + admin_unit for admin_unit in admin_units]
+                bbox['country'] = "You have clicked on %s" % region_data['countryName'] 
+            else:
+                bbox['admin_units'] = ''
+                bbox['country'] = "You have clicked on %s.\n Unfortunately no region data available" % region_data['countryName'] 
             bbox['west'] = float(region_data['bBoxWest'])
             bbox['south'] = float(region_data['bBoxSouth'])
             bbox['east'] = float(region_data['bBoxEast'])
             bbox['north'] = float(region_data['bBoxNorth'])
-            bbox['country'] = "You have clicked on %s" % region_data['countryName'] 
             bbox['adm1'] =  "%s:%s" % (region_data['countryName'], bbox['admin_units'][0])
             response = HttpResponse()
             response.write(json.dumps(bbox))
             return response
         except Exception, ex:
             response = HttpResponse()
-            region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : []}
+            region_data = {'west' : -90, 'south' : -180, 'east' : 90, 'north' : 180, 'country' : 'Request failed', 'adm1' : [], 'admin_units' : ''}
             response.write(json.dumps(region_data))
             return response
         
@@ -361,9 +366,17 @@ def _get_projects_with_search(left, bottom, right, top, sector_ids, implementor_
                                   
 def _get_admin_model(admin_manager, details):
     try:
-        adminModel = admin_manager.get(name=details['NAME_1'])
+        country_regex = re.compile('^HASC')
+        country_match = filter(country_regex.search, details.keys())
+        country_match.sort()
+        country_code = details[country_match[-1]].split(".")[0]
+        unit_regex = re.compile('^NAME')
+        admin_units = filter(unit_regex.search, details.keys())
+        admin_units.sort()
+        adminModel = admin_manager.get(name=details[admin_units[-1]],country=country_code)
         adminModel.found = True
-    except:
+    except Exception, ex:
+        print ex
         adminModel = AdministrativeUnit()
         adminModel.found = False
     
