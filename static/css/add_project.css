@@ -36,6 +36,11 @@
 li.file {
     overflow: hidden;
     color: #007BD6;
+    clear: left;
+}
+
+#project-links {
+    clear: both;
 }
 
 .resource_icon {
@@ -75,6 +80,10 @@ li.file {
 .help_text {
     padding: 5px;
     font-size: 9pt;    
+}
+
+#add_link {
+    clear: both;
 }
 
 .file-attach, #add_link {
