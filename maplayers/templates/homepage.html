@@ -37,6 +37,7 @@
 			</li>
 			<ul class="sectors_and_implementors round_corner">
 				<li class="sectors_li sub_categories expanded">Sectors</li>
+				<li>
 					<ul class="sector_drawer">
 						{% for sector in all_sectors %}
 						<li>
@@ -45,7 +46,9 @@
 						</li>
 						{% endfor %}
 					</ul>
+				</li>	
 				<li class="implementors_li sub_categories expanded">Implementors</li>
+				<li>	
 					<ul class="implementor_drawer">
 						{% for implementor in all_implementors %}
 						<li>
@@ -54,6 +57,7 @@
 						</li>
 						{% endfor %}
 					</ul>
+				</li>	
 			</ul>
 	        
 			<li class="drawer overlay_drawer">
