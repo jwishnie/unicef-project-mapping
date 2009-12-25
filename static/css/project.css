@@ -11,7 +11,6 @@ h4 {
     border: 1px solid #CCC;
     margin-bottom: 10px;
     font-size: 9pt;
-    width: 62.5em;
 }
 
 .toc ul li {
@@ -153,19 +152,21 @@ h4 {
     width: 18em;
 }
 
-#tags {
+#tags, #subprojects {
     clear: both;
 }
 
 #back_to_main_map #nearby_projects {
     cursor: pointer;
     text-decoration: underline;
+    float: left;
 }
 
 #back_to_main_map {
     font-size: 8pt;
     margin: 0 25px;
     padding: 5px 0;
+    overflow: hidden;
 }
 
 #back_to_main_map #back_to_main_map_link {
