@@ -8,14 +8,17 @@
     left: 15%;
     padding: 7px;
     position: absolute;
-    top: 40%;
+    top: 30%;
     width: 70%;
     z-index: 9999;
     font-size: 9pt;
+    word-wrap: break-word;
 } 
 
 #bookmark #bookmark_close {
     background: #DDD url("../js/openlayers/img/close.gif") no-repeat top right;
     display: block;
     height: 15px;
+    padding-bottom: 5px;
+    text-decoration: underline;
 }

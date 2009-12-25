@@ -123,7 +123,7 @@ $(document).ready(function() {
         $('#main_content').css('opacity','1');
         $('#header').css('opacity','1');
         $('#main_nav').css('opacity','1');        
-        $('#bookmark').html("<div id='bookmark_close'></div>");
+        $('#bookmark').html("<div id='bookmark_close'>Use this URL to share</div>");
         $("#bookmark_close").click(bookmarkClose);
     }
     
