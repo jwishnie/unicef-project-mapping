@@ -73,18 +73,21 @@ jQuery(document).ready(function(){
     function add_video(){
         var video_url_count = jQuery(".add_video_url").length;
     	if(video_url_count==1){
-            jQuery("#video_url_1").append('<input type="radio" name="default_video" value="video_1"></input>');
-            jQuery("#video_url_1").append('<span class="remove_video" id="remove_video_' + video_id + '">remove</span>');
+            jQuery("#video_url_1").append('<input type="radio" name="default_video" value="video_1" class="default_video_radio"></input>');
+            jQuery("#video_url_1").append('<span class="make_default" id="make_default_1">Make default | </span>');
+            jQuery("#video_url_1").append('<span class="remove_video" id="remove_video_1">Remove</span>');
         }
         video_id += 1;
         var div_element = '<div id="video_url_' + video_id + '" class="add_video_url">';
         div_element +=  '<label>Video URL : </label>';
         div_element +=  '<input type="text" name="video_url_' + video_id + '"></input>';
-        div_element +=  '<input type="radio" name="default_video" value="video_'+ video_id + '"></input>';
-        div_element +=  '<span class="remove_video" id="remove_video_' + video_id +'">remove</span>';
+        div_element +=  '<input type="radio" name="default_video" value="video_'+ video_id + '" class="default_video_radio"></input>';
+        div_element +=  '<span class="make_default" id="make_default_' + video_id +'">Make default | </span>';
+        div_element +=  '<span class="remove_video" id="remove_video_' + video_id +'">Remove</span>';
         div_element +=  '</div>';
         jQuery("#video_urls").append(div_element);
         jQuery(".remove_video").click(remove_video);
+        jQuery(".default_video_radio").click(defaultVideoText);
     }
 	
 	function add_link(){
@@ -102,6 +105,7 @@ jQuery(document).ready(function(){
 	    if(video_url_count==2){
 	        jQuery("#remove_video_1").remove();
 	        jQuery("#video_url_1 input[type='radio']").remove();
+	        jQuery("#make_default_1").remove();
 	    }
 	    jQuery("#video_url_" + this.id.split("_")[2]).remove();
 	}
@@ -167,5 +171,14 @@ jQuery(document).ready(function(){
             }
         });
     });
+    
+    function defaultVideoText(){
+        var video_id = (this.value).split("_")[1];
+        var span_id = "#make_default_" + video_id;
+        jQuery(".make_default").html('Make default | ');
+        jQuery(span_id).html('Default | ');
+    }
+    
+    jQuery(".default_video_radio").click(defaultVideoText);
 	
 });
