@@ -721,11 +721,11 @@ ul.overlays li {
 }
 
 #ajax-spinner {
-	width: 69%;
-	height: 450px;
-	position: fixed;
-	top: 20%;
-	left: 27%;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 40%;
+	left: 50%;
 	opacity: 0.5;
 	background: #666 url('/static/img/ajax-loader.gif') no-repeat scroll 50% 50%;
 	z-index: 999;
