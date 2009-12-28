@@ -180,9 +180,10 @@ $(document).ready(function() {
         if ($('#filterable_criteria li.overlay_drawer span.open').size() !== 0) {
             clearRegionalDataLayers();
             collapseOverlays();
-        }else {
+        } else {
             clearRegionalDataLayers();
             expandOverlays();
+            showOverlays();
         }
     });
  
@@ -211,7 +212,9 @@ $(document).ready(function() {
         $.each(active_kml_layers, function(layer_name, val) {
             if(!(layer_name=="Markers")){
                 var visible_layer = map.getLayersByName(layer_name)[0];
-                visible_layer.setVisibility(false);
+                if (visible_layer) {
+                    visible_layer.setVisibility(false);
+                }
             }
         });
         $.each(layers, function() {
@@ -346,6 +349,24 @@ $(document).ready(function() {
         });
     }
 
+    function showOverlays() {
+        toggleSpinner();
+        var checked_overlays = $(".overlaybox:checked");
+        $.each(checked_overlays, function() {
+            kml_id = this.value;
+            layer_name = "kml_" + kml_id;
+            kml_filename = $("#" + layer_name).html();
+            if (layer_name in active_kml_layers) {
+                var visible_layer = map.getLayersByName(layer_name)[0];
+                if (visible_layer) {
+                    visible_layer.setVisibility(true);
+                }
+            } else {
+                $("[name=" + layer_name + "]").attr("checked", false);
+            }
+        });
+        toggleSpinner();
+    }
     
     function handleOverlays() {
         kml_id = this.value;
@@ -354,7 +375,10 @@ $(document).ready(function() {
             kml_filename = $("#" + layer_name).html();
             if (layer_name in active_kml_layers) {
                 var visible_layer = map.getLayersByName(layer_name)[0];
-                visible_layer.setVisibility(true);
+                if (visible_layer)
+                {
+                    visible_layer.setVisibility(true);
+                }
             } else {
                 toggleSpinner();
                 var layer_kml = new OpenLayers.Layer.GML(layer_name, kml_filename,
