@@ -209,8 +209,10 @@ $(document).ready(function() {
     function clearRegionalDataLayers() {
         var layers = map.layers;
         $.each(active_kml_layers, function(layer_name, val) {
-            var visible_layer = map.getLayersByName(layer_name)[0];
-            visible_layer.setVisibility(false);
+            if(!(layer_name=="Markers")){
+                var visible_layer = map.getLayersByName(layer_name)[0];
+                visible_layer.setVisibility(false);
+            }
         });
         $.each(layers, function() {
             if (regional_data_layers[this.name]) {
