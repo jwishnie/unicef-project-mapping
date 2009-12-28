@@ -73,8 +73,8 @@ jQuery(document).ready(function(){
     function add_video(){
         var video_url_count = jQuery(".add_video_url").length;
     	if(video_url_count==1){
-            jQuery("#video_url_1").append('<input type="radio" name="default_video" value="video_1" class="default_video_radio"></input>');
-            jQuery("#video_url_1").append('<span class="make_default" id="make_default_1">Make default | </span>');
+            jQuery("#video_url_1").append('<input type="radio" name="default_video" value="video_1" class="default_video_radio" checked="true"></input>');
+            jQuery("#video_url_1").append('<span class="make_default" id="make_default_1">Default | </span>');
             jQuery("#video_url_1").append('<span class="remove_video" id="remove_video_1">Remove</span>');
         }
         video_id += 1;
