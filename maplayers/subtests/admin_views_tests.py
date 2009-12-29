@@ -7,6 +7,8 @@ from maplayers.utils import is_iter
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from maplayers.constants import PROJECT_STATUS, GROUPS
+from mock import Mock
+from maplayers import admin_views as views
 
 class AdminViewsFunctionalTest(TestCase):
         
@@ -54,5 +56,21 @@ class AdminViewsFunctionalTest(TestCase):
                         "new_password" : "map_super",
                         "confirm_password" : "map_super"})
            
-           
+    def test_delete_admin_unit(self):
+        request = Mock()
+        request.session = {}
+        admin_unit_manager = Mock()
+        request.method = 'POST'
+        request.POST.get.return_value = 1
+        admin_unit_manager.get.delete.return_value = ""
+        response = views.delete_administrative_unit(request, admin_unit_manager)
+        self.assertEquals(request.session['message'], "Admin unit has been deleted successfully")
     
+    def test_show_failure_message_when_delete_admin_unit_fails(self):
+        request = Mock()
+        request.session = {}
+        admin_unit_manager = Mock()
+        request.method = 'POST'
+        request.POST.side_effect = Exception
+        response = views.delete_administrative_unit(request, admin_unit_manager)
+        self.assertEquals(request.session['message'], "Unable to delete Admin unit")

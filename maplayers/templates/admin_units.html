@@ -4,7 +4,19 @@
 
 {% block title_extra %} Administrative Units {% endblock %}
 {% block extrahead %}
-		<script src="{{ jquery }}" type="text/javascript"></script>
+        <script src="{{ jquery }}" type="text/javascript"></script>
+        <link rel="stylesheet" href="{{ css_url }}/projects_for_review.css" type="text/css" />
+        <link type="text/css" href="{{ css_url }}/dialog.css" rel="stylesheet" />
+        
+        <script type="text/javascript" src="{{ jqueryui }}"></script>
+        
+        <script type="text/javascript">
+                var admin_unit_id;
+                var delete_url;
+                var delete_tr;
+        </script>
+		
+        <script type="text/javascript" src="{{ js_url }}/admin_units.js"></script>				
 {% endblock %}
 
 {% block page_content %}
@@ -16,19 +28,23 @@
                   <th>Region Name</th>
                   <th>Region Type</th>
                   <th>Country</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>Action</th>
               </tr>
               {% for unit in admin_units %}
-                 <tr>
+                  <tr id="admin_unit_{{unit.id}}">
                      <td>{{ unit.name }}</td>
                      <td>{{ unit.region_type }}</td>
                      <td>{{ unit.country }}</td>
-                     <td><a href="/edit_admin_unit/{{ unit.id }}">Edit</a></td>
-                     <td><a href="/delete_admin_unit/{{ unit.id }}">Delete</a></td>
+                     <td>
+                        <span class="first"><a href="/edit_admin_unit/{{unit.id}}/">Edit</a></span>
+                        <span class="delete_link" id="delete_{{unit.id}}">Delete</span>
+                     </td>
                  </tr>
                   {% endfor %}
               </tbody>
 		</table>
+	</div>
+	<div id="delete_dialog" title="Delete Admin Unit !">
+		<p>Are you Sure you want to delete this Admin Unit ?</p>
 	</div>
 {% endblock %}
