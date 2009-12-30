@@ -123,11 +123,19 @@ def edit_administrative_unit(request, id):
                                   )
 
 @login_required
-def delete_administrative_unit(request, id):
-    AdministrativeUnit.objects.get(id=int(id)).delete()
-    request.session['message'] = "Admin unit has been deleted successfully"
-    url = "/admin_units/"
-    return HttpResponseRedirect(url)
+def delete_administrative_unit(request, admin_unit_manager=AdministrativeUnit.objects):
+    if request.method == 'POST':
+        try:
+            non_existant_admin_unit = '-999'
+            admin_unit_id = request.POST.get('id', non_existant_admin_unit)
+            admin_unit_manager.get(id=int(admin_unit_id)).delete()
+            request.session['message'] = "Admin unit has been deleted successfully"
+            url = "/admin_units/"
+            return HttpResponseRedirect(url)
+        except Exception, ex:
+            request.session['message'] = "Unable to delete Admin unit"
+            url = "/admin_units/"
+            return HttpResponseRedirect(url)
     
     
 @login_required

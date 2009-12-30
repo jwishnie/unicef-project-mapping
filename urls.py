@@ -64,7 +64,7 @@ urlpatterns += patterns('maplayers.admin_views',
                         (r'^admin_units/', 'admin_units'),
                         (r'^add_admin_unit/', 'add_administrative_unit'),
                         (r'^edit_admin_unit/(?P<id>\d+)/$', 'edit_administrative_unit'),
-                        (r'^delete_admin_unit/(?P<id>\d+)/$', 'delete_administrative_unit'),
+                        (r'^delete_admin_unit/$', 'delete_administrative_unit'),
                         (r'^add_kml/$', 'add_kml_file'),
                         (r'^delete_kml/(?P<id>\d+)/$', 'delete_kml'),
                        )
