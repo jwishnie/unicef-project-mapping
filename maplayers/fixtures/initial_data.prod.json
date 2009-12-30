@@ -367,6 +367,24 @@
     }
   }, 
   {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "super", 
+      "first_name": "superuser", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2009-10-29 12:40:55", 
+      "groups": [1, 2, 3],
+      "user_permissions": [], 
+      "password": "sha1$1c36d$7b330ad48b2d10867cb7c1d97bde27a1cb86ee4d", 
+      "email": "me@me.com", 
+      "date_joined": "2009-10-29 11:06:54"
+    }
+  }, 
+  {
     "pk": 5, 
     "model": "contenttypes.contenttype", 
     "fields": {
