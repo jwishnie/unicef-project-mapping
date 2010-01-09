@@ -166,7 +166,11 @@ def add_kml_file(request):
         
 @login_required
 def delete_kml(request, id):
-    KMLFile.objects.get(id=int(id)).delete()
+    kml = KMLFile.objects.get(id=int(id))
+    app_dir = _get_app_dir(__file__)
+    filename = app_dir + '/static/kml/' +  kml.filename
+    os.remove(filename)
+    kml.delete()
     return HttpResponse('OK')
     
 def _render_response(form, request):
