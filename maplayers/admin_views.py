@@ -146,7 +146,7 @@ def add_kml_file(request):
             kml_name = form.cleaned_data['name']
             uploaded_file = request.FILES['filename']
             file_name = uploaded_file.name
-            filename = filename.replace(" ", "_get_app_dir")
+            file_name = file_name.replace(" ", "_")
             app_dir = _get_app_dir(__file__)
             destination_name = app_dir + '/static/kml/' + file_name
             create_dir_if_not_exists(destination_name)
@@ -167,6 +167,9 @@ def add_kml_file(request):
 @login_required
 def delete_kml(request, id):
     kml = KMLFile.objects.get(id=int(id))
+    app_dir = _get_app_dir(__file__)
+    filename = app_dir + "/static/kml/" + kml.filename
+    os.remove(filename)
     kml.delete()
     return HttpResponse('OK')
     
