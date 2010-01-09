@@ -146,6 +146,7 @@ def add_kml_file(request):
             kml_name = form.cleaned_data['name']
             uploaded_file = request.FILES['filename']
             file_name = uploaded_file.name
+            filename = filename.replace(" ", "_get_app_dir")
             app_dir = _get_app_dir(__file__)
             destination_name = app_dir + '/static/kml/' + file_name
             create_dir_if_not_exists(destination_name)
