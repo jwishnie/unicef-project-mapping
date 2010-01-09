@@ -146,7 +146,8 @@ def add_kml_file(request):
             kml_name = form.cleaned_data['name']
             uploaded_file = request.FILES['filename']
             file_name = uploaded_file.name
-            destination_name = 'static/kml/' + file_name
+            app_dir = _get_app_dir(__file__)
+            destination_name = app_dir + '/static/kml/' + file_name
             create_dir_if_not_exists(destination_name)
             destination = open(destination_name, 'wb+')
             for chunk in uploaded_file.chunks(): 
@@ -209,8 +210,12 @@ def _edit_admin_unit(form, unit_id):
     admin_unit.recent_reports = form.cleaned_data['recent_reports']
     admin_unit.resources = form.cleaned_data['resources']
     admin_unit.save()
-
-
-
-
     
+    
+def _get_app_dir(path_of_script):
+    file_path_name = path_of_script
+    directory_of_file = os.path.dirname(__file__)
+    last_slash_index = directory_of_file.rindex("/")
+    directory_of_index = directory_of_file[0:last_slash_index]
+    return directory_of_index
+
