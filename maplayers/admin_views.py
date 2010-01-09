@@ -153,7 +153,7 @@ def add_kml_file(request):
             for chunk in uploaded_file.chunks(): 
                 destination.write(chunk) 
                 destination.close()
-            kml_file = KMLFile(name=kml_name, filename=destination_name)
+            kml_file = KMLFile(name=kml_name, filename=('static/kml/' + file_name))
             kml_file.save()
             return HttpResponseRedirect('/')
         else:
